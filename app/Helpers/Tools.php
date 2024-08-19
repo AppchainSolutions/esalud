@@ -3,8 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\Log;
-use Doctrine\DBAL\Query\QueryException;
-use Exception;
+use QueryException;
 class Tools
 {
     public static function filterData(array $filters, object $query)
@@ -16,7 +15,6 @@ class Tools
                     if (str_contains($key, 'fecha')) {
                         self::applyDateFilter($query, $key, $value);
                     } else {
-                        Log::info($value." - ". $key);
                         $query->where($key, $value);
                     }
                 }

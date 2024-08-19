@@ -186,6 +186,7 @@ async function setResponse(state, result) {
             type: "success",
         });
         state.formItems = { ...result.data };
+        console.log(state.formItems);
         if (state.endpoints) {
             state.tableItems = addValue(state, result.data);
         } else {

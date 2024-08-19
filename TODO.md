@@ -1,5 +1,5 @@
 ## Tareas pendientes
-//TODO
+//* TODO
 ** Proyecto Vulco **
 
 * [ ] Notificaciones, cron, tasks

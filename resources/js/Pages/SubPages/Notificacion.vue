@@ -2,8 +2,8 @@
     <div class="text-6">Notificaciones</div>
 </template>
 
-/* TODO: Notificaciones
-* 
+//* FIXME: Notificaciones
+/* 
 * Vencimiento examenes ocupcionales y preocupacionales 
 * alerta de vencimiento
 * de baterias de examanes dar alarta por vencimiento de examen 

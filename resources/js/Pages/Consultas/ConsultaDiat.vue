@@ -19,7 +19,7 @@ const state = reactive({
 
     headers: [
         { title: "RUT", align: "center", sortable: true, key: "rut" },
-        {
+         {
             title: "Nombre",
             align: "center",
             sortable: true,
@@ -66,10 +66,10 @@ const state = reactive({
             title: "Estatus",
             align: "start",
             sortable: true,
-            key: "estado_diat",
+            key: "aprobado",
         },
 
-        { title: "Acciones", align: "center", key: "actions" },
+        { title: "Acciones", align: "center", key: "actions" }, 
     ],
 
     searchQuery: {
@@ -81,7 +81,7 @@ const state = reactive({
         rut: null,
         unidad: null,
         tipo_accidente: null,
-        estado_diat: "0",
+        aprobado: "false",
         fecha_admision: {
             desde: null,
             hasta: null,
@@ -119,7 +119,7 @@ const state = reactive({
         accidente: null,
         seguro: null,
         comentario: null,
-        estado_diat: null,
+        aprobado: null,
         fecha_admision: null,
         folio: null,
         idpgp: null,
@@ -272,7 +272,7 @@ const handleSearch = async () => {
                                         ></v-switch>
                                         <v-switch
                                             v-model="
-                                                state.searchQuery.estado_diat
+                                                state.searchQuery.aprobado
                                             "
                                             hide-details
                                             true-value="1"
@@ -321,7 +321,7 @@ const handleSearch = async () => {
                             :items="state.tableItems"
                             :sort-by="[{ key: 'apellidos', order: 'asc' }]"
                         >
-                            <template v-slot:item="{ item }">
+                            <template v-slot:item.actions="{ item }">
                                 <v-tooltip text="Ver detalles" location="top">
                                     <template v-slot:activator="{ props }">
                                         <v-btn
@@ -392,16 +392,16 @@ const handleSearch = async () => {
                                     <v-col>
                                         <v-switch
                                             v-model="
-                                                state.itemsView.estado_diat
+                                                state.itemsView.aprobado
                                             "
                                             hide-details
-                                            true-value="Aprobado"
-                                            false-value="No Aprobado"
+                                            true-value="true"
+                                            false-value="false"
                                             variant="underlined"
                                             color="green-darken-3"
-                                            value="No Aprobado"
+                                            value="false"
                                             :inset="true"
-                                            :label="`Estado Diat: ${state.itemsView.estado_diat.toString()}`"
+                                            :label="`Estado Diat: ${state.itemsView.aprobado.toString()}`"
                                         ></v-switch>
 
                                         <v-text-field

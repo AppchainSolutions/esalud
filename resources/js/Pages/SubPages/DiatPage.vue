@@ -40,7 +40,7 @@ const state = reactive({
             title: "Estado",
             align: "start",
             sortable: true,
-            key: "estado_diat",
+            key: "aprobado",
         },
 
         { title: "Acciones", align: "center", key: "actions" },
@@ -51,7 +51,7 @@ const state = reactive({
         accidente: null,
         seguro: null,
         comentario: null,
-        estado_diat: 0,
+        aprobado: null,
         fecha_admision: null,
         folio: null,
         idpgp: null,
@@ -66,7 +66,7 @@ const state = reactive({
         accidente: null,
         seguro: null,
         comentario: null,
-        estado_diat: 0,
+        aprobado: "false",
         fecha_admision: null,
         folio: null,
         idpgp: null,
@@ -230,14 +230,14 @@ const remove = async (item) => {
                                                     label="Aprobado"
                                                     v-model="
                                                         state.editedItem
-                                                            .estado_diat
+                                                            .aprobado
                                                     "
                                                     hide-details
-                                                    true-value="1"
-                                                    false-value="0"
+                                                    true-value="true"
+                                                    false-value="false"
                                                     variant="underlined"
                                                     color="green-darken-3"
-                                                    value="0"
+                                                    value="false"
                                                     :inset="true"
                                                 ></v-switch>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Repository\DiatRepository;
+use Illuminate\Support\Facades\Log;
 
 
 class DiatController extends Controller
@@ -33,7 +34,6 @@ class DiatController extends Controller
      */
     public function store(Request $request)
     {
-
         return $this->diatRepository->store($request);
     }
     
@@ -57,3 +57,5 @@ class DiatController extends Controller
         return $this->diatRepository->search($request);
     }
 }
+
+// TODO: Install Coroot 

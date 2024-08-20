@@ -6,14 +6,14 @@ use App\Helpers\Tools;
 use App\Models\Paciente;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use App\Models\AtencionDiaria;
+use App\Models\FichaCronicos;
 use App\Repository\Repository;
 use Illuminate\Support\Facades\Response;
 
-class AtencionDiariaRepository extends Repository
+class FichaCronicosRepository extends Repository
 {
 
-    public function __construct(AtencionDiaria $model)
+    public function __construct(FichaCronicos $model)
     {
         $this->model = $model;
     }

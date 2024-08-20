@@ -21,7 +21,7 @@ use App\Models\TipoAtencion;
 use App\Models\TipoLicencia;
 use App\Models\Turno;
 
-class AtencionDiaria extends Model
+class FichaCronicos extends Model
 {
     use HasFactory;
 
@@ -87,7 +87,7 @@ class AtencionDiaria extends Model
         return $this->belongsTo(Calificacion::class);
     }
 
-    protected $table = 'atencion_diaria';
+    protected $table = 'ficha_cronicos';
     protected $fillable = [
         'paciente_id',
         'accidente_condicion',

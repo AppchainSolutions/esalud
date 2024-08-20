@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AtencionDiariaController;
+use App\Http\Controllers\FichaCronicosController;
 use App\Http\Controllers\CertificacionController;
 use App\Http\Controllers\DiatController;
 use App\Http\Controllers\DiepController;
@@ -40,12 +40,12 @@ Route::middleware([
 
     Route::get(
         'atencion_diaria/search',
-        [AtencionDiariaController::class, 'search']
+        [FichaCronicosController::class, 'search']
     )->name('atencion_diaria.search');
 
     Route::get(
         'atencion_diaria',
-        [AtencionDiariaController::class, 'consulta']
+        [FichaCronicosController::class, 'consulta']
     )->name('atencion_diaria.consulta');
 
     Route::get(

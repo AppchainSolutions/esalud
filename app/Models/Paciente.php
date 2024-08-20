@@ -6,7 +6,7 @@ use App\Models\Afp;
 use App\Models\Alergia;
 use App\Models\AntecedenteFamiliar;
 use App\Models\Area;
-use App\Models\AtencionDiaria;
+use App\Models\FichaCronicos;
 use App\Models\Ceco;
 use App\Models\Certificacion;
 use App\Models\Cirugia;
@@ -44,7 +44,7 @@ class Paciente extends Model
 
     public function atenciones(): HasMany
     {
-        return $this->hasMany(AtencionDiaria::class);
+        return $this->hasMany(FichaCronicos::class);
     }
     public function licencia(): HasMany
     {

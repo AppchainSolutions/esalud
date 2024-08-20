@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\AntecedenteFamiliarController;
-use App\Http\Controllers\AtencionDiariaController;
+use App\Http\Controllers\FichaCronicosController;
 use App\Http\Controllers\CirugiaController;
 use App\Http\Controllers\EnfermedadController;
 use App\Http\Controllers\FactorRiesgoController;
@@ -50,7 +50,7 @@ Route::middleware([
 
     Route::inertia('/ficha', 'SubPages/FichaMedica');
     Route::resource('/alergia', AlergiaController::class);
-    Route::resource('/atencion_diaria', AtencionDiariaController::class);
+    Route::resource('/atencion_diaria', FichaCronicosController::class);
     Route::resource('/cirugia', CirugiaController::class);
     Route::resource('/enfermedad', EnfermedadController::class);
     Route::resource('/factor', FactorRiesgoController::class);

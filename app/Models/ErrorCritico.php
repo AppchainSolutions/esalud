@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\AtencionDiaria;
+use App\Models\FichaCronicos;
 
 
 class ErrorCritico extends Model
@@ -14,7 +14,7 @@ class ErrorCritico extends Model
 
     public function atencion(): BelongsTo
     {
-        return $this->belongsTo(AtencionDiaria::class);
+        return $this->belongsTo(FichaCronicos::class);
     }
 
     protected $table = 'error_critico';

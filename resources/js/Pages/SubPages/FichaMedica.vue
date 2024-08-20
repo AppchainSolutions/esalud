@@ -2,10 +2,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import DatosMedicos from "@/Pages/SubPages/DatosMedicos.vue";
 import AntecedenteFamiliar from "@/Pages/SubPages/AntecedenteFamiliar.vue";
-import LicenciaMedica from "@/Pages/SubPages/LicenciaMedica.vue";
-import DiatDiep from "@/Pages/SubPages/DiatDiep.vue";
 import Examenes from "@/Pages/Examenes/Examenes.vue";
-import Certificaciones from "@/Pages/SubPages/Certificaciones.vue";
 import { router } from "@inertiajs/vue3";
 import { useDataStore } from "@/store.js";
 
@@ -40,10 +37,7 @@ const volver = () => {
                         :items="[
                             'Datos Medicos',
                             'Datos Familiares',
-                            'Licencias Médicas',
-                            'DIAT/DIEP',
                             'Exámenes',
-                            'Certificaciones',
                         ]"
                     >
                         <template v-slot:item.1>
@@ -54,21 +48,10 @@ const volver = () => {
                             <antecedente-familiar />
                         </template>
 
-                        <template v-slot:item.3>
-                            <licencia-medica />
-                        </template>
-
-                        <template v-slot:item.4>
-                            <diat-diep />
-                        </template>
-
                         <template v-slot:item.5>
                             <examenes />
                         </template>
 
-                        <template v-slot:item.6>
-                            <certificaciones />
-                        </template>
                     </v-stepper>
                 </v-card-text>
             </v-card>

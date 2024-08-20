@@ -50,12 +50,6 @@
         sortable: true,
         key: "apellidos",
       },
-      {
-        title: "Empresa",
-        align: "center",
-        sortable: true,
-        key: "empresa.descripcion",
-      },
       { title: "Acciones", sortable: false, align: "center", key: "actions" },
     ],
     validationSchema: {
@@ -283,6 +277,7 @@
       <v-divider thickness="4px" color="#009AA4"></v-divider>
       <v-form fast-fail @submit.prevent>
         <v-row>
+
           <v-col>
             <v-text-field
               v-model="state.searchQuery.rut"
@@ -294,18 +289,17 @@
               clearable
             ></v-text-field>
 
-            <v-select
-              :items="state.list.ceco"
-              item-title="descripcion"
-              item-value="id"
-              v-model="state.searchQuery.ceco"
-              label="Area de Trabajo (Cencos)"
-              class="ma-2"
-              clearable
-              variant="underlined"
-              single
-            ></v-select>
+                        <v-select
+                          :items="state.list.nacionalidad"
+                          item-title="descripcion"
+                          item-value="id"
+                          v-model="state.editedItem.nacionalidad"
+                          label="Nacionalidad"
+                          clearable
+                          variant="underlined"
+                        ></v-select>
           </v-col>
+
           <v-col>
             <v-switch
               v-model="state.searchQuery.activo"
@@ -317,67 +311,43 @@
               label="Activo"
             ></v-switch>
             <v-select
-              :items="state.list.empresa"
+              :items="state.list.prevision"
               item-title="descripcion"
               item-value="id"
-              v-model="state.searchQuery.empresa"
-              label="Empresa"
+              v-model="state.searchQuery.prevision"
+              label="Prevision"
               clearable
               class="ma-4 mt-8"
               variant="underlined"
               single
             ></v-select>
           </v-col>
+
           <v-col>
             <v-select
-              :items="state.list.planta"
+              :items="state.list.genero"
               item-title="descripcion"
               item-value="id"
-              v-model="state.searchQuery.planta"
-              label="Planta"
+              v-model="state.searchQuery.genero"
+              label="Género"
               clearable
               class="mt-2"
               variant="underlined"
               single
-              :key="'planta'"
+              :key="'genero'"
             ></v-select>
             <v-select
-              :items="state.list.exposicion"
+              :items="state.list.ley_social"
               item-title="descripcion"
               item-value="descripcion"
-              v-model="state.searchQuery.exposicion"
-              label="Exposicion"
+              v-model="state.searchQuery.ley_social"
+              label="Leyes Sociales"
               clearable
               class="mt-2"
               variant="underlined"
-              chips
-              multiple
             ></v-select>
           </v-col>
-          <v-col>
-            <v-select
-              :items="state.list.unidad"
-              item-title="descripcion"
-              item-value="id"
-              v-model="state.searchQuery.unidad"
-              clearable
-              label="Unidad"
-              class="mt-2"
-              variant="underlined"
-              single
-            ></v-select>
-            <v-select
-              :items="state.list.area"
-              item-title="descripcion"
-              item-value="id"
-              v-model="state.searchQuery.area"
-              clearable
-              label="Area"
-              class="mt-2"
-              variant="underlined"
-              single
-            ></v-select>
-          </v-col>
+            
         </v-row>
 
         <v-row>
@@ -704,115 +674,6 @@
                         ></v-select>
                       </v-col>
                     </v-row>
-                    <div class="text-h6">Datos Laborales</div>
-                    <v-spacer></v-spacer>
-                    <v-row class="mt-2">
-                      <v-col cols="12" sm="6" md="3">
-                        <v-text-field
-                          v-model="state.editedItem.actividad_economica"
-                          label="Actividad económica"
-                          required
-                          clearable
-                          variant="underlined"
-                        ></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12" sm="6" md="3">
-                        <v-select
-                          :items="state.list.empresa"
-                          item-title="descripcion"
-                          item-value="id"
-                          clearable
-                          v-model="state.editedItem.empresa"
-                          label="Empresa*"
-                          single-line
-                          variant="underlined"
-                        ></v-select>
-                      </v-col>
-
-                      <v-col cols="12" sm="6" md="3">
-                        <v-text-field
-                          v-model="state.editedItem.cargo"
-                          label="Cargo"
-                          clearable
-                          variant="underlined"
-                        ></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12" sm="6" md="3">
-                        <v-select
-                          :items="state.list.area"
-                          item-title="descripcion"
-                          item-value="id"
-                          clearable
-                          v-model="state.editedItem.area"
-                          label="Área"
-                          single
-                          variant="underlined"
-                        ></v-select>
-                      </v-col>
-
-                      <v-col cols="12" sm="6" md="3">
-                        <v-select
-                          :items="state.list.unidad"
-                          item-title="descripcion"
-                          item-value="id"
-                          clearable
-                          v-model="state.editedItem.unidad"
-                          label="Unidad"
-                          variant="underlined"
-                        ></v-select>
-                      </v-col>
-
-                      <v-col cols="12" sm="6" md="3">
-                        <v-text-field
-                          v-model="state.editedItem.ocupacion"
-                          label="Ocupación"
-                          clearable
-                          variant="underlined"
-                        ></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12" sm="6" md="3">
-                        <v-select
-                          :items="state.list.exposicion"
-                          item-title="descripcion"
-                          item-value="descripcion"
-                          clearable
-                          chips
-                          v-model="state.editedItem.exposicion"
-                          label="Exposicion"
-                          multiple
-                          variant="underlined"
-                        ></v-select>
-                      </v-col>
-
-                      <v-col cols="12" sm="6" md="3">
-                        <v-select
-                          :items="state.list.ceco"
-                          item-title="descripcion"
-                          item-value="id"
-                          clearable
-                          v-model="state.editedItem.ceco"
-                          label="Área de Trabajo (Cencos)"
-                          single
-                          variant="underlined"
-                        ></v-select>
-                      </v-col>
-
-                      <v-col cols="12" sm="6" md="3">
-                        <v-select
-                          :items="state.list.planta"
-                          item-title="descripcion"
-                          item-value="id"
-                          clearable
-                          v-model="state.editedItem.planta"
-                          label="Planta"
-                          single
-                          variant="underlined"
-                        ></v-select>
-                      </v-col>
-                    </v-row>
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
@@ -830,7 +691,7 @@
         </template>
 
         <template v-slot:item.actions="{ item }">
-          <v-tooltip text="Atenciones Diarias" location="top">
+          <v-tooltip text="Ficha Paciente Crónico" location="top">
             <template v-slot:activator="{ props }">
               <v-btn
                 v-bind="props"
@@ -841,7 +702,7 @@
                 variant="tonal"
                 @click="atenciones(item)"
               ></v-btn>
-            </template>
+            </template> 
           </v-tooltip>
           <v-tooltip text="Ficha Médica" location="top">
             <template v-slot:activator="{ props }">
@@ -856,7 +717,7 @@
               ></v-btn>
             </template>
           </v-tooltip>
-          <v-tooltip text="Editar Datos Personales y Laborales" location="top">
+          <v-tooltip text="Datos Personales" location="top">
             <template v-slot:activator="{ props }">
               <v-btn
                 v-bind="props"

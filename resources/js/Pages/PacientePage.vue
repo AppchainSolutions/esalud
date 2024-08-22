@@ -211,10 +211,10 @@
     }
   }
 
-  function atenciones(item) {
+  function fichaCronicos(item) {
     store.selected = item;
     try {
-      router.get("/atencion_diaria");
+      router.get("ficha_cronicos");
     } catch (error) {
       console.error("An error occurred while fetching daily attention data.");
     }
@@ -700,7 +700,7 @@
                 class="mr-2 ml-2"
                 :icon="'mdi-medical-bag'"
                 variant="tonal"
-                @click="atenciones(item)"
+                @click="fichaCronicos(item)"
               ></v-btn>
             </template> 
           </v-tooltip>

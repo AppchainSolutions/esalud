@@ -39,6 +39,7 @@ abstract class Repository implements RepositoryInterface
     public function store(Request $request)
     {
         $query = $request->get('data');
+        Log::info($query);
 
         try {
             $query = array_map(function ($value) {

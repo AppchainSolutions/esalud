@@ -25,6 +25,11 @@ class FichaCronicosController extends Controller
     {
         return Inertia::render('Consultas/ConsultaFichaCronicos');
     }
+    public function perfil(Request $request)
+    {
+        $id = $request->get();
+        Log::info($id);
+    }
 
     /**
      * Show the form for creating a new resource.

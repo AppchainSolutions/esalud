@@ -50,7 +50,7 @@ Route::middleware([
 
     Route::inertia('/ficha', 'SubPages/FichaMedica');
     Route::resource('/alergia', AlergiaController::class);
-    Route::resource('/atencion_diaria', FichaCronicosController::class);
+    Route::resource('/ficha_cronicos', FichaCronicosController::class);
     Route::resource('/cirugia', CirugiaController::class);
     Route::resource('/enfermedad', EnfermedadController::class);
     Route::resource('/factor', FactorRiesgoController::class);

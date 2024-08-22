@@ -110,10 +110,6 @@ const create = async () => {
     closeForm(state);
 };
 
-function openFormEdit(item) {
-    openToEdit(state, item);
-}
-
 const update = async () => {
     await handleEditItem(state);
     closeForm(state);

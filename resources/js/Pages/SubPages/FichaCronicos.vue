@@ -40,12 +40,6 @@ const state = reactive({
 
     headers: [
         {
-            title: "#",
-            align: "center",
-            sortable: true,
-            key: "paciente_id",
-        },
-        {
             title: "Fecha control",
             align: "center",
             sortable: true,
@@ -64,9 +58,6 @@ const state = reactive({
         peso: null,
         altura: null,
         imc: null,
-        recomendacion_medica: null,
-        cambios_tratamiento: null,
-        derivación_especialista: null,
         fecha_examenes: null,
         creatinina: null,
         vfg: null,
@@ -75,20 +66,11 @@ const state = reactive({
         trigliceridos: null,
         ldl: null,
         otro: null,
-        nivel_energia: null,
-        estado_animo: null,
-        calidad_sueño: null,
-        dolor_malestar: null,
-        cumple_medicacion: null,
-        cumple_recomendacion: null,
-        cumple_dieta: null,
-        capacidad_tareas_diarias: null,
-        nivel_actividad_fisica: null,
-        capacidad_respiratoria: null,
-        fuerza_flexibilidad: null,
-        apoyo_familiares: null,
-        participacion_social: null,
-        acceso_recursos_salud: null,
+        recomendacion_medica: null,
+        cambio_tratamiento: null,
+        derivacion_especialista: null,
+        comentario:null
+        
     },
 
     defaultItem: {
@@ -101,10 +83,6 @@ const state = reactive({
         peso: null,
         altura: null,
         imc: null,
-        recomendacion_medica: null,
-        cambios_tratamiento: null,
-        derivación_especialista: null,
-        fecha_examenes: null,
         creatinina: null,
         vfg: null,
         glicemia: null,
@@ -112,20 +90,11 @@ const state = reactive({
         trigliceridos: null,
         ldl: null,
         otro: null,
-        control_seguimiento: null,
-        estado_animo: null,
-        calidad_sueño: null,
-        dolor_malestar: null,
-        cumple_medicacion: null,
-        cumple_recomendacion: null,
-        cumple_dieta: null,
-        capacidad_tareas_diarias: null,
-        nivel_actividad_fisica: null,
-        capacidad_respiratoria: null,
-        fuerza_flexibilidad: null,
-        apoyo_familiares: null,
-        participacion_social: null,
-        acceso_recursos_salud: null,
+        recomendacion_medica: null,
+        cambio_tratamiento: null,
+        derivacion_especialista: null,
+        fecha_examenes: null,
+        comentario:null,
     },
     searchQuery: {
         paciente_id: null,
@@ -139,10 +108,10 @@ const state = reactive({
     formTitle: "Ficha paciente crónico",
     formCrear: "Nuevo Registro",
     formEdit: "Editar datos del atención diaria",
-    urlShow: "/atencion_diaria/show",
-    urlUpdate: "/atencion_diaria/update",
-    urlDelete: "/atencion_diaria/delete",
-    urlStore: "/atencion_diaria",
+    urlShow: "/ficha_cronicos/show",
+    urlUpdate: "/ficha_cronicos/update",
+    urlDelete: "/ficha_cronicos/delete",
+    urlStore: "/ficha_cronicos",
 });
 
 //**********\\\\  LIFE CYCLE HOOKS ////*************/
@@ -185,6 +154,17 @@ function openFormEdit(item) {
     openToEdit(state, item);
 }
 
+function openProfile(item) {
+    console.log(item.id)
+    store.selected = item;
+    try {
+      router.get("ficha_cronicos/perfil");
+    } catch (error) {
+      console.error("An error occurred while fetching profile data.");
+    }
+   // openToEdit(state, item);
+}
+
 const update = async () => {
     await handleEditItem(state);
     closeForm(state);
@@ -197,7 +177,7 @@ const remove = async (item) => {
 
 <template>
     <v-container>
-        <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-2 pa-2'">
+        <v-sheet color="white" :elevation="4" :class="'rounded-lg ma-2 pa-2'">
             <v-toolbar-title>
                 Nombre del Paciente: {{ apellidos }}, {{ nombre }}
             </v-toolbar-title>
@@ -208,495 +188,64 @@ const remove = async (item) => {
                         <v-btn variant="tonal" color="#009AA4" @click="volver">
                             Volver
                         </v-btn>
-                        <v-toolbar-title>{{ state.formTitle }}</v-toolbar-title>
-                        <v-spacer></v-spacer>
-                        <v-btn icon="mdi-update" variant="tonal" class="ma-2" color="#009AA4" @click="handleShow">
+                        <v-spacer> </v-spacer>
+                        <v-btn
+                            icon="mdi-update"
+                            variant="tonal"
+                            class="ma-2"
+                            color="#009AA4"
+                            @click="handleShow"
+                        >
                         </v-btn>
-                        <v-btn icon="mdi-account-multiple-plus" variant="tonal" class="ma-2" color="#009AA4"
-                            @click="openFormCreate">
+                        <v-btn
+                            icon="mdi-account-multiple-plus"
+                            variant="tonal"
+                            class="ma-2"
+                            color="#009AA4"
+                            @click="openFormCreate"
+                        >
                         </v-btn>
-
-                        <v-dialog v-model="state.dialog" width="auto" persistent>
-                            <v-container :class="'ma-6 pa-6'">
-                                <v-card>
-                                    <v-card-title>
-                                        <span class="text-h5">{{ editedItemTitle }}
-                                        </span>
-                                    </v-card-title>
-
-                                    <!-- Formulario -->
-                                    <v-card-text>
-                                        <v-card-actions>
-                                            <v-spacer></v-spacer>
-                                            <v-btn color="#009AA4" variant="tonal" @click="close">
-                                                Cancelar
-                                            </v-btn>
-                                            <v-btn color="#009AA4" variant="tonal" @click="storeItems">
-                                                Guardar
-                                            </v-btn>
-                                        </v-card-actions>
-                                        <v-row>
-                                            <v-col cols="3">
-                                                <v-text-field v-model="state.editedItem.fecha
-                                                    " label="Fecha" clearable type="date"
-                                                    variant="underlined"></v-text-field>
-                                                <v-div class="text-h6">Signos Vitales</v-div>
-                                                <v-text-field v-model="state.editedItem.pa
-                                                    " label="PA" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem.fc
-                                                    " label="FC" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem.temp
-                                                    " label="T°" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem.peso
-                                                    " label="Peso" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem.altura
-                                                    " label="Altura" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem.imc
-                                                    " label="IMC" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                            </v-col>
-                                            <v-col cols="3">
-                                                <v-div class="text-h6">Exámenes recientes</v-div>
-                                                <v-text-field v-model="state.editedItem
-                                                        .fecha_examenes
-                                                    " label="Fecha exámenes" clearable type="date"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem
-                                                        .creatinina
-                                                    " label="Creatinina" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem.vfg
-                                                    " label="VFG" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem
-                                                        .glicemia
-                                                    " label="Glicemia" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem
-                                                        .colesterol_total
-                                                    " label="Colesterol total" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem
-                                                        .trigliceridos
-                                                    " label="Triglicéridos" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem.ldl
-                                                    " label="LDL" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                                <v-text-field v-model="state.editedItem.otro
-                                                    " label="Otro" clearable type="text"
-                                                    variant="underlined"></v-text-field>
-                                            </v-col>
-                                            <v-col cols="6">
-                                                <table>
-                                                    <tr>
-                                                        <th>
-                                                            Estado general de
-                                                            salud
-                                                        </th>
-                                                        <th>1</th>
-                                                        <th>2</th>
-                                                        <th>3</th>
-                                                        <th>4</th>
-                                                        <th>5</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Control y
-                                                            seguimiento
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionA" value="1" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionA" value="2" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionA" value="3" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionA" value="4" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionA" value="5" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Estado de animo</td>
-                                                        <td>
-                                                            <input type="radio" name="opcionB" value="1" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionB" value="2" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionB" value="3" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionB" value="4" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionB" value="5" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Calidad de sueño
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionC" value="1" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionC" value="2" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionC" value="3" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionC" value="4" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionC" value="5" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Dolor o malestar
-                                                            general
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionD" value="1" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionD" value="2" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionD" value="3" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionD" value="4" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionD" value="5" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            Adherencia al
-                                                            tratamiento
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionE" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionE" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionE" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionE" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionE" value="5" />
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Cumple Medicación
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionF" value="1" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionF" value="2" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionF" value="3" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionF" value="4" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionF" value="5" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Cumple
-                                                            recomendaciones de
-                                                            ejercicio
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionG" value="1" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionG" value="2" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionG" value="3" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionG" value="4" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionG" value="5" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Cumple dieta
-                                                            recomendada
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionH" value="1" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionH" value="2" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionH" value="3" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionH" value="4" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionH" value="5" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            Bienestar Físico
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionI" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionI" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionI" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionI" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionI" value="5" />
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Capacidad para
-                                                            realizar actividades
-                                                            diarias
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionJ" value="5" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionJ" value="5" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionJ" value="5" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionJ" value="5" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionJ" value="5" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            Capacidad para
-                                                            realizar actividades
-                                                            diarias
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionK" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionK" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionK" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionK" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionK" value="5" />
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            Nivel de actividad
-                                                            física
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionL" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionL" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionL" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionL" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionL" value="5" />
-                                                        </th>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <th>
-                                                            Capacidad
-                                                            respiratoria
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionM" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionM" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionM" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionM" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionM" value="5" />
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            Fuerza y flexibilidad
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionN" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionN" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionN" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionN" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionN" value="5" />
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Soporte social
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionO" value="1" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionO" value="2" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionO" value="3" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionO" value="4" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="radio" name="opcionO" value="5" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            Apoyo familiares y amigos  
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionP" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionP" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionP" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionP" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionP" value="5" />
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            Participación actividades sociales
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionQ" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionQ" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionQ" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionQ" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionQ" value="5" />
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            Acceso a recursos de salud
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionAA" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionAA" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionAA" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionAA" value="5" />
-                                                        </th>
-                                                        <th>
-                                                            <input type="radio" name="opcionAA" value="5" />
-                                                        </th>
-                                                    </tr>
-                                                </table>
-                                            </v-col>
-                                        </v-row>
-                                    </v-card-text>
-                                </v-card>
-                            </v-container>
-                        </v-dialog>
                     </v-toolbar>
                 </template>
 
                 <template v-slot:item.actions="{ item }">
                     <v-tooltip text="Editar " location="top">
                         <template v-slot:activator="{ props }">
-                            <v-btn v-bind="props" density="compact" class="mr-2 ml-2" color="#009AA4" variant="tonal"
-                                :icon="'mdi-account-edit'" @click="openFormEdit(item)"></v-btn>
+                            <v-btn
+                                v-bind="props"
+                                density="compact"
+                                class="mr-2 ml-2"
+                                color="#009AA4"
+                                variant="tonal"
+                                :icon="'mdi-list-box-outline'"
+                                @click="openProfile(item)"
+                            ></v-btn>
+                        </template>
+                    </v-tooltip>
+                    <v-tooltip text="Editar " location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                v-bind="props"
+                                density="compact"
+                                class="mr-2 ml-2"
+                                color="#009AA4"
+                                variant="tonal"
+                                :icon="'mdi-account-edit'"
+                                @click="openFormEdit(item)"
+                            ></v-btn>
                         </template>
                     </v-tooltip>
                     <v-tooltip text="Eliminar" location="top">
                         <template v-slot:activator="{ props }">
-                            <v-btn v-bind="props" density="compact" class="mr-2 ml-2" color="#009AA4" variant="tonal"
-                                :icon="'mdi-delete'" @click="remove(item)"></v-btn>
+                            <v-btn
+                                v-bind="props"
+                                density="compact"
+                                class="mr-2 ml-2"
+                                color="#009AA4"
+                                variant="tonal"
+                                :icon="'mdi-delete'"
+                                @click="remove(item)"
+                            ></v-btn>
                         </template>
                     </v-tooltip>
                 </template>
@@ -705,6 +254,249 @@ const remove = async (item) => {
                     <v-btn variant="tonal" @click="handleShow"> Iniciar </v-btn>
                 </template>
             </v-data-table>
+
+            <v-dialog v-model="state.dialog" scrollable width="100%">
+                <v-card>
+                    <v-container class="ma-4 pa-2">
+                        <v-card-title>
+                            <span class="text-h5">{{ editedItemTitle }} </span>
+                        </v-card-title>
+
+                        <!-- Formulario -->
+                        <v-card-text>
+                            <v-row class="mt-2">
+                                <v-col cols="2">
+                                    <v-text-field
+                                        v-model="state.editedItem.fecha"
+                                        label="Fecha"
+                                        clearable
+                                        type="date"
+                                        variant="underlined"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col offset="6">
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                        color="#009AA4"
+                                        variant="tonal"
+                                        @click="close"
+                                        class="ma-1"
+                                    >
+                                        Cancelar
+                                    </v-btn>
+                                    <v-btn
+                                        color="#009AA4"
+                                        variant="tonal"
+                                        @click="storeItems"
+                                    >
+                                        Guardar
+                                    </v-btn>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col cols="4">
+                                    <v-div class="font-weight-black"
+                                        >Signos Vitales</v-div
+                                    >
+                                    <v-row>
+                                        <v-col>
+                                            <v-text-field
+                                                v-model="state.editedItem.pa"
+                                                label="PA"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="state.editedItem.fc"
+                                                label="FC"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="state.editedItem.fr"
+                                                label="FC"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="state.editedItem.temp"
+                                                label="T°"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col>
+                                            <v-text-field
+                                                v-model="state.editedItem.peso"
+                                                label="Peso"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="
+                                                    state.editedItem.altura
+                                                "
+                                                label="Altura"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="state.editedItem.imc"
+                                                label="IMC"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-col>
+                                <v-col cols="4">
+                                    <v-div class="font-weight-black"
+                                        >Exámenes recientes</v-div
+                                    >
+                                    <v-row>
+                                        <v-col class="ma-2 pa-2">
+                                            <v-text-field
+                                                v-model="
+                                                    state.editedItem
+                                                        .fecha_examenes
+                                                "
+                                                label="Fecha exámenes"
+                                                clearable
+                                                type="date"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="
+                                                    state.editedItem.creatinina
+                                                "
+                                                label="Creatinina"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="state.editedItem.vfg"
+                                                label="VFG"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="
+                                                    state.editedItem.glicemia
+                                                "
+                                                label="Glicemia"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                        </v-col>
+
+                                        <v-col class="ma-2 pa-2">
+                                            <v-text-field
+                                                v-model="
+                                                    state.editedItem
+                                                        .colesterol_total
+                                                "
+                                                label="Colesterol total"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="
+                                                    state.editedItem
+                                                        .trigliceridos
+                                                "
+                                                label="Triglicéridos"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="state.editedItem.ldl"
+                                                label="LDL"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                            <v-text-field
+                                                v-model="state.editedItem.otro"
+                                                label="Otro"
+                                                clearable
+                                                type="text"
+                                                variant="underlined"
+                                            ></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-col>
+
+                                <v-col>
+                                    <v-div class="font-weight-black"
+                                        >Plan de acción</v-div
+                                    >
+                                    <v-textarea
+                                        v-model="
+                                            state.editedItem
+                                                .recomendacion_medica
+                                        "
+                                        label="Recomendación Médica"
+                                        clearable
+                                        variant="underlined"
+                                        rows="1"
+                                        auto-grow
+                                        shaped
+                                    ></v-textarea>
+                                    <v-text-field
+                                        v-model="
+                                            state.editedItem
+                                                .cambio_tratamiento
+                                        "
+                                        label="Cambio de Tratamiento"
+                                        clearable
+                                        variant="underlined"
+                                        rows="1"
+                                        auto-grow
+                                        shaped
+                                    ></v-text-field>
+                                    <v-text-field
+                                        v-model="
+                                            state.editedItem
+                                                .derivacion_especialista
+                                        "
+                                        label="Derivación a especialista"
+                                        clearable
+                                        variant="underlined"
+                                        rows="1"
+                                        auto-grow
+                                        shaped
+                                    ></v-text-field>
+                                    <v-text-field
+                                        v-model="
+                                            state.editedItem
+                                                .comentario
+                                        "
+                                        label="Comentario"
+                                        clearable
+                                        variant="underlined"
+                                        rows="1"
+                                        auto-grow
+                                        shaped
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
+                        </v-card-text>
+                    </v-container>
+                </v-card>
+            </v-dialog>
         </v-sheet>
     </v-container>
 </template>

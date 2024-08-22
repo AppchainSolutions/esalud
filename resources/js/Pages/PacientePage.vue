@@ -214,7 +214,7 @@
   function fichaCronicos(item) {
     store.selected = item;
     try {
-      router.get("ficha_cronicos");
+      router.get("/ficha_cronicos");
     } catch (error) {
       console.error("An error occurred while fetching daily attention data.");
     }

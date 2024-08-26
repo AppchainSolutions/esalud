@@ -1,12 +1,5 @@
 <script setup>
   import AppLayout from "@/Layouts/AppLayout.vue";
-  import DashPersEmpresa from "./SubPages/DashPersEmpresa.vue";
-  import DashPersPlanta from "./SubPages/DashPersPlanta.vue";
-  import DashCecos from "./SubPages/DashCecos.vue";
-  import DashExpoEmpresa from "./SubPages/DashExpoEmpresa.vue";
-  import DashExpoPlanta from "./SubPages/DashExpoPlanta.vue";
-  import DashEnfermedadEmpresa from "./SubPages/DashEnfermedadEmpresa.vue";
-  import DashEnfermedadPlanta from "./SubPages/DashEnfermedadPlanta.vue";
 
   defineOptions({ layout: AppLayout });
 </script>

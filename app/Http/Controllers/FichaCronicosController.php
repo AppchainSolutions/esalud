@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Repository\FichaCronicosRepository;
+use Illuminate\Support\Facades\Log;
+
 
 class FichaCronicosController extends Controller
 {
@@ -25,12 +27,10 @@ class FichaCronicosController extends Controller
     {
         return Inertia::render('Consultas/ConsultaFichaCronicos');
     }
-    public function perfil(Request $request)
-    {
-        $id = $request->get();
-        Log::info($id);
-    }
 
+    public function perfil(Request $request){
+        return Inertia::render('SubPages/PerfilCronicos');
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -64,4 +64,6 @@ class FichaCronicosController extends Controller
     {
         return $this->FichaCronicosRepository->show($request);
     }
+
+
 }

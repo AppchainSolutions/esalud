@@ -251,7 +251,6 @@ export const addValue = (state, result) => {
 };
 
 export const closeForm = (state) => {
-    state.dialog = false;
     nextTick(() => {
         state.editedItem = { ...state.defaultItem };
         state.editedIndex = -1;
@@ -282,7 +281,6 @@ export const openToEdit = (state, item) => {
             // const edItem = Object.assign({}, record);
             //console.log(Object.assign({}, record));
             state.editedItem = editedItemCopy;
-            state.dialog = true;
         } catch (error) {
             console.error(error);
         }

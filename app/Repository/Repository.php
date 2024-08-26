@@ -39,8 +39,6 @@ abstract class Repository implements RepositoryInterface
     public function store(Request $request)
     {
         $query = $request->get('data');
-        Log::info($query);
-
         try {
             $query = array_map(function ($value) {
                 return is_array($value) ? implode(',', $value) : $value;
@@ -73,7 +71,7 @@ abstract class Repository implements RepositoryInterface
             $model = $this->model->findOrFail($id);
 
             // Log the retrieved model instance
-            Log::info($model);
+            //Log::info($model);
 
             // Update the model instance
             $model->fill($dataNoId);

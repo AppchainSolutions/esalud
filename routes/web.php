@@ -42,13 +42,23 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+/*     Route::get(
+        '/ficha_cronicos/perfil',
+        [FichaCronicosController::class, 'perfil']
+    )->name('ficha_cronicos.perfil');
+   */  
+    Route::inertia('/ficha', 'SubPages/FichaMedica');
+    Route::inertia('/perfil', 'SubPages/PerfilCronicos');
+    
+    Route::get(
+        '/perfil',
+        [FichaCronicosController::class, 'perfil']
+    )->name('ficha_cronicos.perfil');
 
     Route::prefix('/admin')->group(__DIR__ . '/admin/admin.php');
     Route::prefix('/consulta')->group(__DIR__ . '/consulta.php');
     Route::prefix('/secundaria')->group(__DIR__ . '/secundaria.php');
     Route::prefix('/dashboard')->group(__DIR__ . '/dashboard.php');
-
-    Route::inertia('/ficha', 'SubPages/FichaMedica');
     Route::resource('/alergia', AlergiaController::class);
     Route::resource('/ficha_cronicos', FichaCronicosController::class);
     Route::resource('/cirugia', CirugiaController::class);

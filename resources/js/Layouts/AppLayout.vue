@@ -1,6 +1,6 @@
 <script>
 import { computed } from "vue";
-import { usePage, router } from "@inertiajs/vue3";
+import { usePage, router, Head } from "@inertiajs/vue3";
 import logo from "../../img/logo.jpg";
 
 const page = usePage();
@@ -45,12 +45,6 @@ const user = computed(() => page.props.auth.user);
         certificacion() {
             router.get("/consulta/certificacion");
         },
-        diatConsulta() {
-            router.get("/consulta/diat");
-        },
-        diepConsulta() {
-            router.get("/consulta/diep");
-        },
         vacunaConsulta() {
             router.get("/consulta/vacuna");
         },
@@ -59,37 +53,6 @@ const user = computed(() => page.props.auth.user);
         },
         exepo() {
             router.get("/consulta/exepo");
-        },
-        expsico() {
-            router.get("/consulta/expsico");
-        },
-        exrespirador() {
-            router.get("/consulta/exrespirador");
-        },
-        exequilibrio() {
-            router.get("/consulta/exequilibrio");
-        },
-        exsomnolencia() {
-            router.get("/consulta/exsomnolencia");
-        },
-        expvt() {
-            router.get("/consulta/expvtmert");
-        },
-        exruido() {
-            router.get("/consulta/exruido");
-        },
-        exmetales() {
-            router.get("/consulta/exmetales");
-        },
-        exhumos() {
-            router.get("/consulta/exhumonegro");
-        },
-        exaldehido() {
-            router.get("/consulta/exaldehido");
-        },
-
-        exalcohol() {
-            router.get("/consulta/exalcohol");
         },
 
         salir() {
@@ -156,7 +119,7 @@ const user = computed(() => page.props.auth.user);
                         size="x-large"
                         >{{ icon }}</v-icon
                     >
-                    Bienvenido/a    {{ user.name }} [ Vulco ~ VitamHC ]
+                    Bienvenido/a    {{ user.name }}
                 </v-app-bar-title>
             </v-app-bar>
             <v-main>

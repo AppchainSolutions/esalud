@@ -128,9 +128,18 @@ const state = reactive({
 const editedItemTitle = computed(() =>
     state.editedIndex === -1 ? state.formCrear : state.formEdit
 );
-
-function close() {
-    closeForm(state);
+/**
+ * Closes the form by calling the closeForm function with the current state.
+ * Catches any errors that occur during the process and logs them to the console.
+ * If an error is caught, it should be handled appropriately.
+ */
+function closeFormHandler() {
+    try {
+        closeForm(state);
+    } catch (error) {
+        console.error(`Error in closeForm: ${error}`);
+        // Handle the error appropriately
+    }
 }
 //**********\\\\  CRUD ////*************/
 const handleShow = async () => {
@@ -165,7 +174,8 @@ const remove = async (item) => {
 };
 </script>
 
-<template>
+
+ <template>
     <v-container>
         <v-data-table :headers="state.headers" :items="state.tableItems">
             <template v-slot:top>
@@ -190,6 +200,7 @@ const remove = async (item) => {
                     >
                     </v-btn>
                 </v-toolbar>
+                
                 <v-dialog v-model="state.dialog">
                     <v-card class="ma-4 pa-4">
                         <form @submit.prevent="submit">
@@ -204,7 +215,7 @@ const remove = async (item) => {
                                 <v-btn
                                     color="blue-darken-1"
                                     variant="tonal"
-                                    @click="close"
+                                    @click="closeFormHandler"
                                 >
                                     Cancelar
                                 </v-btn>
@@ -1541,7 +1552,7 @@ const remove = async (item) => {
             </template>
         </v-data-table>
     </v-container>
-</template>
+</template> 
 
 <style>
 table {

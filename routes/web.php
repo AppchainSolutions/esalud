@@ -50,11 +50,6 @@ Route::middleware([
     Route::inertia('/ficha', 'SubPages/FichaMedica');
     Route::inertia('/perfil', 'SubPages/PerfilCronicos');
     
-    Route::get(
-        '/perfil',
-        [FichaCronicosController::class, 'perfil']
-    )->name('ficha_cronicos.perfil');
-
     Route::prefix('/admin')->group(__DIR__ . '/admin/admin.php');
     Route::prefix('/consulta')->group(__DIR__ . '/consulta.php');
     Route::prefix('/secundaria')->group(__DIR__ . '/secundaria.php');

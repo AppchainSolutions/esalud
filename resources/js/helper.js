@@ -255,6 +255,7 @@ export const closeForm = (state) => {
         state.editedItem = { ...state.defaultItem };
         state.editedIndex = -1;
     });
+    state.dialog = false;
 };
 
 export const openToCreate = (state) => {
@@ -268,14 +269,16 @@ export const openToEdit = (state, item) => {
         const recordsArray = Object.values(state.formItems);
         const record = recordsArray.find((rec) => rec.id === item.id);
         edit(record);
+        
     } else {
         const record = item;
         edit(record);
     }
+    state.dialog = true;
 
     function edit(record) {
         try {
-            const index = state.tableItems.indexOf(item);
+            const index = state.tableItems.indexOf(record);
             const editedItemCopy = { ...record };
             state.editedIndex = index;
             // const edItem = Object.assign({}, record);

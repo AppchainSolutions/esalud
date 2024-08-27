@@ -22,7 +22,7 @@ class FichaCronicosRepository extends Repository
     {
         try {
             $filters = $request->input('filters');
-            $query = Paciente::join('atencion_diaria as sec', 'sec.paciente_id', '=', 'paciente.id');
+            $query = Paciente::join('ficha_cronicos as sec', 'sec.paciente_id', '=', 'paciente.id');
             return Tools::filterData($filters, $query);
         } catch (QueryException $e) {
             return Response::json([

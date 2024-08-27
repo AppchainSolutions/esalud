@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Log;
 
 class FichaCronicosController extends Controller
 {
-    protected $FichaCronicosRepository;
+    protected $fichaCronicosRepository;
 
-    public function __construct(FichaCronicosRepository $FichaCronicosRepository)
+    public function __construct(FichaCronicosRepository $fichaCronicosRepository)
     {
-        $this->FichaCronicosRepository = $FichaCronicosRepository;
+        $this->fichaCronicosRepository = $fichaCronicosRepository;
     }
     /**
      * Display a listing of the resource.
@@ -28,20 +28,17 @@ class FichaCronicosController extends Controller
         return Inertia::render('Consultas/ConsultaFichaCronicos');
     }
 
-    public function perfil(Request $request){
-        return Inertia::render('SubPages/PerfilCronicos');
-    }
     /**
      * Show the form for creating a new resource.
      */
     public function store(Request $request)
     {
-        return $this->FichaCronicosRepository->store($request);
+       return $this->fichaCronicosRepository->store($request);
     }
 
     public function update(Request $request)
     {
-        return $this->FichaCronicosRepository->update($request);
+        return $this->fichaCronicosRepository->update($request);
     }
 
     /**
@@ -49,7 +46,7 @@ class FichaCronicosController extends Controller
      */
     public function destroy(Request $request)
     {
-        return $this->FichaCronicosRepository->delete($request);
+        return $this->fichaCronicosRepository->delete($request);
     }
 
     /**
@@ -57,12 +54,12 @@ class FichaCronicosController extends Controller
      */
     public function search(Request $request)
     {
-        return $this->FichaCronicosRepository->search($request);
+        return $this->fichaCronicosRepository->search($request);
     }
 
     public function show(Request $request)
     {
-        return $this->FichaCronicosRepository->show($request);
+        return $this->fichaCronicosRepository->show($request);
     }
 
 

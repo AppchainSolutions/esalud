@@ -13,6 +13,10 @@ yarn-error.log
 /bootstrap/ssr
 
 # Laravel 5 & Lumen specific
-public/storage
-public/hot
 
+/boostrap/cache/
+/boostrap/ssr/
+/public/build/
+
+/vendor/
+/node_modules/

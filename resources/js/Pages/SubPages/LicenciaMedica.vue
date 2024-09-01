@@ -163,21 +163,17 @@ const remove = async (item) => {
                     <v-toolbar-title>{{ state.formTitle }}</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
-                </v-toolbar>
-
                     <v-dialog v-model="state.dialog">
                         <template v-slot:activator="{ props }">
                             <v-btn
-                                :loading="state.loading"
                                 icon="mdi-update"
-                                variant="tonal"
                                 class="ma-2"
                                 color="#009AA4"
+                                variant="tonal"
                                 @click="handleShow"
                             >
                             </v-btn>
                             <v-btn
-                                :loading="state.loading"
                                 icon="mdi-account-multiple-plus"
                                 variant="tonal"
                                 class="ma-2"
@@ -186,32 +182,19 @@ const remove = async (item) => {
                             >
                             </v-btn>
                         </template>
-                        <v-card>
-                            <form @submit.prevent="submit">
-                                <div class="text-h5">{{ editedItemTitle }}</div>
 
-                                <v-card-actions>
-                                    <v-spacer></v-spacer>
-                                    <v-btn
-                                        color="blue-darken-1"
-                                        variant="tonal"
-                                        @click="close"
-                                    >
-                                        Cancelar
-                                    </v-btn>
-                                    <v-btn
-                                        color="blue-darken-1"
-                                        variant="tonal"
-                                        @click="storeItems"
-                                    >
-                                        Guardar
-                                    </v-btn>
-                                </v-card-actions>
+                        <v-card>
+                            <v-form>
+                                <v-card-title>
+                                    <span class="text-h5"
+                                        >{{ editedItemTitle }}
+                                    </span>
+                                </v-card-title>
 
                                 <v-card-text>
                                     <v-container>
-                                        <!------------->
 
+                                        <!------------->
                                         <v-row>
                                             <v-col>
                                                 <v-text-field
@@ -353,10 +336,28 @@ const remove = async (item) => {
                                         <!------------->
                                     </v-container>
                                 </v-card-text>
-                            </form>
+
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                        color="#009AA4"
+                                        variant="tonal"
+                                        @click="close"
+                                    >
+                                        Cancelar
+                                    </v-btn>
+                                    <v-btn
+                                        color="#009AA4"
+                                        variant="tonal"
+                                        @click="storeItems"
+                                    >
+                                        Guardar
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-form>
                         </v-card>
                     </v-dialog>
-               
+                </v-toolbar>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -389,7 +390,9 @@ const remove = async (item) => {
                 </v-tooltip>
             </template>
             <template v-slot:no-data>
-                <v-btn variant="tonal" @click="handleShow"> Iniciar </v-btn>
+                <v-btn variant="tonal" color="#009AA4" @click="handleShow">
+                    Iniciar
+                </v-btn>
             </template>
         </v-data-table>
     </v-container>

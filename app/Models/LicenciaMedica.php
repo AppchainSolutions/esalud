@@ -22,6 +22,13 @@ class LicenciaMedica extends Model
         'fecha_recepcion',
         'fecha_inicio',
         'fecha_termino',
-        'comentario'
+        'caract_reposo',
+        'lugar_reposo',
+        'tipo_licencia',
+        'recuperabilidad_laboral',
+        'inicio_invalidez',
+        'titulo_profesional',
+        'nombre_profesional',
+        'comentario',
     ];
 }

@@ -1,12 +1,6 @@
 .github
 .vscode
 e2e
-/nbproject/
 
-/vendor/
-node_modules/
-npm-debug.log
-yarn-error.log
-
-/vendor/
 /node_modules/
+/vendor/

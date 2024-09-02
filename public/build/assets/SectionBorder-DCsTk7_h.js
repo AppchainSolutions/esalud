@@ -1,0 +1,2 @@
+import{o,d as s,a as e}from"./app-DivcrGOD.js";import{_ as r}from"./_plugin-vue_export-helper-DlAUqK2U.js";const c={},t={class:"hidden sm:block"},n=e("div",{class:"py-8"},[e("div",{class:"border-t border-gray-200"})],-1),d=[n];function _(a,i){return o(),s("div",t,[...d])}const f=r(c,[["render",_],["__file","/home/blueshadows/www/vulco/resources/js/Components/SectionBorder.vue"]]);export{f as S};
+//# sourceMappingURL=SectionBorder-DCsTk7_h.js.map

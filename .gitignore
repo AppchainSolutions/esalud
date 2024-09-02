@@ -2,8 +2,10 @@
 .vscode
 e2e
 
-/node_modules/
-/vendor/
+node_modules/
+vendor/
 
-/public/build/
-/boostrap/ssr/
+public/build/assets/*
+boostrap/ssr/assets/*
+!public/build/assets/*
+!boostrap/ssr/assets/*

@@ -1,0 +1,2 @@
+import{o as e,d as t,t as a,l as n}from"./app-DivcrGOD.js";import{_ as l}from"./_plugin-vue_export-helper-DlAUqK2U.js";const r={class:"block font-medium text-sm text-gray-700"},c={key:0},u={key:1},_={__name:"InputLabel",props:{value:String},setup(s){return(o,p)=>(e(),t("label",r,[s.value?(e(),t("span",c,a(s.value),1)):(e(),t("span",u,[n(o.$slots,"default")]))]))}},d=l(_,[["__file","/home/blueshadows/www/vulco/resources/js/Components/InputLabel.vue"]]);export{d as I};
+//# sourceMappingURL=InputLabel-DS0cRv7H.js.map

@@ -100,7 +100,13 @@
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Auth/Login.vue": [
-    "/build/assets/Login-Dx_WzHnM.js",
+    "/build/assets/Login-DihlzbTH.js",
+    "/build/assets/Login-Bvele3VC.css",
+    "/build/assets/app-DAAUXTxL.css"
+  ],
+  "resources/js/Pages/Auth/Login.vue?vue&type=style&index=0&scoped=e4ebae0a&lang.css": [
+    "/build/assets/Login-DihlzbTH.js",
+    "/build/assets/Login-Bvele3VC.css",
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Auth/Register.vue": [

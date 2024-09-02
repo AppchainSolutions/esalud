@@ -95,7 +95,7 @@ const state = reactive({
         inicio_invalidez: false,
         titulo_profesional: null,
         nombre_profesional: null,
-        comentario: null, 
+        comentario: null,
     },
 
     searchQuery: {
@@ -112,13 +112,13 @@ const state = reactive({
         fecha_inicio: { desde: null, hasta: null },
         fecha_termino: { desde: null, hasta: null },
 
-         caract_reposo: null,
+        caract_reposo: null,
         lugar_reposo: null,
         tipo_licencia: null,
         recuperabilidad_laboral: false,
         inicio_invalidez: false,
         titulo_profesional: null,
-        nombre_profesional: null, 
+        nombre_profesional: null,
     },
     caract_reposo: [
         "Total",
@@ -290,7 +290,7 @@ const handleSearch = async () => {
                                         class="ml-4 mb-4"
                                         variant="underlined"
                                         color="green-darken-3"
-                                       inset
+                                        inset
                                         label="Activo"
                                     ></v-switch>
                                 </v-col>
@@ -344,7 +344,7 @@ const handleSearch = async () => {
                                         :items="state.caract_reposo"
                                         clearable
                                     ></v-select>
-                                   <v-select
+                                    <v-select
                                         v-model="state.searchQuery.lugar_reposo"
                                         label="Lugar del reposo"
                                         variant="underlined"
@@ -397,12 +397,10 @@ const handleSearch = async () => {
                                         "
                                         label="Titulo profesional"
                                         variant="underlined"
-                                        :items="
-                                            state.titulo_profesional
-                                        "
+                                        :items="state.titulo_profesional"
                                         clearable
                                     ></v-select>
-                                </v-col> 
+                                </v-col>
                             </v-row>
 
                             <!-- ********** -->
@@ -530,75 +528,73 @@ const handleSearch = async () => {
                                         ></v-text-field>
                                     </v-col>
                                     <v-col>
-                                    <v-select
-                                        v-model="
-                                            state.itemsView.caract_reposo
-                                        "
-                                        label="Características del reposo"
-                                        variant="underlined"
-                                        :items="state.caract_reposo"
-                                        clearable
-                                    ></v-select>
-                                   <v-select
-                                        v-model="state.itemsView.lugar_reposo"
-                                        label="Lugar del reposo"
-                                        variant="underlined"
-                                        :items="state.lugar_reposo"
-                                        clearable
-                                    ></v-select>
-                                    <v-select
-                                        v-model="
-                                            state.itemsView.tipo_licencia
-                                        "
-                                        label="Tipo de Licencia"
-                                        variant="underlined"
-                                        :items="state.tipo_licencia"
-                                        clearable
-                                    ></v-select>
+                                        <v-select
+                                            v-model="
+                                                state.itemsView.caract_reposo
+                                            "
+                                            label="Características del reposo"
+                                            variant="underlined"
+                                            :items="state.caract_reposo"
+                                        ></v-select>
+                                        <v-select
+                                            v-model="
+                                                state.itemsView.lugar_reposo
+                                            "
+                                            label="Lugar del reposo"
+                                            variant="underlined"
+                                            :items="state.lugar_reposo"
+                                        ></v-select>
+                                        <v-select
+                                            v-model="
+                                                state.itemsView.tipo_licencia
+                                            "
+                                            label="Tipo de Licencia"
+                                            variant="underlined"
+                                            :items="state.tipo_licencia"
+                                        ></v-select>
                                     </v-col>
                                     <v-col>
-                                    <v-switch
-                                        v-model="
-                                            state.itemsView
-                                                .recuperabilidad_laboral
-                                        "
-                                        hide-details
-                                        class="ml-4"
-                                        variant="underlined"
-                                        color="primary"
-                                        inset
-                                        label="Recuperabilidad Laboral"
-                                    ></v-switch>
-                                    <v-switch
-                                        v-model="
-                                            state.itemsView.inicio_invalidez
-                                        "
-                                        hide-details
-                                        class="ml-4"
-                                        variant="underlined"
-                                        color="primary"
-                                        inset
-                                        label="Inicio Invalidez"
-                                    ></v-switch>
-                                    <v-text-field
-                                        v-model="
-                                            state.itemsView.nombre_profesional
-                                        "
-                                        label="Nombre del Profesional"
-                                        type="text"
-                                        variant="underlined"
-                                    ></v-text-field>
-                                    <v-select
-                                        v-model="
-                                            state.itemsView.titulo_profesional
-                                        "
-                                        label="Titulo profesional"
-                                        variant="underlined"
-                                        :items="
-                                            state.titulo_profesional
-                                        "
-                                        clearable
-                                    ></v-select>
+                                        <v-switch
+                                            v-model="
+                                                state.itemsView
+                                                    .recuperabilidad_laboral
+                                            "
+                                            hide-details
+                                            class="ml-4"
+                                            variant="underlined"
+                                            color="primary"
+                                            inset
+                                            label="Recuperabilidad Laboral"
+                                        ></v-switch>
+                                        <v-switch
+                                            v-model="
+                                                state.itemsView.inicio_invalidez
+                                            "
+                                            hide-details
+                                            class="ml-4"
+                                            variant="underlined"
+                                            color="primary"
+                                            inset
+                                            label="Inicio Invalidez"
+                                        ></v-switch>
+                                        <v-text-field
+                                            v-model="
+                                                state.itemsView
+                                                    .nombre_profesional
+                                            "
+                                            label="Nombre del Profesional"
+                                            type="text"
+                                            variant="underlined"
+                                        ></v-text-field>
+                                        <v-select
+                                            v-model="
+                                                state.itemsView
+                                                    .titulo_profesional
+                                            "
+                                            label="Titulo profesional"
+                                            variant="underlined"
+                                            :items="state.titulo_profesional"
+                                        ></v-select>
                                     </v-col>
                                 </v-row>
 

@@ -54,13 +54,6 @@ const state = reactive({
         fecha_recepcion: null,
         fecha_inicio: null,
         fecha_termino: null,
-        caract_reposo: null,
-        lugar_reposo: null,
-        tipo_licencia: null,
-        recuperabilidad_laboral: null,
-        inicio_invalidez: null,
-        titulo_profesional: null,
-        nombre_profesional: null,
         comentario: null,
     },
     defaultItem: {
@@ -70,32 +63,8 @@ const state = reactive({
         fecha_recepcion: null,
         fecha_inicio: null,
         fecha_termino: null,
-        caract_reposo: null,
-        lugar_reposo: null,
-        tipo_licencia: null,
-        recuperabilidad_laboral: false,
-        inicio_invalidez: false,
-        titulo_profesional: null,
-        nombre_profesional: null,
         comentario: null,
     },
-    caract_reposo: [
-        "Total",
-        "Parcial - Mañana",
-        "Parcial - Tarde",
-        "Parcial - Noche",
-    ],
-    lugar_reposo: ["Domicilio", "Hospital", "Otro domicilio"],
-    tipo_licencia: [
-        "Accidente del trabajo o trayecto",
-        "Enfermedad grave hijo menor de 1 año",
-        "Enfermedad o accidente común",
-        "Enfermedad profesional",
-        "Licencia maternal pre y post natal",
-        "Patología del embarazo",
-        "Prorroga medicina preventiva",
-    ],
-    titulo_profesional: ["Médico", "Dentista", "Matrona"],
     searchQuery: {
         paciente_id: null,
     },
@@ -166,14 +135,16 @@ const remove = async (item) => {
                     <v-dialog v-model="state.dialog">
                         <template v-slot:activator="{ props }">
                             <v-btn
+                                :loading="state.loading"
                                 icon="mdi-update"
+                                variant="tonal"
                                 class="ma-2"
                                 color="#009AA4"
-                                variant="tonal"
                                 @click="handleShow"
                             >
                             </v-btn>
                             <v-btn
+                                :loading="state.loading"
                                 icon="mdi-account-multiple-plus"
                                 variant="tonal"
                                 class="ma-2"
@@ -184,200 +155,102 @@ const remove = async (item) => {
                         </template>
 
                         <v-card>
-                            <v-form>
+                            <form @submit.prevent="submit">
+                                <v-card-title>
+                                    <span class="text-h5"
+                                        >{{ editedItemTitle }}
+                                    </span>
+                                </v-card-title>
+
                                 <v-card-text>
                                     <v-container>
-                                        <v-sheet
-                                        elevation="4"
-                                        class="ma-4 pa-4"
-                                        >
-                                        <v-row align="center">
+                                        <!------------->
+
+                                        <v-row>
                                             <v-col>
-                                                <v-card-title>
-                                                    <span class="text-h5"
-                                                        >{{ editedItemTitle }}
-                                                    </span>
-                                                </v-card-title>
+                                                <v-text-field
+                                                    v-model="
+                                                        state.editedItem.folio
+                                                    "
+                                                    label="Folio"
+                                                    type="number"
+                                                    variant="underlined"
+                                                ></v-text-field>
+
+                                                <v-text-field
+                                                    v-model="
+                                                        state.editedItem
+                                                            .fecha_emision
+                                                    "
+                                                    label="Fecha emisión"
+                                                    type="date"
+                                                    variant="underlined"
+                                                ></v-text-field>
+
+                                                <v-text-field
+                                                    v-model="
+                                                        state.editedItem
+                                                            .fecha_recepcion
+                                                    "
+                                                    label="Fecha recepción"
+                                                    type="date"
+                                                    variant="underlined"
+                                                ></v-text-field>
                                             </v-col>
                                             <v-col>
-                                                <v-card-actions>
-                                                    <v-btn
-                                                        color="#009AA4"
-                                                        variant="tonal"
-                                                        @click="close"
-                                                    >
-                                                        Cancelar
-                                                    </v-btn>
-                                                    <v-btn
-                                                        color="#009AA4"
-                                                        variant="tonal"
-                                                        @click="storeItems"
-                                                    >
-                                                        Guardar
-                                                    </v-btn>
-                                                </v-card-actions>
+                                                <v-text-field
+                                                    v-model="
+                                                        state.editedItem
+                                                            .fecha_inicio
+                                                    "
+                                                    label="Fecha inicio"
+                                                    type="date"
+                                                    variant="underlined"
+                                                ></v-text-field>
+
+                                                <v-text-field
+                                                    v-model="
+                                                        state.editedItem
+                                                            .fecha_termino
+                                                    "
+                                                    label="Fecha de término"
+                                                    type="date"
+                                                    variant="underlined"
+                                                ></v-text-field>
+
+                                                <v-text-field
+                                                    v-model="
+                                                        state.editedItem
+                                                            .comentario
+                                                    "
+                                                    label="Comentario"
+                                                    type="text"
+                                                    variant="underlined"
+                                                ></v-text-field>
                                             </v-col>
                                         </v-row>
-                                        </v-sheet>
-                                        <v-sheet
-                                            elevation="4"
-                                            class="ma-4 pa-4"
-                                        >
-                                            <!------------->
-                                            <v-row>
-                                                <v-col>
-                                                    <v-text-field
-                                                        v-model="
-                                                            state.editedItem
-                                                                .folio
-                                                        "
-                                                        label="Folio"
-                                                        type="number"
-                                                        variant="underlined"
-                                                    ></v-text-field>
-
-                                                    <v-text-field
-                                                        v-model="
-                                                            state.editedItem
-                                                                .fecha_emision
-                                                        "
-                                                        label="Fecha emisión"
-                                                        type="date"
-                                                        variant="underlined"
-                                                    ></v-text-field>
-
-                                                    <v-text-field
-                                                        v-model="
-                                                            state.editedItem
-                                                                .fecha_recepcion
-                                                        "
-                                                        label="Fecha recepción"
-                                                        type="date"
-                                                        variant="underlined"
-                                                    ></v-text-field>
-                                                </v-col>
-                                                <v-col>
-                                                    <v-text-field
-                                                        v-model="
-                                                            state.editedItem
-                                                                .fecha_inicio
-                                                        "
-                                                        label="Fecha inicio"
-                                                        type="date"
-                                                        variant="underlined"
-                                                    ></v-text-field>
-
-                                                    <v-text-field
-                                                        v-model="
-                                                            state.editedItem
-                                                                .fecha_termino
-                                                        "
-                                                        label="Fecha de término"
-                                                        type="date"
-                                                        variant="underlined"
-                                                    ></v-text-field>
-
-                                                    <v-text-field
-                                                        v-model="
-                                                            state.editedItem
-                                                                .comentario
-                                                        "
-                                                        label="Comentario"
-                                                        type="text"
-                                                        variant="underlined"
-                                                    ></v-text-field>
-                                                </v-col>
-                                                <v-col>
-                                                    <v-select
-                                                        v-model="
-                                                            state.editedItem
-                                                                .caract_reposo
-                                                        "
-                                                        label="Características del reposo"
-                                                        variant="underlined"
-                                                        :items="
-                                                            state.caract_reposo
-                                                        "
-                                                        clearable
-                                                    ></v-select>
-                                                    <v-select
-                                                        v-model="
-                                                            state.editedItem
-                                                                .lugar_reposo
-                                                        "
-                                                        label="Lugar del reposo"
-                                                        variant="underlined"
-                                                        :items="
-                                                            state.lugar_reposo
-                                                        "
-                                                        clearable
-                                                    ></v-select>
-                                                    <v-select
-                                                        v-model="
-                                                            state.editedItem
-                                                                .tipo_licencia
-                                                        "
-                                                        label="Tipo de Licencia"
-                                                        variant="underlined"
-                                                        :items="
-                                                            state.tipo_licencia
-                                                        "
-                                                        clearable
-                                                    ></v-select>
-                                                </v-col>
-                                                <v-col>
-                                                    <v-switch
-                                                        v-model="
-                                                            state.editedItem
-                                                                .recuperabilidad_laboral
-                                                        "
-                                                        hide-details
-                                                        class="ml-4"
-                                                        variant="underlined"
-                                                        color="primary"
-                                                        inset
-                                                        label="Recuperabilidad Laboral"
-                                                    ></v-switch>
-                                                    <v-switch
-                                                        v-model="
-                                                            state.editedItem
-                                                                .inicio_invalidez
-                                                        "
-                                                        hide-details
-                                                        class="ml-4"
-                                                        variant="underlined"
-                                                        color="primary"
-                                                        inset
-                                                        label="Inicio Invalidez"
-                                                    ></v-switch>
-                                                    <v-text-field
-                                                        v-model="
-                                                            state.editedItem
-                                                                .nombre_profesional
-                                                        "
-                                                        label="Nombre del Profesional"
-                                                        type="text"
-                                                        variant="underlined"
-                                                    ></v-text-field>
-                                                    <v-select
-                                                        v-model="
-                                                            state.editedItem
-                                                                .titulo_profesional
-                                                        "
-                                                        label="Titulo profesional"
-                                                        variant="underlined"
-                                                        :items="
-                                                            state.titulo_profesional
-                                                        "
-                                                        clearable
-                                                    ></v-select>
-                                                </v-col>
-                                            </v-row>
-                                            <!------------->
-                                        </v-sheet>
+                                        <!------------->
                                     </v-container>
                                 </v-card-text>
-                            </v-form>
+
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                        color="blue-darken-1"
+                                        variant="tonal"
+                                        @click="close"
+                                    >
+                                        Cancelar
+                                    </v-btn>
+                                    <v-btn
+                                        color="blue-darken-1"
+                                        variant="tonal"
+                                        @click="storeItems"
+                                    >
+                                        Guardar
+                                    </v-btn>
+                                </v-card-actions>
+                            </form>
                         </v-card>
                     </v-dialog>
                 </v-toolbar>
@@ -413,9 +286,7 @@ const remove = async (item) => {
                 </v-tooltip>
             </template>
             <template v-slot:no-data>
-                <v-btn variant="tonal" color="#009AA4" @click="handleShow">
-                    Iniciar
-                </v-btn>
+                <v-btn variant="tonal" @click="handleShow"> Iniciar </v-btn>
             </template>
         </v-data-table>
     </v-container>

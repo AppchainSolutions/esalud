@@ -1,11 +1,7 @@
 .github
 .vscode
+.editorconfig
 e2e
 
 node_modules/
 vendor/
-
-public/build/*
-boostrap/ssr/assets/*
-!public/build/*
-!boostrap/ssr/assets/*

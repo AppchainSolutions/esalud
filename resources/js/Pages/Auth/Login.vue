@@ -27,7 +27,7 @@ const submit = () => {
     <div class="login-container">
         <Head title="Ingreso" />
         <div class="login-card">
-            <h1 class="login-title">VULCO</h1>
+            <h1 class="login-title">Sierra Logistica</h1>
             <div v-if="status">
                 {{ status }}
             </div>

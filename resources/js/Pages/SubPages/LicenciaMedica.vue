@@ -223,7 +223,7 @@ const remove = async (item) => {
                                             elevation="4"
                                             class="ma-4 pa-4"
                                         >
-                                            <!------------->
+                                            <!------ ------>
                                             <v-row>
                                                 <v-col>
                                                     <v-text-field

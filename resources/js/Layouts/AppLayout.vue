@@ -266,7 +266,7 @@ const user = computed(() => page.props.auth.user);
                         size="x-large"
                         >{{ icon }}</v-icon
                     >
-                    Bienvenido/a    {{ user.name }} [ Vulco ~ VitamHC ]
+                    Bienvenido/a    {{ user.name }}   [ Sierra Logística ~ VitamHC ]
                 </v-app-bar-title>
             </v-app-bar>
             <v-main>

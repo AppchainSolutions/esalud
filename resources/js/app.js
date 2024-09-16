@@ -20,7 +20,7 @@ import { aliases, mdi } from "vuetify/iconsets/mdi";
 import "@mdi/font/css/materialdesignicons.css";
 
 const pinia = createPinia()
-const appName = import.meta.env.VITE_APP_NAME || "Vulco"
+const appName = import.meta.env.VITE_APP_NAME || "Empresas"
 const isProduction = process.env.NODE_ENV === "production"
 
 const vuetify = createVuetify({

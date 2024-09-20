@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('alergia', function (Blueprint $table) {
+        Schema::create('tipo_sesion', function (Blueprint $table) {
             $table->id();
-            $table->integer('paciente_id');
-            $table->string('alergia');
-            $table->string('comentario');
+            $table->string('tipo_sesion');
+            $table->integer('duracion');
+            $table->integer('especialidad_id');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('alergia');
+        Schema::dropIfExists('tipo_sesion');
     }
 };

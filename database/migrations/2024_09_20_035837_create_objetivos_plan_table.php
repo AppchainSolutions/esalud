@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('seguimiento_psicologia', function (Blueprint $table) {
+        Schema::create('objetivos_plan', function (Blueprint $table) {
             $table->id();
-            $table->integer('paciente_id');
-            $table->integer('profesional_id');
-            $table->date('fecha_ingreso');
-            $table->integer('sesiones_totales');
-            $table->integer('sesiones_ocupadas');
-            $table->boolean('asiste')->default('false');
+            $table->integer('plan_id');
+            $table->integer('objetivo_id');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('seguimiento_psicologia');
+        Schema::dropIfExists('objetivos_plan');
     }
 };

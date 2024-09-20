@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cirugia', function (Blueprint $table) {
+        Schema::create('disponibilidad_box', function (Blueprint $table) {
             $table->id();
-            $table->integer('paciente_id');
-            $table->string('cirugia');
-            $table->string('fecha_cirugia_aprox');
-            $table->string('comentario');
+            $table->string('dia_semana_box');
+            $table->string('hora_box_disponible_ini');
+            $table->string('hora_box_disponible_fin');
+            $table->boolean('disponible')->default('true');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cirugia');
+        Schema::dropIfExists('disponibilidad_box');
     }
 };

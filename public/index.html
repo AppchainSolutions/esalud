@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genograma</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="genogramCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('genogramCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw a simple family
+        function drawPerson(x, y, gender) {
+            ctx.beginPath();
+            if (gender === 'male') {
+                ctx.rect(x, y, 50, 50); // Square for male
+            } else {
+                ctx.arc(x + 25, y + 25, 25, 0, Math.PI * 2); // Circle for female
+            }
+            ctx.stroke();
+        }
+
+        function drawLine(x1, y1, x2, y2) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+        }
+
+        // Example family
+        drawPerson(100, 100, 'male'); // Father
+        drawPerson(200, 100, 'female'); // Mother
+        drawLine(125, 125, 225, 125); // Marriage line
+
+        drawPerson(150, 200, 'male'); // Child
+        drawLine(175, 150, 175, 200); // Parent-child line
+    </script>
+</body>
+</html>

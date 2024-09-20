@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('empresa', function (Blueprint $table) {
+        Schema::create('agendamiento', function (Blueprint $table) {
             $table->id();
+            $table->integer('horario_id');
+            $table->date('fecha_atencion');
+            $table->time('hora_agenda_ini');
+            $table->time('hora_agenda_fin');
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('empresa');
+        Schema::dropIfExists('agendamiento');
     }
 };

@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vacuna', function (Blueprint $table) {
+        Schema::create('objetivo_sesion', function (Blueprint $table) {
             $table->id();
+            $table->integer('sesion_id');
+            $table->string('objetivo_sesion');
+            $table->boolean('objetivo_sesion_logrado')->default('false');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vacuna');
+        Schema::dropIfExists('objetivo_sesion');
     }
 };

@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('objetivos_factores', function (Blueprint $table) {
+        Schema::create('cie11', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion');
+            $table->integer('dsmv_id');
+            $table->string('detalle_cie11');
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('objetivos_factores');
+        Schema::dropIfExists('cie11');
     }
 };

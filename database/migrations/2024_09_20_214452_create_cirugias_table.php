@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('factor_riesgo', function (Blueprint $table) {
+        Schema::create('cirugias', function (Blueprint $table) {
             $table->id();
             $table->integer('paciente_id');
-            $table->string('factor_riesgo');
-            $table->string('comentario');
+            $table->string('descripcion');
+
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('factor_riesgo');
+        Schema::dropIfExists('cirugias');
     }
 };

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('antecedente_familiar', function (Blueprint $table) {
             $table->id();
             $table->integer('paciente_id');
-            $table->string('patología');
+            $table->string('patologia');
             $table->string('parentesco');
             $table->timestamps();
         });

@@ -45,52 +45,10 @@ const user = computed(() => page.props.auth.user);
         certificacion() {
             router.get("/consulta/certificacion");
         },
-        diatConsulta() {
-            router.get("/consulta/diat");
-        },
-        diepConsulta() {
-            router.get("/consulta/diep");
-        },
         vacunaConsulta() {
             router.get("/consulta/vacuna");
         },
-        exsalud() {
-            router.get("/consulta/exsalud");
-        },
-        exepo() {
-            router.get("/consulta/exepo");
-        },
-        expsico() {
-            router.get("/consulta/expsico");
-        },
-        exrespirador() {
-            router.get("/consulta/exrespirador");
-        },
-        exequilibrio() {
-            router.get("/consulta/exequilibrio");
-        },
-        exsomnolencia() {
-            router.get("/consulta/exsomnolencia");
-        },
-        expvt() {
-            router.get("/consulta/expvtmert");
-        },
-        exruido() {
-            router.get("/consulta/exruido");
-        },
-        exmetales() {
-            router.get("/consulta/exmetales");
-        },
-        exhumos() {
-            router.get("/consulta/exhumonegro");
-        },
-        exaldehido() {
-            router.get("/consulta/exaldehido");
-        },
-
-        exalcohol() {
-            router.get("/consulta/exalcohol");
-        },
+        
 
         salir() {
             localStorage.removeItem("auth_token");
@@ -132,6 +90,13 @@ const user = computed(() => page.props.auth.user);
                             title="Paciente"
                             value="Paciente"
                             @click="paciente"
+                            v-if ="user.isAdmin"
+                        ></v-list-item>
+                        <v-list-item
+                            prepend-icon="mdi-account"
+                            title="Profesional"
+                            value="Profesional"
+                            @click="profesional"
                             v-if ="user.isAdmin"
                         ></v-list-item>
                         <v-divider></v-divider>

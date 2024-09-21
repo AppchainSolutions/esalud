@@ -55,11 +55,7 @@ Route::middleware([
 
     Route::inertia('/ficha', 'SubPages/FichaMedica');
     Route::resource('/alergia', AlergiaController::class);
-    Route::resource('/atencion_diaria', AtencionDiariaController::class);
-    Route::resource('/certificacion', CertificacionController::class);
     Route::resource('/cirugia', CirugiaController::class);
-    Route::resource('/diat', DiatController::class);
-    Route::resource('/diep', DiepController::class);
     Route::resource('/enfermedad', EnfermedadController::class);
     Route::resource('/factor', FactorRiesgoController::class);
     Route::resource('/familiar', AntecedenteFamiliarController::class);
@@ -67,6 +63,4 @@ Route::middleware([
     Route::resource('/medicamento', MedicamentoController::class);
     Route::resource('/paciente', PacienteController::class);
     Route::resource('/vacuna', VacunaController::class);
-
-
 });

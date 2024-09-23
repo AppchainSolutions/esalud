@@ -1,5 +1,5 @@
 {
-    "name": "vulco/laravel",
+    "name": "municipalidad/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": [
@@ -9,25 +9,26 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^1.0",
-        "itsgoingd/clockwork": "^5.2",
         "laravel/framework": "^11",
         "laravel/jetstream": "^5.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "nyholm/psr7": "^1.8",
-        "php-http/guzzle7-adapter": "^1.0",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
-        "opcodesio/log-viewer": "^3.1",
         "fakerphp/faker": "^1.9.1",
+        "guzzlehttp/guzzle": "^7.2",
+        "itsgoingd/clockwork": "^5.2",
+        "laravel/dusk": "^8.2",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.1",
+        "nunomaduro/collision": "^8.1",
+        "opcodesio/log-viewer": "^3.1",
+        "pestphp/pest": "^3.1",
+        "php-http/guzzle7-adapter": "^1.0",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {

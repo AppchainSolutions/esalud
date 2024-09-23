@@ -1,0 +1,2 @@
+import{o as e,d as s,t as a,l as n}from"./app-BBz_71JK.js";import{_ as l}from"./_plugin-vue_export-helper-DlAUqK2U.js";const r={class:"block font-medium text-sm text-gray-700"},p={key:0},c={key:1},u={__name:"InputLabel",props:{value:String},setup(t){return(o,_)=>(e(),s("label",r,[t.value?(e(),s("span",p,a(t.value),1)):(e(),s("span",c,[n(o.$slots,"default")]))]))}},d=l(u,[["__file","/home/blueshadows/www/app-empresas/resources/js/Components/InputLabel.vue"]]);export{d as I};
+//# sourceMappingURL=InputLabel-CHcI8DmR.js.map

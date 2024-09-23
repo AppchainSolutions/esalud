@@ -1,0 +1,2 @@
+import{o as s,d as r,a as o}from"./app-BBz_71JK.js";import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";const c={},a={class:"hidden sm:block"};function n(d,e){return s(),r("div",a,e[0]||(e[0]=[o("div",{class:"py-8"},[o("div",{class:"border-t border-gray-200"})],-1)]))}const m=t(c,[["render",n],["__file","/home/blueshadows/www/app-empresas/resources/js/Components/SectionBorder.vue"]]);export{m as S};
+//# sourceMappingURL=SectionBorder-DggREI58.js.map

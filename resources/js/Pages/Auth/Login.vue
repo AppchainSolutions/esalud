@@ -35,7 +35,6 @@ const submit = () => {
                     <v-text-field
                         type="email"
                         id="email"
-                        value="email"
                         v-model="form.email"
                         autofocus
                         label="Usuario"
@@ -52,7 +51,6 @@ const submit = () => {
                         autocomplete="current-password"
                         label="Clave"
                         class="mt-1"
-                        value="password"
                     />
                     <v-checkbox
                         v-model:checked="form.remember"

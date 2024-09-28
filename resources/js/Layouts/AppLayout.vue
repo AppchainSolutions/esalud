@@ -1,7 +1,7 @@
 <script>
 import { computed } from "vue";
 import { usePage, router } from "@inertiajs/vue3";
-import logo from "../../img/logo.jpg";
+import logo from "../../img/logo_muni_casablanca.png";
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
@@ -36,19 +36,12 @@ const user = computed(() => page.props.auth.user);
         paciente() {
             router.get("/paciente");
         },
-        atenciones() {
-            router.get("/consulta/atencion_diaria");
+        profesional() {
+            router.get("/profesional");
         },
-        licencia() {
-            router.get("/consulta/licencia");
+        sesion_psicologica() {
+            router.get("/sesion_psicologica");
         },
-        certificacion() {
-            router.get("/consulta/certificacion");
-        },
-        vacunaConsulta() {
-            router.get("/consulta/vacuna");
-        },
-        
 
         salir() {
             localStorage.removeItem("auth_token");
@@ -101,117 +94,7 @@ const user = computed(() => page.props.auth.user);
                         ></v-list-item>
                         <v-divider></v-divider>
                     </v-list>
-                    <v-list density="compact" nav>
-                        <v-list-group value="consultas" v-if="isAdmin">
-                            <template v-slot:activator="{ props }">
-                                <v-list-item
-                                    v-bind="props"
-                                    title="Consultas"
-                                    prepend-icon="mdi-database-search"
-                                ></v-list-item>
-                            </template>
-                            <v-list-item
-                                title="Atenciones Diarias"
-                                value="consultas"
-                                @click="atenciones"
-                            />
-                            <v-list-item
-                                title="Licencia Medicas"
-                                value="consultas"
-                                @click="licencia"
-                            />
-                            <v-list-item
-                                title="Certificaciones"
-                                value="consultas"
-                                @click="certificacion"
-                            />
-                            <v-list-item
-                                title="DIAT"
-                                value="consultas"
-                                @click="diatConsulta"
-                            />
-                            <v-list-item
-                                title="DIEP"
-                                value="consultas"
-                                @click="diepConsulta"
-                            />
-                            <v-list-item
-                                title="Vacunas"
-                                value="consultas"
-                                @click="vacunaConsulta"
-                            />
-                        </v-list-group>
-                        <v-list-group value="examenes" v-if="isAdmin">
-                            <template v-slot:activator="{ props }">
-                                <v-list-item
-                                    v-bind="props"
-                                    title="Exámenes"
-                                    prepend-icon="mdi-invoice-text-plus"
-                                ></v-list-item>
-                            </template>
 
-                            <v-list-item
-                                title="Ocupacionales y Preocupacionales"
-                                value="examenes"
-                                @click="exepo"
-                            />
-                            <v-list-item
-                                title="Psicosensometrico"
-                                value="examenes"
-                                @click="expsico"
-                            />
-                            <v-list-item
-                                title="Estado de Salud"
-                                value="examenes"
-                                @click="exsalud"
-                            />
-                            <v-list-item
-                                title="Respirador"
-                                value="examenes"
-                                @click="exrespirador"
-                            />
-                            <v-list-item
-                                title="Equilibrio"
-                                value="examenes"
-                                @click="exequilibrio"
-                            />
-                            <v-list-item
-                                title="Somnolencia"
-                                value="examenes"
-                                @click="exsomnolencia"
-                            />
-                            <v-list-item
-                                title="PVT MERT"
-                                value="examenes"
-                                @click="expvt"
-                            />
-                            <v-list-item
-                                title="PVMO Ruido"
-                                value="examenes"
-                                @click="exruido"
-                            />
-                            <v-list-item
-                                title="PVMO Metales"
-                                value="examenes"
-                                @click="exmetales"
-                            />
-                            <v-list-item
-                                title="PVMO Humos Negros"
-                                value="examenes"
-                                @click="exhumos"
-                            />
-                            <v-list-item
-                                title="PVMO Aldehidos"
-                                value="examenes"
-                                @click="exaldehido"
-                            />
-                            <v-list-item
-                                title="Alcohol y drogas"
-                                value="examenes"
-                                @click="exalcohol"
-                            />
-                        </v-list-group>
-                    </v-list>
                     <template v-slot:append>
                         <v-btn block color="#662d91" @click="salir">
                             <b><i
@@ -231,7 +114,7 @@ const user = computed(() => page.props.auth.user);
                         size="x-large"
                         >{{ icon }}</v-icon
                     >
-                    Bienvenido/a    {{ user.name }} [ Vulco ~ VitamHC ]
+                    Bienvenido/a    {{ user.name }} [ Municipalidad de Casablanca - Centro Comunitario ]
                 </v-app-bar-title>
             </v-app-bar>
             <v-main>

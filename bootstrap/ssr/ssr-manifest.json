@@ -8,350 +8,350 @@
     "/build/assets/logo-HUznXB3o.jpg"
   ],
   "resources/js/Components/ActionMessage.vue": [
-    "/build/assets/ActionMessage-C5SxUjdf.js"
+    "/build/assets/ActionMessage-BcEvr_vd.js"
   ],
   "resources/js/Components/ActionSection.vue": [
-    "/build/assets/Modal-19fW1a4h.js"
+    "/build/assets/Modal-C0i_bFQY.js"
   ],
   "resources/js/Components/AuthenticationCard.vue": [
-    "/build/assets/AuthenticationCard-BZoxc2ir.js"
+    "/build/assets/AuthenticationCard-CoCGvEpk.js"
   ],
   "resources/js/Components/AuthenticationCardLogo.vue": [
-    "/build/assets/AuthenticationCardLogo-qiqLcM4J.js"
+    "/build/assets/AuthenticationCardLogo-C-W4Xq9j.js"
   ],
   "resources/js/Components/Checkbox.vue": [
-    "/build/assets/Checkbox-Zsn9pT31.js"
+    "/build/assets/Checkbox-CMkioL_w.js"
   ],
   "resources/js/Components/ConfirmationModal.vue": [
-    "/build/assets/ConfirmationModal-uQ0M_Ndg.js"
+    "/build/assets/ConfirmationModal-CvHOqZUG.js"
   ],
   "resources/js/Components/ConfirmsPassword.vue": [
-    "/build/assets/TwoFactorAuthenticationForm-CmSLlNo3.js"
+    "/build/assets/TwoFactorAuthenticationForm-BSb_0N25.js"
   ],
   "resources/js/Components/DangerButton.vue": [
-    "/build/assets/DangerButton-unFDRrLT.js"
+    "/build/assets/DangerButton-1WlxjJMA.js"
   ],
   "resources/js/Components/DialogModal.vue": [
-    "/build/assets/DialogModal-Cf1EvDS5.js"
+    "/build/assets/DialogModal-CWfZrpOs.js"
   ],
   "resources/js/Components/FormSection.vue": [
-    "/build/assets/FormSection-B5keodaR.js"
+    "/build/assets/FormSection-nV8niOwm.js"
   ],
   "resources/js/Components/InputError.vue": [
-    "/build/assets/TextInput-C7v4Ykkw.js"
+    "/build/assets/TextInput-AKTH8tze.js"
   ],
   "resources/js/Components/InputLabel.vue": [
-    "/build/assets/InputLabel-C6a7Opn8.js"
+    "/build/assets/InputLabel-C6oPxIeN.js"
   ],
   "resources/js/Components/Modal.vue": [
-    "/build/assets/Modal-19fW1a4h.js"
+    "/build/assets/Modal-C0i_bFQY.js"
   ],
   "resources/js/Components/PrimaryButton.vue": [
-    "/build/assets/PrimaryButton-BB-VszM2.js"
+    "/build/assets/PrimaryButton-5J5uN7b-.js"
   ],
   "resources/js/Components/SecondaryButton.vue": [
-    "/build/assets/SecondaryButton-CWveguw2.js"
+    "/build/assets/SecondaryButton-DX2LqBEU.js"
   ],
   "resources/js/Components/SectionBorder.vue": [
-    "/build/assets/SectionBorder-DwzUHu8G.js"
+    "/build/assets/SectionBorder-tAfE81D7.js"
   ],
   "resources/js/Components/SectionTitle.vue": [
-    "/build/assets/SectionTitle-DVlhFTWU.js"
+    "/build/assets/SectionTitle-C-fhv1oW.js"
   ],
   "resources/js/Components/TextInput.vue": [
-    "/build/assets/TextInput-C7v4Ykkw.js"
+    "/build/assets/TextInput-AKTH8tze.js"
   ],
   "resources/js/Layouts/AppAdmin.vue": [
-    "/build/assets/AdminPage-IZy3iidP.js",
+    "/build/assets/AdminPage-CyjitGNv.js",
     "/build/assets/AdminPage-DsCnpbn_.css"
   ],
   "resources/js/Layouts/AppAdmin.vue?vue&type=style&index=0&lang.css": [
-    "/build/assets/AdminPage-IZy3iidP.js",
+    "/build/assets/AdminPage-CyjitGNv.js",
     "/build/assets/AdminPage-DsCnpbn_.css"
   ],
   "resources/js/Layouts/AppLayout.vue": [
-    "/build/assets/AppLayout-C6vazPI6.js",
+    "/build/assets/AppLayout-luvqOq1Z.js",
     "/build/assets/AppLayout-CKrZFqAB.css"
   ],
   "resources/js/Layouts/AppLayout.vue?vue&type=style&index=0&lang.css": [
-    "/build/assets/AppLayout-C6vazPI6.js",
+    "/build/assets/AppLayout-luvqOq1Z.js",
     "/build/assets/AppLayout-CKrZFqAB.css"
   ],
   "resources/js/Pages/API/Index.vue": [
-    "/build/assets/Index-D3TLIPST.js"
+    "/build/assets/Index-B-nKKMY9.js"
   ],
   "resources/js/Pages/API/Partials/ApiTokenManager.vue": [
-    "/build/assets/ApiTokenManager-BcVE0leX.js"
+    "/build/assets/ApiTokenManager-BmI5z7Bb.js"
   ],
   "resources/js/Pages/Admin/AdminPage.vue": [
-    "/build/assets/AdminPage-IZy3iidP.js",
+    "/build/assets/AdminPage-CyjitGNv.js",
     "/build/assets/AdminPage-DsCnpbn_.css"
   ],
   "resources/js/Pages/Admin/LoginAdmin.vue": [
-    "/build/assets/LoginAdmin-BnsiBSPT.js",
+    "/build/assets/LoginAdmin-vIeN0-Ld.js",
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Auth/ConfirmPassword.vue": [
-    "/build/assets/ConfirmPassword-ChjubljG.js",
+    "/build/assets/ConfirmPassword-BPhSffBZ.js",
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Auth/ForgotPassword.vue": [
-    "/build/assets/ForgotPassword-Dx5AfDy6.js",
+    "/build/assets/ForgotPassword-DEadiBBM.js",
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Auth/Login.vue": [
-    "/build/assets/Login-DihlzbTH.js",
+    "/build/assets/Login-CFz5FtOn.js",
     "/build/assets/Login-Bvele3VC.css",
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Auth/Login.vue?vue&type=style&index=0&scoped=e4ebae0a&lang.css": [
-    "/build/assets/Login-DihlzbTH.js",
+    "/build/assets/Login-CFz5FtOn.js",
     "/build/assets/Login-Bvele3VC.css",
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Auth/Register.vue": [
-    "/build/assets/Register-He-oZAQw.js",
+    "/build/assets/Register-K3I0pshG.js",
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Auth/ResetPassword.vue": [
-    "/build/assets/ResetPassword-C8mHWOKj.js",
+    "/build/assets/ResetPassword-CuCrATh4.js",
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Auth/TwoFactorChallenge.vue": [
-    "/build/assets/TwoFactorChallenge-CUrW6-Bf.js",
+    "/build/assets/TwoFactorChallenge-De-d9Nfy.js",
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Auth/VerifyEmail.vue": [
-    "/build/assets/VerifyEmail-DiERmz5U.js",
+    "/build/assets/VerifyEmail-K494Fopc.js",
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Consultas/ConsultaAtencionDiaria.vue": [
-    "/build/assets/ConsultaAtencionDiaria-BgCnGY-W.js"
+    "/build/assets/ConsultaAtencionDiaria-BnkcZiFv.js"
   ],
   "resources/js/Pages/Consultas/ConsultaCertificacion.vue": [
-    "/build/assets/ConsultaCertificacion-DPJ9FILQ.js"
+    "/build/assets/ConsultaCertificacion-CAlZ8T0I.js"
   ],
   "resources/js/Pages/Consultas/ConsultaDiat.vue": [
-    "/build/assets/ConsultaDiat-BIr0kBW_.js"
+    "/build/assets/ConsultaDiat-D8GTUQKG.js"
   ],
   "resources/js/Pages/Consultas/ConsultaDiep.vue": [
-    "/build/assets/ConsultaDiep-DIRMlSl5.js"
+    "/build/assets/ConsultaDiep-pUZPhnyU.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExAlcohol.vue": [
-    "/build/assets/ConsultaExAlcohol-EvyBb89h.js"
+    "/build/assets/ConsultaExAlcohol-LABX-wLZ.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExAldehido.vue": [
-    "/build/assets/ConsultaExAldehido-CuXGdljH.js"
+    "/build/assets/ConsultaExAldehido-CD0zx-hn.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExEpo.vue": [
-    "/build/assets/ConsultaExEpo-6AXpRmMk.js"
+    "/build/assets/ConsultaExEpo-DyWs_nc6.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExEquilibrio.vue": [
-    "/build/assets/ConsultaExEquilibrio-C0nq7_Tx.js"
+    "/build/assets/ConsultaExEquilibrio-Cc52Q4qX.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExHumoNegro.vue": [
-    "/build/assets/ConsultaExHumoNegro-BzZbFZJq.js"
+    "/build/assets/ConsultaExHumoNegro-CEvFo5_g.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExMetales.vue": [
-    "/build/assets/ConsultaExMetales-B2BaQzOZ.js"
+    "/build/assets/ConsultaExMetales-BRpSb_pb.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExPVTMERT.vue": [
-    "/build/assets/ConsultaExPVTMERT-DGLTvdRF.js"
+    "/build/assets/ConsultaExPVTMERT-T7BSe55N.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExPsico.vue": [
-    "/build/assets/ConsultaExPsico-1tR8-a2C.js"
+    "/build/assets/ConsultaExPsico-Bpkjnyfe.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExRespirador.vue": [
-    "/build/assets/ConsultaExRespirador-zIhwvVse.js"
+    "/build/assets/ConsultaExRespirador-Cg344X-z.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExRuido.vue": [
-    "/build/assets/ConsultaExRuido-DogpWPdD.js"
+    "/build/assets/ConsultaExRuido-DoBiFc5r.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExSalud.vue": [
-    "/build/assets/ConsultaExSalud-CMBuXbfd.js"
+    "/build/assets/ConsultaExSalud-BT2ZpMlV.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExSomnolencia.vue": [
-    "/build/assets/ConsultaExSomnolencia-HCzDcUBf.js"
+    "/build/assets/ConsultaExSomnolencia-DcB8tp5v.js"
   ],
   "resources/js/Pages/Consultas/ConsultaLicenciaMedica.vue": [
-    "/build/assets/ConsultaLicenciaMedica-TXWNOJlW.js"
+    "/build/assets/ConsultaLicenciaMedica-5W1N8MwL.js"
   ],
   "resources/js/Pages/Consultas/ConsultaVacuna.vue": [
-    "/build/assets/ConsultaVacuna-lgoFDPbo.js"
+    "/build/assets/ConsultaVacuna-L3MawFvT.js"
   ],
   "resources/js/Pages/Dashboard.vue": [
-    "/build/assets/Dashboard-C4qse3Fr.js"
+    "/build/assets/Dashboard-jATsRn5p.js"
   ],
   "resources/js/Pages/Examenes/ExamenAlcohol.vue": [
-    "/build/assets/ExamenAlcohol-CZnuNlmY.js"
+    "/build/assets/ExamenAlcohol-CRX9XbtP.js"
   ],
   "resources/js/Pages/Examenes/ExamenAldehido.vue": [
-    "/build/assets/ExamenAldehido-7nPd0evC.js"
+    "/build/assets/ExamenAldehido-ClizmSrZ.js"
   ],
   "resources/js/Pages/Examenes/ExamenEPO.vue": [
-    "/build/assets/ExamenEPO-DPXbjVOV.js"
+    "/build/assets/ExamenEPO-Cb93v_wb.js"
   ],
   "resources/js/Pages/Examenes/ExamenEquilibrio.vue": [
-    "/build/assets/ExamenEquilibrio-CSt4hRTO.js"
+    "/build/assets/ExamenEquilibrio-DTGbTlzE.js"
   ],
   "resources/js/Pages/Examenes/ExamenHumoNegro.vue": [
-    "/build/assets/ExamenHumoNegro-BG5OvWUv.js"
+    "/build/assets/ExamenHumoNegro-M_oG0NH6.js"
   ],
   "resources/js/Pages/Examenes/ExamenMetales.vue": [
-    "/build/assets/ExamenMetales-oDxeKUD-.js"
+    "/build/assets/ExamenMetales-eaCJh1op.js"
   ],
   "resources/js/Pages/Examenes/ExamenPVTMERT.vue": [
-    "/build/assets/ExamenPVTMERT-ghGcDaof.js"
+    "/build/assets/ExamenPVTMERT-MMan5aDM.js"
   ],
   "resources/js/Pages/Examenes/ExamenPsico.vue": [
-    "/build/assets/ExamenPsico-BXfsU7MT.js"
+    "/build/assets/ExamenPsico-nIbc-PIg.js"
   ],
   "resources/js/Pages/Examenes/ExamenRespirador.vue": [
-    "/build/assets/ExamenRespirador-DyJPzTZK.js"
+    "/build/assets/ExamenRespirador-C7AiFr33.js"
   ],
   "resources/js/Pages/Examenes/ExamenRuido.vue": [
-    "/build/assets/ExamenRuido-BiPruYBz.js"
+    "/build/assets/ExamenRuido-DvkJ0OZy.js"
   ],
   "resources/js/Pages/Examenes/ExamenSalud.vue": [
-    "/build/assets/ExamenSalud-D8-WztYg.js"
+    "/build/assets/ExamenSalud-Cx0zGQnX.js"
   ],
   "resources/js/Pages/Examenes/ExamenSilice.vue": [
-    "/build/assets/ExamenSilice-BnkxbItF.js"
+    "/build/assets/ExamenSilice-BmmcB4kL.js"
   ],
   "resources/js/Pages/Examenes/ExamenSolvente.vue": [
-    "/build/assets/ExamenSolvente-BMvdeaCO.js"
+    "/build/assets/ExamenSolvente-nvWRE7W9.js"
   ],
   "resources/js/Pages/Examenes/ExamenSomnolencia.vue": [
-    "/build/assets/ExamenSomnolencia-Dgclashm.js"
+    "/build/assets/ExamenSomnolencia-BlTA4S_X.js"
   ],
   "resources/js/Pages/Examenes/Examenes.vue": [
-    "/build/assets/Examenes-BRJTehU8.js"
+    "/build/assets/Examenes-CmrkkYPy.js"
   ],
   "resources/js/Pages/PacientePage.vue": [
-    "/build/assets/PacientePage-CPTAjViq.js"
+    "/build/assets/PacientePage-Dobkby24.js"
   ],
   "resources/js/Pages/PrivacyPolicy.vue": [
-    "/build/assets/PrivacyPolicy-Cg_6JY64.js"
+    "/build/assets/PrivacyPolicy-DpHhzYYa.js"
   ],
   "resources/js/Pages/Profile/Partials/DeleteUserForm.vue": [
-    "/build/assets/DeleteUserForm-DfgoGD9E.js"
+    "/build/assets/DeleteUserForm-CJRPLWZu.js"
   ],
   "resources/js/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue": [
-    "/build/assets/LogoutOtherBrowserSessionsForm-DyVPJpTd.js"
+    "/build/assets/LogoutOtherBrowserSessionsForm-DOwt4UHm.js"
   ],
   "resources/js/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue": [
-    "/build/assets/TwoFactorAuthenticationForm-CmSLlNo3.js"
+    "/build/assets/TwoFactorAuthenticationForm-BSb_0N25.js"
   ],
   "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue": [
-    "/build/assets/UpdatePasswordForm-Ch5hslzg.js"
+    "/build/assets/UpdatePasswordForm-ScsWypKV.js"
   ],
   "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue": [
-    "/build/assets/UpdateProfileInformationForm-JMSuu--6.js"
+    "/build/assets/UpdateProfileInformationForm-ZnI30Ti3.js"
   ],
   "resources/js/Pages/Profile/Show.vue": [
-    "/build/assets/Show-56TBeqHo.js"
+    "/build/assets/Show-Bwtll9Nk.js"
   ],
   "resources/js/Pages/SubPages/Alergia.vue": [
-    "/build/assets/Alergia-DqfWHPR1.js"
+    "/build/assets/Alergia-DiSpHuP6.js"
   ],
   "resources/js/Pages/SubPages/AntecedenteFamiliar.vue": [
-    "/build/assets/AntecedenteFamiliar-T-8hg3g0.js"
+    "/build/assets/AntecedenteFamiliar-DJJx-p38.js"
   ],
   "resources/js/Pages/SubPages/AtencionDiaria.vue": [
-    "/build/assets/AtencionDiaria-jFTv3Tke.js"
+    "/build/assets/AtencionDiaria-bYADCDL1.js"
   ],
   "resources/js/Pages/SubPages/Certificaciones.vue": [
-    "/build/assets/Certificaciones-BsYO_z1A.js"
+    "/build/assets/Certificaciones-Dk2jYVGo.js"
   ],
   "resources/js/Pages/SubPages/Cirugia.vue": [
-    "/build/assets/Cirugia-D6jZwxun.js"
+    "/build/assets/Cirugia-DQSfuoPr.js"
   ],
   "resources/js/Pages/SubPages/DashCecos.vue": [
-    "/build/assets/DashCecos-2pbyhl5U.js"
+    "/build/assets/DashCecos-BJaFAP2P.js"
   ],
   "resources/js/Pages/SubPages/DashEnfermedadEmpresa.vue": [
-    "/build/assets/DashEnfermedadEmpresa-CNrB7qz2.js"
+    "/build/assets/DashEnfermedadEmpresa-Dauu_H9R.js"
   ],
   "resources/js/Pages/SubPages/DashEnfermedadPlanta.vue": [
-    "/build/assets/DashEnfermedadPlanta-0rqGtNk2.js"
+    "/build/assets/DashEnfermedadPlanta-gA4H0Se5.js"
   ],
   "resources/js/Pages/SubPages/DashExpoEmpresa.vue": [
-    "/build/assets/DashExpoEmpresa-Bfwesm4G.js"
+    "/build/assets/DashExpoEmpresa-DXETIzYq.js"
   ],
   "resources/js/Pages/SubPages/DashExpoPlanta.vue": [
-    "/build/assets/DashExpoPlanta-C4RMiB6T.js"
+    "/build/assets/DashExpoPlanta-nbXOz4GR.js"
   ],
   "resources/js/Pages/SubPages/DashExpoTotal.vue": [
-    "/build/assets/DashExpoTotal-DlWsDWPq.js"
+    "/build/assets/DashExpoTotal-DOxGattZ.js"
   ],
   "resources/js/Pages/SubPages/DashPersEmpresa.vue": [
-    "/build/assets/DashPersEmpresa-BLVwu9U1.js"
+    "/build/assets/DashPersEmpresa-BXN-O77q.js"
   ],
   "resources/js/Pages/SubPages/DashPersPlanta.vue": [
-    "/build/assets/DashPersPlanta-BlFwlp9e.js"
+    "/build/assets/DashPersPlanta-hDEDt7Uj.js"
   ],
   "resources/js/Pages/SubPages/DatosMedicos.vue": [
-    "/build/assets/DatosMedicos-DVbKo0GR.js"
+    "/build/assets/DatosMedicos-BHAaMC_1.js"
   ],
   "resources/js/Pages/SubPages/DiatDiep.vue": [
-    "/build/assets/DiatDiep-DAtWVjRD.js"
+    "/build/assets/DiatDiep-DIzcoMq_.js"
   ],
   "resources/js/Pages/SubPages/DiatPage.vue": [
-    "/build/assets/DiatPage-D6gh_ulP.js"
+    "/build/assets/DiatPage-cqaqkvtm.js"
   ],
   "resources/js/Pages/SubPages/DiepPage.vue": [
-    "/build/assets/DiepPage-a_g6N1GX.js"
+    "/build/assets/DiepPage-DcIDfPzb.js"
   ],
   "resources/js/Pages/SubPages/Enfermedad.vue": [
-    "/build/assets/Enfermedad-yOYpGIjw.js"
+    "/build/assets/Enfermedad-C2u8-z0b.js"
   ],
   "resources/js/Pages/SubPages/FactorRiesgo.vue": [
-    "/build/assets/FactorRiesgo-BBVlIiOU.js"
+    "/build/assets/FactorRiesgo-Bv22Y8FC.js"
   ],
   "resources/js/Pages/SubPages/FichaMedica.vue": [
-    "/build/assets/FichaMedica-svF_7fZ8.js"
+    "/build/assets/FichaMedica-BF2CSt8A.js"
   ],
   "resources/js/Pages/SubPages/LicenciaMedica.vue": [
-    "/build/assets/LicenciaMedica-se5dLydb.js"
+    "/build/assets/LicenciaMedica-CZJuqsHU.js"
   ],
   "resources/js/Pages/SubPages/Medicamento.vue": [
-    "/build/assets/Medicamento-DvqxwlIT.js"
+    "/build/assets/Medicamento-VYcaMxlq.js"
   ],
   "resources/js/Pages/SubPages/Notificacion.vue": [
-    "/build/assets/Notificacion-Cs6ohvuQ.js"
+    "/build/assets/Notificacion-DRLj0w9r.js"
   ],
   "resources/js/Pages/SubPages/Vacuna.vue": [
-    "/build/assets/Vacuna-BH35HxKr.js"
+    "/build/assets/Vacuna-Dd_GXv0a.js"
   ],
   "resources/js/Pages/Teams/Create.vue": [
-    "/build/assets/Create-Dyh5WaHJ.js"
+    "/build/assets/Create-iEp_dnm2.js"
   ],
   "resources/js/Pages/Teams/Partials/CreateTeamForm.vue": [
-    "/build/assets/CreateTeamForm-BpLu_gKT.js"
+    "/build/assets/CreateTeamForm-oxOj4wjw.js"
   ],
   "resources/js/Pages/Teams/Partials/DeleteTeamForm.vue": [
-    "/build/assets/DeleteTeamForm-BoDD521x.js"
+    "/build/assets/DeleteTeamForm-D55_92dL.js"
   ],
   "resources/js/Pages/Teams/Partials/TeamMemberManager.vue": [
-    "/build/assets/TeamMemberManager-BHMYWqvD.js"
+    "/build/assets/TeamMemberManager-Bv2rbbsw.js"
   ],
   "resources/js/Pages/Teams/Partials/UpdateTeamNameForm.vue": [
-    "/build/assets/UpdateTeamNameForm-CYjWXpeH.js"
+    "/build/assets/UpdateTeamNameForm-DNE0x3BB.js"
   ],
   "resources/js/Pages/Teams/Show.vue": [
-    "/build/assets/Show-KFcWHKhq.js"
+    "/build/assets/Show-C1e8SfxX.js"
   ],
   "resources/js/Pages/TermsOfService.vue": [
-    "/build/assets/TermsOfService-Cm3PTR1F.js"
+    "/build/assets/TermsOfService-DH8T6U1o.js"
   ],
   "resources/js/Pages/Welcome.vue": [
-    "/build/assets/Welcome--u-p6QTn.js",
+    "/build/assets/Welcome-B5P8Aq4D.js",
     "/build/assets/Welcome-DfJlNQwt.css",
     "/build/assets/app-DAAUXTxL.css",
     "/build/assets/vitamhc-C8RI-1Kv.png"
   ],
   "resources/js/Pages/Welcome.vue?vue&type=style&index=0&lang.css": [
-    "/build/assets/Welcome--u-p6QTn.js",
+    "/build/assets/Welcome-B5P8Aq4D.js",
     "/build/assets/Welcome-DfJlNQwt.css",
     "/build/assets/app-DAAUXTxL.css",
     "/build/assets/vitamhc-C8RI-1Kv.png"

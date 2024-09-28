@@ -3,30 +3,17 @@
 namespace app\Models;
 
 use App\Models\Afp;
-use App\Models\Alergia;
+use App\Models\Alergias;
 use App\Models\AntecedenteFamiliar;
-use App\Models\Area;
-use App\Models\AtencionDiaria;
-use App\Models\Ceco;
-use App\Models\Certificacion;
 use App\Models\Cirugia;
-use App\Models\Diat;
-use App\Models\Diep;
 use App\Models\Enfermedad;
-use App\Models\Empresa;
-use App\Models\EstadoCertificacion;
 use App\Models\EstadoCivil;
-use App\Models\ExAlcohol;
-use App\Models\ExEpo;
-use App\Models\Exposicion;
 use App\Models\FactorRiesgo;
 use App\Models\GrupoSanguineo;
 use App\Models\Instruccion;
 use App\Models\LeySocial;
-use App\Models\LicenciaMedica;
 use App\Models\Medicamento;
 use App\Models\Modalidad;
-use App\Models\Planta;
 use App\Models\Prevision;
 use App\Models\Pueblo;
 use App\Models\Religion;
@@ -42,17 +29,9 @@ class Paciente extends Model
 {
     use HasFactory;
 
-    public function atenciones(): HasMany
+    public function alergias(): HasMany
     {
-        return $this->hasMany(AtencionDiaria::class);
-    }
-    public function licencia(): HasMany
-    {
-        return $this->hasMany(LicenciaMedica::class, 'paciente_id', 'id');
-    }
-    public function alergia(): HasMany
-    {
-        return $this->hasMany(Alergia::class, 'paciente_id', 'id');
+        return $this->hasMany(Alergias::class, 'paciente_id', 'id');
     }
     public function enfermedad(): HasMany
     {
@@ -78,52 +57,6 @@ class Paciente extends Model
     {
         return $this->hasMany(AntecedenteFamiliar::class, 'paciente_id', 'id');
     }
-    public function diat(): HasMany
-    {
-        return $this->hasMany(Diat::class, 'paciente_id', 'id');
-    }
-    public function diep(): HasMany
-    {
-        return $this->hasMany(Diep::class, 'paciente_id', 'id');
-    }
-    public function certificacion(): HasMany
-    {
-        return $this->hasMany(Certificacion::class, 'paciente_id', 'id');
-    }
-    public function estado_certificacion(): HasMany
-    {
-        return $this->hasMany(EstadoCertificacion::class, 'paciente_id', 'id');
-    }
-    public function exalcohol(): HasMany
-    {
-        return $this->hasMany(ExAlcohol::class, 'paciente_id', 'id');
-    }
-    public function exepo(): HasMany
-    {
-        return $this->hasMany(ExEpo::class, 'paciente_id', 'id');
-    }
-
-    public function exequilibrio(): HasMany
-    {
-        return $this->hasMany(ExEquilibrio::class, 'paciente_id', 'id');
-    }
-
-    public function empresa(): BelongsTo
-    {
-        return $this->belongsTo(Empresa::class, 'empresa', 'id');
-    }
-    public function unidad(): BelongsTo
-    {
-        return $this->belongsTo(Unidad::class, 'unidad', 'id');
-    }
-    public function area(): BelongsTo
-    {
-        return $this->belongsTo(Area::class, 'area', 'id');
-    }
-    public function ceco(): BelongsTo
-    {
-        return $this->belongsTo(Ceco::class, 'ceco', 'id');
-    }
     public function seguro(): BelongsTo
     {
         return $this->belongsTo(Seguro::class, 'seguro', 'id');
@@ -148,10 +81,6 @@ class Paciente extends Model
     {
         return $this->belongsTo(LeySocial::class, 'ley_social', 'id');
     }
-    public function planta(): BelongsTo
-    {
-        return $this->belongsTo(Planta::class, 'planta', 'id');
-    }
     public function prevision(): BelongsTo
     {
         return $this->belongsTo(Prevision::class, 'prevision', 'id');
@@ -168,30 +97,21 @@ class Paciente extends Model
     {
         return $this->belongsTo(Modalidad::class, 'modalidad', 'id');
     }
-    public function exposicion(): BelongsTo
-    {
-        return $this->belongsTo(Exposicion::class, 'exposicion', 'id');
-    }
 
     protected $table = 'paciente';
     protected $fillable = [
         'rut',
         'nombre',
         'apellidos',
-        'actividad_economica',
         'activo',
         'afp',
-        'area',
-        'cargo',
-        'ceco',
+        'calle',
         'ciudad',
         'direccion',
         'donante',
         'edad',
         'email',
-        'empresa',
         'estado_civil',
-        'exposicion',
         'fecha_nacimiento',
         'genero',
         'grupo_sanguineo',
@@ -200,7 +120,6 @@ class Paciente extends Model
         'modalidad',
         'nacionalidad',
         'ocupacion',
-        'planta',
         'prevision',
         'profesion',
         'pueblo',
@@ -208,7 +127,6 @@ class Paciente extends Model
         'seguro',
         'telefono1',
         'telefono2',
-        'unidad',
     ];
 
 }

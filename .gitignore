@@ -1,5 +1,4 @@
 .github
-.vscode
 e2e
 
 node_modules/*
@@ -7,3 +6,5 @@ vendor/*
 
 public/build/assets/*
 bootstrap/ssr/assets/*
+# stryker temp files
+.stryker-tmp

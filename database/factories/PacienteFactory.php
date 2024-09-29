@@ -38,32 +38,32 @@ class PacienteFactory extends Factory
             'apellidos' => $this->faker->lastName,
             'actividad_economica' => $this->faker->jobTitle,
             'activo' => $this->faker->boolean,
-            'afp' => $this->faker->randomElement(['1', '2', '3']), // Selecciona un AFP al azar
+            'afp_id' => $this->faker->randomElement(['1', '2', '3']), // Selecciona un AFP al azar
             'ciudad' => $this->faker->city,
             'direccion' => $this->faker->streetAddress,
             'donante' => $this->faker->boolean,
             'edad' => $this->faker->numberBetween(18, 65), // Edad entre 18 y 65 años
             'email' => $this->faker->email,
             'estado_civil' => $this->faker->randomElement(['Soltero', 'Casado', 'Divorciado', 'Viudo']), // Selecciona un estado civil al azar
-            'fecha_nacimiento' => $this->faker->dateOfBirth, // Fecha de nacimiento aleatoria
+            'fecha_nacimiento' => $this->faker->date, // Fecha de nacimiento aleatoria
             'genero' => $this->faker->randomElement(['Masculino', 'Femenino']), // Selecciona un género al azar
             'grupo_sanguineo' => $this->faker->randomElement(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']), // Selecciona un grupo sanguíneo al azar
-            'instruccion' => $this->faker->randomElement(['Primaria', 'Secundaria', 'Universitaria']), // Selecciona un nivel de instrucción al azar
-            'ley_social' => $this->faker->randomElement(['Ley Social1', 'Ley Social2', 'Ley Social3']), // Selecciona una ley social al azar
+            'nivel_instruccion_id' => $this->faker->randomElement(['1', '2', '3']), // Selecciona un nivel de instrucción al azar
+            'ley_social_id' => $this->faker->randomElement([1, 2, 3]), // Selecciona una ley social al azar
             'modalidad' => $this->faker->randomElement(['Modalidad1', 'Modalidad2', 'Modalidad3']), // Selecciona una modalidad al azar
-            'nacionalidad' => $this->faker->country,
+            'nacionalidad_id' => $this->faker->randomElement([1,2,3,4,5]),
             'ocupacion' => $this->faker->jobTitle,
-            'prevision' => $this->faker->randomElement(['Previsión1', 'Previsión2', 'Previsión3']), // Selecciona una previsión al azar
+            'prevision_id' => $this->faker->randomElement([1, 2, 3]), // Selecciona una previsión al azar
             'profesion' => $this->faker->jobTitle,
-            'pueblo' => $this->faker->city,
-            'religion' => $this->faker->randomElement(['Religión1', 'Religión2', 'Religión3']), // Selecciona una religión al azar
-            'seguro' => $this->faker->randomElement(['Seguro1', 'Seguro2', 'Seguro3']), // Selecciona un seguro al azar
+            'pueblo_indigena_id' => $this->faker->randomElement([1, 2, 3]),
+            'religion_id' => $this->faker->randomElement([1, 2, 3]), // Selecciona una religión al azar
+            'seguro_salud_id' => $this->faker->randomElement(['1', '2', '3']), // Selecciona un seguro al azar
             'telefono1' => $this->faker->phoneNumber,
             'telefono2' => $this->faker->phoneNumber,
         ];
     }
 
-    public function withAlergia()
+     public function withAlergia()
     {
         return $this->has(Alergias::factory()->count(3));
     }
@@ -106,7 +106,7 @@ class PacienteFactory extends Factory
     public function withSeguro()
     {
         return $this->for(Seguro::factory());
-    }
+    } 
 
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Models;
+namespace App\Models;
 
 use App\Models\Afp;
 use App\Models\Alergias;
@@ -8,6 +8,7 @@ use App\Models\AntecedenteFamiliar;
 use App\Models\Cirugia;
 use App\Models\Enfermedad;
 use App\Models\EstadoCivil;
+use App\Models\EstablecimientoEducacional;
 use App\Models\FactorRiesgo;
 use App\Models\GrupoSanguineo;
 use App\Models\Instruccion;
@@ -17,7 +18,7 @@ use App\Models\Modalidad;
 use App\Models\Prevision;
 use App\Models\Pueblo;
 use App\Models\Religion;
-use App\Models\Seguro;
+use App\Models\SeguroSalud;
 use App\Models\Vacuna;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -57,15 +58,15 @@ class Paciente extends Model
     {
         return $this->hasMany(AntecedenteFamiliar::class, 'paciente_id', 'id');
     }
-    public function seguro(): BelongsTo
+    public function seguro_salud_id(): BelongsTo
     {
-        return $this->belongsTo(Seguro::class, 'seguro', 'id');
+        return $this->belongsTo(SeguroSalud::class, 'seguro', 'id');
     }
     public function estado_civil(): BelongsTo
     {
         return $this->belongsTo(EstadoCivil::class, 'estado_civil', 'id');
     }
-    public function afp(): BelongsTo
+    public function afp_id(): BelongsTo
     {
         return $this->belongsTo(Afp::class, 'afp', 'id');
     }
@@ -73,23 +74,23 @@ class Paciente extends Model
     {
         return $this->belongsTo(GrupoSanguineo::class, 'grupo_sanguineo', 'id');
     }
-    public function instruccion(): BelongsTo
+    public function nivel_instruccion_id(): BelongsTo
     {
         return $this->belongsTo(Instruccion::class, 'instruccion', 'id');
     }
-    public function ley_social(): BelongsTo
+    public function ley_social_id(): BelongsTo
     {
         return $this->belongsTo(LeySocial::class, 'ley_social', 'id');
     }
-    public function prevision(): BelongsTo
+    public function prevision_id(): BelongsTo
     {
         return $this->belongsTo(Prevision::class, 'prevision', 'id');
     }
-    public function pueblo(): BelongsTo
+    public function pueblo_indigena_id(): BelongsTo
     {
         return $this->belongsTo(Pueblo::class, 'pueblo', 'id');
     }
-    public function religion(): BelongsTo
+    public function religion_id(): BelongsTo
     {
         return $this->belongsTo(Religion::class, 'religion', 'id');
     }
@@ -97,36 +98,40 @@ class Paciente extends Model
     {
         return $this->belongsTo(Modalidad::class, 'modalidad', 'id');
     }
+    public function establecimiento_educacional_id(): BelongsTo
+    {
+        return $this->belongsTo(EstablecimientoEducacional::class, 'establecimiento_educacional', 'id');
+    }
 
     protected $table = 'paciente';
-    protected $fillable = [
-        'rut',
-        'nombre',
-        'apellidos',
+       protected $fillable = [
+        'actividad_economica',
         'activo',
-        'afp',
-        'calle',
+        'afp_id',
+        'apellidos',
+        'calle_id',
         'ciudad',
         'direccion',
         'donante',
         'edad',
         'email',
         'estado_civil',
+        'establecimiento_educacional_id',
         'fecha_nacimiento',
         'genero',
         'grupo_sanguineo',
-        'instruccion',
-        'ley_social',
+        'ley_social_id',
         'modalidad',
-        'nacionalidad',
+        'nacionalidad_id',
+        'nivel_instruccion_id',
+        'nombre',
         'ocupacion',
-        'prevision',
-        'profesion',
-        'pueblo',
-        'religion',
-        'seguro',
+        'prevision_id',
+        'pueblo_indigena_id',
+        'religion_id',
+        'rut',
+        'seguro_salud_id',
         'telefono1',
         'telefono2',
     ];
-
 }

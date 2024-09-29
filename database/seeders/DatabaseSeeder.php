@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Paciente;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //       User::truncate();
-        //       User::factory()->createAuthUser();
-        //       Paciente::factory(10)->create();
+        //Paciente::factory(10)->create();
+
         $this->call([
-            UserSeeder::class,
+            Seeder::class,
         ]);
     }
 }

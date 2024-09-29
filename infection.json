@@ -7,5 +7,14 @@
     },
     "mutators": {
         "@default": true
+    },
+    "timeout": 10,
+    "logs": {
+        "text": "infection-log.txt"
+    },
+
+    "phpUnit": {
+        "configDir": "."
+
     }
 }

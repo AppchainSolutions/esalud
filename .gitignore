@@ -8,3 +8,4 @@ public/build/assets/*
 bootstrap/ssr/assets/*
 # stryker temp files
 .stryker-tmp
+*.deb

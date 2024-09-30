@@ -1,10 +1,9 @@
 .github
 .vscode
 /vendor/*
-/resources/css
-/resources/img
-/resources/js
-/resources/markdown
+/resources/*
 /public/vendor
 /node_modules/*
 /public/hot
+/tests/
+/vendor/

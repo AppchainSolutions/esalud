@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 use App\Models\Afp;
 use App\Models\Calle;
 use App\Models\EstablecimientoEducacional;
@@ -23,9 +25,9 @@ uses(RefreshDatabase::class);
 it('can create a paciente', function () {
     $afp = Afp::factory()->create();
     $calle = Calle::factory()->create();
-    $educacional = EstablecimientoEducacional::factory()->create();
+    $establecimientoEducacional = EstablecimientoEducacional::factory()->create();
     $leySocial = LeySocial::factory()->create();
-    //$modalidad = Modalidad::factory()->create();
+    $modalidad = Modalidad::factory()->create();
     $nacionalidad = Nacionalidad::factory()->create();
     $nivelInstruccion = NivelInstruccion::factory()->create();
     $prevision = Prevision::factory()->create();
@@ -53,7 +55,7 @@ it('can create a paciente', function () {
         'genero' => 'Femenino',
         'grupo_sanguineo' => 'A+',
         'ley_social_id' => LeySocial::inRandomOrder()->first()->id,
-        'modalidad' => 'Modalidad1',
+        'modalidad' => Modalidad::inRandomOrder()->first()->id,
         'nacionalidad_id' => Nacionalidad::inRandomOrder()->first()->id,
         'nivel_instruccion_id' => NivelInstruccion::inRandomOrder()->first()->id,
         'nombre' => 'Juan',
@@ -70,6 +72,25 @@ it('can create a paciente', function () {
 
 
     expect($paciente->afp_id)->toBe($afp->id);
+    expect($paciente->establecimiento_educacional_id)->toBe($establecimientoEducacional->id);
+    expect($paciente->ley_social_id)->toBe($leySocial->id);
+    expect($paciente->nacionalidad_id)->toBe($nacionalidad->id);
+    expect($paciente->modalidad_id)->toBe($modalidad->id);
+    expect($paciente->nivel_instruccion_id)->toBe($nivelInstruccion->id);
+    expect($paciente->pueblo_originario_id)->toBe($puebloOriginario->id);
+    expect($paciente->seguro_salud_id)->toBe($seguro->id);
+    expect($paciente->prevision_id)->toBe($prevision->id);
+    expect($paciente->religion_id)->toBe($religion->id);
+    expect($paciente->afp())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->establecimientoEducacional())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->leySocial())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->nacionalidad())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->modalidad())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->nivelInstruccion())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->puebloOriginario())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->seguroSalud())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->prevision())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->religion())->toBeInstanceOf(BelongsTo::class);
     expect($paciente->actividad_economica)->toBe('Fast Food Cook');
     expect($paciente->activo)->toBe(0);
     expect($paciente->apellidos)->toBe('Perez');
@@ -79,23 +100,15 @@ it('can create a paciente', function () {
     expect($paciente->donante)->toBe(0);
     expect($paciente->edad)->toBe(18);
     expect($paciente->email)->toBe('juan.perez@example.com');
-    //expect($paciente->establecimiento_educacional_id)->toBe($educacional->id);
     expect($paciente->estado_civil)->toBe('Viudo');
     expect($paciente->fecha_nacimiento)->toBe('2011-07-19');
     expect($paciente->genero)->toBe('Femenino');
     expect($paciente->grupo_sanguineo)->toBe('A+');
-    expect($paciente->ley_social_id)->toBe($leySocial->id);
     expect($paciente->modalidad)->toBe('Modalidad1');
-    expect($paciente->nacionalidad_id)->toBe($nacionalidad->id);
-    expect($paciente->nivel_instruccion_id)->toBe($nivelInstruccion->id);
     expect($paciente->nombre)->toBe('Juan');
     expect($paciente->ocupacion)->toBe('Title Searcher');
-    expect($paciente->prevision_id)->toBe($prevision->id);
     expect($paciente->profesion)->toBe('Substation Maintenance');
-    expect($paciente->pueblo_originario_id)->toBe($puebloOriginario->id);
-    expect($paciente->religion_id)->toBe($religion->id);
     expect($paciente->rut)->toBe('12345678-9');
-    expect($paciente->seguro_salud_id)->toBe($seguro->id);
     expect($paciente->telefono1)->toBe('337-597-4667');
     expect($paciente->telefono2)->toBe('+1-505-479-9905');
     expect($paciente)->toBeInstanceOf(Paciente::class);

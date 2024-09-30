@@ -9,13 +9,16 @@ use App\Models\EstablecimientoEducacional;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Afp>
  */
-class EstablecimientoEducacionalFactory extends Factory
-{
+class EstablecimientoEducacionalFactory extends Factory{
+
     protected $model = EstablecimientoEducacional::class;
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * This function is used by Laravel's Eloquent Factories to generate default data for the EstablecimientoEducacional model.
+     *
+     * @return array<string, mixed> The default state of the EstablecimientoEducacional model.
+     *     - 'descripcion': A random word generated using Faker.
      */
     public function definition(): array
     {

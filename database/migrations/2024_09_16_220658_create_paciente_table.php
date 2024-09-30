@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('edad')->nullable();
             $table->foreignId('establecimiento_educacional_id')->nullable()->constrained('establecimiento_educacional');
             $table->foreignId('ley_social_id')->nullable()->constrained('ley_social');
+            $table->foreignId('modalidad_id')->nullable()->constrained('modalidad');
             $table->foreignId('nacionalidad_id')->nullable()->constrained('nacionalidad');
             $table->foreignId('nivel_instruccion_id')->nullable()->constrained('nivel_instruccion');
             $table->foreignId('prevision_id')->nullable()->constrained('prevision');
@@ -40,7 +41,6 @@ return new class extends Migration
             $table->string('estado_civil')->nullable();
             $table->string('genero')->nullable();
             $table->string('grupo_sanguineo')->nullable();
-            $table->string('modalidad')->nullable();
             $table->string('nombre');
             $table->string('ocupacion')->nullable();
             $table->string('password')->nullable();

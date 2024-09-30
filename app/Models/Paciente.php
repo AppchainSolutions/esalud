@@ -132,7 +132,7 @@ class Paciente extends Model
         'genero',
         'grupo_sanguineo',
         'ley_social_id',
-        'modalidad',
+        'modalidad_id',
         'nacionalidad_id',
         'nivel_instruccion_id',
         'nombre',

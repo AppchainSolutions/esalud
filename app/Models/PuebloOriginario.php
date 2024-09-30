@@ -6,14 +6,14 @@ use App\Models\Paciente;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pueblo extends Model
+class PuebloOriginario extends Model
 {
     use HasFactory;
-    public function pueblo(): BelongsTo
+    public function puebloOriginario(): BelongsTo
     {
-        return $this->belongsTo(Paciente::class, 'pueblo', 'id');
+        return $this->belongsTo(Paciente::class);
     }
-    protected $table = 'pueblo';
+    protected $table = 'pueblo_originario';
 
     protected $fillable = [
         'descripcion',

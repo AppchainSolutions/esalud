@@ -1,25 +1,19 @@
 <?php
+// database/factories/SeguroSaludFactory.php
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\SeguroSalud;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Afp>
- */
 class SeguroSaludFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = SeguroSalud::class;
+
+    public function definition()
     {
         return [
-            'descripcion' => $this->faker->word,
+            'descripcion' => $this->faker->company,
         ];
     }
 }

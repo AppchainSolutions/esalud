@@ -12,7 +12,7 @@ class Religion extends Model
     use HasFactory;
     public function religion(): HasMany
     {
-        return $this->hasMany(Paciente::class, 'religion', 'id');
+        return $this->hasMany(Paciente::class);
     }
     protected $table = 'religion';
 

@@ -12,7 +12,7 @@ class Modalidad extends Model
     use HasFactory;
     public function modalidadd(): BelongsTo
     {
-        return $this->belongsTo(Paciente::class, 'modalidad', 'id');
+        return $this->belongsTo(Paciente::class);
     }
     protected $table = 'modalidad';
 

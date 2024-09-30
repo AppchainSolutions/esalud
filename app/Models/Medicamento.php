@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Paciente;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Medicamento extends Model
 {
     use HasFactory;
 
-    public function paciente(): BelongsTo
+    public function paciente(): HasMany
     {
-        return $this->belongsTo(Paciente::class, 'paciente_id', 'id');
+        return $this->hasMany(Paciente::class);
     }
     protected $table = 'medicamento';
     protected $fillable = [

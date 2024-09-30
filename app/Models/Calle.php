@@ -7,19 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Paciente;
 
-
-class Alergias extends Model
+class Calle extends Model
 {
     use HasFactory;
-    public function paciente(): BelongsTo
+    public function afp(): BelongsTo
     {
-        return $this->belongsTo(Paciente::class, 'paciente_id', 'id');
+        return $this->belongsTo(Paciente::class);
     }
+    
+    protected $table = 'calle';
 
-    protected $table = 'alergias';
     protected $fillable = [
-        'paciente_id',
-        'comentario',
-        'alergia',
+        'descripcion',
     ];
 }

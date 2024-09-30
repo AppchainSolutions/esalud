@@ -10,7 +10,7 @@ use App\Models\Paciente;
 class Prevision extends Model
 {
     use HasFactory;
-    public function paciente(): BelongsTo
+    public function prevision(): BelongsTo
     {
         return $this->belongsTo(Paciente::class);
     }

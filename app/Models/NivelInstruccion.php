@@ -6,14 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Paciente;
-class Instruccion extends Model
+
+class NivelInstruccion extends Model
 {
     use HasFactory;
-    public function instruccion(): BelongsTo
+    public function nivelInstruccion(): BelongsTo
     {
-        return $this->belongsTo(Paciente::class, 'instruccion', 'id');
+        return $this->belongsTo(Paciente::class);
     }
-    protected $table = 'instruccion';
+    protected $table = 'nivel_instruccion';
 
     protected $fillable = [
         'descripcion',

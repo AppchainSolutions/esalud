@@ -11,6 +11,7 @@ use App\Models\EstablecimientoEducacional;
  */
 class EstablecimientoEducacionalFactory extends Factory
 {
+    protected $model = EstablecimientoEducacional::class;
     /**
      * Define the model's default state.
      *

@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Models\Afp;
-use App\Models\Alergias;
+use App\Models\Alergia;
 use App\Models\AntecedenteFamiliar;
+use App\Models\Calle;
 use App\Models\Cirugia;
 use App\Models\Enfermedad;
 use App\Models\EstadoCivil;
@@ -15,6 +16,8 @@ use App\Models\Instruccion;
 use App\Models\LeySocial;
 use App\Models\Medicamento;
 use App\Models\Modalidad;
+use App\Models\Nacionalidad;
+use App\Models\NivelInstruccion;
 use App\Models\Prevision;
 use App\Models\Pueblo;
 use App\Models\Religion;
@@ -30,77 +33,85 @@ class Paciente extends Model
 {
     use HasFactory;
 
-    public function alergias(): HasMany
+    public function alergia(): HasMany
     {
-        return $this->hasMany(Alergias::class, 'paciente_id', 'id');
+        return $this->hasMany(Alergia::class);
     }
     public function enfermedad(): HasMany
     {
-        return $this->hasMany(Enfermedad::class, 'paciente_id', 'id');
+        return $this->hasMany(Enfermedad::class);
     }
     public function cirugia(): HasMany
     {
-        return $this->hasMany(Cirugia::class, 'paciente_id', 'id');
+        return $this->hasMany(Cirugia::class);
     }
     public function factor(): HasMany
     {
-        return $this->hasMany(FactorRiesgo::class, 'paciente_id', 'id');
+        return $this->hasMany(FactorRiesgo::class);
     }
     public function medicamento(): HasMany
     {
-        return $this->hasMany(Medicamento::class, 'paciente_id', 'id');
+        return $this->hasMany(Medicamento::class);
     }
     public function vacuna(): HasMany
     {
-        return $this->hasMany(Vacuna::class, 'paciente_id', 'id');
+        return $this->hasMany(Vacuna::class);
     }
-    public function familiar(): HasMany
+    public function antecedenteFamiliar(): HasMany
     {
-        return $this->hasMany(AntecedenteFamiliar::class, 'paciente_id', 'id');
+        return $this->hasMany(AntecedenteFamiliar::class);
     }
-    public function seguro_salud_id(): BelongsTo
+    public function calle(): BelongsTo
     {
-        return $this->belongsTo(SeguroSalud::class, 'seguro', 'id');
+        return $this->belongsTo(Calle::class);
     }
-    public function estado_civil(): BelongsTo
+    public function seguroSalud(): BelongsTo
     {
-        return $this->belongsTo(EstadoCivil::class, 'estado_civil', 'id');
+        return $this->belongsTo(SeguroSalud::class);
     }
-    public function afp_id(): BelongsTo
+    public function nacionalidad(): BelongsTo
     {
-        return $this->belongsTo(Afp::class, 'afp', 'id');
+        return $this->belongsTo(Nacionalidad::class);
     }
-    public function grupo_sanguineo(): BelongsTo
+    public function estadoCivil(): BelongsTo
     {
-        return $this->belongsTo(GrupoSanguineo::class, 'grupo_sanguineo', 'id');
+        return $this->belongsTo(EstadoCivil::class);
     }
-    public function nivel_instruccion_id(): BelongsTo
+    public function afp(): BelongsTo
     {
-        return $this->belongsTo(Instruccion::class, 'instruccion', 'id');
+        return $this->belongsTo(Afp::class);
     }
-    public function ley_social_id(): BelongsTo
+    public function grupoSanguineo(): BelongsTo
     {
-        return $this->belongsTo(LeySocial::class, 'ley_social', 'id');
+        return $this->belongsTo(GrupoSanguineo::class);
     }
-    public function prevision_id(): BelongsTo
+    public function nivelInstruccion(): BelongsTo
     {
-        return $this->belongsTo(Prevision::class, 'prevision', 'id');
+        return $this->belongsTo(NivelInstruccion::class,);
     }
-    public function pueblo_indigena_id(): BelongsTo
+    public function leySocial(): BelongsTo
     {
-        return $this->belongsTo(Pueblo::class, 'pueblo', 'id');
+        return $this->belongsTo(LeySocial::class);
     }
-    public function religion_id(): BelongsTo
+    public function prevision(): BelongsTo
     {
-        return $this->belongsTo(Religion::class, 'religion', 'id');
+        return $this->belongsTo(Prevision::class);
+    }
+    public function puebloOriginario(): BelongsTo
+    {
+        return $this->belongsTo(PuebloOriginario::class);
+    }
+    public function religion(): BelongsTo
+    {
+        return $this->belongsTo(Religion::class);
     }
     public function modalidad(): BelongsTo
     {
-        return $this->belongsTo(Modalidad::class, 'modalidad', 'id');
+        return $this->belongsTo(Modalidad::class);
     }
-    public function establecimiento_educacional_id(): BelongsTo
+    public function establecimientoEducacional(): BelongsTo
     {
-        return $this->belongsTo(EstablecimientoEducacional::class, 'establecimiento_educacional', 'id');
+        return $this->belongsTo(EstablecimientoEducacional::class);
     }
 
     protected $table = 'paciente';
@@ -127,7 +138,7 @@ class Paciente extends Model
         'nombre',
         'ocupacion',
         'prevision_id',
-        'pueblo_indigena_id',
+        'pueblo_originario_id',
         'religion_id',
         'rut',
         'seguro_salud_id',

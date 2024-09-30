@@ -12,7 +12,7 @@ class Nacionalidad extends Model
     use HasFactory;
     public function nacionalidad(): BelongsTo
     {
-        return $this->belongsTo(Paciente::class, 'nacionalidad', 'id');
+        return $this->belongsTo(Paciente::class);
     }
     protected $table = 'nacionalidad';
 

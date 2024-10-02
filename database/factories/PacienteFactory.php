@@ -37,6 +37,7 @@ class PacienteFactory extends Factory
         Afp::factory()->create();
         Calle::factory()->create();
         EstablecimientoEducacional::factory()->create();
+        EstadoCivil::factory()->create();
         LeySocial::factory()->create();
         Modalidad::factory()->create();
         Nacionalidad::factory()->create();
@@ -58,7 +59,7 @@ class PacienteFactory extends Factory
             'edad' => $this->faker->numberBetween(18, 65), // Edad entre 18 y 65 años
             'email' => $this->faker->unique()->safeEmail,
             'establecimiento_educacional_id' => EstablecimientoEducacional::inRandomOrder()->first()->id,
-            'estado_civil' => $this->faker->randomElement(['Soltero', 'Casado', 'Divorciado', 'Viudo']), // Selecciona un estado civil al azar
+            'estado_civil_id' => EstadoCivil::inRandomOrder()->first()->id, // Selecciona un estado civil al azar
             'fecha_nacimiento' => $this->faker->date, // Fecha de nacimiento aleatoria
             'genero' => $this->faker->randomElement(['Masculino', 'Femenino']), // Selecciona un género al azar
             'grupo_sanguineo' => $this->faker->randomElement(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']), // Selecciona un grupo sanguíneo al azar

@@ -2,12 +2,12 @@
 
 namespace App\Repository;
 
-use App\Models\Ceco;
+use App\Models\Calle;
 
 
-class CecoRepository extends Repository
+class CalleRepository extends Repository
 {
-    public function __construct(Ceco $model)
+    public function __construct(Calle $model)
     {
         $this->model = $model;
     }

@@ -18,6 +18,10 @@ class DerivacionController extends Controller
      */
     public function index()
     {
+    }
+
+    public function show()
+    {
         return $this->derivacionRepository->all();
     }
 

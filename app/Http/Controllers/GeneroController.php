@@ -18,7 +18,6 @@ class GeneroController extends Controller
      */
     public function index()
     {
-        return $this->generoRepository->all();
     }
 
     /**
@@ -48,6 +47,6 @@ class GeneroController extends Controller
 
     public function show(Request $request)
     {
-        return $this->generoRepository->show($request);
+        return $this->generoRepository->all();
     }
 }

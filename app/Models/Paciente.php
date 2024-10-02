@@ -126,7 +126,7 @@ class Paciente extends Model
         'donante',
         'edad',
         'email',
-        'estado_civil',
+        'estado_civil_id',
         'establecimiento_educacional_id',
         'fecha_nacimiento',
         'genero',

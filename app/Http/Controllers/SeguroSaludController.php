@@ -3,23 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repository\EmpresaRepository;
+use App\Repository\SeguroSaludRepository;
 
-class EmpresaController extends Controller
+class SeguroSaludController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    protected $empresaRepository;
+    protected $seguroSaludRepository;
 
-    public function __construct(EmpresaRepository $empresaRepository)
+    public function __construct(SeguroRepository $seguroSaludRepository)
     {
-        $this->empresaRepository = $empresaRepository;
+        $this->seguroRepository = $seguroRepository;
     }
-
+    
     public function index()
     {
-        return $this->empresaRepository->all();
+
     }
 
     /**
@@ -28,6 +25,15 @@ class EmpresaController extends Controller
     public function store()
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function all()
+    {
+        return $this->seguroRepository->all();
+    
     }
 
     /**

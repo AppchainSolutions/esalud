@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\AfpController;
+use App\Http\Controllers\CalleController;
 use App\Http\Controllers\DerivacionController;
+use App\Http\Controllers\EstablecimientoEducacionalController;
 use App\Http\Controllers\EstadoCivilController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\GrupoSanguineoController;
@@ -14,13 +16,11 @@ use App\Http\Controllers\PuebloController;
 use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\ResponsableController;
 use App\Http\Controllers\SemaforoController;
-use App\Http\Controllers\SeguroController;
+use App\Http\Controllers\SeguroSaludController;
 use App\Http\Controllers\SistemaAfectadoController;
-use App\Http\Controllers\TestDrogaController;
 use App\Http\Controllers\TipoEnfermedadController;
 use App\Http\Controllers\TipoLicenciaController;
 use App\Http\Controllers\TrastornoCronicoController;
-use App\Http\Controllers\TurnoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +41,9 @@ Route::middleware([
 ])->group(function () {
 
     Route::resource('afp', AfpController::class);
+    Route::resource('calle', CalleController::class);
     Route::resource('derivacion', DerivacionController::class);
+    Route::resource('establecimiento_educacional', EstablecimientoEducacionalController::class);
     Route::resource('estado_civil', EstadoCivilController::class);
     Route::resource('genero', GeneroController::class);
     Route::resource('grupo_sanguineo', GrupoSanguineoController::class);
@@ -55,11 +57,8 @@ Route::middleware([
     Route::resource('religion', ReligionController::class);
     Route::resource('responsable', ResponsableController::class);
     Route::resource('semaforo', SemaforoController::class);
-    Route::resource('seguro', SeguroController::class);
-    Route::resource('sistema_afectado', SistemaAfectadoController::class);
-    Route::resource('test_drogas', TestDrogaController::class);
+    Route::resource('seguro_salud', SeguroSaludController::class);
     Route::resource('trastorno_cronico', TrastornoCronicoController::class);
     Route::resource('tipo_enfermedad', TipoEnfermedadController::class);
     Route::resource('tipo_licencia', TipoLicenciaController::class);
-    Route::resource('turno', TurnoController::class);
 });

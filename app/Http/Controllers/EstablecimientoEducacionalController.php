@@ -3,23 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repository\LugarAtencionRepository;
+use App\Repository\EstablecimientoEducacionalRepository;
 
-class LugarAtencionController extends Controller
+class EstablecimientoEducacionalController extends Controller
 {
-    protected $lugarAtencionRepository;
+    protected $establecimientoEducacionalRepository;
 
-    public function __construct(LugarAtencionRepository $lugarAtencionRepository)
+    public function __construct(EstablecimientoEducacionalRepository $establecimientoEducacionalRepository)
     {
-        $this->lugarAtencionRepository = $lugarAtencionRepository;
+        $this->establecimientoEducacionalRepository = $establecimientoEducacionalRepository;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return $this->lugarAtencionRepository->all();
-
+        return $this->establecimientoEducacionalRepository->all();
     }
 
     /**
@@ -28,6 +27,14 @@ class LugarAtencionController extends Controller
     public function store()
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show()
+    {
+        return $this->establecimientoEducacionalRepository->all();
     }
 
     /**
@@ -53,4 +60,5 @@ class LugarAtencionController extends Controller
     {
         //
     }
+
 }

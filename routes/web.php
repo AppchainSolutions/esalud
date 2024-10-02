@@ -4,6 +4,7 @@ use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\AntecedenteFamiliarController;
 use App\Http\Controllers\CirugiaController;
 use App\Http\Controllers\EnfermedadController;
+use App\Http\Controllers\EstablecimientoEducacionalController;
 use App\Http\Controllers\FactorRiesgoController;
 use App\Http\Controllers\LicenciaMedicaController;
 use App\Http\Controllers\MedicamentoController;
@@ -25,6 +26,7 @@ Route::middleware([
     Route::resource('/alergia', AlergiaController::class);
     Route::resource('/cirugia', CirugiaController::class);
     Route::resource('/enfermedad', EnfermedadController::class);
+    Route::resource('/establecimiento_educacional', EstablecimientoEducacionalController::class);
     Route::resource('/factor', FactorRiesgoController::class);
     Route::resource('/familiar', AntecedenteFamiliarController::class);
     Route::resource('/licencia', LicenciaMedicaController::class);

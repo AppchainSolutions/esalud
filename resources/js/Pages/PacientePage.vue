@@ -24,22 +24,20 @@
   const state = reactive({
     endpoints: [
       "afp",
-      "area",
-      "ceco",
+      'calle',
       "estado_civil",
-      "empresa",
-      "exposicion",
+      "establecimiento_educacional",
       "genero",
       "grupo_sanguineo",
       "instruccion",
       "ley_social",
+      "modalidad",
       "nacionalidad",
-      "planta",
+      "nivel_instruccion",
       "prevision",
-      "pueblo",
+      "pueblo_originario",
       "religion",
-      "seguro",
-      "unidad",
+      "seguro_salud",
     ],
     headers: [
       { title: "Rut", align: "center", sortable: true, key: "rut" },
@@ -51,10 +49,16 @@
         key: "apellidos",
       },
       {
-        title: "Empresa",
+        title: "Edad",
         align: "center",
         sortable: true,
-        key: "empresa.descripcion",
+        key: "empresa.edad",
+      },
+      {
+        title: "Telefono",
+        align: "center",
+        sortable: true,
+        key: "empresa.telefono1",
       },
       { title: "Acciones", sortable: false, align: "center", key: "actions" },
     ],
@@ -97,85 +101,70 @@
     searchQuery: {
       id: null,
       rut: null,
-      empresa: null,
-      area: null,
-      unidad: null,
-      planta: null,
-      ceco: null,
       activo: true,
-      exposicion: [],
+      afp_id: null,
+      establecimiento_educacional_id: null,
+      nacionalidad_id: null,
+      seguro_salud_id: null,
+      prevision_id: null,
     },
     editedItem: {
       rut: null,
       nombre: null,
-      actividad_economica: null,
       activo: true,
-      afp: null,
+      afp_id: null,
       apellidos: null,
-      area: null,
-      cargo: null,
-      ceco: null,
+      calle_id: null,
       ciudad: null,
       direccion: null,
       donante: false,
       edad: null,
       email: null,
-      empresa: null,
       estado_civil: null,
-      exposicion: [],
+      establecimiento_educacional_id: null,
       fecha_nacimiento: null,
       genero: null,
       grupo_sanguineo: null,
-      instruccion: null,
-      ley_social: null,
+      nivel_instruccion: null,
+      ley_social_id: null,
       modalidad: null,
-      nacionalidad: null,
-      ocupacion: null,
-      planta: null,
-      prevision: null,
+      nacionalidad_id: null,
+      prevision_id: null,
       profesion: null,
-      pueblo: null,
-      religion: null,
-      seguro: null,
+      pueblo_originario_id: null,
+      religion_id: null,
+      seguro_salud_id: null,
       telefono1: null,
-      telefono2: null,
-      unidad: null,
+      telefono2: null
     },
     defaultItem: {
       rut: null,
       nombre: null,
-      apellidos: null,
-      actividad_economica: null,
       activo: true,
-      seguro: null,
-      afp: null,
-      ceco: null,
-      area: null,
-      cargo: null,
+      afp_id: null,
+      apellidos: null,
+      calle_id: null,
       ciudad: null,
       direccion: null,
       donante: false,
       edad: null,
       email: null,
-      empresa: null,
       estado_civil: null,
-      exposicion: [],
+      establecimiento_educacional_id: null,
       fecha_nacimiento: null,
       genero: null,
       grupo_sanguineo: null,
-      instruccion: null,
-      ley_social: null,
+      nivel_instruccion: null,
+      ley_social_id: null,
       modalidad: null,
-      nacionalidad: null,
-      ocupacion: null,
-      planta: null,
-      prevision: null,
+      nacionalidad_id: null,
+      prevision_id: null,
       profesion: null,
-      pueblo: null,
-      religion: null,
+      pueblo_originario_id: null,
+      religion_id: null,
+      seguro_salud_id: null,
       telefono1: null,
-      telefono2: null,
-      unidad: null,
+      telefono2: null
     },
     dialog: false,
     editedIndex: -1,
@@ -186,9 +175,9 @@
     list: [],
     loadingSearch: false,
     tableItems: [],
-    urlDelete: "/paciente/delete",
+    urlDelete: "/paciente/destroy",
     urlShow: "/paciente/show",
-    urlStore: "/paciente",
+    urlStore: "/paciente/store",
     urlUpdate: "/paciente/update",
   });
   const date = useDate();
@@ -196,6 +185,8 @@
   //**********\\\\  LIFE CYCLE HOOKS ////*************/
   onMounted(async () => {
     state.list = await fetchData(state.endpoints);
+    console.log(state.list);
+
   });
 
   //**********\\\\  COMPUTE PROPERTIES ////*************/
@@ -220,7 +211,7 @@
   function atenciones(item) {
     store.selected = item;
     try {
-      router.get("/atencion_diaria");
+      router.get("/ficha_paciente");
     } catch (error) {
       console.error("An error occurred while fetching daily attention data.");
     }
@@ -293,21 +284,43 @@
               variant="underlined"
               clearable
             ></v-text-field>
-
             <v-select
-              :items="state.list.ceco"
+              :items="state.list.afp"
               item-title="descripcion"
               item-value="id"
-              v-model="state.searchQuery.ceco"
-              label="Area de Trabajo (Cencos)"
-              class="ma-2"
+              v-model="state.searchQuery.afp"
               clearable
+              label="AFP"
+              class="ma-2"
               variant="underlined"
               single
             ></v-select>
+            <v-select
+              :items="state.list.calle"
+              item-title="descripcion"
+              item-value="id"
+              v-model="state.searchQuery.calle"
+              clearable
+              label="Calle"
+              class="ma-2"
+              variant="underlined"
+              single
+            ></v-select>
+            <v-select
+              :items="state.list.establecimiento_educacional_id"
+              item-title="descripcion"
+              item-value="id"
+              v-model="state.searchQuery.establecimiento_educacional_id"
+              clearable
+              label="Establecimiento Educacional"
+              class="ma-2"
+              variant="underlined"
+              single
+            ></v-select>
+            
           </v-col>
           <v-col>
-            <v-switch
+<!--             <v-switch
               v-model="state.searchQuery.activo"
               hide-details
               class="ml-4"
@@ -315,65 +328,28 @@
               color="green-darken-3"
               inset
               label="Activo"
-            ></v-switch>
+            ></v-switch> -->
+            
+      
             <v-select
-              :items="state.list.empresa"
+              :items="state.list.ley_social"
               item-title="descripcion"
               item-value="id"
-              v-model="state.searchQuery.empresa"
-              label="Empresa"
+              v-model="state.searchQuery.ley_social"
               clearable
-              class="ma-4 mt-8"
-              variant="underlined"
-              single
-            ></v-select>
-          </v-col>
-          <v-col>
-            <v-select
-              :items="state.list.planta"
-              item-title="descripcion"
-              item-value="id"
-              v-model="state.searchQuery.planta"
-              label="Planta"
-              clearable
-              class="mt-2"
-              variant="underlined"
-              single
-              :key="'planta'"
-            ></v-select>
-            <v-select
-              :items="state.list.exposicion"
-              item-title="descripcion"
-              item-value="descripcion"
-              v-model="state.searchQuery.exposicion"
-              label="Exposicion"
-              clearable
-              class="mt-2"
-              variant="underlined"
-              chips
-              multiple
-            ></v-select>
-          </v-col>
-          <v-col>
-            <v-select
-              :items="state.list.unidad"
-              item-title="descripcion"
-              item-value="id"
-              v-model="state.searchQuery.unidad"
-              clearable
-              label="Unidad"
-              class="mt-2"
+              label="Ley Social"
+              class="ml-4"
               variant="underlined"
               single
             ></v-select>
             <v-select
-              :items="state.list.area"
+              :items="state.list.prevision"
               item-title="descripcion"
               item-value="id"
-              v-model="state.searchQuery.area"
+              v-model="state.searchQuery.prevision_id"
               clearable
-              label="Area"
-              class="mt-2"
+              label="Previsión"
+              class="ma-4"
               variant="underlined"
               single
             ></v-select>
@@ -423,6 +399,7 @@
               @click="openFormCreate"
             >
             </v-btn>
+
             <v-dialog v-model="state.dialog" persistent>
               <v-form fast-fail @submit.prevent>
                 <v-card>
@@ -826,6 +803,7 @@
                 </v-card>
               </v-form>
             </v-dialog>
+
           </v-toolbar>
         </template>
 

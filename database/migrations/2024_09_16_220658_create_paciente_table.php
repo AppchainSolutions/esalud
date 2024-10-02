@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('ciudad')->nullable();
             $table->string('direccion')->nullable();
             $table->string('email')->unique();
-            $table->string('estado_civil')->nullable();
+            $table->string('estado_civil_id')->nullable();
             $table->string('genero')->nullable();
             $table->string('grupo_sanguineo')->nullable();
             $table->string('nombre');

@@ -20,17 +20,6 @@ class AfpController extends Controller
      */
     public function index()
     {
-    }
-
-    /**
-     * Display all AFP records.
-     *
-     * This function retrieves all AFP records from the database and returns them.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection A collection of AFP records.
-     */
-    public function show()
-    {
         return $this->afpRepository->all();
     }
 

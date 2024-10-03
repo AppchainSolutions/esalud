@@ -12,19 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('paciente', function (Blueprint $table) {
-            $table->id();
-            $table->boolean('activo')->default('true');
-            $table->boolean('comunidad_lgbtq')->default('false');
-            $table->boolean('credencial_discapacidad')->default('false');
-            $table->boolean('donante')->default('false');
-            $table->boolean('pertenece_pie')->default('false');
+            $table->boolean('activo')->unsigned()->default(true);
+            $table->boolean('comunidad_lgbtq')->unsigned()->default(false);
+            $table->boolean('credencial_discapacidad')->unsigned()->default(false);
+            $table->boolean('donante')->unsigned()->default(false);
+            $table->boolean('pertenece_pie')->unsigned()->default(false);
             $table->date('fecha_nacimiento')->nullable();
             $table->foreignId('afp_id')->nullable()->constrained('afp');
             $table->foreignId('calle_id')->nullable()->constrained('calle');
-           // $table->integer('dg_nne_permanente_id')->nullable();
-           // $table->integer('dg_nne_transitoria_id')->nullable();
-            $table->integer('edad')->nullable();
             $table->foreignId('establecimiento_educacional_id')->nullable()->constrained('establecimiento_educacional');
+            $table->foreignId('estado_civil_id')->nullable()->constrained('estado_civil');
+            $table->foreignId('genero_id')->nullable()->constrained('genero');
+            $table->foreignId('grupo_sanguineo_id')->nullable()->constrained('grupo_Sanguineo');
             $table->foreignId('ley_social_id')->nullable()->constrained('ley_social');
             $table->foreignId('modalidad_id')->nullable()->constrained('modalidad');
             $table->foreignId('nacionalidad_id')->nullable()->constrained('nacionalidad');
@@ -33,14 +32,12 @@ return new class extends Migration
             $table->foreignId('pueblo_originario_id')->nullable()->constrained('pueblo_originario');
             $table->foreignId('religion_id')->nullable()->constrained('religion');
             $table->foreignId('seguro_salud_id')->nullable()->constrained('seguro_salud');
-            $table->string('actividad_economica')->nullable();
+            $table->id();
+            $table->integer('edad')->nullable();
             $table->string('apellidos')->nullable();
             $table->string('ciudad')->nullable();
             $table->string('direccion')->nullable();
             $table->string('email')->unique();
-            $table->string('estado_civil_id')->nullable();
-            $table->string('genero')->nullable();
-            $table->string('grupo_sanguineo')->nullable();
             $table->string('nombre');
             $table->string('ocupacion')->nullable();
             $table->string('password')->nullable();

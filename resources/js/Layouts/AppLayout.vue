@@ -88,6 +88,20 @@ const user = computed(() => page.props.auth.user);
                         <v-list-item
                             prepend-icon="mdi-account"
                             title="Profesional"
+                            value="Paciente"
+                            @click="paciente"
+                            v-if ="user.isAdmin"
+                        ></v-list-item>
+                        <v-list-item
+                            prepend-icon="mdi-account"
+                            title="Atención Psicológica"
+                            value="Paciente"
+                            @click="paciente"
+                            v-if ="user.isAdmin"
+                        ></v-list-item>
+                        <v-list-item
+                            prepend-icon="mdi-account"
+                            title="Profesional"
                             value="Profesional"
                             @click="profesional"
                             v-if ="user.isAdmin"

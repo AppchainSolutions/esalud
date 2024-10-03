@@ -1,6 +1,6 @@
 <script>
 import Enfermedad from "./Enfermedad.vue";
-import Alergia from "./Alergia.vue";
+import AlergiaModel from "./AlergiaModel.vue";
 import Cirugia from "./Cirugia.vue";
 import FactorRiesgo from "./FactorRiesgo.vue";
 import Medicamento from "./Medicamento.vue";
@@ -10,7 +10,7 @@ import Vacuna from "./Vacuna.vue";
 export default {
     components: {
         Enfermedad,
-        Alergia,
+        AlergiaModel,
         Cirugia,
         FactorRiesgo,
         Medicamento,
@@ -33,7 +33,7 @@ export default {
         <v-divider thickness="4px" color="#662d91"></v-divider>
     </v-sheet>
     <v-row class="mt-2">
-        <alergia />
+        <AlergiaModel />
         <v-divider
             :thickness="3"
             class="border-opacity-100"

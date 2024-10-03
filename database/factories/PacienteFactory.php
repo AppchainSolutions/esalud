@@ -13,6 +13,7 @@ use App\Models\EstadoCivil;
 use App\Models\EstablecimientoEducacional;
 use App\Models\FactorRiesgo;
 use App\Models\GrupoSanguineo;
+use App\Models\Genero;
 use App\Models\LeySocial;
 use App\Models\Medicamento;
 use App\Models\Modalidad;
@@ -23,6 +24,7 @@ use App\Models\Prevision;
 use App\Models\PuebloOriginario;
 use App\Models\Religion;
 use App\Models\SeguroSalud;
+use App\Models\User;
 use App\Models\Vacuna;
 
 /**
@@ -32,12 +34,15 @@ class PacienteFactory extends Factory
 {
     protected $model = Paciente::class;
 
+    
     public function definition()
     {
         Afp::factory()->create();
         Calle::factory()->create();
         EstablecimientoEducacional::factory()->create();
         EstadoCivil::factory()->create();
+        Genero::factory()->create();
+        GrupoSanguineo::factory()->create();
         LeySocial::factory()->create();
         Modalidad::factory()->create();
         Nacionalidad::factory()->create();
@@ -48,7 +53,6 @@ class PacienteFactory extends Factory
         SeguroSalud::factory()->create();
         
         return [
-            'actividad_economica' => $this->faker->jobTitle,
             'activo' => $this->faker->boolean,
             'afp_id' => Afp::inRandomOrder()->first()->id, // Selecciona un AFP al azar
             'apellidos' => $this->faker->lastName,
@@ -61,8 +65,8 @@ class PacienteFactory extends Factory
             'establecimiento_educacional_id' => EstablecimientoEducacional::inRandomOrder()->first()->id,
             'estado_civil_id' => EstadoCivil::inRandomOrder()->first()->id, // Selecciona un estado civil al azar
             'fecha_nacimiento' => $this->faker->date, // Fecha de nacimiento aleatoria
-            'genero' => $this->faker->randomElement(['Masculino', 'Femenino']), // Selecciona un género al azar
-            'grupo_sanguineo' => $this->faker->randomElement(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']), // Selecciona un grupo sanguíneo al azar
+            'genero_id' =>  Genero::inRandomOrder()->first()->id,
+            'grupo_sanguineo_id' => GrupoSanguineo::inRandomOrder()->first()->id, // Selecciona un grupo sanguíneo al azar
             'ley_social_id' => LeySocial::inRandomOrder()->first()->id,
             'modalidad_id' => Modalidad::inRandomOrder()->first()->id, // Selecciona una modalidad al azar
             'nacionalidad_id' => Nacionalidad::inRandomOrder()->first()->id,

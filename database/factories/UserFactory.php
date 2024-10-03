@@ -16,13 +16,16 @@ class UserFactory extends Factory
 
     public function definition(): array
     {
+        User::truncate();
+
         return [
             'name' => $this->faker->firstName(),
             'lastname' => $this->faker->lastName(),
             'rut' => RutGenerator::generarRut(),
             'email' => $this->faker->unique()->safeEmail(),
+            'isAdmin' => $this->faker->boolean,
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => static::$password ??= Hash::make('clave123'),
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),

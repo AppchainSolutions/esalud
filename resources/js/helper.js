@@ -11,7 +11,7 @@ const { notify } = useNotification();
 
 export const fetchData = async (endpoints) => {
     const fetches = endpoints.map(async (endpoint) => {
-        const endpointUrl = "/secundaria/" + endpoint + "/show";
+        const endpointUrl = "/secundaria/" + endpoint;
         try {
             const response = await axios.get(endpointUrl);
             return {

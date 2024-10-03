@@ -20,22 +20,9 @@ const nombre = store.getSelected.nombre;
 const apellidos = store.getSelected.apellidos;
 const state = reactive({
     endpoints: [
-        "accidente",
-        "accidente_condicion",
-        "calificacion",
-        "derivacion",
-        "lugar_atencion",
-        "medio_derivacion",
-        "error_critico",
-        "estado_mental",
-        "fuente_incidente",
-        "responsable",
-        "sistema_afectado",
-        "tipo_atencion",
-        "tipo_licencia",
-        "religion",
-        "unidad",
-        "turno",
+/*         "servicio",
+        "profesional",
+        "horarios_disponibles", */
     ],
 
     headers: [
@@ -62,8 +49,6 @@ const state = reactive({
     ],
     editedItem: {
         paciente_id: null,
-        accidente_condicion: null,
-        accidente: null,
         acompanado: null,
         alerta_she: null,
         at_realizada_por: null,
@@ -138,13 +123,13 @@ const state = reactive({
     list: [],
     loading: false,
     valid: null,
-    formTitle: "Atención diaria de Pacientes",
+    formTitle: "Asignación de Servicio de Pacientes",
     formCrear: "Nueva Atención",
-    formEdit: "Editar datos del atención diaria",
-    urlShow: "/atencion_diaria/show",
-    urlUpdate: "/atencion_diaria/update",
-    urlDelete: "/atencion_diaria/delete",
-    urlStore: "/atencion_diaria",
+    formEdit: "Editar datos del Asignación de Servicio",
+    urlShow: "/asignacion_servicio/show",
+    urlUpdate: "/asignacion_servicio/update",
+    urlDelete: "/asignacion_servicio/delete",
+    urlStore: "/asignacion_servicio",
 });
 
 //**********\\\\  LIFE CYCLE HOOKS ////*************/

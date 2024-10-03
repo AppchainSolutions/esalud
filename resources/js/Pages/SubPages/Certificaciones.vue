@@ -27,12 +27,12 @@ export default {
         editedIndex: -1,
         editedItem: {
             idpersonal: store.userSelected,
-            alergia: "",
+            AlergiaModel: "",
             comentario: 0,
         },
         defaultItem: {
             idpersonal: store.userSelected,
-            alergia: "",
+            AlergiaModel: "",
             comentario: "",
         },
     }),
@@ -81,7 +81,7 @@ export default {
         initialize() {
             let user = store.userSelected;
 
-            router.get("/alergia", {
+            router.get("/AlergiaModel", {
                 rut: user,
             });
             this.lista = listaResponse.value;
@@ -150,13 +150,13 @@ export default {
         },
 
         saveEdit(edited) {
-            router.put("/alergia/edit", {
-                alergia: edited,
+            router.put("/AlergiaModel/edit", {
+                AlergiaModel: edited,
             });
         },
         saveSave(added) {
-            router.put("/alergia/store", {
-                alergia: added,
+            router.put("/AlergiaModel/store", {
+                AlergiaModel: added,
             });
         },
     },
@@ -168,7 +168,7 @@ export default {
         <v-data-table
             :headers="headers"
             :items="lista"
-            :sort-by="[{ key: 'alergia', order: 'asc' }]"
+            :sort-by="[{ key: 'AlergiaModel', order: 'asc' }]"
         >
             <template v-slot:top>
                 <v-toolbar flat>

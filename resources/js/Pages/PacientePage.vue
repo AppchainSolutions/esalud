@@ -25,7 +25,7 @@
     endpoints: [
       "afp",
       'calle',
-      "estado_civil",
+  /*     "estado_civil",
       "establecimiento_educacional",
       "genero",
       "grupo_sanguineo",
@@ -37,7 +37,7 @@
       "prevision",
       "pueblo_originario",
       "religion",
-      "seguro_salud",
+      "seguro_salud", */
     ],
     headers: [
       { title: "Rut", align: "center", sortable: true, key: "rut" },
@@ -52,13 +52,13 @@
         title: "Edad",
         align: "center",
         sortable: true,
-        key: "empresa.edad",
+        key: "edad",
       },
       {
-        title: "Telefono",
+        title: "Telefono contacto",
         align: "center",
         sortable: true,
-        key: "empresa.telefono1",
+        key: "telefono1",
       },
       { title: "Acciones", sortable: false, align: "center", key: "actions" },
     ],
@@ -101,10 +101,11 @@
     searchQuery: {
       id: null,
       rut: null,
-      activo: true,
+      activo: 1,
       afp_id: null,
       establecimiento_educacional_id: null,
       nacionalidad_id: null,
+      ley_social_id: null,
       seguro_salud_id: null,
       prevision_id: null,
     },
@@ -120,12 +121,12 @@
       donante: false,
       edad: null,
       email: null,
-      estado_civil: null,
+      estado_civil_id: null,
       establecimiento_educacional_id: null,
       fecha_nacimiento: null,
-      genero: null,
-      grupo_sanguineo: null,
-      nivel_instruccion: null,
+      genero_id: null,
+      grupo_sanguineo_id: null,
+      nivel_instruccion_id: null,
       ley_social_id: null,
       modalidad: null,
       nacionalidad_id: null,
@@ -149,12 +150,12 @@
       donante: false,
       edad: null,
       email: null,
-      estado_civil: null,
+      estado_civil_id: null,
       establecimiento_educacional_id: null,
       fecha_nacimiento: null,
-      genero: null,
-      grupo_sanguineo: null,
-      nivel_instruccion: null,
+      genero_id: null,
+      grupo_sanguineo_id: null,
+      nivel_instruccion_id: null,
       ley_social_id: null,
       modalidad: null,
       nacionalidad_id: null,
@@ -177,6 +178,7 @@
     tableItems: [],
     urlDelete: "/paciente/destroy",
     urlShow: "/paciente/show",
+    urlAll: "/paciente/",
     urlStore: "/paciente/store",
     urlUpdate: "/paciente/update",
   });
@@ -208,10 +210,11 @@
     }
   }
 
-  function atenciones(item) {
+  function asignacion(item) {
     store.selected = item;
+    console.log(item);
     try {
-      router.get("/ficha_paciente");
+      router.get("/asignacion");
     } catch (error) {
       console.error("An error occurred while fetching daily attention data.");
     }
@@ -252,7 +255,7 @@
     closeForm(state);
   };
 
-  function openFormEdit(item) {
+  function fichaPersonal(item) {
     openToEdit(state, item);
     handleInputChange();
   }
@@ -290,7 +293,7 @@
               item-value="id"
               v-model="state.searchQuery.afp"
               clearable
-              label="AFP"
+              label="Afp"
               class="ma-2"
               variant="underlined"
               single
@@ -306,21 +309,11 @@
               variant="underlined"
               single
             ></v-select>
-            <v-select
-              :items="state.list.establecimiento_educacional_id"
-              item-title="descripcion"
-              item-value="id"
-              v-model="state.searchQuery.establecimiento_educacional_id"
-              clearable
-              label="Establecimiento Educacional"
-              class="ma-2"
-              variant="underlined"
-              single
-            ></v-select>
+            
             
           </v-col>
           <v-col>
-<!--             <v-switch
+<!--              <v-switch
               v-model="state.searchQuery.activo"
               hide-details
               class="ml-4"
@@ -335,7 +328,7 @@
               :items="state.list.ley_social"
               item-title="descripcion"
               item-value="id"
-              v-model="state.searchQuery.ley_social"
+              v-model="state.searchQuery.ley_social_id"
               clearable
               label="Ley Social"
               class="ml-4"
@@ -350,6 +343,17 @@
               clearable
               label="Previsión"
               class="ma-4"
+              variant="underlined"
+              single
+            ></v-select>
+            <v-select
+              :items="state.list.establecimiento_educacional_id"
+              item-title="descripcion"
+              item-value="id"
+              v-model="state.searchQuery.establecimiento_educacional_id"
+              clearable
+              label="Establecimiento Educacional"
+              class="ma-2"
               variant="underlined"
               single
             ></v-select>
@@ -629,7 +633,7 @@
                           item-title="descripcion"
                           item-value="id"
                           v-model="state.editedItem.afp"
-                          label="AFP"
+                          label="AFP;"
                           clearable
                           variant="underlined"
                         ></v-select>
@@ -808,7 +812,7 @@
         </template>
 
         <template v-slot:item.actions="{ item }">
-          <v-tooltip text="Atenciones Diarias" location="top">
+          <v-tooltip text="Asignacion de Servicio" location="top">
             <template v-slot:activator="{ props }">
               <v-btn
                 v-bind="props"
@@ -817,7 +821,7 @@
                 class="mr-2 ml-2"
                 :icon="'mdi-medical-bag'"
                 variant="tonal"
-                @click="atenciones(item)"
+                @click="asignacion(item)"
               ></v-btn>
             </template>
           </v-tooltip>
@@ -834,7 +838,7 @@
               ></v-btn>
             </template>
           </v-tooltip>
-          <v-tooltip text="Editar Datos Personales y Laborales" location="top">
+          <v-tooltip text="Datos Personales" location="top">
             <template v-slot:activator="{ props }">
               <v-btn
                 v-bind="props"
@@ -843,7 +847,7 @@
                 color="#009AA4"
                 variant="tonal"
                 :icon="'mdi-account-edit-outline'"
-                @click="openFormEdit(item)"
+                @click="fichaPersonal(item)"
               ></v-btn>
             </template>
           </v-tooltip>

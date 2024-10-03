@@ -15,10 +15,10 @@ const store = useDataStore();
 const state = reactive({
     headers: [
         {
-            title: "Alergia",
+            title: "AlergiaModel",
             align: "start",
             sortable: true,
-            key: "alergia",
+            key: "AlergiaModel",
         },
         { title: "Comentario", key: "comentario", sortable: false },
         { title: "Acciones", align: "center", key: "actions" },
@@ -26,13 +26,13 @@ const state = reactive({
 
     editedItem: {
         paciente_id: null,
-        alergia: null,
+        AlergiaModel: null,
         comentario: null,
     },
 
     defaultItem: {
         paciente_id: null,
-        alergia: null,
+        AlergiaModel: null,
         comentario: null,
     },
     searchQuery: {
@@ -44,12 +44,12 @@ const state = reactive({
     list: [],
     valid: null,
     formTitle: "Alergias",
-    formCrear: "Nueva Alergia",
-    formEdit: "Editar Alergia",
-    urlShow: "/alergia/show",
-    urlUpdate: "/alergia/update",
-    urlDelete: "/alergia/delete",
-    urlStore: "/alergia",
+    formCrear: "Nueva AlergiaModel",
+    formEdit: "Editar AlergiaModel",
+    urlShow: "/AlergiaModel/show",
+    urlUpdate: "/AlergiaModel/update",
+    urlDelete: "/AlergiaModel/delete",
+    urlStore: "/AlergiaModel",
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/
@@ -135,9 +135,9 @@ const remove = async (item) => {
                                             <v-col>
                                                 <v-text-field
                                                     v-model="
-                                                        state.editedItem.alergia
+                                                        state.editedItem.AlergiaModel
                                                     "
-                                                    label="alergia"
+                                                    label="AlergiaModel"
                                                     type="text"
                                                     variant="underlined"
                                                 ></v-text-field>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\AntecedenteFamiliarController;
+use App\Http\Controllers\AsignacionServicioController;
 use App\Http\Controllers\CirugiaController;
 use App\Http\Controllers\EnfermedadController;
 use App\Http\Controllers\EstablecimientoEducacionalController;
@@ -23,6 +24,7 @@ Route::middleware([
 
     Route::inertia('/ficha', 'SubPages/FichaMedica');
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard'); // Define the dashboard route using Inertia and name it
+    Route::resource('/asignacion', AsignacionServicioController::class);
     Route::resource('/alergia', AlergiaController::class);
     Route::resource('/cirugia', CirugiaController::class);
     Route::resource('/enfermedad', EnfermedadController::class);

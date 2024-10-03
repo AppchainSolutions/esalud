@@ -12,7 +12,7 @@ class GeneroFactory extends Factory
     public function definition()
     {
         return [
-            'descripcion' => $this->faker->genre,
+            'descripcion' =>$this->faker->randomElement(['Masculino', 'Femenino']),
         ];
     }
 }

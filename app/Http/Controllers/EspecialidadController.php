@@ -3,27 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repository\PrevisionRepository;
 
-
-class PrevisionController extends Controller
+class EspecialidadController extends Controller
 {
-    protected $previsionRepository;
-
-    public function __construct(previsionRepository $previsionRepository)
-    {
-        $this->previsionRepository = $previsionRepository;
-    }
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        return $this->previsionRepository->all();
-
+        //
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function store()
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         //
     }
@@ -31,9 +33,9 @@ class PrevisionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function all()
+    public function show(string $id)
     {
-
+        //
     }
 
     /**

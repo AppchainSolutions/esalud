@@ -39,8 +39,8 @@ const user = computed(() => page.props.auth.user);
         profesional() {
             router.get("/profesional");
         },
-        sesion_psicologica() {
-            router.get("/sesion_psicologica");
+        psico() {
+            router.get("/psico");
         },
 
         salir() {
@@ -55,80 +55,39 @@ const user = computed(() => page.props.auth.user);
     <v-app>
         <v-container fluid>
             <notifications position="bottom right" width="40%">
-              
+
             </notifications>
             <v-card>
-                <v-navigation-drawer
-                    v-model="drawer"
-                    :rail="rail"
-                    permanent
-                    @click="rail = false"
-                    color="white"
-                >
+                <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false" color="white">
                     <v-list-item nav class="mt-0">
                         <v-img :src="logo" id="logo"> </v-img>
                     </v-list-item>
                     <v-divider></v-divider>
 
                     <v-list density="compact" nav>
-                        <v-list-item
-                            prepend-icon="mdi-home-city"
-                            color="rgb(0, 0, 0)"
-                            title="Dashboard"
-                            value="Inicio"
-                            @click="inicio"
-                        ></v-list-item>
-                        <v-list-item
-                            prepend-icon="mdi-account"
-                            title="Paciente"
-                            value="Paciente"
-                            @click="paciente"
-                            v-if ="user.isAdmin"
-                        ></v-list-item>
-                        <v-list-item
-                            prepend-icon="mdi-account"
-                            title="Profesional"
-                            value="Paciente"
-                            @click="paciente"
-                            v-if ="user.isAdmin"
-                        ></v-list-item>
-                        <v-list-item
-                            prepend-icon="mdi-account"
-                            title="Atención Psicológica"
-                            value="Paciente"
-                            @click="paciente"
-                            v-if ="user.isAdmin"
-                        ></v-list-item>
-                        <v-list-item
-                            prepend-icon="mdi-account"
-                            title="Profesional"
-                            value="Profesional"
-                            @click="profesional"
-                            v-if ="user.isAdmin"
-                        ></v-list-item>
+                        <v-list-item prepend-icon="mdi-home-city" color="rgb(0, 0, 0)" title="Dashboard" value="Inicio"
+                            @click="inicio"></v-list-item>
+                        <v-list-item prepend-icon="mdi-account" title="Paciente" value="Paciente" @click="paciente"
+                            v-if="user.isAdmin"></v-list-item>
+                        <v-list-item prepend-icon="mdi-account" title="Profesional" value="Profesional"
+                            @click="profesional" v-if="user.isAdmin"></v-list-item>
+                        <v-list-item prepend-icon="mdi-account" title="Psicología" value="Psicología" @click="psico"
+                            v-if="user.isAdmin"></v-list-item>
+
                         <v-divider></v-divider>
                     </v-list>
 
                     <template v-slot:append>
                         <v-btn block color="#662d91" @click="salir">
-                            <b><i
-                                    class="mdi mdi-location-exit"
-                                    style="font-size: 24px; color: white"
-                                ></i
-                            ></b>
+                            <b><i class="mdi mdi-location-exit" style="font-size: 24px; color: white"></i></b>
                         </v-btn>
                     </template>
                 </v-navigation-drawer>
             </v-card>
             <v-app-bar color="#009AA4">
                 <v-app-bar-title>
-                    <v-icon
-                        @click.stop="toggleBtn"
-                        class="ma-auto"
-                        size="x-large"
-                        >{{ icon }}</v-icon
-                    >
-                    Bienvenido/a    {{ user.name }} [ Municipalidad de Casablanca - Centro Comunitario ]
+                    <v-icon @click.stop="toggleBtn" class="ma-auto" size="x-large">{{ icon }}</v-icon>
+                    Bienvenido/a {{ user.name }} [ Municipalidad de Casablanca - Centro Comunitario ]
                 </v-app-bar-title>
             </v-app-bar>
             <v-main>

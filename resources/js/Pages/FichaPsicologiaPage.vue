@@ -20,39 +20,52 @@ const nombre = store.getSelected.nombre;
 const apellidos = store.getSelected.apellidos;
 const state = reactive({
     endpoints: [
-/*         "servicio",
-        "profesional",
-        "horarios_disponibles", */
+        /*         "servicio",
+                "profesional",
+                "horarios_disponibles", */
     ],
+    atencion: {
+        headers: [
+            {
+                title: "Nombre y apellido",
+                align: "center",
+                sortable: true,
+                value: "paciente",
+            },
+            {
+                title: "Motivo Consulta",
+                align: "center",
+                sortable: true,
+                value: "motivoConsulta",
+            },
+            {
+                title: "Fecha Solicitud",
+                align: "center",
+                sortable: true,
+                value: "fechaSolicitud",
+            },
+            {
+                title: "Tipo Sesion",
+                align: "center",
+                sortable: true,
+                value: "tipoSesion", //TODO: esto vendría por defecto para todas las primeras sesiones
+            },
+            { title: "Horario", key: "horario", sortable: true },
+            { title: "Acciones", align: "center", key: "actions" },
+        ],
+        items: [
+            {
+                paciente: 'Pedro Castillo', motivoConsulta: 'Crisis de panico', fechaSolicitud: '12/01/2024', tipoSesion: "Evaluación diagnóstica", horario: "Lunes: 14:00 - 14:45"
+            }
+        ]
+    },
 
-    headers: [
-        {
-            title: "#",
-            align: "center",
-            sortable: true,
-            key: "paciente_id",
-        },
-        {
-            title: "Motivo de consulta",
-            align: "center",
-            sortable: true,
-            key: "motivo_consulta",
-        },
-        {
-            title: "Accidente",
-            align: "center",
-            sortable: true,
-            key: "accidente.descripcion",
-        },
-        { title: "Fecha atencion", key: "fecha_atencion", sortable: true },
-        { title: "Acciones", align: "center", key: "actions" },
-    ],
     horario: {
         headers: [
-            { text: 'Día de la semana', align: 'center', sortable: true, value: 'dia' },
-            { text: 'Hora inicio', align: 'center', sortable: true, value: 'horaInicio' },
-            { text: 'Hora término', align: 'center', sortable: true, value: 'horaTermino' },
-            { text: 'Disponible (S/N)', align: 'center', sortable: true, value: 'disponible' }
+            { title: 'Día de la semana', align: 'center', sortable: true, value: 'dia' },
+            { title: 'Hora inicio', align: 'center', sortable: true, value: 'horaInicio' },
+            { title: 'Hora término', align: 'center', sortable: true, value: 'horaTermino' },
+            { title: 'Disponible (S/N)', align: 'center', sortable: true, value: 'disponible' }
         ],
         items: [
             { dia: 'Lunes', horaInicio: '08:00', horaTermino: '17:00', disponible: 'S' },
@@ -193,7 +206,14 @@ const remove = async (item) => {
     await handleRemoveItem(state, item);
 };
 
-
+function sesiones(item) {
+    store.selected = item;
+    try {
+        router.get("/sesiones");
+    } catch (error) {
+        console.error("An error occurred while fetching daily attention data.");
+    }
+}
 
 </script>
 
@@ -210,48 +230,75 @@ const remove = async (item) => {
                 :loading="state.loadingSearch" type="submit" @click="volver">
                 Volver
             </v-btn>
-            <br>
-            Paciente: {{ apellidos }}, {{ nombre }}
-            <v-row>
+            <v-btn color="#009AA4" variant="tonal" @click="sesiones">
+                +
+            </v-btn>
 
-                <v-col cols="6" :class="'ma-4 pa-4'">
-                    <v-select :items="[
-                        'Especialidad 1',
-                        'Especialidad 2',
-                        'Especialidad 3',
-                    ]" clearable label="Especialidad" variant="underlined" single></v-select>
-                    <v-select :items="[
-                        'Profesional 1',
-                        'Profesional 2',
-                        'Profesional 3',
-                    ]" clearable label="Profesional" variant="underlined" single></v-select>
-                    <v-select :items="[
-                        'Box 1',
-                        'Box 2',
-                        'Box 3',
-                    ]" clearable label="Box" variant="underlined" single></v-select>
-                    <v-select clearable chips label="COntacto"
-                        :items="['No responde', 'No desea servicio', 'Inubicable', 'Otro']" multiple></v-select>
-                </v-col>
-                <v-col>
+            <v-sheet color="gray" :elevation="1" :class="'rounded-lg ma-4 pa-6'">
+                <v-row>
+                    <v-col>
+                        <h3>Profesional:</h3> Tapia, Jorge
+                        <h4>Especialidad:</h4> Psicología
+                        <br>
 
-                    <v-data-table :headers="state.horario.headers" :items="state.horario.items" class="elevation-1">
-                        <template v-slot:top>
-                            <v-toolbar flat>
-                                <v-toolbar-title>Disponibilidad horaria</v-toolbar-title>
-                                <v-divider class="mx-4" inset vertical></v-divider>
-                            </v-toolbar>
-                        </template>
-                        <template v-slot:item.disponible="{ item }">
-                            <v-chip :color="item.disponible === 'S' ? 'green' : 'red'" dark>
-                                {{ item.disponible }}
-                            </v-chip>
-                        </template>
-                    </v-data-table>
-                </v-col>
-            </v-row>
+                        TODO: Acá pueden ir los pacientes totales del profesional o solamente los que les
+                        corresponde para ese día o tener opcion de switch entre todos S/N
+
+                    </v-col>
+                    <v-col>
+                        <h4>Horarios asignados: </h4>
+                        <ol :class="'ml-4'">
+                            <li>Lunes: 08:00 - 17:00</li>
+                            <li>Martes: 08:00 - 17:00</li>
+                            <li>Miércoles: 08:00 - 17:00</li>
+                            <li>Jueves: 08:00 - 17:00</li>
+                            <li>Viernes: 08:00 - 17:00</li>
+                        </ol>
+                    </v-col>
+                    <v-col>
+                        <h4>Horarios disponibles: </h4>
+                        <ol :class="'ml-4'">
+                            <li>Lunes: 08:00 - 17:00</li>
+                            <li>Jueves: 08:00 - 17:00</li>
+                        </ol>
+                    </v-col>
+                    <v-col>
+                        <h4>Fecha: 03/10/2024</h4>
+                        <h4>Hora actual: 10:30</h4>
+                        <h4>Hora inicio: 10:00 - 10:45</h4>
+                        <v-line></v-line>
+                        <v-textarea clearable label="Nota rápida:"></v-textarea>
+                    </v-col>
+
+                </v-row>
 
 
+            </v-sheet>
+            <v-sheet color="gray" :elevation="1" :class="'rounded-lg ma-4 pa-6'">
+                <v-row>
+
+
+                    <v-col>
+
+                        <v-data-table :headers="state.atencion.headers" :items="state.atencion.items"
+                            class="elevation-1">
+                            <template v-slot:top>
+                                <v-toolbar flat>
+                                    <v-toolbar-title>Pacientes asignados</v-toolbar-title>
+                                    <v-divider class="mx-4" inset vertical></v-divider>
+                                </v-toolbar>
+                            </template>
+                            <template v-slot:item.disponible="{ item }">
+                                <v-chip :color="item.disponible === 'S' ? 'green' : 'red'" dark>
+                                    {{ item.disponible }}
+                                </v-chip>
+                            </template>
+                        </v-data-table>
+                    </v-col>
+                </v-row>
+
+
+            </v-sheet>
         </v-sheet>
     </v-container>
 </template>

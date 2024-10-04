@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('profesional', function (Blueprint $table) {
             $table->id();
+            $table->string('rut');
             $table->string('nombre');
             $table->string('apellidos');
-            $table->string('email');
-            $table->string('telefono');
-            $table->string('direccion');
-            $table->integer('especialidad_id');
-            $table->binary('foto');
+            $table->string('email')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('direccion')->nullable();
+            $table->foreignId('especialidad_id')->constrained('especialidad');
+            $table->binary('foto')->nullable();
             $table->timestamps();
         });
     }

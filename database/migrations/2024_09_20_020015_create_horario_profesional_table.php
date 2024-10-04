@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('dia_semana_horario_profesional');
             $table->string('hora_semana_horario_profesional_ini');
             $table->string('hora_semana_horario_profesional_termino');
-            $table->integer('disponibilidad_box_id');
             $table->boolean('disponible')->default('true');
             $table->timestamps();
         });

@@ -2,13 +2,17 @@
 
 namespace App\Repository;
 
-use App\Models\Planta;
+use App\Models\Especialidad;
 
-class PlantaRepository extends Repository
+
+class EspecialidadRepository extends Repository
 {
-    public function __construct(Planta $model)
+    public function __construct(Especialidad $model)
     {
         $this->model = $model;
     }
+
+
+
     // Add any necessary methods to the repository here
 }

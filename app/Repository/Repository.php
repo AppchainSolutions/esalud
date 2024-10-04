@@ -40,6 +40,8 @@ abstract class Repository implements RepositoryInterface
     {
         $query = $request->get('data');
 
+        Log::info($query);
+
         try {
             $query = array_map(function ($value) {
                 return is_array($value) ? implode(',', $value) : $value;
@@ -99,6 +101,7 @@ abstract class Repository implements RepositoryInterface
     {
         try {
             $filters = $request->input('data');
+            Log::info($filters);
             $query = $this->model->query()
                 ->select("*");
             return Tools::filterData($filters, $query);

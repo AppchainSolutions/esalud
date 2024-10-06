@@ -117,7 +117,7 @@ class Paciente extends Model
     protected $table = 'paciente';
        protected $fillable = [
         'actividad_economica',
-        'activo',
+        'lista_espera',
         'afp_id',
         'apellidos',
         'calle_id',
@@ -129,8 +129,8 @@ class Paciente extends Model
         'estado_civil_id',
         'establecimiento_educacional_id',
         'fecha_nacimiento',
-        'genero',
-        'grupo_sanguineo',
+        'genero_id',
+        'grupo_sanguineo_id',
         'ley_social_id',
         'modalidad_id',
         'nacionalidad_id',

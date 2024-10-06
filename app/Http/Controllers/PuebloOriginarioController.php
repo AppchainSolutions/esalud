@@ -3,15 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repository\PuebloOriginarioRepository;
+
 
 class PuebloOriginarioController extends Controller
 {
+    protected $puebloOriginarioRepository;
+
+    public function __construct(PuebloOriginarioRepository $puebloOriginarioRepository)
+    {
+        $this->puebloOriginarioRepository = $puebloOriginarioRepository;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() {}
+
+    public function all()
     {
-        //
+        return $this->puebloOriginarioRepository->all();
     }
 
     /**

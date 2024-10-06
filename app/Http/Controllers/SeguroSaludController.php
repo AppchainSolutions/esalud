@@ -9,9 +9,9 @@ class SeguroSaludController extends Controller
 {
     protected $seguroSaludRepository;
 
-    public function __construct(SeguroRepository $seguroSaludRepository)
+    public function __construct(SeguroSaludRepository $seguroSaludRepository)
     {
-        $this->seguroRepository = $seguroRepository;
+        $this->seguroSaludRepository = $seguroSaludRepository;
     }
     
     public function index()
@@ -32,7 +32,7 @@ class SeguroSaludController extends Controller
      */
     public function all()
     {
-        return $this->seguroRepository->all();
+        return $this->seguroSaludRepository->all();
     
     }
 

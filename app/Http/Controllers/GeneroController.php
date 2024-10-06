@@ -19,6 +19,10 @@ class GeneroController extends Controller
     public function index()
     {
     }
+    public function all()
+    {
+        return $this->generoRepository->all();
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -47,6 +51,6 @@ class GeneroController extends Controller
 
     public function show(Request $request)
     {
-        return $this->generoRepository->all();
+       // return $this->generoRepository->all();
     }
 }

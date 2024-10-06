@@ -31,6 +31,11 @@ class PacienteController extends Controller
         return Inertia::render('PacientePage');
     }
 
+    public function all()
+    {
+        return $this->pacienteRepository->all();
+    }
+
     /**
      * Display the specified patient.
      *

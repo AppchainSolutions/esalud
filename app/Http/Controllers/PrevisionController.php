@@ -14,11 +14,18 @@ class PrevisionController extends Controller
     {
         $this->previsionRepository = $previsionRepository;
     }
+
     public function index()
     {
-        return $this->previsionRepository->all();
-
+        // This method is intentionally left empty because it is not yet implemented.
+        // Future implementation will handle the display of the index page.
     }
+
+    public function all()
+    {
+        return $this->previsionRepository->all();
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -26,14 +33,6 @@ class PrevisionController extends Controller
     public function store()
     {
         //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function all()
-    {
-
     }
 
     /**

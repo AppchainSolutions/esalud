@@ -2,7 +2,7 @@
   import { reactive, computed, onMounted } from "vue";
   import { useDataStore } from "@/store.js";
   import {
-    fetchData,
+    fetchAllData,
     handleRemoveItem,
     handleShowItem,
     handleStoreItem,
@@ -55,7 +55,7 @@
 
   //**********\\\\  LIFE CYCLE HOOKS ////*************/
   onMounted(async () => {
-    state.list = await fetchData(state.endpoints);
+    state.list = await fetchAllData(state.endpoints);
   });
 
   //**********\\\\  COMPUTE PROPERTIES ////*************/

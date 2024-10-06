@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('paciente', function (Blueprint $table) {
-            $table->boolean('activo')->unsigned()->default(true);
+            $table->boolean('lista_espera')->unsigned()->default(true);
             $table->boolean('comunidad_lgbtq')->unsigned()->default(false);
             $table->boolean('credencial_discapacidad')->unsigned()->default(false);
             $table->boolean('donante')->unsigned()->default(false);
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignId('genero_id')->nullable()->constrained('genero');
             $table->foreignId('grupo_sanguineo_id')->nullable()->constrained('grupo_Sanguineo');
             $table->foreignId('ley_social_id')->nullable()->constrained('ley_social');
-            $table->foreignId('modalidad_id')->nullable()->constrained('modalidad');
+         //   $table->foreignId('modalidad_id')->nullable()->constrained('modalidad');
             $table->foreignId('nacionalidad_id')->nullable()->constrained('nacionalidad');
             $table->foreignId('nivel_instruccion_id')->nullable()->constrained('nivel_instruccion');
             $table->foreignId('prevision_id')->nullable()->constrained('prevision');

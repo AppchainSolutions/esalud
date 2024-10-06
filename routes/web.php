@@ -30,9 +30,11 @@ Route::middleware([
     Route::resource('/psico', FichaPsicologiaController::class);
     Route::resource('/profesional', ProfesionalController::class);
     Route::resource('/vacuna', VacunaController::class);
-
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard'); // Define the dashboard route using Inertia and name it
     Route::inertia('/at_psico', 'SubPages/AtencionPsicologia');
     Route::inertia('/ficha', 'SubPages/FichaMedica');
+
+    Route::get('paciente/all', [PacienteController::class, 'all'])->name('paciente.all');
+
     
 });

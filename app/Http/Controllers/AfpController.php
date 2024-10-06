@@ -24,6 +24,11 @@ class AfpController extends Controller
         
     }
 
+    public function all()
+    {
+        return $this->afpRepository->all();
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -56,8 +61,5 @@ class AfpController extends Controller
         //
     }
 
-    public function all()
-    {
-        return $this->afpRepository->all();
-    }
+
 }

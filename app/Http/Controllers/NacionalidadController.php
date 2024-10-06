@@ -18,6 +18,11 @@ class NacionalidadController extends Controller
      */
     public function index()
     {
+        //        return $this->nacionalidadRepository->all();
+    }
+
+    public function all()
+    {
         return $this->nacionalidadRepository->all();
     }
 

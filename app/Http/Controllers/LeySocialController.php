@@ -15,6 +15,11 @@ class LeySocialController extends Controller
     }
     public function index()
     {
+        //        return $this->leySocialRepository->all();
+    }
+
+    public function all()
+    {
         return $this->leySocialRepository->all();
 
     }
@@ -25,24 +30,6 @@ class LeySocialController extends Controller
     public function store()
     {
         //
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function all()
-    {
-        try {
-            $query = LeySocialModel::all();
-             return response()->json([
-                'result' => $query
-            ]);
-        } catch (QueryException $error) {
-            Session::flash('message', 'No se encuentran registros.');
-            Log::error($error);
-
-        };
     }
 
     /**

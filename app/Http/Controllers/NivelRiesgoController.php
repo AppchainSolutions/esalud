@@ -18,6 +18,9 @@ class NivelRiesgoController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+    {}
+
+    public function all()
     {
         return $this->nivelriesgoRepository->all();
     }

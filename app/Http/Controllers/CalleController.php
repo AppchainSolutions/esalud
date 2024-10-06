@@ -21,7 +21,7 @@ class CalleController extends Controller
        // return Inertia::render('SubPages/Calle');
     }
 
-    public function all(Request $id)
+    public function all()
     {
         return $this->calleRepository->all();
     }

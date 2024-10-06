@@ -2,17 +2,15 @@
 
 namespace App\Repository;
 
-use App\Models\TipoAtencion;
+use App\Models\SeguroSalud;
 
 
-class TipoAtencionRepository extends Repository
+class SeguroSaludRepository extends Repository
 {
-    public function __construct(TipoAtencion $model)
+    public function __construct(SeguroSalud $model)
     {
         $this->model = $model;
     }
-
-
 
     // Add any necessary methods to the repository here
 }

@@ -3,15 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repository\NivelInstruccionRepository;
 
 class NivelInstruccionController extends Controller
 {
+    protected $nivelInstruccionRepository;
+
+    public function __construct(NivelInstruccionRepository $nivelInstruccionRepository)
+    {
+        $this->nivelInstruccionRepository = $nivelInstruccionRepository;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() {}
+
+    public function all()
     {
-        //
+        return $this->nivelInstruccionRepository->all();
     }
 
     /**

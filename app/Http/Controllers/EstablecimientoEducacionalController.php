@@ -18,6 +18,11 @@ class EstablecimientoEducacionalController extends Controller
      */
     public function index()
     {
+        // return $this->establecimientoEducacionalRepository->all();
+    }
+
+    public function all()
+    {
         return $this->establecimientoEducacionalRepository->all();
     }
 

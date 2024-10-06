@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Afp;
 use App\Models\Calle;
 use App\Models\EstablecimientoEducacional;
+use App\Models\EstadoCivil;
+use App\Models\Genero;
+use App\Models\GrupoSanguineo;
 use App\Models\Nacionalidad;
 use App\Models\NivelInstruccion;
 use App\Models\Modalidad;
@@ -27,7 +30,7 @@ it('can create a paciente', function () {
     $calle = Calle::factory()->create();
     $establecimientoEducacional = EstablecimientoEducacional::factory()->create();
     $leySocial = LeySocial::factory()->create();
-    $modalidad = Modalidad::factory()->create();
+//    $modalidad = Modalidad::factory()->create();
     $nacionalidad = Nacionalidad::factory()->create();
     $nivelInstruccion = NivelInstruccion::factory()->create();
     $prevision = Prevision::factory()->create();
@@ -39,33 +42,36 @@ it('can create a paciente', function () {
 
     // Crear un paciente usando el factory
     $paciente = Paciente::factory()->create([
-        'actividad_economica' => 'Fast Food Cook',
-        'activo' => 0,
-        'afp_id' => Afp::inRandomOrder()->first()->id,
-        'apellidos' => 'Perez',
-        'calle_id' => Calle::inRandomOrder()->first()->id,
-        'ciudad' => 'Kemmershire',
-        'direccion' => '6806 Labadie Ways Apt. 417',
-        'donante' => 0,
-        'edad' => 18,
-        'email' => 'juan.perez@example.com',
-        'establecimiento_educacional_id' => EstablecimientoEducacional::factory()->create()->id,
-        'estado_civil' => 'Viudo',
+        //      'actividad_economica' => 'Fast Food Cook',
+        'lista_espera' => true,
+        'comunidad_lgbtq' => true,
+        'credencial_discapacidad' => false,
+        'donante' => false,
+        'pertenece_pie' => false,
         'fecha_nacimiento' => '2011-07-19',
-        'genero' => 'Femenino',
-        'grupo_sanguineo' => 'A+',
+        'afp_id' => Afp::inRandomOrder()->first()->id,
+        'calle_id' => Calle::inRandomOrder()->first()->id,
+        'establecimiento_educacional_id' => EstablecimientoEducacional::factory()->create()->id,
+        'estado_civil_id' => EstadoCivil::inRandomOrder()->first()->id,
+        'genero_id' => Genero::inRandomOrder()->first()->id,
+        'grupo_sanguineo' => GrupoSanguineo::inRandomOrder()->first()->id,
         'ley_social_id' => LeySocial::inRandomOrder()->first()->id,
-        'modalidad' => Modalidad::inRandomOrder()->first()->id,
         'nacionalidad_id' => Nacionalidad::inRandomOrder()->first()->id,
         'nivel_instruccion_id' => NivelInstruccion::inRandomOrder()->first()->id,
-        'nombre' => 'Juan',
-        'ocupacion' => 'Title Searcher',
         'prevision_id' => Prevision::inRandomOrder()->first()->id,
-        'profesion' => 'Substation Maintenance',
         'pueblo_originario_id' => PuebloOriginario::inRandomOrder()->first()->id,
         'religion_id' => Religion::inRandomOrder()->first()->id,
-        'rut' => '12345678-9',
         'seguro_salud_id' => SeguroSalud::inRandomOrder()->first()->id,
+        'edad' => 18,
+        'apellidos' => 'Perez',
+        'ciudad' => 'Kemmershire',
+        'direccion' => '6806 Labadie Ways Apt. 417',
+        'email' => 'juan.perez@example.com',
+    //    'modalidad' => Modalidad::inRandomOrder()->first()->id,
+        'nombre' => 'Juan',
+        'ocupacion' => 'Title Searcher',
+        'profesion' => 'Substation Maintenance',
+        'rut' => '12345678-9',
         'telefono1' => '337-597-4667',
         'telefono2' => '+1-505-479-9905',
     ]);
@@ -75,7 +81,6 @@ it('can create a paciente', function () {
     expect($paciente->establecimiento_educacional_id)->toBe($establecimientoEducacional->id);
     expect($paciente->ley_social_id)->toBe($leySocial->id);
     expect($paciente->nacionalidad_id)->toBe($nacionalidad->id);
-    expect($paciente->modalidad_id)->toBe($modalidad->id);
     expect($paciente->nivel_instruccion_id)->toBe($nivelInstruccion->id);
     expect($paciente->pueblo_originario_id)->toBe($puebloOriginario->id);
     expect($paciente->seguro_salud_id)->toBe($seguro->id);
@@ -91,13 +96,12 @@ it('can create a paciente', function () {
     expect($paciente->seguroSalud())->toBeInstanceOf(BelongsTo::class);
     expect($paciente->prevision())->toBeInstanceOf(BelongsTo::class);
     expect($paciente->religion())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->actividad_economica)->toBe('Fast Food Cook');
-    expect($paciente->activo)->toBe(0);
+    expect($paciente->lista_espera)->toBe(true);
     expect($paciente->apellidos)->toBe('Perez');
     expect($paciente->calle_id)->toBe($calle->id);
     expect($paciente->ciudad)->toBe('Kemmershire');
     expect($paciente->direccion)->toBe('6806 Labadie Ways Apt. 417');
-    expect($paciente->donante)->toBe(0);
+    expect($paciente->donante)->toBe(false);
     expect($paciente->edad)->toBe(18);
     expect($paciente->email)->toBe('juan.perez@example.com');
     expect($paciente->estado_civil)->toBe('Viudo');
@@ -113,6 +117,7 @@ it('can create a paciente', function () {
     expect($paciente->telefono2)->toBe('+1-505-479-9905');
     expect($paciente)->toBeInstanceOf(Paciente::class);
 });
+
 
 /*
 
@@ -174,7 +179,7 @@ it('has fillable attributes', function () {
     $paciente = new Paciente();
     expect($paciente->getFillable())->toEqual([
         'actividad_economica',
-        'activo',
+        'actilista_espera',
         'afp_id',
         'apellidos',
         'calle_id',

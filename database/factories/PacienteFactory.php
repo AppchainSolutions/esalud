@@ -16,7 +16,7 @@ use App\Models\GrupoSanguineo;
 use App\Models\Genero;
 use App\Models\LeySocial;
 use App\Models\Medicamento;
-use App\Models\Modalidad;
+//use App\Models\Modalidad;
 use App\Models\Nacionalidad;
 use App\Models\NivelInstruccion;
 use App\Models\Paciente;
@@ -24,7 +24,6 @@ use App\Models\Prevision;
 use App\Models\PuebloOriginario;
 use App\Models\Religion;
 use App\Models\SeguroSalud;
-use App\Models\User;
 use App\Models\Vacuna;
 
 /**
@@ -44,7 +43,7 @@ class PacienteFactory extends Factory
         Genero::factory()->create();
         GrupoSanguineo::factory()->create();
         LeySocial::factory()->create();
-        Modalidad::factory()->create();
+        //Modalidad::factory()->create();
         Nacionalidad::factory()->create();
         NivelInstruccion::factory()->create();
         Prevision::factory()->create();
@@ -53,7 +52,7 @@ class PacienteFactory extends Factory
         SeguroSalud::factory()->create();
         
         return [
-            'activo' => $this->faker->boolean,
+            'lista_espera' => $this->faker->boolean,
             'afp_id' => Afp::inRandomOrder()->first()->id, // Selecciona un AFP al azar
             'apellidos' => $this->faker->lastName,
             'calle_id' => Calle::inRandomOrder()->first()->id,
@@ -68,7 +67,7 @@ class PacienteFactory extends Factory
             'genero_id' =>  Genero::inRandomOrder()->first()->id,
             'grupo_sanguineo_id' => GrupoSanguineo::inRandomOrder()->first()->id, // Selecciona un grupo sanguíneo al azar
             'ley_social_id' => LeySocial::inRandomOrder()->first()->id,
-            'modalidad_id' => Modalidad::inRandomOrder()->first()->id, // Selecciona una modalidad al azar
+            //'modalidad_id' => Modalidad::inRandomOrder()->first()->id, // Selecciona una modalidad al azar
             'nacionalidad_id' => Nacionalidad::inRandomOrder()->first()->id,
             'nivel_instruccion_id' => NivelInstruccion::inRandomOrder()->first()->id,
             'nombre' => $this->faker->firstName,

@@ -29,17 +29,15 @@ export const fetchAllData = async (endpoints) => {
         }
     });
 
-    return await Promise.allSettled(fetches).then((results) => {
-        const dataByEndpoint = results.map((result) => {
-            console.log(result.status);
-            if (result.status === "fulfilled") {
-                return result.value;
-            } else {
-                return { endpoint: result.reason.endpoint, data: null };
-            }
-        });
+    let variable = [];
 
-        return dataByEndpoint;
+    return await Promise.allSettled(fetches).then((response) => {
+        const dataByVariable = [];
+        response.forEach(({ value }) => {
+            variable = value.endpoint;
+            dataByVariable[variable] = value.data;
+        });
+        return dataByVariable;
     });
 };
 
@@ -143,6 +141,7 @@ export const handleRemoveItem = async (state, item) => {
 export const handleShowItem = async (state) => {
     const url = state.urlShow;
     const filter = state.searchQuery;
+    console.log(filter);
     state.loadingSearch = true;
     try {
         const result = await showItem(url, filter);
@@ -170,7 +169,8 @@ export const handleSearchItem = async (state) => {
     state.loadingSearch = true;
     try {
         const result = await searchItem(url, filter);
-        setResponse(state, result);
+        console.log(result);
+        //  setResponse(state, result);
     } catch (error) {
         notify({
             title: "Error.",
@@ -183,7 +183,7 @@ export const handleSearchItem = async (state) => {
     state.loadingSearch = false;
 };
 
-async function setResponse(state, result) {
+/* async function setResponse(state, result) {
     const count = result.data.length;
 
     if (count > 0) {
@@ -208,7 +208,7 @@ async function setResponse(state, result) {
         state.tableItems = [];
     }
 }
-
+ */
 /**
  * Adds matching item descriptions to the given result data.
  *

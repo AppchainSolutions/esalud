@@ -4,7 +4,7 @@ import { reactive, onMounted, computed } from "vue";
 import { useDataStore } from "@/store.js";
 import {
     closeForm,
-    fetchData,
+    fetchAllData,
     handleEditItem,
     handleRemoveItem,
     handleShowItem,
@@ -148,18 +148,12 @@ const state = reactive({
     list: [],
     loading: false,
     valid: null,
-    formTitle: "Asignación de Servicio",
-    formCrear: "Nueva atención",
-    formEdit: "Editar datos",
-    urlShow: "/asignacion_servicio/show",
-    urlUpdate: "/asignacion_servicio/update",
-    urlDelete: "/asignacion_servicio/delete",
-    urlStore: "/asignacion_servicio",
+
 });
 
 //**********\\\\  LIFE CYCLE HOOKS ////*************/
 onMounted(async () => {
-    state.list = await fetchData(state.endpoints);
+    state.list = await fetchAllData(state.endpoints);
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/

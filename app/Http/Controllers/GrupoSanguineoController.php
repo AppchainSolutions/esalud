@@ -16,6 +16,11 @@ class GrupoSanguineoController extends Controller
     }
     public function index()
     {
+        //        return $this->grupoSanguineoRepository->all();
+    }
+
+    public function all()
+    {
         return $this->grupoSanguineoRepository->all();
     }
 

@@ -16,6 +16,11 @@ class ReligionController extends Controller
     }
     public function index()
     {
+        //        return $this->religionRepository->all();
+    }
+
+    public function all()
+    {
         return $this->religionRepository->all();
     }
 
@@ -25,23 +30,6 @@ class ReligionController extends Controller
         public function store()
     {
         //
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function all()
-    {
-        try {
-            $query = ReligionModel::all();
-            return response()->json([
-                'result' => $query
-            ]);
-        } catch (QueryException $error) {
-            Session::flash('message', 'No se encuentran registros.');
-
-        }
     }
 
     /**

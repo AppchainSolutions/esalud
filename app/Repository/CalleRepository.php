@@ -12,7 +12,5 @@ class CalleRepository extends Repository
         $this->model = $model;
     }
 
-
-
     // Add any necessary methods to the repository here
 }

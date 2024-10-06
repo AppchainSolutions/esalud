@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repository\EspecialidadRepository;
 
 class EspecialidadController extends Controller
 {
+
+    protected $especialidadRepository;
+
+    public function __construct(EspecialidadRepository $especialidadRepository)
+    {
+        $this->especialidadRepository = $especialidadRepository;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -13,7 +21,10 @@ class EspecialidadController extends Controller
     {
         //
     }
-
+    public function all()
+    {
+        return $this->especialidadRepository->all();
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -61,4 +72,5 @@ class EspecialidadController extends Controller
     {
         //
     }
+
 }

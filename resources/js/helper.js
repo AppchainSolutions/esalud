@@ -9,9 +9,9 @@ const { notify } = useNotification();
 
 //**********\\\\ METHODS ////*************/
 
-export const fetchData = async (endpoints) => {
+export const fetchAllData = async (endpoints) => {
     const fetches = endpoints.map(async (endpoint) => {
-        const endpointUrl = "/secundaria/" + endpoint;
+        const endpointUrl = "api/" + endpoint + "/all";
         try {
             const response = await axios.get(endpointUrl);
             return {
@@ -20,19 +20,26 @@ export const fetchData = async (endpoints) => {
                 endpoint,
             };
         } catch (error) {
+            notify({
+                type: "error",
+                message: `Failed to fetch data from ${endpointUrl}`,
+            });
+            console.error(`Error fetching data from ${endpointUrl}:`, error);
             return { endpoint, data: null };
         }
     });
 
-    let variable = [];
-
-    return await Promise.allSettled(fetches).then((response) => {
-        const dataByVariable = [];
-        response.forEach(({ value }) => {
-            variable = value.endpoint;
-            dataByVariable[variable] = value.data;
+    return await Promise.allSettled(fetches).then((results) => {
+        const dataByEndpoint = results.map((result) => {
+            console.log(result.status);
+            if (result.status === "fulfilled") {
+                return result.value;
+            } else {
+                return { endpoint: result.reason.endpoint, data: null };
+            }
         });
-        return dataByVariable;
+
+        return dataByEndpoint;
     });
 };
 
@@ -178,7 +185,7 @@ export const handleSearchItem = async (state) => {
 
 async function setResponse(state, result) {
     const count = result.data.length;
-    
+
     if (count > 0) {
         notify({
             title: "Aviso.",
@@ -201,6 +208,7 @@ async function setResponse(state, result) {
         state.tableItems = [];
     }
 }
+
 /**
  * Adds matching item descriptions to the given result data.
  *

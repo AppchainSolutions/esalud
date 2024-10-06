@@ -16,12 +16,15 @@ class Profesional extends Model
     protected $table = 'profesional';
 
     protected $fillable = [
-        'nombre',
         'apellidos',
-        'email',
-        'telefono',
         'direccion',
+        'email',
         'especialidad_id',
+        'fecha_nacimiento',
         'foto',
+        'nombre',
+        'rut',
+        'telefono',
+        'vigente'
     ];
 }

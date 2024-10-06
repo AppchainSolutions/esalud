@@ -6,7 +6,6 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Repository\ProfesionalRepository;
 
-
 class ProfesionalController extends Controller
 {
     protected $profesionalRepository;

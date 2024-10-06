@@ -1,11 +1,11 @@
 .github
 e2e
 
-node_modules/*
-vendor/*
+node_modules/
+vendor/
 
-public/build/assets/*
-bootstrap/ssr/assets/*
+public/build/
+bootstrap/ssr/
 # stryker temp files
 .stryker-tmp
 *.deb

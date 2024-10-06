@@ -7,16 +7,21 @@ use Illuminate\Http\Request;
 
 class EstadoCivilController extends Controller
 {
+    
     protected $estadoCivilRepository;
+
     public function __construct(EstadoCivilRepository $estadoCivilRepository)
     {
         $this->estadoCivilRepository = $estadoCivilRepository;
     }
     public function index()
     {
+        //   return $this->estadoCivilRepository->all();
+    }
+    public function all()
+    {
         return $this->estadoCivilRepository->all();
     }
-
     /**
      * Show the form for creating a new resource.
      */

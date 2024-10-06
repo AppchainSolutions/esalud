@@ -13,6 +13,7 @@ class EspecialidadFactory extends Factory
     public function definition()
     {
         Especialidad::truncate();
+
         return [
             'descripcion' => $this->faker->jobTitle,
         ];

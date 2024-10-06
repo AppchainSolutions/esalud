@@ -18,19 +18,20 @@ class ProfesionalFactory extends Factory
     public function definition()
     {
 
-        Especialidad::factory()->create();
-
         Profesional::truncate();
-
+        Especialidad::factory()->count(5)->create();
 
         return [
             'apellidos' => $this->faker->lastName,
+            'direccion' => $this->faker->address,
             'email' => $this->faker->unique()->safeEmail,
-            'nombre' => $this->faker->firstName,
             'especialidad_id' => Especialidad::inRandomOrder()->first()->id,
+            'fecha_nacimiento' => $this->faker->date,
+            'foto' => null, // Aquí podrías agregar una imagen o un link a una imagen en un repositorio externo.
+            'nombre' => $this->faker->firstName,
             'rut' => RutGenerator::generarRut(), // Genera un RUT chileno válido
             'telefono' => $this->faker->phoneNumber,
-            'direccion' => $this->faker->address
+            'vigente' => $this->faker->boolean,
         ];
     }
 }

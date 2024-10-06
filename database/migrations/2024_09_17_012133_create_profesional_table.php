@@ -12,15 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('profesional', function (Blueprint $table) {
-            $table->id();
-            $table->string('rut');
-            $table->string('nombre');
-            $table->string('apellidos');
-            $table->string('email')->nullable();
-            $table->string('telefono')->nullable();
-            $table->string('direccion')->nullable();
-            $table->foreignId('especialidad_id')->constrained('especialidad');
             $table->binary('foto')->nullable();
+            $table->foreignId('especialidad_id')->constrained('especialidad');
+            $table->id();
+            $table->boolean('vigente')->default(true);
+            $table->string('apellidos');
+            $table->string('direccion')->nullable();
+            $table->string('email')->nullable();
+            $table->date('fecha_nacimiento')->nullable();
+            $table->string('nombre');
+            $table->string('rut');
+            $table->string('telefono')->nullable();
             $table->timestamps();
         });
     }

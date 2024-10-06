@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use App\Repository\CalleRepository;
-
 
 class CalleController extends Controller
 {
@@ -23,10 +21,14 @@ class CalleController extends Controller
        // return Inertia::render('SubPages/Calle');
     }
 
+    public function all(Request $id)
+    {
+        return $this->calleRepository->all();
+    }
     public function show(Request $id)
     {
        // return Inertia::render('SubPages/Calle');
-       return $this->calleRepository->all();
+      // return $this->calleRepository->all();
     }
     /**
      * Show the form for creating a new resource.

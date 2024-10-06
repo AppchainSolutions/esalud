@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repository\AfpRepository;
+use Illuminate\Support\Facades\Log;
 
 
 class AfpController extends Controller
@@ -20,7 +21,7 @@ class AfpController extends Controller
      */
     public function index()
     {
-        return $this->afpRepository->all();
+        
     }
 
     /**
@@ -53,5 +54,10 @@ class AfpController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function all()
+    {
+        return $this->afpRepository->all();
     }
 }

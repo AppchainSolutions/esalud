@@ -256,7 +256,7 @@ const remove = async (item) => {
                             label="Número de Solicitud"
                             @blur="buscarPaciente"
                         ></v-text-field>
-
+                        <v-row>
                         <v-btn
                             prepend-icon="mdi-account-multiple-plus"
                             variant="tonal"
@@ -264,8 +264,18 @@ const remove = async (item) => {
                             color="#009AA4"
                             type="submit"
                         >
-                            Buscar solicitud
+                            Asignar solicitud
                         </v-btn>
+                        <v-btn
+                            prepend-icon="mdi-account-multiple-plus"
+                            variant="tonal"
+                            class="ma-2"
+                            color="#009AA4"
+                            type="submit"
+                        >
+                            Buscar por Rut
+                        </v-btn>
+                    </v-row>
                         <v-select
                             :items="[
                                 'Especialidad 1',
@@ -371,3 +381,6 @@ const remove = async (item) => {
         </v-card>
     </v-container>
 </template>
+
+// TODO: Definir el numero de sesiones total por defecto (12) y pregunte cuando necesite notificacion de término. 
+// TODO: preguntar si desea egresar al paciente cuando la serie de sesiones al finalizar el máximo de sesiones por defecto

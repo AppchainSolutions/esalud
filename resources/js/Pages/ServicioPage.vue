@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import SolicitudServicio from "@/Pages/SubPages/SolicitudServicio.vue";
-import AsignacionServicio from "@/Pages/SubPages/AsignacionServicio.vue";
+import SolicitudServicio from "@/Pages/SubPages/SolicitudServicioPage.vue";
+import AsignacionServicio from "@/Pages/SubPages/AsignacionServicioPage.vue";
 import ListaEspera from "@/Pages/SubPages/ListaEsperaPage.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 

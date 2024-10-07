@@ -6,17 +6,17 @@ import logo from "../../img/logo_muni_casablanca.png";
 const page = usePage();
 const user = computed(() => page.props.auth.user);
 
-   export default {
+export default {
     inheritAttrs: false,
     data() {
         return {
-          logo,
+            logo,
             drawer: true,
             rail: false,
             isAdmin: true,
             approved: 0,
             user: user,
-            props: null
+            props: null,
         };
     },
     computed: {
@@ -24,7 +24,7 @@ const user = computed(() => page.props.auth.user);
             return this.rail
                 ? "mdi-chevron-right-circle-outline"
                 : "mdi-chevron-left-circle-outline";
-        }
+        },
     },
     methods: {
         toggleBtn() {
@@ -42,57 +42,97 @@ const user = computed(() => page.props.auth.user);
         profesional() {
             router.get("/profesional");
         },
-        psico() {
-            router.get("/psico");
+        psicologia() {
+            router.get("/psicologia");
         },
 
         salir() {
             localStorage.removeItem("auth_token");
             router.post("/logout");
         },
-    }
+    },
 };
 </script>
 
 <template>
     <v-app>
         <v-container fluid>
-            <notifications position="bottom right" width="40%">
-
-            </notifications>
+            <notifications position="bottom right" width="40%"> </notifications>
             <v-card>
-                <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false" color="white">
+                <v-navigation-drawer
+                    v-model="drawer"
+                    :rail="rail"
+                    permanent
+                    @click="rail = false"
+                    color="white"
+                >
                     <v-list-item nav class="mt-0">
                         <v-img :src="logo" id="logo"> </v-img>
                     </v-list-item>
                     <v-divider></v-divider>
 
                     <v-list density="compact" nav>
-                        <v-list-item prepend-icon="mdi-home-city" color="rgb(0, 0, 0)" title="Dashboard" value="Inicio"
-                            @click="inicio"></v-list-item>
-                            <v-list-item prepend-icon="mdi-human-male-female-child" title="Gestión de Servicio" value="Servicio" @click="servicio"
-                            v-if="user.isAdmin"></v-list-item>
-                        <v-list-item prepend-icon="mdi-account" title="Ficha de Pacientes" value="Paciente" @click="paciente"
-                            v-if="user.isAdmin"></v-list-item>
-                        <v-list-item prepend-icon="mdi-account-heart" title="Registro de Profesionales" value="Profesional"
-                            @click="profesional" v-if="user.isAdmin"></v-list-item>
-                        <v-list-item prepend-icon="mdi-head-cog-outline" title="Atención Psicología" value="Psicología" @click="psico"
-                            v-if="user.isAdmin"></v-list-item>
+                        <v-list-item
+                            prepend-icon="mdi-home-city"
+                            color="rgb(0, 0, 0)"
+                            title="Dashboard"
+                            value="Inicio"
+                            @click="inicio"
+                        ></v-list-item>
+                        <v-list-item
+                            prepend-icon="mdi-human-male-female-child"
+                            title="Gestión de Servicio"
+                            value="Servicio"
+                            @click="servicio"
+                            v-if="user.isAdmin"
+                        ></v-list-item>
+                        <v-list-item
+                            prepend-icon="mdi-account"
+                            title="Ficha de Pacientes"
+                            value="Paciente"
+                            @click="paciente"
+                            v-if="user.isAdmin"
+                        ></v-list-item>
+                        <v-list-item
+                            prepend-icon="mdi-account-heart"
+                            title="Registro de Profesionales"
+                            value="Profesional"
+                            @click="profesional"
+                            v-if="user.isAdmin"
+                        ></v-list-item>
+                        <v-list-item
+                            prepend-icon="mdi-head-cog-outline"
+                            title="Atención Psicología"
+                            value="Psicología"
+                            @click="psicologia"
+                            v-if="user.isAdmin"
+                        ></v-list-item>
 
                         <v-divider></v-divider>
                     </v-list>
 
                     <template v-slot:append>
                         <v-btn block color="#662d91" @click="salir">
-                            <b><i class="mdi mdi-location-exit" style="font-size: 24px; color: white"></i></b>
+                            <b
+                                ><i
+                                    class="mdi mdi-location-exit"
+                                    style="font-size: 24px; color: white"
+                                ></i
+                            ></b>
                         </v-btn>
                     </template>
                 </v-navigation-drawer>
             </v-card>
             <v-app-bar color="#009AA4">
                 <v-app-bar-title>
-                    <v-icon @click.stop="toggleBtn" class="ma-auto" size="x-large">{{ icon }}</v-icon>
-                    Bienvenido/a {{ user.name }} [ Municipalidad de Casablanca - Centro Comunitario ]
+                    <v-icon
+                        @click.stop="toggleBtn"
+                        class="ma-auto"
+                        size="x-large"
+                        >{{ icon }}</v-icon
+                    >
+                    Bienvenido/a {{ user.name }} [ Municipalidad de Casablanca -
+                    Centro Comunitario ]
                 </v-app-bar-title>
             </v-app-bar>
             <v-main>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Log;
 
 
 class FichaPsicologiaController extends Controller
@@ -14,6 +15,11 @@ class FichaPsicologiaController extends Controller
     public function index()
     {
         return Inertia::render('FichaPsicologiaPage');
+    }
+
+    public function atencion()
+    {
+        return Inertia::render('SubPages/AtencionPsicologicaPage');
     }
 
     /**

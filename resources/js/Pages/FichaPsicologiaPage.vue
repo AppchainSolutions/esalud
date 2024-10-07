@@ -61,24 +61,64 @@ const state = reactive({
         ],
         items: [
             {
-                paciente: 'Pedro Castillo', motivoConsulta: 'Crisis de panico', fechaSolicitud: '12/01/2024', avanceSesion: "2/12", tipoSesion: "Evaluación diagnóstica", horario: "Lunes: 14:00 - 14:45"
+                paciente: "Pedro Castillo",
+                motivoConsulta: "Crisis de panico",
+                fechaSolicitud: "12/01/2024",
+                avanceSesion: "2/12",
+                tipoSesion: "Evaluación diagnóstica",
+                horario: "Lunes: 14:00 - 14:45",
             },
             {
-                paciente: 'Pedro Castillo', motivoConsulta: 'Crisis de panico', fechaSolicitud: '12/01/2024', avanceSesion: "1/12", tipoSesion: "Nuevo Ingreso", horario: "Lunes: 15:00 - 15:45"
-            }
-        ]
+                paciente: "Juana Gómez",
+                motivoConsulta: "No puede dormir",
+                fechaSolicitud: "20/03/2024",
+                avanceSesion: "1/12",
+                tipoSesion: "Nuevo Ingreso",
+                horario: "Lunes: 15:00 - 15:45",
+            },
+        ],
     },
 
     horario: {
         headers: [
-            { title: 'Día de la semana', align: 'center', sortable: true, value: 'dia' },
-            { title: 'Hora inicio', align: 'center', sortable: true, value: 'horaInicio' },
-            { title: 'Hora término', align: 'center', sortable: true, value: 'horaTermino' },
-            { title: 'Disponible (S/N)', align: 'center', sortable: true, value: 'disponible' }
+            {
+                title: "Día de la semana",
+                align: "center",
+                sortable: true,
+                value: "dia",
+            },
+            {
+                title: "Hora inicio",
+                align: "center",
+                sortable: true,
+                value: "horaInicio",
+            },
+            {
+                title: "Hora término",
+                align: "center",
+                sortable: true,
+                value: "horaTermino",
+            },
+            {
+                title: "Disponible (S/N)",
+                align: "center",
+                sortable: true,
+                value: "disponible",
+            },
         ],
         items: [
-            { dia: 'Lunes', horaInicio: '08:00', horaTermino: '17:00', disponible: 'S' },
-            { dia: 'Martes', horaInicio: '08:00', horaTermino: '17:00', disponible: 'N' }
+            {
+                dia: "Lunes",
+                horaInicio: "08:00",
+                horaTermino: "17:00",
+                disponible: "S",
+            },
+            {
+                dia: "Martes",
+                horaInicio: "08:00",
+                horaTermino: "17:00",
+                disponible: "N",
+            },
         ],
     },
     editedItem: {
@@ -157,7 +197,6 @@ const state = reactive({
     list: [],
     loading: false,
     valid: null,
-
 });
 
 //**********\\\\  LIFE CYCLE HOOKS ////*************/
@@ -209,99 +248,118 @@ const remove = async (item) => {
     await handleRemoveItem(state, item);
 };
 
-function sesiones(item) {
-    store.selected = item;
+function atencionPsicologica(item) {
+   // store.selected = item;
     try {
-        router.get("/sesiones");
+        router.get("/atencion_psicologica");
+      //  alert("holi");
     } catch (error) {
         console.error("An error occurred while fetching daily attention data.");
     }
 }
 
+
 </script>
 
 <template>
     <v-container>
-        <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-4 pa-6'">
-            <h2>{{ state.formTitle }}</h2>
-            <v-spacer></v-spacer>
-            <v-btn prepend-icon="mdi-file-search" variant="tonal" class="ma-2" color="#009AA4"
-                :loading="state.loadingSearch" type="submit" @click="show">
-                Guardar
-            </v-btn>
-            <v-btn prepend-icon="mdi-backup-restore" variant="tonal" class="ma-2" color="#009AA4"
-                :loading="state.loadingSearch" type="submit" @click="volver">
-                Volver
-            </v-btn>
-            <v-btn color="#009AA4" variant="tonal" @click="sesiones">
-                +
-            </v-btn>
+        <v-card>
+            <v-card-title>Asignar Solicitud de Servicio</v-card-title>
+            <v-card-text>
+                <v-sheet
+                    color="gray"
+                    :elevation="1"
+                    :class="'rounded-lg ma-4 pa-6'"
+                >
+                    <v-row>
+                        <v-col>
+                            <h3>Profesional:</h3>
+                            Tapia, Jorge
+                            <h4>Especialidad:</h4>
+                            Psicología
+                            <br />
 
-            <v-sheet color="gray" :elevation="1" :class="'rounded-lg ma-4 pa-6'">
-                <v-row>
-                    <v-col>
-                        <h3>Profesional:</h3> Tapia, Jorge
-                        <h4>Especialidad:</h4> Psicología
-                        <br>
-
-                        TODO: Acá pueden ir los pacientes totales del profesional o solamente los que les
-                        corresponde para ese día o tener opcion de switch entre todos S/N
-
-                    </v-col>
-                    <v-col>
-                        <h4>Horarios asignados: </h4>
-                        <ol :class="'ml-4'">
-                            <li>Lunes: 08:00 - 17:00</li>
-                            <li>Martes: 08:00 - 17:00</li>
-                            <li>Miércoles: 08:00 - 17:00</li>
-                            <li>Jueves: 08:00 - 17:00</li>
-                            <li>Viernes: 08:00 - 17:00</li>
-                        </ol>
-                    </v-col>
-                    <v-col>
-                        <h4>Horarios disponibles: </h4>
-                        <ol :class="'ml-4'">
-                            <li>Lunes: 08:00 - 17:00</li>
-                            <li>Jueves: 08:00 - 17:00</li>
-                        </ol>
-                    </v-col>
-                    <v-col>
-                        <h4>Fecha: 03/10/2024</h4>
-                        <h4>Hora actual: 10:30</h4>
-                        <h4>Hora inicio: 10:00 - 10:45</h4>
-                        <v-line></v-line>
-                        <v-textarea clearable label="Nota rápida:"></v-textarea>
-                    </v-col>
-
-                </v-row>
-
-
-            </v-sheet>
-            <v-sheet color="gray" :elevation="1" :class="'rounded-lg ma-4 pa-6'">
-                <v-row>
-
-
-                    <v-col>
-
-                        <v-data-table :headers="state.atencion.headers" :items="state.atencion.items"
-                            class="elevation-1">
-                            <template v-slot:top>
-                                <v-toolbar flat>
-                                    <v-toolbar-title>Pacientes asignados</v-toolbar-title>
-                                    <v-divider class="mx-4" inset vertical></v-divider>
-                                </v-toolbar>
-                            </template>
-                            <template v-slot:item.disponible="{ item }">
-                                <v-chip :color="item.disponible === 'S' ? 'green' : 'red'" dark>
-                                    {{ item.disponible }}
-                                </v-chip>
-                            </template>
-                        </v-data-table>
-                    </v-col>
-                </v-row>
-
-
-            </v-sheet>
-        </v-sheet>
+                            TODO: Acá pueden ir los pacientes totales del
+                            profesional o solamente los que les corresponde para
+                            ese día o tener opcion de switch entre todos S/N
+                        </v-col>
+                        <v-col>
+                            <h4>Horarios asignados:</h4>
+                            <ol :class="'ml-4'">
+                                <li>Lunes: 08:00 - 17:00</li>
+                                <li>Martes: 08:00 - 17:00</li>
+                                <li>Miércoles: 08:00 - 17:00</li>
+                                <li>Jueves: 08:00 - 17:00</li>
+                                <li>Viernes: 08:00 - 17:00</li>
+                            </ol>
+                        </v-col>
+                        <v-col>
+                            <h4>Horarios disponibles:</h4>
+                            <ol :class="'ml-4'">
+                                <li>Lunes: 08:00 - 17:00</li>
+                                <li>Jueves: 08:00 - 17:00</li>
+                            </ol>
+                        </v-col>
+                        <v-col>
+                            <h4>Fecha: 03/10/2024</h4>
+                            <h4>Hora actual: 10:30</h4>
+                            <h4>Hora inicio: 10:00 - 10:45</h4>
+                            <v-line></v-line>
+                            <v-textarea
+                                clearable
+                                label="Nota rápida:"
+                            ></v-textarea>
+                        </v-col>
+                    </v-row>
+                </v-sheet>
+                <v-sheet
+                    color="gray"
+                    :elevation="1"
+                    :class="'rounded-lg ma-4 pa-6'"
+                >
+                    <v-row>
+                        <v-col>
+                            <v-data-table
+                                :headers="state.atencion.headers"
+                                :items="state.atencion.items"
+                                class="elevation-1"
+                            >
+                                <template v-slot:top>
+                                    <v-toolbar flat>
+                                        <v-toolbar-title
+                                            >Pacientes
+                                            asignados</v-toolbar-title
+                                        >
+                                        <v-divider
+                                            class="mx-4"
+                                            inset
+                                            vertical
+                                        ></v-divider>
+                                    </v-toolbar>
+                                </template>
+                                <template v-slot:item.actions="{ item }">
+                                    <v-tooltip
+                                        text="Atención Psicológica"
+                                        location="top"
+                                    >
+                                        <template v-slot:activator="{ props }">
+                                            <v-btn
+                                                v-bind="props"
+                                                density="compact"
+                                                color="#009AA4"
+                                                class="mr-2 ml-2"
+                                                variant="tonal"
+                                                :icon="'mdi-head-cog'"
+                                                @click="atencionPsicologica(item)"
+                                            ></v-btn>
+                                        </template>
+                                    </v-tooltip>
+                                </template>
+                            </v-data-table>
+                        </v-col>
+                    </v-row>
+                </v-sheet>
+            </v-card-text>
+        </v-card>
     </v-container>
 </template>

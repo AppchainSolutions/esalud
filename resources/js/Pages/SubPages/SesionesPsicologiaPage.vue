@@ -1,8 +1,8 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import DatosMedicos from "@/Pages/SubPages/DatosMedicos.vue";
-import AntecedenteFamiliar from "@/Pages/SubPages/AntecedenteFamiliar.vue";
-import ContextoSocioEconomico from "@/Pages/SubPages/Contexto.vue";
+import DatosMedicos from "@/Pages/SubPages/DatosMedicosPage.vue";
+import AntecedenteFamiliar from "@/Pages/SubPages/AntecedenteFamiliarPage.vue";
+import ContextoSocioEconomico from "@/Pages/SubPages/ContextoPage.vue";
 
 import { router } from "@inertiajs/vue3";
 import { useDataStore } from "@/store.js";

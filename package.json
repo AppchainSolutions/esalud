@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "build": "vite build && vite build --ssr",
-        "dev": "vite"
+        "dev": "vite",
+        "clear": "sh clear.sh"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",

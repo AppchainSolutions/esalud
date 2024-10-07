@@ -4,8 +4,9 @@ e2e
 node_modules/
 vendor/
 
-public/build/
-bootstrap/ssr/
+public/build/assets/*
+bootstrap/ssr/assets/*
+storage/*
 # stryker temp files
 .stryker-tmp
 *.deb

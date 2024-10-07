@@ -1,10 +1,10 @@
 <script>
-import Enfermedad from "./Enfermedad.vue";
-import Alergia from "./Alergia.vue";
-import Cirugia from "./Cirugia.vue";
-import FactorRiesgo from "./FactorRiesgo.vue";
-import Medicamento from "./Medicamento.vue";
-import Vacuna from "./Vacuna.vue";
+import Enfermedad from "./EnfermedadPage.vue";
+import Alergia from "./AlergiaPage.vue";
+import Cirugia from "./CirugiaPage.vue";
+import FactorRiesgo from "./FactorRiesgoPage.vue";
+import Medicamento from "./MedicamentoPage.vue";
+import Vacuna from "./VacunaPage.vue";
 
 
 export default {

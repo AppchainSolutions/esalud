@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\AntecedenteFamiliarController;
-use App\Http\Controllers\AsignacionServicioController;
+use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\CirugiaController;
 use App\Http\Controllers\EnfermedadController;
 use App\Http\Controllers\FactorRiesgoController;
@@ -20,7 +20,7 @@ Route::middleware([
 ])->group(function () {
     Route::prefix('/admin')->group(__DIR__ . '/admin/admin.php');
     Route::resource('/alergia', AlergiaController::class);
-    Route::resource('/asignacion', AsignacionServicioController::class);
+    Route::resource('/servicio', ServicioController::class);
     Route::resource('/cirugia', CirugiaController::class);
     Route::resource('/enfermedad', EnfermedadController::class);
     Route::resource('/factor', FactorRiesgoController::class);

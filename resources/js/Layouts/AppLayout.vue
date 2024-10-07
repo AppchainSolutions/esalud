@@ -36,6 +36,9 @@ const user = computed(() => page.props.auth.user);
         paciente() {
             router.get("/paciente");
         },
+        servicio() {
+            router.get("/servicio");
+        },
         profesional() {
             router.get("/profesional");
         },
@@ -67,11 +70,13 @@ const user = computed(() => page.props.auth.user);
                     <v-list density="compact" nav>
                         <v-list-item prepend-icon="mdi-home-city" color="rgb(0, 0, 0)" title="Dashboard" value="Inicio"
                             @click="inicio"></v-list-item>
-                        <v-list-item prepend-icon="mdi-account" title="Paciente" value="Paciente" @click="paciente"
+                            <v-list-item prepend-icon="mdi-human-male-female-child" title="Gestión de Servicio" value="Servicio" @click="servicio"
                             v-if="user.isAdmin"></v-list-item>
-                        <v-list-item prepend-icon="mdi-account" title="Profesional" value="Profesional"
+                        <v-list-item prepend-icon="mdi-account" title="Ficha de Pacientes" value="Paciente" @click="paciente"
+                            v-if="user.isAdmin"></v-list-item>
+                        <v-list-item prepend-icon="mdi-account-heart" title="Registro de Profesionales" value="Profesional"
                             @click="profesional" v-if="user.isAdmin"></v-list-item>
-                        <v-list-item prepend-icon="mdi-account" title="Psicología" value="Psicología" @click="psico"
+                        <v-list-item prepend-icon="mdi-head-cog-outline" title="Atención Psicología" value="Psicología" @click="psico"
                             v-if="user.isAdmin"></v-list-item>
 
                         <v-divider></v-divider>

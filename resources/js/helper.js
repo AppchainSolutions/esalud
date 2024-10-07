@@ -148,7 +148,7 @@ export const handleShowItem = async (state) => {
         setResponse(state, result);
     } catch (error) {
         notify({
-            title: "Error.",
+            title: "Error al obtener los datos.",
             text: error,
             type: "error",
         });
@@ -169,8 +169,7 @@ export const handleSearchItem = async (state) => {
     state.loadingSearch = true;
     try {
         const result = await searchItem(url, filter);
-        console.log(result);
-        //  setResponse(state, result);
+        setResponse(state, result);
     } catch (error) {
         notify({
             title: "Error.",
@@ -183,7 +182,7 @@ export const handleSearchItem = async (state) => {
     state.loadingSearch = false;
 };
 
-/* async function setResponse(state, result) {
+async function setResponse(state, result) {
     const count = result.data.length;
 
     if (count > 0) {
@@ -193,7 +192,6 @@ export const handleSearchItem = async (state) => {
             type: "success",
         });
         state.formItems = { ...result.data };
-        console.log(state.formItems);
         if (state.endpoints) {
             state.tableItems = addValue(state, result.data);
         } else {
@@ -208,7 +206,7 @@ export const handleSearchItem = async (state) => {
         state.tableItems = [];
     }
 }
- */
+ 
 /**
  * Adds matching item descriptions to the given result data.
  *

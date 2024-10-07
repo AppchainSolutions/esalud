@@ -50,12 +50,21 @@ const state = reactive({
                 sortable: true,
                 value: "tipoSesion", //TODO: esto vendría por defecto para todas las primeras sesiones
             },
+            {
+                title: "Avance",
+                align: "center",
+                sortable: true,
+                value: "avanceSesion", //TODO: esto vendría por defecto para todas las primeras sesiones
+            },
             { title: "Horario", key: "horario", sortable: true },
             { title: "Acciones", align: "center", key: "actions" },
         ],
         items: [
             {
-                paciente: 'Pedro Castillo', motivoConsulta: 'Crisis de panico', fechaSolicitud: '12/01/2024', tipoSesion: "Evaluación diagnóstica", horario: "Lunes: 14:00 - 14:45"
+                paciente: 'Pedro Castillo', motivoConsulta: 'Crisis de panico', fechaSolicitud: '12/01/2024', avanceSesion: "2/12", tipoSesion: "Evaluación diagnóstica", horario: "Lunes: 14:00 - 14:45"
+            },
+            {
+                paciente: 'Pedro Castillo', motivoConsulta: 'Crisis de panico', fechaSolicitud: '12/01/2024', avanceSesion: "1/12", tipoSesion: "Nuevo Ingreso", horario: "Lunes: 15:00 - 15:45"
             }
         ]
     },

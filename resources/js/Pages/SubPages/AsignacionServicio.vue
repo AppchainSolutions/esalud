@@ -19,11 +19,7 @@ const store = useDataStore();
 const nombre = store.getSelected.nombre;
 const apellidos = store.getSelected.apellidos;
 const state = reactive({
-    endpoints: [
-/*         "servicio",
-        "profesional",
-        "horarios_disponibles", */
-    ],
+    endpoints: ["especialidad"],
 
     headers: [
         {
@@ -49,14 +45,68 @@ const state = reactive({
     ],
     horario: {
         headers: [
-            { text: 'Día de la semana', align: 'center', sortable: true, value: 'dia' },
-            { text: 'Hora inicio', align: 'center', sortable: true, value: 'horaInicio' },
-            { text: 'Hora término', align: 'center', sortable: true, value: 'horaTermino' },
-            { text: 'Disponible (S/N)', align: 'center', sortable: true, value: 'disponible' }
+            {
+                text: "Día de la semana",
+                align: "center",
+                sortable: true,
+                value: "dia",
+            },
+            {
+                text: "Hora inicio",
+                align: "center",
+                sortable: true,
+                value: "horaInicio",
+            },
+            {
+                text: "Hora término",
+                align: "center",
+                sortable: true,
+                value: "horaTermino",
+            },
+            {
+                text: "Disponible (S/N)",
+                align: "center",
+                sortable: true,
+                value: "disponible",
+            },
         ],
         items: [
-            { dia: 'Lunes', horaInicio: '08:00', horaTermino: '17:00', disponible: 'S' },
-            { dia: 'Martes', horaInicio: '08:00', horaTermino: '17:00', disponible: 'N' }
+            {
+                dia: "Lunes",
+                horaInicio: "08:00",
+                horaTermino: "08:45",
+                disponible: "S",
+            },
+            {
+                dia: "Lunes",
+                horaInicio: "09:00",
+                horaTermino: "09:45",
+                disponible: "S",
+            },
+            {
+                dia: "Lunes",
+                horaInicio: "09:45",
+                horaTermino: "10:45",
+                disponible: "N",
+            },
+            {
+                dia: "Martes",
+                horaInicio: "08:00",
+                horaTermino: "08:45",
+                disponible: "N",
+            },
+            {
+                dia: "Miércoles",
+                horaInicio: "09:00",
+                horaTermino: "09:45",
+                disponible: "S",
+            },
+            {
+                dia: "Miércoles",
+                horaInicio: "09:45",
+                horaTermino: "10:45",
+                disponible: "S",
+            },
         ],
     },
     editedItem: {
@@ -192,66 +242,132 @@ const update = async () => {
 const remove = async (item) => {
     await handleRemoveItem(state, item);
 };
-
-
-
 </script>
 
 <template>
     <v-container>
-        <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-4 pa-6'">
-            <h2>{{ state.formTitle }}</h2>
-            <v-spacer></v-spacer>
-            <v-btn prepend-icon="mdi-file-search" variant="tonal" class="ma-2" color="#009AA4"
-                :loading="state.loadingSearch" type="submit" @click="show">
-                Guardar
-            </v-btn>
-            <v-btn prepend-icon="mdi-backup-restore" variant="tonal" class="ma-2" color="#009AA4"
-                :loading="state.loadingSearch" type="submit" @click="volver">
-                Volver
-            </v-btn>
-            <br>
-            Paciente: {{ apellidos }}, {{ nombre }}
-            <v-row>
+        <v-card>
+            <v-card-title>Asignar Solicitud de Servicio</v-card-title>
+            <v-card-text>
+                <v-row>
+                    <v-col cols="6" :class="'ma-4 pa-4'">
+                        <v-text-field
+                            v-model="rut"
+                            label="Número de Solicitud"
+                            @blur="buscarPaciente"
+                        ></v-text-field>
 
-                <v-col cols="6" :class="'ma-4 pa-4'">
-                    <v-select :items="[
-                        'Especialidad 1',
-                        'Especialidad 2',
-                        'Especialidad 3',
-                    ]" clearable label="Especialidad" variant="underlined" single></v-select>
-                    <v-select :items="[
-                        'Profesional 1',
-                        'Profesional 2',
-                        'Profesional 3',
-                    ]" clearable label="Profesional" variant="underlined" single></v-select>
-                    <v-select :items="[
-                        'Box 1',
-                        'Box 2',
-                        'Box 3',
-                    ]" clearable label="Box" variant="underlined" single></v-select>
-                    <v-select clearable chips label="COntacto"
-                        :items="['No responde', 'No desea servicio', 'Inubicable', 'Otro']" multiple></v-select>
-                </v-col>
-                <v-col>
+                        <v-btn
+                            prepend-icon="mdi-account-multiple-plus"
+                            variant="tonal"
+                            class="ma-2"
+                            color="#009AA4"
+                            type="submit"
+                        >
+                            Buscar solicitud
+                        </v-btn>
+                        <v-select
+                            :items="[
+                                'Especialidad 1',
+                                'Especialidad 2',
+                                'Especialidad 3',
+                            ]"
+                            clearable
+                            label="Especialidad"
+                            variant="underlined"
+                            single
+                        ></v-select>
+                        <v-select
+                            :items="[
+                                'Profesional 1',
+                                'Profesional 2',
+                                'Profesional 3',
+                            ]"
+                            clearable
+                            label="Profesional"
+                            variant="underlined"
+                            single
+                        ></v-select>
 
-                    <v-data-table :headers="state.horario.headers" :items="state.horario.items" class="elevation-1">
-                        <template v-slot:top>
-                            <v-toolbar flat>
-                                <v-toolbar-title>Disponibilidad horaria</v-toolbar-title>
-                                <v-divider class="mx-4" inset vertical></v-divider>
-                            </v-toolbar>
-                        </template>
-                        <template v-slot:item.disponible="{ item }">
-                            <v-chip :color="item.disponible === 'S' ? 'green' : 'red'" dark>
-                                {{ item.disponible }}
-                            </v-chip>
-                        </template>
-                    </v-data-table>
-                </v-col>
-            </v-row>
+                        <v-select
+                            clearable
+                            chips
+                            label="Contacto"
+                            :items="[
+                                'No responde 1 vez',
+                                'No responde 2 veces',
+                                'No conveniencia horaria 1',
+                                'No conveniencia horaria 2',
+                                'Inubicable / no contesta',
+                            ]"
+                            multiple
+                        ></v-select>
+                        <v-btn
+                            color="#009AA4"
+                            variant="tonal"
+                            @click="sesiones"
+                            class="ma-2"
+                            prepend-icon="mdi-cancel"
+                        >
+                            Anular Servicio
+                        </v-btn>
 
+                        <v-btn
+                            color="#009AA4"
+                            variant="tonal"
+                            @click="sesiones"
+                            class="ma-2"
 
-        </v-sheet>
+                            prepend-icon="mdi-check-decagram"
+                        >
+                            Asignar Servicio
+                        </v-btn>
+
+                        <v-alert
+                            color="#2A3B4D"
+                            density="compact"
+                            icon="mdi-firework"
+                            theme="dark"
+                            class="mt-2"
+                        >
+                            El servicio ha sido asignado a Profesional 1 los
+                            días Lunes de 09:00 a 09:45.
+                        </v-alert>
+                    </v-col>
+                    <v-col>
+                        <v-data-table
+                            :headers="state.horario.headers"
+                            :items="state.horario.items"
+                            class="elevation-1"
+                        >
+                            <template v-slot:top>
+                                <v-toolbar flat>
+                                    <v-toolbar-title
+                                        >Disponibilidad horaria del profesional</v-toolbar-title
+                                    >
+                                    <v-divider
+                                        class="mx-4"
+                                        inset
+                                        vertical
+                                    ></v-divider>
+                                </v-toolbar>
+                            </template>
+                            <template v-slot:item.disponible="{ item }">
+                                <v-chip
+                                    :color="
+                                        item.disponible === 'S'
+                                            ? 'green'
+                                            : 'red'
+                                    "
+                                    dark
+                                >
+                                    {{ item.disponible }}
+                                </v-chip>
+                            </template>
+                        </v-data-table>
+                    </v-col>
+                </v-row>
+            </v-card-text>
+        </v-card>
     </v-container>
 </template>

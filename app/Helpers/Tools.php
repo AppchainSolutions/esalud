@@ -13,7 +13,7 @@ class Tools
             return $query->get();
         }
 
-        /*   try {
+          try {
               foreach ($filters as $key => $value) {
                   if (str_contains($key, 'fecha')) {
                       self::applyDateFilter($query, $key, $value);
@@ -24,11 +24,9 @@ class Tools
               return $query->get();
           } catch (QueryException $error) {
               return 'Error al filtrar por fechas';
-          } */
-
-
+          } 
     }
-    /*  private static function applyDateFilter($query, $field, $dates)
+      private static function applyDateFilter($query, $field, $dates)
      {
          try {
              if (isset($dates['desde'], $dates['hasta'])) {
@@ -39,5 +37,5 @@ class Tools
          } catch (QueryException $e) {
              return 'Formato de fecha incorrecto';
          }
-     } */
+     } 
 }

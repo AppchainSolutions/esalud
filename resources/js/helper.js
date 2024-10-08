@@ -272,28 +272,33 @@ export const openToCreate = (state) => {
 };
 
 export const openToEdit = (state, item) => {
-    if (state.endpoints) {
+    if (state.endpoints.length > 0) {
         const recordsArray = Object.values(state.formItems);
         const record = recordsArray.find((rec) => rec.id === item.id);
         edit(record);
-    } else {
+    } else {    
         const record = item;
         edit(record);
-    }
-
+    } 
+    
     function edit(record) {
+        console.log(record);
         try {
             const index = state.tableItems.indexOf(item);
+            console.error(error);
+
             const editedItemCopy = { ...record };
             state.editedIndex = index;
             // const edItem = Object.assign({}, record);
-            //console.log(Object.assign({}, record));
             state.editedItem = editedItemCopy;
             state.dialog = true;
         } catch (error) {
-            console.error(error);
+            notify({
+                type: "error",
+                message: `Error ${error}`,
+            });
         }
-    }
+    } 
 };
 
 export const validationRules = (value) => {

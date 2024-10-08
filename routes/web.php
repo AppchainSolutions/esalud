@@ -19,21 +19,26 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::prefix('/admin')->group(__DIR__ . '/admin/admin.php');
-    Route::resource('/alergia', AlergiaController::class);
-    Route::resource('/servicio', ServicioController::class);
-    Route::resource('/cirugia', CirugiaController::class);
-    Route::resource('/enfermedad', EnfermedadController::class);
-    Route::resource('/factor', FactorRiesgoController::class);
-    Route::resource('/familiar', AntecedenteFamiliarController::class);
-    Route::resource('/medicamento', MedicamentoController::class);
-    Route::resource('/paciente', PacienteController::class);
-    Route::resource('/psicologia', FichaPsicologiaController::class);
-    Route::resource('/profesional', ProfesionalController::class);
-    Route::resource('/vacuna', VacunaController::class);
-    Route::inertia('/dashboard', 'Dashboard')->name('dashboard'); // Define the dashboard route using Inertia and name it
-    Route::inertia('/ficha', 'SubPages/FichaMedica');
-    
+    Route::resource('alergia', AlergiaController::class);
+    Route::resource('servicio', ServicioController::class);
+    Route::resource('cirugia', CirugiaController::class);
+    Route::resource('enfermedad', EnfermedadController::class);
+    Route::resource('factor', FactorRiesgoController::class);
+    Route::resource('familiar', AntecedenteFamiliarController::class);
+    Route::resource('medicamento', MedicamentoController::class);
+    Route::resource('paciente', PacienteController::class);
+    Route::resource('psicologia', FichaPsicologiaController::class);
+    Route::resource('profesional', ProfesionalController::class);
+    Route::resource('vacuna', VacunaController::class);
+    Route::inertia('dashboard', 'Dashboard')->name('dashboard');
+
+    Route::inertia('ficha', 'SubPages/FichaMedicaPage');
     Route::get('paciente/all', [PacienteController::class, 'all'])->name('paciente.all');
+<<<<<<< HEAD
     Route::get('/atencion_psicologica', 'SubPages/AtencionPsicologica')->name('psicologia.atencion');
+=======
+    
+    Route::inertia('atencion_psicologica', [FichaPsicologiaController::class, 'atencion'])->name('psicologia.atencion');
+>>>>>>> dfedd27 (Refactor launch.json to add new Chrome configurations)
     
 });

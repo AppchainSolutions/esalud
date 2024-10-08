@@ -48,7 +48,7 @@ const state = reactive({
                 title: "Tipo Sesion",
                 align: "center",
                 sortable: true,
-                value: "tipoSesion", //TODO: esto vendría por defecto para todas las primeras sesiones
+                value: "tipoSesion", // TODO: esto vendría por defecto para todas las primeras sesiones
             },
             {
                 title: "Avance",
@@ -123,70 +123,10 @@ const state = reactive({
     },
     editedItem: {
         paciente_id: null,
-        acompanado: null,
-        alerta_she: null,
-        at_realizada_por: null,
-        calificacion: null,
-        comentario: null,
-        cuenta_acr: null,
-        declaracion_completa: null,
-        derivacion_inmediata: null,
-        derivacion: null,
-        descripcion_breve: null,
-        dias_descanso: null,
-        error_critico: null,
-        estado_mental: null,
-        fecha_atencion: null,
-        fuente_incidente: null,
-        hora_inicio: null,
-        hora_termino: null,
-        lugar_atencion: null,
-        medicamentos: null,
-        medio_derivacion: null,
-        motivo_consulta: null,
-        nombre_supervisor: null,
-        puede_reintegrarse: null,
-        RECA: null,
-        responsable: null,
-        sistema_afectado: null,
-        tipo_atencion: null,
-        tipo_licencia: null,
-        turno: null,
     },
 
     defaultItem: {
         paciente_id: null,
-        accidente_condicion: null,
-        accidente: null,
-        acompanado: false,
-        alerta_she: false,
-        at_realizada_por: null,
-        calificacion: null,
-        comentario: null,
-        cuenta_acr: false,
-        declaracion_completa: false,
-        derivacion_inmediata: false,
-        derivacion: null,
-        descripcion_breve: null,
-        dias_descanso: null,
-        error_critico: null,
-        estado_mental: null,
-        fecha_atencion: null,
-        fuente_incidente: null,
-        hora_inicio: null,
-        hora_termino: null,
-        lugar_atencion: null,
-        medicamentos: null,
-        medio_derivacion: null,
-        motivo_consulta: null,
-        nombre_supervisor: null,
-        puede_reintegrarse: false,
-        responsable: null,
-        RECA: null,
-        sistema_afectado: null,
-        tipo_atencion: null,
-        tipo_licencia: null,
-        turno: null,
     },
     searchQuery: {
         paciente_id: null,
@@ -249,12 +189,16 @@ const remove = async (item) => {
 };
 
 function atencionPsicologica(item) {
+<<<<<<< HEAD
     store.selected = item;
     try {
       router.get("/atencion_psicologica");
     } catch (error) {
       console.error("An error occurred while fetching atencion psicologica.");
     }
+=======
+    openToEdit(state, item);
+>>>>>>> dfedd27 (Refactor launch.json to add new Chrome configurations)
 }
 
 
@@ -303,7 +247,6 @@ function atencionPsicologica(item) {
                             <h4>Fecha: 03/10/2024</h4>
                             <h4>Hora actual: 10:30</h4>
                             <h4>Hora inicio: 10:00 - 10:45</h4>
-                            <v-line></v-line>
                             <v-textarea
                                 clearable
                                 label="Nota rápida:"

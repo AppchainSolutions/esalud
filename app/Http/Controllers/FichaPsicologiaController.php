@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Log;
-
 
 class FichaPsicologiaController extends Controller
 {
@@ -17,6 +15,14 @@ class FichaPsicologiaController extends Controller
         return Inertia::render('FichaPsicologiaPage');
     }
 
+<<<<<<< HEAD
+=======
+    public function atencion()
+    {
+       return Inertia::render('SubPages/AtencionPsicologicaPage');
+    }
+
+>>>>>>> dfedd27 (Refactor launch.json to add new Chrome configurations)
     /**
      * Show the form for creating a new resource.
      */

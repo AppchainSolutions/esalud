@@ -19,16 +19,16 @@ clear_auth() {
 # Define a function to clear temporary files
 clear_temp() {
   echo "Clearing temporary files..."
-  rm -rf "$APP_DIR/storage/framework/cache"
-  rm -rf "$APP_DIR/storage/framework/sessions"
-  rm -rf "$APP_DIR/storage/framework/views"
-  rm -rf "$APP_DIR/storage/clockwork"
+  rm -rf "$APP_DIR/storage/framework/cache/"*
+  rm -rf "$APP_DIR/storage/framework/sessions/"*
+  rm -rf "$APP_DIR/storage/framework/views/"*
+  rm -rf "$APP_DIR/storage/clockwork/"*
 }
 
 # Define a function to clear log files
 clear_logs() {
   echo "Clearing log files..."
-  rm -rf "$APP_DIR/storage/logs"
+  rm -rf "$APP_DIR/storage/logs/"*
 }
 
 # Main script

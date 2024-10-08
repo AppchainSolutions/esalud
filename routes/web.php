@@ -8,7 +8,7 @@ use App\Http\Controllers\EnfermedadController;
 use App\Http\Controllers\FactorRiesgoController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\PacienteController;
-use App\Http\Controllers\FichaPsicologiaController;
+use App\Http\Controllers\PsicologiaController;
 use App\Http\Controllers\ProfesionalController;
 use App\Http\Controllers\VacunaController;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +18,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::prefix('/admin')->group(__DIR__ . '/admin/admin.php');
+    //Route::prefix('/admin')->group(__DIR__ . '/admin/admin.php');
     Route::resource('alergia', AlergiaController::class);
     Route::resource('servicio', ServicioController::class);
     Route::resource('cirugia', CirugiaController::class);
@@ -27,18 +27,18 @@ Route::middleware([
     Route::resource('familiar', AntecedenteFamiliarController::class);
     Route::resource('medicamento', MedicamentoController::class);
     Route::resource('paciente', PacienteController::class);
-    Route::resource('psicologia', FichaPsicologiaController::class);
+    Route::resource('psicologia', PsicologiaController::class);
     Route::resource('profesional', ProfesionalController::class);
     Route::resource('vacuna', VacunaController::class);
     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
 
     Route::inertia('ficha', 'SubPages/FichaMedicaPage');
+<<< HEAD
     Route::get('paciente/all', [PacienteController::class, 'all'])->name('paciente.all');
-<<<<<<< HEAD
     Route::get('/atencion_psicologica', 'SubPages/AtencionPsicologica')->name('psicologia.atencion');
 =======
-    
-    Route::inertia('atencion_psicologica', [FichaPsicologiaController::class, 'atencion'])->name('psicologia.atencion');
->>>>>>> dfedd27 (Refactor launch.json to add new Chrome configurations)
+    Route::get('pacientes', [PacienteController::class, 'all'])->name('paciente.all');
+    Route::get('atencion_psicologica', [PsicologiaController::class, 'atencion'])->name('psicologia.atencion');
+>>>>>>> 46a20ea (Refactor TestCase.php, remove unused code)
     
 });

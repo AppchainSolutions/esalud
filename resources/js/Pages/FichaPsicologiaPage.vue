@@ -187,8 +187,10 @@ const remove = async (item) => {
     await handleRemoveItem(state, item);
 };
 
-function atencionPsicologica(item) {
-    openToEdit(state, item);
+function atencionPsicologica (item) {
+    router.get('psicologia.atencion', {
+        data: item
+    });
 }
 
 
@@ -197,7 +199,7 @@ function atencionPsicologica(item) {
 <template>
     <v-container>
         <v-card>
-            <v-card-title>Asignar Solicitud de Servicio</v-card-title>
+            <v-card-title>Pacientes asignado para atención psicológica</v-card-title>
             <v-card-text>
                 <v-sheet color="gray" :elevation="1" :class="'rounded-lg ma-4 pa-6'">
                     <v-row>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class FichaPsicologiaController extends Controller
+class PsicologiaController extends Controller
 {
     /**
      * Display a listing of the resource.

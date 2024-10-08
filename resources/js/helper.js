@@ -11,7 +11,7 @@ const { notify } = useNotification();
 
 export const fetchAllData = async (endpoints) => {
     const fetches = endpoints.map(async (endpoint) => {
-        const endpointUrl = "api/" + endpoint + "/all";
+        const endpointUrl = "api/" + endpoint;
         try {
             const response = await axios.get(endpointUrl);
             return {

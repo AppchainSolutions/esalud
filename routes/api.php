@@ -14,7 +14,7 @@ use App\Http\Controllers\MedioDerivacionController;
 use App\Http\Controllers\NacionalidadController;
 use App\Http\Controllers\NivelInstruccionController;
 use App\Http\Controllers\PrevisionController;
-use App\Http\Controllers\PuebloController;
+use App\Http\Controllers\PuebloOriginarioController;
 use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\ResponsableController;
 use App\Http\Controllers\SeguroSaludController;
@@ -40,40 +40,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // TODO: Seguir desde Especialidad
-Route::get('afp/all', [AfpController::class, 'all'])->name('afp.all');
-Route::get('calle/all', [CalleController::class, 'all'])->name('calle.all');
-Route::get('estado_civil/all', [EstadoCivilController::class, 'all'])->name('estadoCivil.all');
-Route::get('especialidad/all', [EspecialidadController::class, 'all'])->name('especialidad.all');
-Route::get('establecimiento_educacional/all', [EstablecimientoEducacionalController::class, 'all'])->name('establecimientoEducacional.all');
-Route::get('genero/all', [GeneroController::class, 'all'])->name('genero.all');
-Route::get('grupo_sanguineo/all', [GrupoSanguineoController::class, 'all'])->name('grupoSanguineo.all');
-Route::get('ley_social/all', [LeySocialController::class, 'all'])->name('leySocial.all');
-Route::get('nacionalidad/all', [NacionalidadController::class, 'all'])->name('modalidad.all');
-Route::get('prevision/all', [PrevisionController::class, 'all'])->name('prevision.all');
-Route::get('nivel_instruccion/all', [NivelInstruccionController::class, 'all'])->name('nivelInstruccion.all');
-Route::get('pueblo_originario/all', [PuebloOriginarioController::class, 'all'])->name('puebloOriginario.all');
-Route::get('religion/all', [ReligionController::class, 'all'])->name('religion.all');
-Route::get('seguro_salud/all', [SeguroSaludController::class, 'all'])->name('seguroSalud.all');
-
-/*
-Route::resource('afp', AfpController::class);
-    Route::resource('calle', CalleController::class);
-    Route::resource('derivacion', DerivacionController::class);
-    Route::resource('especialidad', EspecialidadController::class);
-    Route::resource('establecimiento_educacional', EstablecimientoEducacionalController::class);
-    Route::resource('estado_civil', EstadoCivilController::class);
-    Route::resource('genero', GeneroController::class);
-    Route::resource('grupo_sanguineo', GrupoSanguineoController::class);
-    Route::resource('instruccion', InstruccionController::class);
-    Route::resource('ley_social', LeySocialController::class);
-    Route::resource('medio_derivacion', MedioDerivacionController::class);
-    Route::resource('nacionalidad', NacionalidadController::class);
-    Route::resource('nivel_riesgo', NivelRiesgoController::class);
-    Route::resource('prevision', PrevisionController::class);
-    Route::resource('pueblo', PuebloController::class);
-    Route::resource('religion', ReligionController::class);
-    Route::resource('responsable', ResponsableController::class);
-    Route::resource('semaforo', SemaforoController::class);
-    Route::resource('seguro_salud', SeguroSaludController::class);
-    Route::resource('tipo_enfermedad', TipoEnfermedadController::class);
-    Route::resource('tipo_licencia', TipoLicenciaController::class);*/
+Route::get('afps', [AfpController::class, 'all'])->name('afp.all');
+Route::get('calles', [CalleController::class, 'all'])->name('calle.all');
+Route::get('estados_civiles', [EstadoCivilController::class, 'all'])->name('estadoCivil.all');
+Route::get('especialidades', [EspecialidadController::class, 'all'])->name('especialidad.all');
+Route::get('establecimientos_educacionales', [EstablecimientoEducacionalController::class, 'all'])->name('establecimientoEducacional.all');
+Route::get('generos', [GeneroController::class, 'all'])->name('genero.all');
+Route::get('grupos_sanguineos', [GrupoSanguineoController::class, 'all'])->name('grupoSanguineo.all');
+Route::get('leyes_sociales', [LeySocialController::class, 'all'])->name('leySocial.all');
+Route::get('nacionalidades', [NacionalidadController::class, 'all'])->name('modalidad.all');
+Route::get('previsiones', [PrevisionController::class, 'all'])->name('prevision.all');
+Route::get('niveles_instruccionales', [NivelInstruccionController::class, 'all'])->name('nivelInstruccion.all');
+Route::get('pueblos_originarios', [PuebloOriginarioController::class, 'all'])->name('puebloOriginario.all');
+Route::get('religiones', [ReligionController::class, 'all'])->name('religion.all');
+Route::get('seguros_salud', [SeguroSaludController::class, 'all'])->name('seguroSalud.all');

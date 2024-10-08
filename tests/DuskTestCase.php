@@ -44,4 +44,14 @@ abstract class DuskTestCase extends BaseTestCase
             )
         );
     }
+    
+    /**
+     * Define the base URL for the application.
+     *
+     * @return string
+     */
+    protected function baseUrl()
+    {
+        return 'http://localhost:8000';
+    }
 }

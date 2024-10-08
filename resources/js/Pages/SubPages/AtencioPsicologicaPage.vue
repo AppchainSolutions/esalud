@@ -20,7 +20,7 @@ defineOptions({ layout: AppLayout });
 <template>
     <v-container>
         <v-card>
-            <v-card-title>Asignar Solicitud de Servicio</v-card-title>
+            <v-card-title>Sesiones de atención psicológica</v-card-title>
             <v-card-text>
                 <v-sheet
                     color="gray"

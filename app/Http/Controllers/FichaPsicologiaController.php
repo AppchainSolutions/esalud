@@ -17,11 +17,6 @@ class FichaPsicologiaController extends Controller
         return Inertia::render('FichaPsicologiaPage');
     }
 
-    public function atencion()
-    {
-        return Inertia::render('SubPages/AtencionPsicologicaPage');
-    }
-
     /**
      * Show the form for creating a new resource.
      */

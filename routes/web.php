@@ -34,7 +34,6 @@ Route::middleware([
     Route::inertia('/ficha', 'SubPages/FichaMedica');
     
     Route::get('paciente/all', [PacienteController::class, 'all'])->name('paciente.all');
-    
-    Route::inertia('/atencion_psicologica', [FichaPsicologiaController::class, 'atencion'])->name('psicologia.atencion');
+    Route::get('/atencion_psicologica', 'SubPages/AtencionPsicologica')->name('psicologia.atencion');
     
 });

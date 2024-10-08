@@ -249,12 +249,11 @@ const remove = async (item) => {
 };
 
 function atencionPsicologica(item) {
-   // store.selected = item;
+    store.selected = item;
     try {
-        router.get("/atencion_psicologica");
-      //  alert("holi");
+      router.get("/atencion_psicologica");
     } catch (error) {
-        console.error("An error occurred while fetching daily attention data.");
+      console.error("An error occurred while fetching atencion psicologica.");
     }
 }
 

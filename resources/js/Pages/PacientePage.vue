@@ -213,7 +213,7 @@
     try {
       router.get("/ficha");
     } catch (error) {
-      console.error('"An error occurred while fetching daily attention data."');
+      console.error('"An error occurred while fetching daily Ficha Médica."');
     }
   }
 
@@ -222,7 +222,7 @@
     try {
       router.get("/atencion_diaria");
     } catch (error) {
-      console.error("An error occurred while fetching daily attention data.");
+      console.error("An error occurred while fetching Atenciones.");
     }
   }
 

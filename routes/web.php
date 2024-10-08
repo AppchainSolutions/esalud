@@ -68,5 +68,4 @@ Route::middleware([
     Route::resource('/paciente', PacienteController::class);
     Route::resource('/vacuna', VacunaController::class);
 
-
 });

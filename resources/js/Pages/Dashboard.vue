@@ -13,4 +13,3 @@
     </v-sheet>
   </v-container>
 </template>
-./SubPages/DashDough.vue./SubPages/DashPieChart.vue./SubPages/DashTable.vue./SubPages/Dash.vue

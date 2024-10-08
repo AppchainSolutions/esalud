@@ -44,8 +44,8 @@ export const search = async (searchUrl, searchQuery) => {
     try {
         const result = await axios.get(searchUrl, {
             params: {
-                filters: searchQuery
-            }
+                filters: searchQuery,
+            },
         });
         return result;
     } catch (errors) {

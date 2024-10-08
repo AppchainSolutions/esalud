@@ -282,14 +282,10 @@ export const openToEdit = (state, item) => {
     } 
     
     function edit(record) {
-        console.log(record);
         try {
             const index = state.tableItems.indexOf(item);
-            console.error(error);
-
             const editedItemCopy = { ...record };
             state.editedIndex = index;
-            // const edItem = Object.assign({}, record);
             state.editedItem = editedItemCopy;
             state.dialog = true;
         } catch (error) {

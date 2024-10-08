@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('paciente_id');
             $table->string('descripcion');
+            $table->string('comentario');
             $table->timestamps();
         });
     }

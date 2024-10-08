@@ -207,16 +207,6 @@ function fichaMedica(item) {
     }
 }
 
-function asignacion(item) {
-    store.selected = item;
-    console.log(item);
-    try {
-        router.get("/asignacion");
-    } catch (error) {
-        console.error("An error occurred while fetching daily attention data.");
-    }
-}
-
 function close() {
     closeForm(state);
 }

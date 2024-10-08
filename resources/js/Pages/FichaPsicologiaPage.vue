@@ -2,6 +2,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { reactive, onMounted, computed } from "vue";
 import { useDataStore } from "@/store.js";
+import { router } from "@inertiajs/vue3";
 import {
     closeForm,
     fetchAllData,
@@ -20,9 +21,7 @@ const nombre = store.getSelected.nombre;
 const apellidos = store.getSelected.apellidos;
 const state = reactive({
     endpoints: [
-        /*         "servicio",
-                "profesional",
-                "horarios_disponibles", */
+
     ],
     atencion: {
         headers: [
@@ -189,16 +188,7 @@ const remove = async (item) => {
 };
 
 function atencionPsicologica(item) {
-<<<<<<< HEAD
-    store.selected = item;
-    try {
-      router.get("/atencion_psicologica");
-    } catch (error) {
-      console.error("An error occurred while fetching atencion psicologica.");
-    }
-=======
     openToEdit(state, item);
->>>>>>> dfedd27 (Refactor launch.json to add new Chrome configurations)
 }
 
 
@@ -209,11 +199,7 @@ function atencionPsicologica(item) {
         <v-card>
             <v-card-title>Asignar Solicitud de Servicio</v-card-title>
             <v-card-text>
-                <v-sheet
-                    color="gray"
-                    :elevation="1"
-                    :class="'rounded-lg ma-4 pa-6'"
-                >
+                <v-sheet color="gray" :elevation="1" :class="'rounded-lg ma-4 pa-6'">
                     <v-row>
                         <v-col>
                             <h3>Profesional:</h3>
@@ -247,53 +233,27 @@ function atencionPsicologica(item) {
                             <h4>Fecha: 03/10/2024</h4>
                             <h4>Hora actual: 10:30</h4>
                             <h4>Hora inicio: 10:00 - 10:45</h4>
-                            <v-textarea
-                                clearable
-                                label="Nota rápida:"
-                            ></v-textarea>
+                            <v-textarea clearable label="Nota rápida:"></v-textarea>
                         </v-col>
                     </v-row>
                 </v-sheet>
-                <v-sheet
-                    color="gray"
-                    :elevation="1"
-                    :class="'rounded-lg ma-4 pa-6'"
-                >
+                <v-sheet color="gray" :elevation="1" :class="'rounded-lg ma-4 pa-6'">
                     <v-row>
                         <v-col>
-                            <v-data-table
-                                :headers="state.atencion.headers"
-                                :items="state.atencion.items"
-                                class="elevation-1"
-                            >
+                            <v-data-table :headers="state.atencion.headers" :items="state.atencion.items"
+                                class="elevation-1">
                                 <template v-slot:top>
                                     <v-toolbar flat>
-                                        <v-toolbar-title
-                                            >Pacientes
-                                            asignados</v-toolbar-title
-                                        >
-                                        <v-divider
-                                            class="mx-4"
-                                            inset
-                                            vertical
-                                        ></v-divider>
+                                        <v-toolbar-title>Pacientes asignados</v-toolbar-title>
+                                        <v-divider class="mx-4" inset vertical></v-divider>
                                     </v-toolbar>
                                 </template>
                                 <template v-slot:item.actions="{ item }">
-                                    <v-tooltip
-                                        text="Atención Psicológica"
-                                        location="top"
-                                    >
+                                    <v-tooltip text="Atención Psicológica" location="top">
                                         <template v-slot:activator="{ props }">
-                                            <v-btn
-                                                v-bind="props"
-                                                density="compact"
-                                                color="#009AA4"
-                                                class="mr-2 ml-2"
-                                                variant="tonal"
-                                                :icon="'mdi-head-cog'"
-                                                @click="atencionPsicologica(item)"
-                                            ></v-btn>
+                                            <v-btn v-bind="props" density="compact" color="#009AA4" class="mr-2 ml-2"
+                                                variant="tonal" :icon="'mdi-head-cog'"
+                                                @click="atencionPsicologica(item)"></v-btn>
                                         </template>
                                     </v-tooltip>
                                 </template>

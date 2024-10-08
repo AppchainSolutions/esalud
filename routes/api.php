@@ -1,22 +1,28 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AfpController;
 use App\Http\Controllers\CalleController;
-use App\Http\Controllers\EstadoCivilController;
+use App\Http\Controllers\DerivacionController;
 use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\EstablecimientoEducacionalController;
+use App\Http\Controllers\EstadoCivilController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\GrupoSanguineoController;
+use App\Http\Controllers\InstruccionController;
 use App\Http\Controllers\LeySocialController;
+use App\Http\Controllers\MedioDerivacionController;
 use App\Http\Controllers\NacionalidadController;
 use App\Http\Controllers\NivelInstruccionController;
 use App\Http\Controllers\PrevisionController;
-use App\Http\Controllers\PuebloOriginarioController;
+use App\Http\Controllers\PuebloController;
 use App\Http\Controllers\ReligionController;
+use App\Http\Controllers\ResponsableController;
 use App\Http\Controllers\SeguroSaludController;
-
+use App\Http\Controllers\SemaforoController;
+use App\Http\Controllers\TipoEnfermedadController;
+use App\Http\Controllers\TipoLicenciaController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -48,3 +54,26 @@ Route::get('nivel_instruccion/all', [NivelInstruccionController::class, 'all'])-
 Route::get('pueblo_originario/all', [PuebloOriginarioController::class, 'all'])->name('puebloOriginario.all');
 Route::get('religion/all', [ReligionController::class, 'all'])->name('religion.all');
 Route::get('seguro_salud/all', [SeguroSaludController::class, 'all'])->name('seguroSalud.all');
+
+/*
+Route::resource('afp', AfpController::class);
+    Route::resource('calle', CalleController::class);
+    Route::resource('derivacion', DerivacionController::class);
+    Route::resource('especialidad', EspecialidadController::class);
+    Route::resource('establecimiento_educacional', EstablecimientoEducacionalController::class);
+    Route::resource('estado_civil', EstadoCivilController::class);
+    Route::resource('genero', GeneroController::class);
+    Route::resource('grupo_sanguineo', GrupoSanguineoController::class);
+    Route::resource('instruccion', InstruccionController::class);
+    Route::resource('ley_social', LeySocialController::class);
+    Route::resource('medio_derivacion', MedioDerivacionController::class);
+    Route::resource('nacionalidad', NacionalidadController::class);
+    Route::resource('nivel_riesgo', NivelRiesgoController::class);
+    Route::resource('prevision', PrevisionController::class);
+    Route::resource('pueblo', PuebloController::class);
+    Route::resource('religion', ReligionController::class);
+    Route::resource('responsable', ResponsableController::class);
+    Route::resource('semaforo', SemaforoController::class);
+    Route::resource('seguro_salud', SeguroSaludController::class);
+    Route::resource('tipo_enfermedad', TipoEnfermedadController::class);
+    Route::resource('tipo_licencia', TipoLicenciaController::class);*/

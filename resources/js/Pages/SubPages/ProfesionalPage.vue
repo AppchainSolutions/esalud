@@ -182,7 +182,7 @@ function fichaMedica(item) {
         router.get("/ficha");
     } catch (error) {
         console.error(
-            '"An error occurred while fetching daily attention data."'
+          //  '"An error occurred while fetching daily attention data."'
         );
     }
 }
@@ -192,7 +192,7 @@ function asignacion(item) {
     try {
         router.get("/asignacion");
     } catch (error) {
-        console.error("An error occurred while fetching daily attention data.");
+       // console.error("An error occurred while fetching daily attention data.");
     }
 }
 

@@ -14,25 +14,22 @@
 
   const store = useDataStore();
   const state = reactive({
-    endpoints: ["trastorno_cronico"],
+    endpoints: [""],
     headers: [
       {
-        title: "Trastorno Crónico",
+        title: "Enfermedad",
         align: "start",
         sortable: true,
-        key: "trastorno_cronico.descripcion",
       },
       { title: "Comentario", key: "comentario", sortable: false },
       { title: "Acciones", align: "center", key: "actions" },
     ],
     editedItem: {
       paciente_id: null,
-      trastorno_cronico: "",
       comentario: "",
     },
     defaultItem: {
       paciente_id: null,
-      trastorno_cronico: null,
       comentario: null,
     },
     searchQuery: {
@@ -137,14 +134,7 @@
                   <v-container>
                     <v-row>
                       <v-col>
-                        <v-select
-                          v-model="state.editedItem.trastorno_cronico"
-                          :items="state.list.trastorno_cronico"
-                          item-title="descripcion"
-                          item-value="id"
-                          label="Trastorno Crónico"
-                          variant="underlined"
-                        ></v-select>
+
                         <v-text-field
                           v-model="state.editedItem.comentario"
                           label="comentario"

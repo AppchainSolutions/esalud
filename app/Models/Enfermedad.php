@@ -4,21 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\TrastornoCronico;
+use App\Models\Paciente;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Enfermedad extends Model
 {
     use HasFactory;
-    public function trastorno_cronico(): BelongsTo
+    public function paciente(): BelongsTo
     {
-        return $this->belongsTo(TrastornoCronico::class);
+        return $this->hasMany(Paciente::class);
     } 
    
     protected $table = 'enfermedad';
     protected $fillable = [
         'paciente_id',
         'comentario',
-        'trastorno_cronico',
+        'descripcion',
     ];
 }

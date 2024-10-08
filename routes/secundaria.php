@@ -59,7 +59,6 @@ Route::middleware([
     Route::resource('responsable', ResponsableController::class);
     Route::resource('semaforo', SemaforoController::class);
     Route::resource('seguro_salud', SeguroSaludController::class);
-    Route::resource('trastorno_cronico', TrastornoCronicoController::class);
     Route::resource('tipo_enfermedad', TipoEnfermedadController::class);
     Route::resource('tipo_licencia', TipoLicenciaController::class);
 });

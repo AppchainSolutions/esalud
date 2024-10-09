@@ -27,18 +27,14 @@ Route::middleware([
     Route::resource('familiar', AntecedenteFamiliarController::class);
     Route::resource('medicamento', MedicamentoController::class);
     Route::resource('paciente', PacienteController::class);
-    Route::resource('psicologia', PsicologiaController::class);
+   // Route::resource('psicologia', PsicologiaController::class);
     Route::resource('profesional', ProfesionalController::class);
     Route::resource('vacuna', VacunaController::class);
+
     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
 
     Route::inertia('ficha', 'SubPages/FichaMedicaPage');
-<<< HEAD
-    Route::get('paciente/all', [PacienteController::class, 'all'])->name('paciente.all');
-    Route::get('/atencion_psicologica', 'SubPages/AtencionPsicologica')->name('psicologia.atencion');
-=======
     Route::get('pacientes', [PacienteController::class, 'all'])->name('paciente.all');
     Route::get('atencion_psicologica', [PsicologiaController::class, 'atencion'])->name('psicologia.atencion');
->>>>>>> 46a20ea (Refactor TestCase.php, remove unused code)
     
 });

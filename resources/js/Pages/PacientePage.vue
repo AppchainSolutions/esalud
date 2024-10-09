@@ -199,7 +199,7 @@ const formatDate = computed(() => {
 function fichaMedica(item) {
     store.selected = item;
     try {
-        router.get("ficha");
+        router.get("ficha-medica");
     } catch (error) {
         console.error(
             '"An error occurred while fetching daily attention data."'

@@ -7,10 +7,8 @@ import Notifications from "@kyvg/vue3-notification";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import JsonExcel from "vue-json-excel3";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
-//* SweetAlert2
 import VueSweetalert2 from "vue-sweetalert2";
 import "@sweetalert2/theme-material-ui/material-ui.scss";
-//* Vuetify
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
@@ -21,7 +19,6 @@ import "@mdi/font/css/materialdesignicons.css";
 
 const pinia = createPinia()
 const appName = import.meta.env.VITE_APP_NAME || "Empresas"
-const isProduction = process.env.NODE_ENV === "production"
 
 const vuetify = createVuetify({
     ssr: true,
@@ -56,7 +53,7 @@ createInertiaApp({
             .component("downloadExcel", JsonExcel)
             .use(Notifications)
             .use(VueSpinnersPlugin)
-            .use(ZiggyVue)
+            .use(ZiggyVue, Ziggy)
             .use(plugin)
             .use(pinia)
             .use(vuetify)

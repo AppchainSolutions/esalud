@@ -23,7 +23,7 @@ defineOptions({ layout: AppLayout });
 
 const store = useDataStore();
 const state = reactive({
-    endpoints: ["especialidad"],
+    endpoints: ["especialidades"],
     headers: [
         { title: "Rut", align: "center", sortable: true, key: "rut" },
         { title: "Nombre", align: "center", sortable: true, key: "nombre" },

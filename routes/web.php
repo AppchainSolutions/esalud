@@ -27,14 +27,19 @@ Route::middleware([
     Route::resource('familiar', AntecedenteFamiliarController::class);
     Route::resource('medicamento', MedicamentoController::class);
     Route::resource('paciente', PacienteController::class);
-   // Route::resource('psicologia', PsicologiaController::class);
     Route::resource('profesional', ProfesionalController::class);
     Route::resource('vacuna', VacunaController::class);
-
     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
+<<<<<<< HEAD
 
     Route::inertia('ficha', 'SubPages/FichaMedicaPage');
     Route::get('pacientes', [PacienteController::class, 'all'])->name('paciente.all');
     Route::get('atencion_psicologica', [PsicologiaController::class, 'atencion'])->name('psicologia.atencion');
     
+=======
+    Route::inertia('ficha-medica', 'SubPages/FichaMedicaPage')->name('ficha.medica');
+    Route::inertia('psicologia-pacientes', 'PsicologiaPage')->name('psicologia');
+    Route::inertia('psicologia-sesiones', 'SubPages/Sesiones-PsicologiaPage')->name('psicologia.sesiones');
+    Route::inertia('psicologia-registro-sesion', 'SubPages/Psicologia-Registro-SesionPage')->name('psicologia.sesion');
+>>>>>>> b0c789a (Refactor routing paths and add new components for psychology sessions)
 });

@@ -43,7 +43,7 @@ export default {
             router.get("/profesional");
         },
         psicologia() {
-            router.get("/psicologia");
+            router.get("/psicologia-pacientes");
         },
 
         salir() {

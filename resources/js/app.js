@@ -1,6 +1,6 @@
 import "./bootstrap";
 import { createApp, h } from "vue";
-import { VueSpinnersPlugin } from 'vue3-spinners';
+import { VueSpinnersPlugin } from "vue3-spinners";
 import { createPinia } from "pinia";
 import { createInertiaApp } from "@inertiajs/vue3";
 import Notifications from "@kyvg/vue3-notification";
@@ -17,8 +17,8 @@ import * as labsComponents from "vuetify/labs/components";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
 import "@mdi/font/css/materialdesignicons.css";
 
-const pinia = createPinia()
-const appName = import.meta.env.VITE_APP_NAME || "Empresas"
+const pinia = createPinia();
+const appName = import.meta.env.VITE_APP_NAME || "Centro Comunitario";
 
 const vuetify = createVuetify({
     ssr: true,
@@ -61,6 +61,14 @@ createInertiaApp({
             .mount(el);
     },
     progress: {
-        color: "cyan",
+        color: "red", // Change the color of the progress bar
+        includeCSS: true, // Include the default CSS for the progress bar
+        showSpinner: true, // Show a spinner while the progress bar is loading
+        thickness: "2em", // Change the thickness of the progress bar
+        transition: {
+            duration: 0.3, // Change the duration of the transition
+            opacity: 0.2, // Change the opacity of the progress bar
+            speed: "0.4s", // Change the speed of the progress bar
+        },
     },
 });

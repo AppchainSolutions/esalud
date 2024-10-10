@@ -187,6 +187,7 @@ const remove = async (item) => {
     await handleRemoveItem(state, item);
 };
 
+<<<<<<< HEAD
 function atencionPsicologica (item) {
 <<<<<<< HEAD:resources/js/Pages/FichaPsicologiaPage.vue
     router.get('psicologia.atencion', {
@@ -196,6 +197,10 @@ function atencionPsicologica (item) {
     console.log(item);
     router.get('/psicologia-atencion');
 >>>>>>> 3beee4f ("Removed and modified files in app/Http/Controllers, resources/js, routes, and tests directories; updated vite.config.js"):resources/js/Pages/PsicologiaPage.vue
+=======
+function psicologiaSesiones (item) {
+    router.get('/psicologia-sesiones');
+>>>>>>> b0c789a (Refactor routing paths and add new components for psychology sessions)
 }
 
 
@@ -213,12 +218,8 @@ function atencionPsicologica (item) {
                             Tapia, Jorge
                             <h4>Especialidad:</h4>
                             Psicología
-                            <br />
-
-                            TODO: Acá pueden ir los pacientes totales del
-                            profesional o solamente los que les corresponde para
-                            ese día o tener opcion de switch entre todos S/N
                         </v-col>
+
                         <v-col>
                             <h4>Horarios asignados:</h4>
                             <ol :class="'ml-4'">
@@ -240,7 +241,6 @@ function atencionPsicologica (item) {
                             <h4>Fecha: 03/10/2024</h4>
                             <h4>Hora actual: 10:30</h4>
                             <h4>Hora inicio: 10:00 - 10:45</h4>
-                            <v-textarea clearable label="Nota rápida:"></v-textarea>
                         </v-col>
                     </v-row>
                 </v-sheet>
@@ -256,11 +256,11 @@ function atencionPsicologica (item) {
                                     </v-toolbar>
                                 </template>
                                 <template v-slot:item.actions="{ item }">
-                                    <v-tooltip text="Atención Psicológica" location="top">
+                                    <v-tooltip text="Sesiones de atención psicológica" location="top">
                                         <template v-slot:activator="{ props }">
                                             <v-btn v-bind="props" density="compact" color="#009AA4" class="mr-2 ml-2"
                                                 variant="tonal" :icon="'mdi-head-cog'"
-                                                @click="atencionPsicologica(item)"></v-btn>
+                                                @click="psicologiaSesiones(item)"></v-btn>
                                         </template>
                                     </v-tooltip>
                                 </template>

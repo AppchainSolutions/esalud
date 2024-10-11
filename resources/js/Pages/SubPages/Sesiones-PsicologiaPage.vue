@@ -279,11 +279,16 @@ function registroSesionPsicologia(item) {
 
                                             <v-select clearable label="Diagnóstico DSM V - CIE11 (Salud Mental)"
                                                 class="ma-2 pa-2" variant="underlined" single></v-select>
-                                            <v-select :items="state.objetivos" :item-description="descripcion" clearable label="Objetivos de la Terapia" class="ma-2 pa-2"
-                                                variant="underlined" multiple chips></v-select>
+                                            
                                         </v-col>
                                         <v-col>
-
+                                            <v-select :items="state.objetivos" :item-description="descripcion" clearable label="Objetivos de la Terapia" class="ma-2 pa-2"
+                                                variant="underlined" multiple chips></v-select>
+<v-textarea title="Problemas que afectan al paciente"
+                                                label="Problemas que afectan al paciente" clearable class="ma-2 pa-2"
+                                                rows="1">
+                                                Problemas
+                                            </v-textarea>
                                         </v-col>
                                     </v-row>
                                 </v-expansion-panel-text>
@@ -297,24 +302,16 @@ function registroSesionPsicologia(item) {
                                 <v-expansion-panel-text>
                                     <v-row>
                                         <v-col>
-                                            <v-textarea title="Problemas que afectan al paciente"
-                                                label="Problemas que afectan al paciente" clearable class="ma-2 pa-2"
-                                                rows="1">
-                                                Problemas
-                                            </v-textarea>
+                                            
                                             <v-file-input class="ma-2 pa-2" rows="1" clearable label="Subir Genograma"></v-file-input>
                                             <v-file-input class="ma-2 pa-2" rows="1" clearable label="Subir Ecograma"></v-file-input>
                                             <v-textarea title="Motivo de consulta" label="Factores de Riesgo" clearable
                                                 class="ma-2 pa-2" rows="1">
                                                 Factores de Riesgo
                                             </v-textarea>
-                                            <v-textarea title="Factores Protectores" label="Factores Protectores" clearable
+                                            <v-textarea title="Factores Protectores / Facilitadores" label="Factores Protectores / Facilitadores" clearable
                                                 class="ma-2 pa-2" rows="1">
-                                                Factores Protectores
-                                            </v-textarea>
-                                            <v-textarea title="Facilitadores" label="Facilitadores" clearable
-                                                class="ma-2 pa-2" rows="1">
-                                                Facilitadores
+                                                Factores Protectores / Facilitadores
                                             </v-textarea>
                                             <v-textarea title="Obstaculizadores" label="Obstaculizadores" clearable
                                                 class="ma-2 pa-2" rows="1">

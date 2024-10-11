@@ -407,6 +407,7 @@ const remove = async (item) => {
                                                         state.editedItem.rut
                                                     "
                                                     label="Rut* (12345678-9)"
+                                                    id="rut"
                                                     type="text"
                                                     required
                                                     clearable
@@ -427,6 +428,7 @@ const remove = async (item) => {
                                                     "
                                                     label="Nombre*"
                                                     type="text"
+                                                    id="nombre"
                                                     required
                                                     clearable
                                                     variant="underlined"
@@ -440,6 +442,7 @@ const remove = async (item) => {
                                                             .apellidos
                                                     "
                                                     label="Apellidos*"
+                                                    id="apellidos"
                                                     required
                                                     type="text"
                                                     clearable

@@ -2,12 +2,8 @@ import { defineStore } from "pinia";
 
 export const useDataStore = defineStore("DataStore", {
   state: () => ({
-    selected: {
-    }
+    selected: null
   }),
-  getters: {
-    getSelected: (state) => state.selected,
-  },
   actions: {
     async setUserSelected(user) {
       state.userSelected = user;

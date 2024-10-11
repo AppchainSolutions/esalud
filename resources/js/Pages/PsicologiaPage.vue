@@ -17,8 +17,8 @@ import {
 defineOptions({ layout: AppLayout });
 
 const store = useDataStore();
-const nombre = store.getSelected.nombre;
-const apellidos = store.getSelected.apellidos;
+/* const nombre = store.getSelected.nombre;
+const apellidos = store.getSelected.apellidos; */
 const state = reactive({
     endpoints: [
 

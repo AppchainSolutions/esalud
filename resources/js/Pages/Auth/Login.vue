@@ -37,7 +37,7 @@ const submit = () => {
                         id="email"
                         v-model="form.email"
                         autofocus
-                        label="Usuario"
+                        label="Email"
                         hide-details
                         required
                         class="mb-1"

@@ -19,6 +19,33 @@ defineOptions({ layout: AppLayout });
 const store = useDataStore();
 const state = reactive({
     endpoints: [],
+    objetivos: [
+  { "id": 1, "descripcion": "Acompañamiento en el proceso de duelo" },
+  { "id": 2, "descripcion": "Desarrollar nuevas prácticas relacionales entre la familia" },
+  { "id": 3, "descripcion": "Desarrollar técnicas de autorregulación emocional" },
+  { "id": 4, "descripcion": "Disminuir sintomatología ansiosa" },
+  { "id": 5, "descripcion": "Disminuir sintomatología depresiva" },
+  { "id": 6, "descripcion": "Elaboración de la experiencia de separación de los padres" },
+  { "id": 7, "descripcion": "Evaluación de competencias parentales" },
+  { "id": 8, "descripcion": "Fomentar técnicas y conductas de autocuidado" },
+  { "id": 9, "descripcion": "Fortalecer autoestima y autoconcepto" },
+  { "id": 10, "descripcion": "Fortalecer competencias formativas" },
+  { "id": 11, "descripcion": "Fortalecer competencias protectoras" },
+  { "id": 12, "descripcion": "Fortalecer competencias reflexivas" },
+  { "id": 13, "descripcion": "Fortalecer competencias vinculares" },
+  { "id": 14, "descripcion": "Fortalecer tolerancia a la frustración" },
+  { "id": 15, "descripcion": "Identificar situaciones que gatillen procesos ansiosos" },
+  { "id": 16, "descripcion": "Mejorar la regulación emocional" },
+  { "id": 17, "descripcion": "Propiciar habilidades para enfrentar los miedos nocturnos" },
+  { "id": 18, "descripcion": "Psicoeducar habilidades parentales" },
+  { "id": 19, "descripcion": "Psicoeducar sobre adolescencia y sexualidad" },
+  { "id": 20, "descripcion": "Psicoeducar sobre ciclo vital personas mayores" },
+  { "id": 21, "descripcion": "Disminuir síntomas ansiosos" },
+  { "id": 22, "descripcion": "Fortalecer autoconcepto" },
+  { "id": 23, "descripcion": "Fortalecer autoestima" },
+  { "id": 24, "descripcion": "Fortalecer competencias sociales y/o habilidades interpersonales" },
+  { "id": 25, "descripcion": "Propiciar la organización" }
+],
     atencion: {
         headers: [
             {
@@ -214,7 +241,7 @@ function registroSesionPsicologia(item) {
                 <v-row class="mb-4">
                         <div class="text-h4 ma-2 pa-2">Sesiones asignadas por paciente: Patricio Navia</div>
                         <v-expansion-panels>
-                            <v-expansion-panel title="Atención Psicología" color="teal">
+                            <v-expansion-panel title="Atención Psicología" color="#009AA4">
                                 <v-expansion-panel-text>
                                     <v-row>
                                         <v-col>
@@ -238,20 +265,25 @@ function registroSesionPsicologia(item) {
 
                     <v-row class="mb-4">
                         <v-expansion-panels>
-                            <v-expansion-panel title="Ficha Psicológica del Paciente" color="teal">
+                            <v-expansion-panel title="Ficha Psicológica del Paciente" color="#009AA4">
                                 <v-expansion-panel-text>
                                     <v-row>
                                         <v-col>
-                                            <v-file-input clearable label="Subir Genograma"></v-file-input>
-                                            <v-file-input clearable label="Subir Ecograma"></v-file-input>
-                                            Factores Riesgo Factores Protectores
-                                            Red de apoyo profesional
-                                            ANtecedentes mórbidos familiares
+                                            <v-text-field class="ma-2 pa-2" type="date" label="Fecha de Ingreso">
+                                                
+                                            </v-text-field>
+                                            <v-textarea title="Motivo de consulta" label="Motivo de Consulta" clearable
+                                                class="ma-2 pa-2" rows="1">
+                                                Motivo de consulta
+                                            </v-textarea>
+
+                                            <v-select clearable label="Diagnóstico DSM V - CIE11 (Salud Mental)"
+                                                class="ma-2 pa-2" variant="underlined" single></v-select>
+                                            <v-select :items="state.objetivos" :item-description="descripcion" clearable label="Objetivos de la Terapia" class="ma-2 pa-2"
+                                                variant="underlined" multiple chips></v-select>
                                         </v-col>
                                         <v-col>
-                                            Tratamientos anteriores Tramientos
-                                            actuales Tratamiento farmacológico
-                                            Tratamiento de apoyo comunal
+
                                         </v-col>
                                     </v-row>
                                 </v-expansion-panel-text>
@@ -261,40 +293,62 @@ function registroSesionPsicologia(item) {
 
                     <v-row class="mb-4">
                         <v-expansion-panels>
-                            <v-expansion-panel title="Plan de Trabajo" color="teal">
+                            <v-expansion-panel title="Plan de Trabajo" color="#009AA4">
                                 <v-expansion-panel-text>
                                     <v-row>
                                         <v-col>
-                                            <v-textarea title="Motivo de consulta" label="Motivo de Consulta" clearable
-                                                class="ma-4 pa-4" rows="2">
-                                                Modelo de trabajo
-                                            </v-textarea>
-
-                                            <v-select clearable label="Diagnóstico DSM V - CIE11 (Salud Mental)"
-                                                class="ma-4 pa-4" variant="underlined" single></v-select>
-                                            <v-select clearable label="Objetivos de la Terapia" class="ma-4 pa-4"
-                                                variant="underlined" multiple chips></v-select>
-                                        </v-col>
-                                        <v-col>
                                             <v-textarea title="Problemas que afectan al paciente"
-                                                label="Problemas que afectan al paciente" clearable class="ma-4 pa-4"
-                                                rows="2">
+                                                label="Problemas que afectan al paciente" clearable class="ma-2 pa-2"
+                                                rows="1">
                                                 Problemas
                                             </v-textarea>
-                                            <v-textarea title="Factores de Riesgo / VUlnearibilidades"
-                                                label="Factores de Riesgo / VUlnearibilidades" clearable
-                                                class="ma-4 pa-4" rows="2">
+                                            <v-file-input class="ma-2 pa-2" rows="1" clearable label="Subir Genograma"></v-file-input>
+                                            <v-file-input class="ma-2 pa-2" rows="1" clearable label="Subir Ecograma"></v-file-input>
+                                            <v-textarea title="Motivo de consulta" label="Factores de Riesgo" clearable
+                                                class="ma-2 pa-2" rows="1">
                                                 Factores de Riesgo
                                             </v-textarea>
+                                            <v-textarea title="Factores Protectores" label="Factores Protectores" clearable
+                                                class="ma-2 pa-2" rows="1">
+                                                Factores Protectores
+                                            </v-textarea>
                                             <v-textarea title="Facilitadores" label="Facilitadores" clearable
-                                                class="ma-4 pa-4" rows="2">
+                                                class="ma-2 pa-2" rows="1">
                                                 Facilitadores
                                             </v-textarea>
                                             <v-textarea title="Obstaculizadores" label="Obstaculizadores" clearable
-                                                class="ma-4 pa-4" rows="2">
+                                                class="ma-2 pa-2" rows="1">
                                                 Obstaculizadores
                                             </v-textarea>
+                                            <v-select title="Red de apoyo profesional" multiple chips label="Red de apoyo profesional" clearable
+                                                class="ma-2 pa-2" rows="1" :items="['Fonoaudiología', 'Terapia Ocupacional', 'Kinesiología', 'Kinesiología domiciliaria','Psicología', 'Terapia Floral']">
+                                                Red de apoyo profesional
+                                            </v-select>
                                         </v-col>
+
+                                        <v-col>
+                                            <v-textarea title="Antecedentes mórbidos familiares" label="Antecedentes mórbidos familiares" clearable
+                                                class="ma-2 pa-2" rows="1">
+                                                Antecedentes mórbidos familiares
+                                            </v-textarea>
+                                            <v-textarea title="Tratamientos anteriores" label="Tratamientos anteriores" clearable
+                                                class="ma-2 pa-2" rows="1">
+                                                Tratamientos anteriores
+                                            </v-textarea>
+                                            <v-textarea title=" Tratamientos actuales" label=" Tratamientos actuales" clearable
+                                                class="ma-2 pa-2" rows="1">
+                                                Tratamientos actuales
+                                            </v-textarea>
+                                            <v-textarea title="Tratamientos famacológico" label="Tratamientos famacológico" clearable
+                                                class="ma-2 pa-2" rows="1">
+                                                Tratamientos famacológico
+                                            </v-textarea>
+                                            <v-textarea title="Tratamientos de apoyo comunal" label="Tratamientos de apoyo comunal" clearable
+                                                class="ma-2 pa-2" rows="1">
+                                                Tratamientos de apoyo comunal
+                                            </v-textarea>
+                                        </v-col>
+                                    
                                     </v-row>
                                 </v-expansion-panel-text>
                             </v-expansion-panel>
@@ -304,7 +358,7 @@ function registroSesionPsicologia(item) {
                     <v-row class="mb-4">
                         <v-expansion-panels>
                             <v-expansion-panel title="Sesiones de atención psicológica asiganadas al paciente"
-                                color="teal">
+                                color="#009AA4">
                                 <v-expansion-panel-text>
                                     <v-col>
                                         <v-data-table :headers="state.atencion.headers" :items="state.atencion.items"

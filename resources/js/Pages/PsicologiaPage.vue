@@ -187,20 +187,14 @@ const remove = async (item) => {
     await handleRemoveItem(state, item);
 };
 
-<<<<<<< HEAD
+
 function atencionPsicologica (item) {
-<<<<<<< HEAD:resources/js/Pages/FichaPsicologiaPage.vue
     router.get('psicologia.atencion', {
         data: item
     });
-=======
-    console.log(item);
-    router.get('/psicologia-atencion');
->>>>>>> 3beee4f ("Removed and modified files in app/Http/Controllers, resources/js, routes, and tests directories; updated vite.config.js"):resources/js/Pages/PsicologiaPage.vue
-=======
+
 function psicologiaSesiones (item) {
-    router.get('/psicologia-sesiones');
->>>>>>> b0c789a (Refactor routing paths and add new components for psychology sessions)
+    router.get('psicologia-sesiones');
 }
 
 

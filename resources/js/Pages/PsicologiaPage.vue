@@ -192,7 +192,7 @@ function atencionPsicologica (item) {
     router.get('psicologia.atencion', {
         data: item
     });
-
+}
 function psicologiaSesiones (item) {
     router.get('psicologia-sesiones');
 }

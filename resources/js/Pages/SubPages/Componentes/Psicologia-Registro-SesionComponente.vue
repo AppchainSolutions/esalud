@@ -1,13 +1,8 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+ import AppLayout from "@/Layouts/AppLayout.vue";
 import { ref } from 'vue';
-import { QuillEditor } from '@vueup/vue-quill';
-import '@vueup/vue-quill/dist/vue-quill.snow.css'; // Import Quill CSS
-import {
-    closeForm,
-    handleEditItem,
-    handleRemoveItem,
-} from "@/helper.js";
+/* import { QuillEditor } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css'; // Import Quill CSS */
 
 defineOptions({ layout: AppLayout });
 
@@ -23,21 +18,12 @@ const editorOptions = {
     },
 };
 
-
-const update = async () => {
-    await handleEditItem(state);
-    closeForm(state);
-};
-
-const remove = async (item) => {
-    await handleRemoveItem(state, item);
-};
-
 </script>
 
 <template>
-    <v-container>
-        <v-card>
+   <v-container>
+    KAKAREO
+        <!-- <v-card>
             <v-card-title>Registro de la Sesión</v-card-title>
             <v-card-text>
                 <v-sheet
@@ -52,7 +38,7 @@ const remove = async (item) => {
                     />
                 </v-sheet>
             </v-card-text>
-        </v-card>
+        </v-card> -->
     </v-container>
 </template>
 

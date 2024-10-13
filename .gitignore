@@ -4,9 +4,15 @@ e2e
 node_modules/
 vendor/
 
-public/build/assets/
-bootstrap/ssr/assets/
-storage/
+public/
+bootstrap/
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/framework/testing/*
+storage/clockwork/* 
+storage/logs/*
+
 # stryker temp files
 .stryker-tmp
 *.deb

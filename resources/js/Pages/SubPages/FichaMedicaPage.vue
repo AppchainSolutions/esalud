@@ -5,12 +5,12 @@ import AntecedenteFamiliar from "@/Pages/SubPages/AntecedenteFamiliarPage.vue";
 import ContextoSocioEconomico from "@/Pages/SubPages/ContextoPage.vue";
 
 import { router } from "@inertiajs/vue3";
-import { useDataStore } from "@/store.js";
+//import { useDataStore } from "@/store.js";
 
 defineOptions({ layout: AppLayout });
-const store = useDataStore();
-const nombre = store.getSelected.nombre;
-const apellidos = store.getSelected.apellidos;
+//const store = useDataStore();
+/* const nombre = store.getSelected.nombre;
+const apellidos = store.getSelected.apellidos; */
 
 const volver = () => {
     router.get("/paciente");
@@ -21,9 +21,9 @@ const volver = () => {
     <v-container fluid>
         <v-row justify="center">
             <v-card min-width="500">
-                <v-card-title class="justify-space-between"
+               <!--  <v-card-title class="justify-space-between"
                     >Información del Paciente: {{ apellidos }}, {{ nombre }}
-                </v-card-title>
+                </v-card-title> -->
                 <v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>

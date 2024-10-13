@@ -16,7 +16,7 @@ const store = useDataStore();
 const state = reactive({
     headers: [
         {
-            title: "AlergiaModel",
+    title: "AlergiaModel",
             align: "start",
             sortable: true,
             key: "AlergiaModel",

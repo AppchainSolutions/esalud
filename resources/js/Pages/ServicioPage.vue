@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import SolicitudServicio from "@/Pages/SubPages/SolicitudServicioPage.vue";
-import AsignacionServicio from "@/Pages/SubPages/AsignacionServicioPage.vue";
-import ListaEspera from "@/Pages/SubPages/ListaEsperaPage.vue";
+import SolicitudServicio from "@/Pages/SubPages/Componentes/Solicitud-ServicioComponente.vue";
+import AsignacionServicio from "@/Pages/SubPages/Componentes/Asignacion-ServicioComponente.vue";
+import ListaEspera from "@/Pages/SubPages/Componentes/Lista-EsperaComponente.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
 defineOptions({
@@ -52,6 +52,7 @@ defineOptions({
             </v-card>
           </v-tabs-window-item>
         </v-tabs-window>
+
     </v-card>
   </template>
   <script>

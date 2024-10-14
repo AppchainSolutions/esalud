@@ -1,52 +1,25 @@
 <template>
     <v-row class="mb-4">
-                    <v-expansion-panels>
-                        <v-expansion-panel title="Sesiones de atención psicológica asiganadas al paciente"
-                            color="#009AA4">
-                            <v-expansion-panel-text>
-                                <v-col>
-                                    <v-data-table :headers="state.atencion.headers" :items="state.atencion.items"
-                                        class="elevation-1">
-                                        <template v-slot:top>
-                                            <v-toolbar flat>
-                                                <v-toolbar-title>Sesiones
-                                                    asignadas</v-toolbar-title>
-                                                <v-divider class="mx-4" inset vertical></v-divider>
-                                            </v-toolbar>
-                                        </template>
+        <v-col cols="6">
+            <v-text-field label="Fecha de egreso" type="date" placeholder="DD/MM/YYYY" mask="00/00/0000" required
+                clearable />
+        </v-col>
+        <v-col cols="6">
+            <v-textarea label="Motivo de Egreso" rows="1" clearable />
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col cols="6">
+            <v-select label="Objetivos cumplidos" multiple chips clearable />
+            <v-select label="Objetivos medianamente cumplidos" multiple chips clearable />
+        </v-col>
+        <v-col cols="6">
+            <v-select label="Objetivos no cumplidos" multiple chips clearable />
+            <v-textarea label="Comentarios" rows="1" clearable />
 
-                                        <template v-slot:item.actions="{ item }">
-                                            <v-tooltip text="Registro de la sesión" location="top">
-                                                <template v-slot:activator="{
-                                                    props,
-                                                }">
-                                                    <v-btn v-bind="props" density="compact" color="#009AA4"
-                                                        class="mr-1 ml-1" variant="tonal" :icon="'mdi-notebook-check'"
-                                                        @click="
-                                                            registroSesionPsicologia(
-                                                                item
-                                                            )
-                                                            "></v-btn>
-                                                </template>
-                                            </v-tooltip>
-                                            <v-tooltip text="Ver registro" location="top">
-                                                <template v-slot:activator="{
-                                                    props,
-                                                }">
-                                                    <v-btn v-bind="props" density="compact" color="#009AA4"
-                                                        class="mr-1 ml-1" variant="tonal" :icon="'mdi-eye-plus-outline'"
-                                                        @click="
-                                                            registroSesionPsicologia(
-                                                                item
-                                                            )
-                                                            "></v-btn>
-                                                </template>
-                                            </v-tooltip>
-                                        </template>
-                                    </v-data-table>
-                                </v-col>
-                            </v-expansion-panel-text>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
-                </v-row>
+        </v-col>
+        <v-btn prepend-icon="mdi-notebook-plus" variant="tonal" class="ma-4" color="#009AA4">Guardar datos de
+            egreso</v-btn>
+    </v-row>
+
 </template>

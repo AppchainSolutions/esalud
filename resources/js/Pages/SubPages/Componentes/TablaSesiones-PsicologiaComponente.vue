@@ -1,5 +1,5 @@
 <script setup>
-import { reactive,ref  } from "vue";
+import { reactive, ref } from "vue";
 import { router } from "@inertiajs/vue3";
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css'; // Import Quill CSS 
@@ -96,8 +96,15 @@ function registroSesionPsicologia(item) {
     }
 }
 
-function cerrarRegistro(){
-    state.dialog = false;
+function cerrarRegistro() {
+    try {
+        // router.get("psicologia-registro-sesion");
+        state.dialog = false;
+    } catch (error) {
+        console.error(
+            '"An error occurred while fetching daily attention data."'
+        );
+    }
 }
 
 </script>
@@ -140,30 +147,29 @@ function cerrarRegistro(){
 
             <v-card>
                 <v-card-title class="bg-surface-light pt-4">Registro de la Sesión</v-card-title>
-                <v-card-subtitle>Subtítulo de la Tarjeta</v-card-subtitle>
+                <v-card-subtitle></v-card-subtitle>
                 <v-card-text>
-                    <v-row>
-                        <v-col>
-                            <v-text-field label="Objetivo de la Sesión"></v-text-field>
-                        </v-col>
-                        <v-col>
-                            <v-select>Tipo de Sesiones</v-select>
-                        </v-col>
-                        <v-card>
-                            <v-card-title>Registro de la Sesión</v-card-title>
-                            <v-card-text>
-                                <v-sheet color="gray" :elevation="1" :class="'rounded-lg ma-4 pa-6'">
-                                   
-                                
-                                </v-sheet>
-                            </v-card-text>
-                        </v-card>
-                    </v-row>
+                    <v-sheet fluid color="gray" :elevation="1" :class="'rounded-lg ma-4 pa-4 '">
+                        <v-row  class="ma-2 pa-2">
+                            <v-col cols="4"class="ma-2 pa-2">
+                                <v-text-field label="Objetivo de la Sesión"></v-text-field>
+                            </v-col>
+                            <v-col cols="4" class="ma-2 pa-2">
+                                <v-select label="Tipo de Sesión">Tipo de Sesiones</v-select>
+                            </v-col>
+                        </v-row>
+                        <v-row class="mb-4 pb-4">
+                            <v-col >
+                                <quill-editor v-model="editorContent" :options="editorOptions" class="editor" />
+                            </v-col>
+                        </v-row>
+                    </v-sheet>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn prepend-icon="mdi-cloud-upload" variant="tonal" class="ma-4" color="#009AA4">Guardar
                         Sesión</v-btn>
-                    <v-btn prepend-icon="mdi-close" variant="tonal" class="ma-4" color="#009AA4" @click="cerrarRegistro">Cerrar</v-btn>
+                    <v-btn prepend-icon="mdi-close" variant="tonal" class="ma-4" color="#009AA4"
+                        @click="cerrarRegistro">Cerrar</v-btn>
                 </v-card-actions>
             </v-card>
         </v-sheet>

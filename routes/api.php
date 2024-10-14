@@ -13,14 +13,17 @@ use App\Http\Controllers\LeySocialController;
 use App\Http\Controllers\MedioDerivacionController;
 use App\Http\Controllers\NacionalidadController;
 use App\Http\Controllers\NivelInstruccionController;
-use App\Http\Controllers\PrevisionController;
-use App\Http\Controllers\PuebloOriginarioController;
-use App\Http\Controllers\ReligionController;
+use App\Http\Controllers\NivelRiesgoController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PrevisionController;
+use App\Http\Controllers\PuebloController;
+use App\Http\Controllers\ReligionController;
+use App\Http\Controllers\ResponsableController;
 use App\Http\Controllers\SeguroSaludController;
 use App\Http\Controllers\SemaforoController;
 use App\Http\Controllers\TipoEnfermedadController;
 use App\Http\Controllers\TipoLicenciaController;
+use App\Http\Controllers\TrastornoCronicoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -39,7 +42,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 });
 
-// TODO: Seguir desde Especialidad
 Route::get('afps', [AfpController::class, 'all'])->name('afp.all');
 Route::get('calles', [CalleController::class, 'all'])->name('calle.all');
 Route::get('estados_civiles', [EstadoCivilController::class, 'all'])->name('estadoCivil.all');
@@ -55,3 +57,5 @@ Route::get('niveles_instruccion', [NivelInstruccionController::class, 'all'])->n
 Route::get('pueblos_originarios', [PuebloOriginarioController::class, 'all'])->name('puebloOriginario.all');
 Route::get('religiones', [ReligionController::class, 'all'])->name('religion.all');
 Route::get('seguros_salud', [SeguroSaludController::class, 'all'])->name('seguroSalud.all');
+
+

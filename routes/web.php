@@ -31,7 +31,7 @@ Route::middleware([
     Route::resource('vacuna', VacunaController::class);
     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
     Route::inertia('ficha-medica', 'SubPages/FichaMedicaPage')->name('ficha.medica');
-    Route::inertia('psicologia-pacientes', 'PsicologiaPage')->name('psicologia');
+    Route::inertia('psicologia-pacientes', 'PsicologiaPage')->name('psicologia.pacientes');
     Route::inertia('psicologia-sesiones', 'SubPages/Sesiones-PsicologiaPage')->name('psicologia.sesiones');
     Route::inertia('psicologia-registro-sesion', 'SubPages/Componentes/Psicologia-Registro-SesionComponente')->name('psicologia.registro');
 });

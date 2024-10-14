@@ -16,3 +16,7 @@ storage/logs/*
 # stryker temp files
 .stryker-tmp
 *.deb
+bootstrap/ssr/ssr-manifest.json
+bootstrap/ssr/ssr.js
+database/database.db
+public/build/manifest.json

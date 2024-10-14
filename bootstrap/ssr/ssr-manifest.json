@@ -13,7 +13,11 @@
     "/build/assets/logo-HUznXB3o.jpg"
   ],
   "resources/img/logo_muni_casablanca.png": [
+<<<<<<< Updated upstream
     "/build/assets/AppLayout-D3zN5DpX.js",
+=======
+    "/build/assets/AppLayout-D-aaGZMh.js",
+>>>>>>> Stashed changes
     "/build/assets/AppLayout-CKrZFqAB.css",
     "/build/assets/logo_muni_casablanca-C8F-l-iQ.png"
   ],
@@ -82,17 +86,29 @@
     "/build/assets/logo-HUznXB3o.jpg"
   ],
   "resources/js/Layouts/AppLayout.vue": [
+<<<<<<< Updated upstream
     "/build/assets/AppLayout-D3zN5DpX.js",
+=======
+    "/build/assets/AppLayout-D-aaGZMh.js",
+>>>>>>> Stashed changes
     "/build/assets/AppLayout-CKrZFqAB.css",
     "/build/assets/logo_muni_casablanca-C8F-l-iQ.png"
   ],
   "resources/js/Layouts/AppLayout.vue?vue&type=style&index=0&lang.css": [
+<<<<<<< Updated upstream
     "/build/assets/AppLayout-D3zN5DpX.js",
+=======
+    "/build/assets/AppLayout-D-aaGZMh.js",
+>>>>>>> Stashed changes
     "/build/assets/AppLayout-CKrZFqAB.css",
     "/build/assets/logo_muni_casablanca-C8F-l-iQ.png"
   ],
   "resources/js/Pages/API/Index.vue": [
+<<<<<<< Updated upstream
     "/build/assets/Index-D-AonlF_.js"
+=======
+    "/build/assets/Index-CSPso5h9.js"
+>>>>>>> Stashed changes
   ],
   "resources/js/Pages/API/Partials/ApiTokenManager.vue": [
     "/build/assets/ApiTokenManager-BDJRUs4V.js"
@@ -141,10 +157,20 @@
     "/build/assets/app-DAAUXTxL.css"
   ],
   "resources/js/Pages/Dashboard.vue": [
+<<<<<<< Updated upstream
     "/build/assets/Dashboard-CrL1uHgs.js"
   ],
   "resources/js/Pages/PacientePage.vue": [
     "/build/assets/PacientePage-Bknt20H3.js"
+=======
+    "/build/assets/Dashboard-D9QWKvzs.js"
+  ],
+  "resources/js/Pages/FichaPsicologiaPage.vue": [
+    "/build/assets/FichaPsicologiaPage-BtWl_E7d.js"
+  ],
+  "resources/js/Pages/PacientePage.vue": [
+    "/build/assets/PacientePage-CTCuoiTx.js"
+>>>>>>> Stashed changes
   ],
   "resources/js/Pages/PrivacyPolicy.vue": [
     "/build/assets/PrivacyPolicy-BFd4Zm8u.js"
@@ -165,6 +191,7 @@
     "/build/assets/UpdateProfileInformationForm-CyCcssAr.js"
   ],
   "resources/js/Pages/Profile/Show.vue": [
+<<<<<<< Updated upstream
     "/build/assets/Show-D6-p0AVJ.js"
   ],
   "resources/js/Pages/PsicologiaPage.vue": [
@@ -186,11 +213,35 @@
   ],
   "resources/js/Pages/SubPages/AsignacionServicioPage.vue": [
     "/build/assets/AsignacionServicioPage-Db2NHWxH.js"
+=======
+    "/build/assets/Show-CT-ql4GE.js"
+  ],
+  "resources/js/Pages/ServicioPage.vue": [
+    "/build/assets/ServicioPage-wNPJIhqb.js",
+    "/build/assets/ServicioPage-CvjdIlTR.css"
+  ],
+  "resources/js/Pages/ServicioPage.vue?vue&type=style&index=0&scoped=c62917aa&lang.css": [
+    "/build/assets/ServicioPage-wNPJIhqb.js",
+    "/build/assets/ServicioPage-CvjdIlTR.css"
+  ],
+  "resources/js/Pages/SubPages/AlergiaPage.vue": [
+    "/build/assets/AlergiaPage-Bfw-uHWx.js"
+  ],
+  "resources/js/Pages/SubPages/AntecedenteFamiliarPage.vue": [
+    "/build/assets/AntecedenteFamiliarPage-CAoPyjcx.js"
+  ],
+  "resources/js/Pages/SubPages/AsignacionServicioPage.vue": [
+    "/build/assets/AsignacionServicioPage-D-fbcrqA.js"
+  ],
+  "resources/js/Pages/SubPages/AtencioPsicologicaPage.vue": [
+    "/build/assets/AtencioPsicologicaPage-BiY_Vxr9.js"
+>>>>>>> Stashed changes
   ],
   "resources/js/Pages/SubPages/CertificacionesPage.vue": [
     "/build/assets/CertificacionesPage-CVLFE5QA.js"
   ],
   "resources/js/Pages/SubPages/CirugiaPage.vue": [
+<<<<<<< Updated upstream
     "/build/assets/CirugiaPage-D-waxzZv.js"
   ],
   "resources/js/Pages/SubPages/ContextoPage.vue": [
@@ -207,6 +258,24 @@
   ],
   "resources/js/Pages/SubPages/FichaMedicaPage.vue": [
     "/build/assets/FichaMedicaPage-D4XIGluH.js"
+=======
+    "/build/assets/CirugiaPage-DYmDimy2.js"
+  ],
+  "resources/js/Pages/SubPages/ContextoPage.vue": [
+    "/build/assets/ContextoPage-ChvNyK1D.js"
+  ],
+  "resources/js/Pages/SubPages/DatosMedicosPage.vue": [
+    "/build/assets/DatosMedicosPage-CrN7hae2.js"
+  ],
+  "resources/js/Pages/SubPages/EnfermedadPage.vue": [
+    "/build/assets/EnfermedadPage-D3RC0TKq.js"
+  ],
+  "resources/js/Pages/SubPages/FactorRiesgoPage.vue": [
+    "/build/assets/FactorRiesgoPage-WgUffMnc.js"
+  ],
+  "resources/js/Pages/SubPages/FichaMedicaPage.vue": [
+    "/build/assets/FichaMedicaPage-CStrllV6.js"
+>>>>>>> Stashed changes
   ],
   "resources/js/Pages/SubPages/HorarioProfesionalPage.vue": [
     "/build/assets/HorarioProfesionalPage-KJ3vedb-.js",
@@ -217,7 +286,11 @@
     "/build/assets/HorarioProfesionalPage-COf7cHHs.css"
   ],
   "resources/js/Pages/SubPages/LicenciaMedicaPage.vue": [
+<<<<<<< Updated upstream
     "/build/assets/LicenciaMedicaPage-DnIhorPp.js"
+=======
+    "/build/assets/LicenciaMedicaPage-BB8ae6Bi.js"
+>>>>>>> Stashed changes
   ],
   "resources/js/Pages/SubPages/ListaEsperaPage.vue": [
     "/build/assets/ListaEsperaPage-DSQl4P3q.js",
@@ -228,12 +301,17 @@
     "/build/assets/ListaEsperaPage-BWaq8UOH.css"
   ],
   "resources/js/Pages/SubPages/MedicamentoPage.vue": [
+<<<<<<< Updated upstream
     "/build/assets/MedicamentoPage-4GNpIPlK.js"
+=======
+    "/build/assets/MedicamentoPage-Czd4bvun.js"
+>>>>>>> Stashed changes
   ],
   "resources/js/Pages/SubPages/NotificacionPage.vue": [
     "/build/assets/NotificacionPage-C-7EFuaD.js"
   ],
   "resources/js/Pages/SubPages/ProfesionalPage.vue": [
+<<<<<<< Updated upstream
     "/build/assets/ProfesionalPage-CBSRd_M6.js"
   ],
   "resources/js/Pages/SubPages/Psicologia-Registro-SesionPage.vue": [
@@ -260,6 +338,26 @@
   ],
   "resources/js/Pages/Teams/Create.vue": [
     "/build/assets/Create-HnqSeDWj.js"
+=======
+    "/build/assets/ProfesionalPage-DjVpen8V.js"
+  ],
+  "resources/js/Pages/SubPages/SesionesPsicologiaPage.vue": [
+    "/build/assets/SesionesPsicologiaPage-Ca7Vv-57.js"
+  ],
+  "resources/js/Pages/SubPages/SolicitudServicioPage.vue": [
+    "/build/assets/SolicitudServicioPage-VzSNGW9E.js",
+    "/build/assets/ServicioPage-CvjdIlTR.css"
+  ],
+  "resources/js/Pages/SubPages/SolicitudServicioPage.vue?vue&type=style&index=0&scoped=0d0e238c&lang.css": [
+    "/build/assets/SolicitudServicioPage-VzSNGW9E.js",
+    "/build/assets/ServicioPage-CvjdIlTR.css"
+  ],
+  "resources/js/Pages/SubPages/VacunaPage.vue": [
+    "/build/assets/VacunaPage-DQRlWi8-.js"
+  ],
+  "resources/js/Pages/Teams/Create.vue": [
+    "/build/assets/Create-Ci7tf76x.js"
+>>>>>>> Stashed changes
   ],
   "resources/js/Pages/Teams/Partials/CreateTeamForm.vue": [
     "/build/assets/CreateTeamForm-JuuoBZlx.js"
@@ -274,7 +372,11 @@
     "/build/assets/UpdateTeamNameForm-QErdWRpI.js"
   ],
   "resources/js/Pages/Teams/Show.vue": [
+<<<<<<< Updated upstream
     "/build/assets/Show-IDkXFZNb.js"
+=======
+    "/build/assets/Show-CsuJR8hL.js"
+>>>>>>> Stashed changes
   ],
   "resources/js/Pages/TermsOfService.vue": [
     "/build/assets/TermsOfService-BwW9Z5Ez.js"
@@ -292,6 +394,7 @@
     "/build/assets/vitamhc-C8RI-1Kv.png"
   ],
   "resources/js/api.js": [
+<<<<<<< Updated upstream
     "/build/assets/helper-DlyAxSqm.js"
   ],
   "resources/js/crud.js": [
@@ -299,6 +402,15 @@
   ],
   "resources/js/helper.js": [
     "/build/assets/helper-DlyAxSqm.js"
+=======
+    "/build/assets/helper-CxuI8PVg.js"
+  ],
+  "resources/js/crud.js": [
+    "/build/assets/helper-CxuI8PVg.js"
+  ],
+  "resources/js/helper.js": [
+    "/build/assets/helper-CxuI8PVg.js"
+>>>>>>> Stashed changes
   ],
   "resources/js/ssr.js": [],
   "resources/js/store.js": [

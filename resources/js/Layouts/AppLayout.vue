@@ -31,19 +31,19 @@ export default {
             this.rail = !this.rail;
         },
         inicio() {
-            router.get("/dashboard");
+            router.get("dashboard");
         },
         paciente() {
-            router.get("/paciente");
+            router.get("paciente");
         },
         servicio() {
-            router.get("/servicio");
+            router.get("servicio");
         },
         profesional() {
-            router.get("/profesional");
+            router.get("profesional");
         },
         psicologia() {
-            router.get("/psicologia-pacientes");
+            router.get("psicologia-pacientes");
         },
 
         salir() {

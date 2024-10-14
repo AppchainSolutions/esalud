@@ -187,16 +187,9 @@ const remove = async (item) => {
     await handleRemoveItem(state, item);
 };
 
-
-function atencionPsicologica (item) {
-    router.get('psicologia.atencion', {
-        data: item
-    });
-}
 function psicologiaSesiones (item) {
     router.get('psicologia-sesiones');
 }
-
 
 </script>
 
@@ -235,6 +228,7 @@ function psicologiaSesiones (item) {
                             <h4>Fecha: 03/10/2024</h4>
                             <h4>Hora actual: 10:30</h4>
                             <h4>Hora inicio: 10:00 - 10:45</h4>
+                            <v-textarea clearable label="Nota rápida:"></v-textarea>
                         </v-col>
                     </v-row>
                 </v-sheet>
@@ -255,6 +249,14 @@ function psicologiaSesiones (item) {
                                             <v-btn v-bind="props" density="compact" color="#009AA4" class="mr-2 ml-2"
                                                 variant="tonal" :icon="'mdi-head-cog'"
                                                 @click="psicologiaSesiones(item)"></v-btn>
+                                        </template>
+
+                                                </v-tooltip>
+                                    <v-tooltip text="Atención Psicológica" location="top">
+                                        <template v-slot:activator="{ props }">
+                                            <v-btn v-bind="props" density="compact" color="#009AA4" class="mr-2 ml-2"
+                                                variant="tonal" :icon="'mdi-head-cog'"
+                                                @click="atencionPsicologica(item)"></v-btn>
                                         </template>
                                     </v-tooltip>
                                 </template>

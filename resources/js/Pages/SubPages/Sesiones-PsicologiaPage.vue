@@ -139,7 +139,7 @@ const state = reactive({
         ],
     },
 
-    
+
     editedItem: {
         paciente_id: null,
     },
@@ -158,73 +158,69 @@ const state = reactive({
     valid: null,
 });
 
-
-
 </script>
 
 <template>
-    
-        <v-card class="ma-4 pa-4">
-            <v-card-title class="bg-surface-light pt-4">Servicio Atención Psicológica</v-card-title>
-            <v-card-subtitle></v-card-subtitle>
-            <v-card-text>
 
-                <v-tabs v-model="tab" color="teal" staked>
-                    <v-tab prepend-icon="mdi-account" text="Información general." value="option-1"></v-tab>
-                    <v-tab prepend-icon="mdi-lock" text="Ficha Psicológica" value="option-2"></v-tab>
-                    <v-tab prepend-icon="mdi-access-point" text="Plan de Trabajo" value="option-3"></v-tab>
-                    <v-tab prepend-icon="mdi-access-point" text="Sesiones" value="option-4"></v-tab>
-                    <v-tab prepend-icon="mdi-access-point" text="Egreso" value="option-5"></v-tab>
-                </v-tabs>
+    <v-card class="ma-4 pa-4">
+        <v-card-title class="bg-surface-light pt-4">Servicio Atención Psicológica</v-card-title>
+        <v-card-subtitle></v-card-subtitle>
+        <v-card-text>
 
-                <v-tabs-window v-model="tab">
-                    <v-tabs-window-item value="option-1">
-                        <v-card class="ma-4 pa-4">
-                            <v-card-text>
+            <v-tabs v-model="tab" color="teal" staked>
+                <v-tab prepend-icon="mdi-account" text="Información general." value="option-1"></v-tab>
+                <v-tab prepend-icon="mdi-lock" text="Ficha Psicológica" value="option-2"></v-tab>
+                <v-tab prepend-icon="mdi-access-point" text="Plan de Trabajo" value="option-3"></v-tab>
+                <v-tab prepend-icon="mdi-access-point" text="Sesiones" value="option-4"></v-tab>
+                <v-tab prepend-icon="mdi-access-point" text="Egreso" value="option-5"></v-tab>
+            </v-tabs>
 
-                               <informacion-general />
+            <v-tabs-window v-model="tab">
+                <v-tabs-window-item value="option-1">
+                    <v-card class="ma-4 pa-4">
+                        <v-card-text>
 
-                            </v-card-text>
-                        </v-card>
-                    </v-tabs-window-item>
+                            <informacion-general />
 
-                    <v-tabs-window-item value="option-2">
-                        <v-card flat>
-                            <v-card-text>
-                              
-                                <ficha-psicologia />
-                                
-                            </v-card-text>
-                        </v-card>
-                    </v-tabs-window-item>
+                        </v-card-text>
+                    </v-card>
+                </v-tabs-window-item>
 
-                    <v-tabs-window-item value="option-3">
-                        <v-card flat>
-                            <v-card-text>
+                <v-tabs-window-item value="option-2">
+                    <v-card flat>
+                        <v-card-text>
 
-                                <plan-trabajo />
-                                
-                            </v-card-text>
-                        </v-card>
-                    </v-tabs-window-item>
+                            <ficha-psicologia />
 
-                    <v-tabs-window-item value="option-4">
-                        <v-card flat>
-                            <v-card-text>
-                                <tabla-sesiones-psicologia />
-                            </v-card-text>
-                        </v-card>
-                    </v-tabs-window-item>
+                        </v-card-text>
+                    </v-card>
+                </v-tabs-window-item>
 
-                    <v-tabs-window-item value="option-5">
-                        <v-card flat>
-                            <v-card-text>
-                                <plan-trabajo />
-                            </v-card-text>
-                        </v-card>
-                    </v-tabs-window-item>
-                </v-tabs-window>
+                <v-tabs-window-item value="option-3">
+                    <v-card flat>
+                        <v-card-text>
+                            <plan-trabajo />
+                        </v-card-text>
+                    </v-card>
+                </v-tabs-window-item>
 
-            </v-card-text>
-        </v-card>
+                <v-tabs-window-item value="option-4">
+                    <v-card flat>
+                        <v-card-text>
+                            <tabla-sesiones-psicologia />
+                        </v-card-text>
+                    </v-card>
+                </v-tabs-window-item>
+
+                <v-tabs-window-item value="option-5">
+                    <v-card flat>
+                        <v-card-text>
+                            <datos-egreso-psicologia />
+                        </v-card-text>
+                    </v-card>
+                </v-tabs-window-item>
+            </v-tabs-window>
+
+        </v-card-text>
+    </v-card>
 </template>

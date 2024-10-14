@@ -3,6 +3,17 @@ e2e
 
 node_modules/
 vendor/
+<<<<<<< Updated upstream
+=======
+tests/
+cypress/
+resources/js
+resources/css 
+resources/img
+resources/markdown
+
+public/hot
+>>>>>>> Stashed changes
 
 storage/clockwork/*
 public/build/assets/*

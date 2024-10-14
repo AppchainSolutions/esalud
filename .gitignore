@@ -4,8 +4,7 @@ e2e
 node_modules/
 vendor/
 
-public/
-bootstrap/
+public/build/assets/*
 storage/framework/cache/*
 storage/framework/sessions/*
 storage/framework/views/*
@@ -13,10 +12,5 @@ storage/framework/testing/*
 storage/clockwork/* 
 storage/logs/*
 
-# stryker temp files
-.stryker-tmp
-*.deb
-bootstrap/ssr/ssr-manifest.json
-bootstrap/ssr/ssr.js
+bootstrap/ssr/assets/*
 database/database.db
-public/build/manifest.json

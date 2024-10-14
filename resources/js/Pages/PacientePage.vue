@@ -109,8 +109,6 @@ const state = reactive({
     },
     editedItem: {
         rut: null,
-        nombre: null,
-        lista_espera: null,
         afp_id: null,
         apellidos: null,
         calle_id: null,
@@ -119,47 +117,83 @@ const state = reactive({
         donante: false,
         edad: null,
         email: null,
-        estado_civil_id: null,
         establecimiento_educacional_id: null,
+        estado_civil_id: null,
         fecha_nacimiento: null,
         genero_id: null,
         grupo_sanguineo_id: null,
-        nivel_instruccion_id: null,
         ley_social_id: null,
         nacionalidad_id: null,
+        nivel_instruccion_id: null,
+        nombre: null,
         prevision_id: null,
-        profesion: null,
         pueblo_originario_id: null,
         religion_id: null,
         seguro_salud_id: null,
         telefono1: null,
         telefono2: null,
+        nombre_responsable: null,
+        apellido_responsable: null,
+        telefono_responsable: null,
+        rut_responsable: null,
+        direccion_responsable: null,
+        email_responsable: null,
+        parentesco_responsable: null,
+        ocupacion_responsable: null,
+        pueblo_originario_responsable_id: null,
+        nivel_instruccion_responsable_id: null,
+        religion_responsable_id: null,
+        fecha_nacimiento_responsable: null,
+        edad: null,
+        genero_responsable_id: null,
+        nacionalidad_responsable_id: null,
+        comunidad_lgtbq_responsable: null,
+        credencial_discapacidad_responsable_id: null,
+        estado_civil_responsable_id: null,
+        prevision_responsable_id: null,
     },
     defaultItem: {
-        rut: null,
-        nombre: null,
-        lista_espera: null,
         afp_id: null,
+        apellido_responsable: null,
         apellidos: null,
         calle_id: null,
         ciudad: null,
+        comunidad_lgtbq_responsable: null,
+        credencial_discapacidad_responsable_id: null,
+        direccion_responsable: null,
         direccion: null,
         donante: false,
         edad: null,
+        edad: null,
+        email_responsable: null,
         email: null,
-        estado_civil_id: null,
         establecimiento_educacional_id: null,
+        estado_civil_id: null,
+        estado_civil_responsable_id: null,
+        fecha_nacimiento_responsable: null,
         fecha_nacimiento: null,
         genero_id: null,
+        genero_responsable_id: null,
         grupo_sanguineo_id: null,
-        nivel_instruccion_id: null,
         ley_social_id: null,
         nacionalidad_id: null,
+        nacionalidad_responsable_id: null,
+        nivel_instruccion_id: null,
+        nivel_instruccion_responsable_id: null,
+        nombre_responsable: null,
+        nombre: null,
+        ocupacion_responsable: null,
+        parentesco_responsable: null,
         prevision_id: null,
-        profesion: null,
+        prevision_responsable_id: null,
         pueblo_originario_id: null,
+        pueblo_originario_responsable_id: null,
         religion_id: null,
+        religion_responsable_id: null,
+        rut_responsable: null,
+        rut: null,
         seguro_salud_id: null,
+        telefono_responsable: null,
         telefono1: null,
         telefono2: null,
     },
@@ -186,13 +220,13 @@ onMounted(async () => {
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/
 const editedItemTitle = computed(() =>
-    state.editedIndex === -1 ? state.formCrear : state.formEdit
+    state.editedIndex === -1 ? state.formCrear : state.formEdit,
 );
 
 //**********\\\\ METHODS ////*************/
 const formatDate = computed(() => {
     let formatted = moment(state.editedItem.fecha_nacimiento).format(
-        "DD/MM/YYYY"
+        "DD/MM/YYYY",
     );
     return formatted;
 });
@@ -202,7 +236,7 @@ function fichaMedica(item) {
         router.get("ficha-medica");
     } catch (error) {
         console.error(
-            '"An error occurred while fetching daily attention data."'
+            '"An error occurred while fetching daily attention data."',
         );
     }
 }
@@ -284,7 +318,7 @@ const remove = async (item) => {
                             class="ma-2"
                             variant="underlined"
                             single
-                        ></v-select>
+                        />
                         <v-select
                             :items="state.list.calle"
                             item-title="descripcion"
@@ -295,31 +329,10 @@ const remove = async (item) => {
                             class="ma-2"
                             variant="underlined"
                             single
-                        ></v-select>
+                        />
                     </v-col>
                     <v-col>
-                        <v-select
-                            :items="state.list.ley_social"
-                            item-title="descripcion"
-                            item-value="id"
-                            v-model="state.searchQuery.ley_social_id"
-                            clearable
-                            label="Ley Social"
-                            class="ml-4"
-                            variant="underlined"
-                            single
-                        ></v-select>
-                        <v-select
-                            :items="state.list.prevision"
-                            item-title="descripcion"
-                            item-value="id"
-                            v-model="state.searchQuery.prevision_id"
-                            clearable
-                            label="Previsión"
-                            class="ma-4"
-                            variant="underlined"
-                            single
-                        ></v-select>
+                        
                         <v-select
                             :items="state.list.establecimiento_educacional"
                             item-title="descripcion"
@@ -332,7 +345,7 @@ const remove = async (item) => {
                             class="ma-2"
                             variant="underlined"
                             single
-                        ></v-select>
+                        />
                     </v-col>
                 </v-row>
 
@@ -342,7 +355,6 @@ const remove = async (item) => {
                         variant="tonal"
                         class="ma-4"
                         color="#009AA4"
-                        :loading="state.loadingSearch"
                         type="submit"
                         @click="show"
                     >
@@ -385,403 +397,660 @@ const remove = async (item) => {
 
                         <v-dialog v-model="state.dialog" persistent>
                             <v-form fast-fail @submit.prevent>
-                                <v-card>
-                                    <v-card-title>
-                                        <div class="text-h6 ma-2">
-                                            {{ editedItemTitle }}
-                                        </div>
-                                        <v-divider
-                                            thickness="4px"
-                                            color="#662d91"
-                                        ></v-divider>
-                                    </v-card-title>
-                                    <v-card-text>
-                                        <div class="text-h6">
-                                            Datos Personales
-                                        </div>
-                                        <v-spacer></v-spacer>
-                                        <v-row>
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-text-field
-                                                    v-model="
-                                                        state.editedItem.rut
-                                                    "
-                                                    label="Rut* (12345678-9)"
-                                                    id="rut"
-                                                    type="text"
-                                                    required
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-text-field>
-                                                <v-text-field
-                                                    label="Derivado por*"
-                                                    type="text"
-                                                    required
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-text-field>
-                                            </v-col>
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-text-field
-                                                    v-model="
-                                                        state.editedItem.nombre
-                                                    "
-                                                    label="Nombre*"
-                                                    type="text"
-                                                    id="nombre"
-                                                    required
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-text-field>
-                                            </v-col>
+                                <v-sheet
+                                    color="white"
+                                    :elevation="6"
+                                    :class="'rounded-lg ma-4 pa-4'"
+                                >
+                                    <v-card>
+                                        <v-card-title>
+                                            <div class="text-h6 ma-2">
+                                                {{ editedItemTitle }}
+                                            </div>
+                                            <v-divider
+                                                thickness="4px"
+                                                color="#662d91"
+                                            ></v-divider>
+                                        </v-card-title>
+                                        <v-card-text>
+                                            <div class="text-h6">
+                                                Datos Personales
+                                            </div>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-text-field
-                                                    v-model="
-                                                        state.editedItem
-                                                            .apellidos
-                                                    "
-                                                    label="Apellidos*"
-                                                    id="apellidos"
-                                                    required
-                                                    type="text"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-text-field>
-                                            </v-col>
+                                            <v-row>
+                                                <v-col>
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem.rut
+                                                        "
+                                                        label="Rut* (12345678-9)"
+                                                        id="rut"
+                                                        type="text"
+                                                        required
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+                                                    <v-text-field
+                                                        label="Derivado por*"
+                                                        type="text"
+                                                        required
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-switch
-                                                    v-model="
-                                                        state.editedItem
-                                                            .lista_espera
-                                                    "
-                                                    hide-details
-                                                    class="ml-2"
-                                                    color="green-darken-3"
-                                                    inset
-                                                    label="lista_espera"
-                                                ></v-switch>
-                                                <v-switch
-                                                    v-model="
-                                                        state.editedItem
-                                                            .lista_espera
-                                                    "
-                                                    hide-details
-                                                    class="ml-2"
-                                                    color="green-darken-3"
-                                                    inset
-                                                    label="Comunidad LGTB+"
-                                                ></v-switch>
-                                            </v-col>
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .nombre
+                                                        "
+                                                        label="Nombre*"
+                                                        type="text"
+                                                        id="nombre"
+                                                        required
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-switch
-                                                    v-model="
-                                                        state.editedItem.donante
-                                                    "
-                                                    class="ml-2"
-                                                    label="Donante"
-                                                    color="success"
-                                                    hide-details
-                                                    inset
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-switch>
-                                            </v-col>
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .apellidos
+                                                        "
+                                                        label="Apellidos*"
+                                                        id="apellidos"
+                                                        required
+                                                        type="text"
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-text-field
-                                                    v-model="
-                                                        state.editedItem.email
-                                                    "
-                                                    :rules="
-                                                        state.validationSchema
-                                                            .emailRules
-                                                    "
-                                                    label="Email"
-                                                    type="email"
-                                                    required
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-text-field>
-                                            </v-col>
+                                                    <v-switch
+                                                        v-model="
+                                                            state.editedItem
+                                                                .comunidad_lgbtq
+                                                        "
+                                                        hide-details
+                                                        class="ml-2"
+                                                        color="green-darken-3"
+                                                        inset
+                                                        label="Comunidad LGTB+"
+                                                    ></v-switch>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-text-field
-                                                    v-model="
-                                                        state.editedItem
-                                                            .fecha_nacimiento
-                                                    "
-                                                    label="Fecha de nacimiento"
-                                                    clearable
-                                                    variant="underlined"
-                                                    type="date"
-                                                    :format="formatDate"
-                                                    @input="handleInputChange"
-                                                ></v-text-field>
-                                            </v-col>
+                                                    <v-switch
+                                                        v-model="
+                                                            state.editedItem
+                                                                .donante
+                                                        "
+                                                        class="ml-2"
+                                                        label="Donante"
+                                                        color="success"
+                                                        hide-details
+                                                        inset
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-switch>
+                                                </v-col>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-text-field
-                                                    v-model="
-                                                        state.editedItem.edad
-                                                    "
-                                                    label="Edad*"
-                                                    type="text"
-                                                    variant="underlined"
-                                                    readonly
-                                                ></v-text-field>
-                                            </v-col>
+                                                <v-col>
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .email
+                                                        "
+                                                        :rules="
+                                                            state
+                                                                .validationSchema
+                                                                .emailRules
+                                                        "
+                                                        label="Email"
+                                                        type="email"
+                                                        required
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-text-field
-                                                    v-model="
-                                                        state.editedItem
-                                                            .direccion
-                                                    "
-                                                    label="Dirección"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-text-field>
-                                            </v-col>
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .fecha_nacimiento
+                                                        "
+                                                        label="Fecha de nacimiento"
+                                                        clearable
+                                                        variant="underlined"
+                                                        type="date"
+                                                        :format="formatDate"
+                                                        @input="
+                                                            handleInputChange
+                                                        "
+                                                    ></v-text-field>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-text-field
-                                                    label="teléfono 1"
-                                                    v-model="
-                                                        state.editedItem
-                                                            .telefono1
-                                                    "
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-text-field>
-                                            </v-col>
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .edad
+                                                        "
+                                                        label="Edad*"
+                                                        type="text"
+                                                        variant="underlined"
+                                                        readonly
+                                                    ></v-text-field>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-text-field
-                                                    v-model="
-                                                        state.editedItem
-                                                            .telefono2
-                                                    "
-                                                    label="teléfono 2"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-text-field>
-                                            </v-col>
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .direccion
+                                                        "
+                                                        label="Dirección"
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="
-                                                        state.list
-                                                            .grupo_sanguineo
-                                                    "
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    v-model="
-                                                        state.editedItem
-                                                            .grupo_sanguineo_id
-                                                    "
-                                                    label="Grupo sanguíneo"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
+                                                    <v-text-field
+                                                        label="teléfono 1"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .telefono1
+                                                        "
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="
-                                                        state.list.estado_civil
-                                                    "
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    v-model="
-                                                        state.editedItem
-                                                            .estado_civil_id
-                                                    "
-                                                    label="Estado civil"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .telefono2
+                                                        "
+                                                        label="teléfono 2"
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+                                                </v-col>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="
-                                                        state.list.nacionalidad
-                                                    "
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    v-model="
-                                                        state.editedItem
-                                                            .nacionalidad_id
-                                                    "
-                                                    label="Nacionalidad"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
+                                                <v-col>
+                                                    <v-select
+                                                        :items="
+                                                            state.list
+                                                                .grupo_sanguineo
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .grupo_sanguineo_id
+                                                        "
+                                                        label="Grupo sanguíneo"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="state.list.religion"
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    label="Religion / Culto"
-                                                    v-model="
-                                                        state.editedItem
-                                                            .religion_id
-                                                    "
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
+                                                    <v-select
+                                                        :items="
+                                                            state.list
+                                                                .estado_civil
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .estado_civil_id
+                                                        "
+                                                        label="Estado civil"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="state.list.genero"
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    label="Género"
-                                                    v-model="
-                                                        state.editedItem
-                                                            .genero_id
-                                                    "
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
+                                                    <v-select
+                                                        :items="
+                                                            state.list
+                                                                .nacionalidad
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .nacionalidad_id
+                                                        "
+                                                        label="Nacionalidad"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-text-field
-                                                    label="Ciudad"
-                                                    v-model="
-                                                        state.editedItem.ciudad
-                                                    "
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-text-field>
-                                            </v-col>
+                                                    <v-select
+                                                        :items="
+                                                            state.list.religion
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        label="Religion / Culto"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .religion_id
+                                                        "
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="
-                                                        state.list.prevision
-                                                    "
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    v-model="
-                                                        state.editedItem
-                                                            .prevision_id
-                                                    "
-                                                    label="Previsión de Salud"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
+                                                    <v-select
+                                                        :items="
+                                                            state.list.genero
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        label="Género"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .genero_id
+                                                        "
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="state.list.afp"
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    v-model="
-                                                        state.editedItem.afp_id
-                                                    "
-                                                    label="AFP;"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
+                                                    <v-text-field
+                                                        label="Ciudad"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .ciudad
+                                                        "
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+                                                </v-col>
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="
-                                                        state.list.ley_social
-                                                    "
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    v-model="
-                                                        state.editedItem
-                                                            .ley_social_id
-                                                    "
-                                                    label="Leyes Sociales"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
+                                                <v-col>
+                                                    <v-select
+                                                        :items="
+                                                            state.list.prevision
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .prevision_id
+                                                        "
+                                                        label="Previsión de Salud"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
 
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="state.list.seguro"
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    v-model="
-                                                        state.editedItem.seguro
-                                                    "
-                                                    label="Administradores del Seguro Ley 16.744"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="state.list.pueblo"
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    v-model="
-                                                        state.editedItem
-                                                            .pueblo_originario_id
-                                                    "
-                                                    label="Pueblo originario"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
-                                            <v-col cols="6" sm="4" md="2">
-                                                <v-select
-                                                    :items="
-                                                        state.list
-                                                            .nivel_instruccion_id
-                                                    "
-                                                    item-title="descripcion"
-                                                    item-value="id"
-                                                    v-model="
-                                                        state.editedItem
-                                                            .instruccion
-                                                    "
-                                                    label="Nivel de Instruccion"
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-select>
-                                            </v-col>
-                                        </v-row>
-                                    </v-card-text>
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            color="#009AA4"
-                                            variant="tonal"
-                                            @click="close"
-                                        >
-                                            Cancelar
-                                        </v-btn>
-                                        <v-btn
-                                            color="#009AA4"
-                                            variant="tonal"
-                                            @click="storeItems"
-                                        >
-                                            Guardar
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
+                                                                                                        <v-select
+                                                        :items="
+                                                            state.list.pueblo
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .pueblo_originario_id
+                                                        "
+                                                        label="Pueblo originario"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
+
+                                                    <v-select
+                                                        :items="
+                                                            state.list
+                                                                .nivel_instruccion_id
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .instruccion
+                                                        "
+                                                        label="Nivel de Instruccion"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
+                                                    <v-select
+                                                        label="Diagnóstico NNE Transitoria"
+                                                    ></v-select>
+                                                    <v-select
+                                                        label="Diagnóstico NNE Permanentes"
+                                                    ></v-select>
+                                                </v-col>
+
+                                            </v-row>
+
+                                            <div class="text-h6">
+                                                Datos Educacionales
+                                            </div>
+
+                                            <v-row>
+                                                <v-col>
+                                                    <v-select
+                                                        label="Establecimiento educacional"
+                                                    ></v-select>
+                                                </v-col>
+                                                <v-col>
+                                                    <v-select
+                                                        label="Profesor/a Jefe"
+                                                    ></v-select>
+                                                </v-col>
+                                                <v-col>
+                                                    <v-switch
+                                                        v-model="
+                                                            state.editedItem
+                                                                .pertenece_pie
+                                                        "
+                                                        hide-details
+                                                        class="ml-2"
+                                                        color="green-darken-3"
+                                                        inset
+                                                        label="Pertenece PIE"
+                                                    ></v-switch>
+                                                </v-col>
+                                            </v-row>
+
+                                            <div class="text-h6">
+                                                Datos Persona Responsable
+                                            </div>
+
+                                            <v-row>
+                                                <v-col>
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem.rut_responsable
+                                                        "
+                                                        label="Rut* (12345678-9)"
+                                                        id="rut"
+                                                        type="text"
+                                                        required
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+                                                  
+
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .nombre_responsable
+                                                        "
+                                                        label="Nombre*"
+                                                        type="text"
+                                                        id="nombre"
+                                                        required
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .apellidos_responsable
+                                                        "
+                                                        label="Apellidos*"
+                                                        id="apellidos"
+                                                        required
+                                                        type="text"
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+
+                                                    <v-switch
+                                                        v-model="
+                                                            state.editedItem
+                                                                .comunidad_lgbtq_responsable
+                                                        "
+                                                        hide-details
+                                                        class="ml-2"
+                                                        color="green-darken-3"
+                                                        inset
+                                                        label="Comunidad LGTB+"
+                                                    ></v-switch>
+
+                                                    <v-switch
+                                                        v-model="
+                                                            state.editedItem
+                                                                .donante
+                                                        "
+                                                        class="ml-2"
+                                                        label="Donante"
+                                                        color="success"
+                                                        hide-details
+                                                        inset
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-switch>
+                                                </v-col>
+                                                <v-col>
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .email
+                                                        "
+                                                        :rules="
+                                                            state
+                                                                .validationSchema
+                                                                .emailRules
+                                                        "
+                                                        label="Email"
+                                                        type="email"
+                                                        required
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .fecha_nacimiento
+                                                        "
+                                                        label="Fecha de nacimiento"
+                                                        clearable
+                                                        variant="underlined"
+                                                        type="date"
+                                                        :format="formatDate"
+                                                        @input="
+                                                            handleInputChange
+                                                        "
+                                                    ></v-text-field>
+
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .edad
+                                                        "
+                                                        label="Edad*"
+                                                        type="text"
+                                                        variant="underlined"
+                                                        readonly
+                                                    ></v-text-field>
+
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .direccion
+                                                        "
+                                                        label="Dirección"
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+
+                                                    <v-text-field
+                                                        label="teléfono 1"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .telefono1
+                                                        "
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+
+                                                    <v-text-field
+                                                        v-model="
+                                                            state.editedItem
+                                                                .telefono2
+                                                        "
+                                                        label="teléfono 2"
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+                                                </v-col>
+                                                <v-col>
+                                                    <v-select
+                                                        :items="
+                                                            state.list
+                                                                .grupo_sanguineo
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .grupo_sanguineo_id
+                                                        "
+                                                        label="Grupo sanguíneo"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
+
+                                                    <v-select
+                                                        :items="
+                                                            state.list
+                                                                .estado_civil
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .estado_civil_id
+                                                        "
+                                                        label="Estado civil"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
+
+                                                    <v-select
+                                                        :items="
+                                                            state.list
+                                                                .nacionalidad
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .nacionalidad_id
+                                                        "
+                                                        label="Nacionalidad"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
+
+                                                    <v-select
+                                                        :items="
+                                                            state.list.religion
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        label="Religion / Culto"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .religion_id
+                                                        "
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
+
+                                                    <v-select
+                                                        :items="
+                                                            state.list.genero
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        label="Género"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .genero_id
+                                                        "
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
+
+                                                    <v-text-field
+                                                        label="Ciudad"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .ciudad
+                                                        "
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-text-field>
+                                                </v-col>
+                                                <v-col>
+                                                    <v-select
+                                                        :items="
+                                                            state.list.prevision
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .prevision_id
+                                                        "
+                                                        label="Previsión de Salud"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
+                                                 
+
+                                                    <v-select
+                                                        :items="
+                                                            state.list.pueblo
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .pueblo_originario_id
+                                                        "
+                                                        label="Pueblo originario"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
+
+                                                    <v-select
+                                                        :items="
+                                                            state.list
+                                                                .nivel_instruccion_id
+                                                        "
+                                                        item-title="descripcion"
+                                                        item-value="id"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .instruccion
+                                                        "
+                                                        label="Nivel de Instruccion"
+                                                        clearable
+                                                        variant="underlined"
+                                                    />
+                                                </v-col>
+                                            </v-row>
+                                        </v-card-text>
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn
+                                                color="#009AA4"
+                                                variant="tonal"
+                                                @click="close"
+                                            >
+                                                Cancelar
+                                            </v-btn>
+                                            <v-btn
+                                                color="#009AA4"
+                                                variant="tonal"
+                                                @click="storeItems"
+                                            >
+                                                Guardar
+                                            </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-sheet>
                             </v-form>
                         </v-dialog>
                     </v-toolbar>
                 </template>
 
                 <template v-slot:item.actions="{ item }">
-
                     <v-tooltip text="Ficha Médica" location="top">
                         <template v-slot:activator="{ props }">
                             <v-btn

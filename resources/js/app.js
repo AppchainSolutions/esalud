@@ -18,7 +18,7 @@ import { aliases, mdi } from "vuetify/iconsets/mdi";
 import "@mdi/font/css/materialdesignicons.css";
 
 const pinia = createPinia();
-const appName = import.meta.env.VITE_APP_NAME || "Centro Comunitario Municipalidad de Casablanca";
+const appName = import.meta.env.VITE_APP_NAME || "Centro Comunitario";
 
 const vuetify = createVuetify({
     ssr: true,

@@ -2,7 +2,7 @@
 
     <v-card class="ma-4 pa-4">
         <v-card-title class="bg-surface-light pt-4">
-            Plan de Trabajo: XXX
+            Plan de Intervención Individual
         </v-card-title>
         <v-card-subtitle>
         </v-card-subtitle>

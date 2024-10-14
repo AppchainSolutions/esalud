@@ -3,14 +3,10 @@ e2e
 
 node_modules/
 vendor/
-
-public/build/assets/*
-storage/framework/cache/*
-storage/framework/sessions/*
-storage/framework/views/*
-storage/framework/testing/*
-storage/clockwork/* 
-storage/logs/*
-
-bootstrap/ssr/assets/*
+tests/
+cypress/
 database/database.db
+
+storage/clockwork/*
+public/build/assets/*
+bootstrap/ssr/assets/*

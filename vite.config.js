@@ -3,16 +3,20 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
+<<<<<<< HEAD
     build: {
         sourcemap: true
     },
     css: {
         devSourcemap: true
     },
+=======
+>>>>>>> parent of bce7c95 (archivos eleiminados)
     plugins: [
         laravel({
             input: 'resources/js/app.js',
             ssr: 'resources/js/ssr.js',
+<<<<<<< HEAD
             refresh: true
         }),
         vue({
@@ -37,3 +41,10 @@ export default defineConfig({
         maxHttpHeaderSize: 8192// increase the maximum allowed size of HTTP headers
       },
 });
+=======
+            refresh: true,
+        }),
+        vue(),
+    ],
+});
+>>>>>>> parent of bce7c95 (archivos eleiminados)

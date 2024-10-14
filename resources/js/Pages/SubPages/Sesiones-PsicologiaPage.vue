@@ -168,9 +168,9 @@ const state = reactive({
         <v-card-text>
 
             <v-tabs v-model="tab" color="teal" staked>
-                <v-tab prepend-icon="mdi-account" text="Información general." value="option-1"></v-tab>
+                <v-tab prepend-icon="mdi-account" text="Información general" value="option-1"></v-tab>
                 <v-tab prepend-icon="mdi-lock" text="Ficha Psicológica" value="option-2"></v-tab>
-                <v-tab prepend-icon="mdi-access-point" text="Plan de Trabajo" value="option-3"></v-tab>
+                <v-tab prepend-icon="mdi-access-point" text="Plan de Intervención" value="option-3"></v-tab>
                 <v-tab prepend-icon="mdi-access-point" text="Sesiones" value="option-4"></v-tab>
                 <v-tab prepend-icon="mdi-access-point" text="Egreso" value="option-5"></v-tab>
             </v-tabs>

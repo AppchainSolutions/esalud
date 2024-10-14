@@ -11,6 +11,12 @@
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
         </testsuite>
+<<<<<<< HEAD
+=======
+        <testsuite name="Browser">
+            <directory>tests/Browser</directory>
+        </testsuite>
+>>>>>>> parent of bce7c95 (archivos eleiminados)
     </testsuites>
     <source>
         <include>
@@ -27,4 +33,11 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
     </php>
+<<<<<<< HEAD
 </phpunit>
+=======
+    <!-- <extensions>
+        <extension class="Pest\Plugin\Laravel\PestExtension" />
+    </extensions> -->
+</phpunit>
+>>>>>>> parent of bce7c95 (archivos eleiminados)

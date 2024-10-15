@@ -3,7 +3,7 @@
     "/build/assets/_plugin-vue_export-helper-1tPrXgE0.js"
   ],
   "node_modules/@vueup/vue-quill/dist/vue-quill.snow.css": [
-    "/build/assets/TablaSesiones-PsicologiaComponente-D_MVukfj.js",
+    "/build/assets/TablaSesiones-PsicologiaComponente-BgWVWn30.js",
     "/build/assets/TablaSesiones-PsicologiaComponente-XVJbOYiT.css"
   ],
   "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
@@ -144,7 +144,7 @@
     "/build/assets/Dashboard-CSC-NGCr.js"
   ],
   "resources/js/Pages/PacientePage.vue": [
-    "/build/assets/PacientePage-DILlOrxm.js"
+    "/build/assets/PacientePage-CBwqLk2V.js"
   ],
   "resources/js/Pages/PrivacyPolicy.vue": [
     "/build/assets/PrivacyPolicy-BFd4Zm8u.js"
@@ -197,7 +197,7 @@
     "/build/assets/DatosEgreso-PsicologiaComponente-Ciy5e35k.js"
   ],
   "resources/js/Pages/SubPages/Componentes/FichaPsicologia-PacienteComponente.vue": [
-    "/build/assets/FichaPsicologia-PacienteComponente-xmnfn4uY.js"
+    "/build/assets/FichaPsicologia-PacienteComponente-ClzmP8wp.js"
   ],
   "resources/js/Pages/SubPages/Componentes/Informacion-SesionPsicologiaComponente.vue": [
     "/build/assets/Informacion-SesionPsicologiaComponente-vynTUIxw.js"
@@ -211,15 +211,7 @@
     "/build/assets/Lista-EsperaComponente-BWaq8UOH.css"
   ],
   "resources/js/Pages/SubPages/Componentes/PlanTrabajo-PsicologiaComponente.vue": [
-    "/build/assets/PlanTrabajo-PsicologiaComponente-6dFqtVgU.js"
-  ],
-  "resources/js/Pages/SubPages/Componentes/Psicologia-Registro-SesionComponente.vue": [
-    "/build/assets/Psicologia-Registro-SesionComponente-H115ez0K.js",
-    "/build/assets/Psicologia-Registro-SesionComponente-x8838e4D.css"
-  ],
-  "resources/js/Pages/SubPages/Componentes/Psicologia-Registro-SesionComponente.vue?vue&type=style&index=0&lang.css": [
-    "/build/assets/Psicologia-Registro-SesionComponente-H115ez0K.js",
-    "/build/assets/Psicologia-Registro-SesionComponente-x8838e4D.css"
+    "/build/assets/PlanTrabajo-PsicologiaComponente-CuCRHceB.js"
   ],
   "resources/js/Pages/SubPages/Componentes/Solicitud-ServicioComponente.vue": [
     "/build/assets/Solicitud-ServicioComponente-DS9zq1vs.js",
@@ -230,7 +222,7 @@
     "/build/assets/ServicioPage-CvjdIlTR.css"
   ],
   "resources/js/Pages/SubPages/Componentes/TablaSesiones-PsicologiaComponente.vue": [
-    "/build/assets/TablaSesiones-PsicologiaComponente-D_MVukfj.js",
+    "/build/assets/TablaSesiones-PsicologiaComponente-BgWVWn30.js",
     "/build/assets/TablaSesiones-PsicologiaComponente-XVJbOYiT.css"
   ],
   "resources/js/Pages/SubPages/ContextoPage.vue": [
@@ -269,7 +261,7 @@
     "/build/assets/ProfesionalPage-DO6do8O4.js"
   ],
   "resources/js/Pages/SubPages/Sesiones-PsicologiaPage.vue": [
-    "/build/assets/Sesiones-PsicologiaPage-DUQZ5Z7L.js"
+    "/build/assets/Sesiones-PsicologiaPage-BELqMVBB.js"
   ],
   "resources/js/Pages/SubPages/VacunaPage.vue": [
     "/build/assets/VacunaPage-DZdnJG2i.js"

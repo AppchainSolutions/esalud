@@ -153,9 +153,16 @@ function cerrarRegistro() {
                         <v-row  class="ma-2 pa-2">
                             <v-col cols="4"class="ma-2 pa-2">
                                 <v-text-field label="Objetivo de la Sesión"></v-text-field>
+                                <v-switch inline color="green" label="Asiste" />
                             </v-col>
                             <v-col cols="4" class="ma-2 pa-2">
                                 <v-select label="Tipo de Sesión">Tipo de Sesiones</v-select>
+                                <v-text-field
+                                label="Justificación inasistencia"
+                                name="justificacion"
+                                textarea
+                            ></v-text-field>
+
                             </v-col>
                         </v-row>
                         <v-row class="mb-4 pb-4">

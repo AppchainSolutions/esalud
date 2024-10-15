@@ -1,20 +1,26 @@
-.github
-e2e
+# Laravel specific
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+Homestead.yaml
+Homestead.json
+/.vagrant
 
-node_modules/
-vendor/
-<<<<<<< Updated upstream
-=======
-tests/
-cypress/
-resources/js
-resources/css 
-resources/img
-resources/markdown
 
-public/hot
->>>>>>> Stashed changes
+# IDE specific
+/.idea
+/.vscode
 
-storage/clockwork/*
-public/build/assets/*
-bootstrap/ssr/assets/*
+# System specific
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+npm-debug.log
+yarn-error.log
+
+# Compiled assets
+/public/build/assets
+/bootstrap/ssr/assets

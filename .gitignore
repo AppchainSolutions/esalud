@@ -9,3 +9,4 @@ public/build/*
 boostrap/ssr/assets/*
 !public/build/*
 !boostrap/ssr/assets/*
+appchain.github-issues

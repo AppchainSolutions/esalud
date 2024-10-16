@@ -27,5 +27,5 @@ yarn-error.log
 
 #storage/logs/laravel.log
 #/public/hot
-#database/database.db
-package-lock.json
+#package-lock.json
+database/database.db

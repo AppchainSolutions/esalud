@@ -489,6 +489,20 @@ const remove = async (item) => {
                                                         clearable
                                                         variant="underlined"
                                                     ></v-switch>
+
+                                                    <v-switch
+                                                        v-model="
+                                                            state.editedItem
+                                                                .credencial_discapacidad
+                                                        "
+                                                        class="ml-2"
+                                                        label="Credencial discapacidad"
+                                                        color="success"
+                                                        hide-details
+                                                        inset
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-switch>
                                                 </v-col>
 
                                                 <v-col>
@@ -813,6 +827,19 @@ const remove = async (item) => {
                                                         variant="underlined"
                                                     ></v-switch>
                                                 </v-col>
+                                                <v-switch
+                                                        v-model="
+                                                            state.editedItem
+                                                                .credencial_discapacidad_responsable_id
+                                                        "
+                                                        class="ml-2"
+                                                        label="Credencial discapacidad"
+                                                        color="success"
+                                                        hide-details
+                                                        inset
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-switch>
                                                 <v-col>
                                                     <v-text-field
                                                         v-model="

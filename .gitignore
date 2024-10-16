@@ -25,7 +25,7 @@ yarn-error.log
 /public
 /bootstrap/ssr/*
 
-storage/logs/laravel.log
-public/hot
-database/database.db
+#storage/logs/laravel.log
+#/public/hot
+#database/database.db
 package-lock.json

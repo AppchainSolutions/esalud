@@ -24,7 +24,7 @@ const store = useDataStore();
 const state = reactive({
     endpoints: [
         "afps",
-        "calles",
+        "Calless",
         "estados_civiles",
         "establecimientos_educacionales",
         "generos",
@@ -111,7 +111,7 @@ const state = reactive({
         rut: null,
         afp_id: null,
         apellidos: null,
-        calle_id: null,
+        Calles_id: null,
         ciudad: null,
         direccion: null,
         donante: false,
@@ -156,7 +156,7 @@ const state = reactive({
         afp_id: null,
         apellido_responsable: null,
         apellidos: null,
-        calle_id: null,
+        Calles_id: null,
         ciudad: null,
         comunidad_lgtbq_responsable: null,
         credencial_discapacidad_responsable_id: null,
@@ -293,89 +293,85 @@ const remove = async (item) => {
 
 <template>
     <v-container fluid>
-        <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-2 pa-2'">
-            <div class="text-h6 ma-2">{{ state.formTitle }}</div>
-            <v-divider thickness="4px" color="#009AA4"></v-divider>
-            <v-form fast-fail @submit.prevent>
-                <v-row>
-                    <v-col>
-                        <v-text-field
-                            v-model="state.searchQuery.rut"
-                            :rules="state.validationSchema.rutRules"
-                            label="Rut* (12345678-9)"
-                            class="ma-2"
-                            type="text"
-                            variant="underlined"
-                            clearable
-                        ></v-text-field>
-                        <v-select
-                            :items="state.list.afp"
-                            item-title="descripcion"
-                            item-value="id"
-                            v-model="state.searchQuery.afp_id"
-                            clearable
-                            label="Afp"
-                            class="ma-2"
-                            variant="underlined"
-                            single
-                        />
-                        <v-select
-                            :items="state.list.calle"
-                            item-title="descripcion"
-                            item-value="id"
-                            v-model="state.searchQuery.calle_id"
-                            clearable
-                            label="Calle"
-                            class="ma-2"
-                            variant="underlined"
-                            single
-                        />
-                    </v-col>
-                    <v-col>
-                        
-                        <v-select
-                            :items="state.list.establecimiento_educacional"
-                            item-title="descripcion"
-                            item-value="id"
-                            v-model="
-                                state.searchQuery.establecimiento_educacional_id
-                            "
-                            clearable
-                            label="Establecimiento Educacional"
-                            class="ma-2"
-                            variant="underlined"
-                            single
-                        />
-                    </v-col>
-                </v-row>
+        <v-sheet :elevation="6" :class="'rounded-lg ma-2 pa-2'">
+            <v-expansion-panels>
+                <v-expansion-panel title="Ficha de Pacientes" color="#009AA4">
+                    <v-expansion-panel-text>
+                        <v-form fast-fail @submit.prevent>
+                            <v-row>
+                                <v-col>
+                                    <v-text-field
+                                        v-model="state.searchQuery.rut"
+                                        :rules="state.validationSchema.rutRules"
+                                        label="Rut del paciente * (12345678-9)"
+                                        class="ma-2"
+                                        type="text"
+                                        variant="underlined"
+                                        clearable
+                                    ></v-text-field>
 
-                <v-row>
-                    <v-btn
-                        prepend-icon="mdi-file-search"
-                        variant="tonal"
-                        class="ma-4"
-                        color="#009AA4"
-                        type="submit"
-                        @click="show"
-                    >
-                        Buscar
-                    </v-btn>
+                                    <v-text-field
+                                        v-model="state.searchQuery.rut_responsable"
+                                        :rules="state.validationSchema.rutRules"
+                                        label="Rut persona encargada"
+                                        class="ma-2"
+                                        type="text"
+                                        variant="underlined"
+                                        clearable
+                                    ></v-text-field>
+                                    
+                                </v-col>
+                                <v-col>
+                                    <v-select
+                                        :items="
+                                            state.list
+                                                .establecimiento_educacional
+                                        "
+                                        item-title="descripcion"
+                                        item-value="id"
+                                        v-model="
+                                            state.searchQuery
+                                                .establecimiento_educacional_id
+                                        "
+                                        clearable
+                                        label="Establecimiento Educacional"
+                                        class="ma-2"
+                                        variant="underlined"
+                                        single
+                                    />
+                                </v-col>
+                            </v-row>
 
-                    <v-btn
-                        prepend-icon="mdi-cloud-download"
-                        variant="tonal"
-                        class="ma-4"
-                        color="#009AA4"
-                    >
-                        <download-excel
-                            :data="state.tableItems"
-                            name="consulta_paciente.xls"
-                        >
-                            Bajar archivo
-                        </download-excel>
-                    </v-btn>
-                </v-row>
-            </v-form>
+                            <v-row>
+                                <v-btn
+                                    prepend-icon="mdi-file-search"
+                                    variant="tonal"
+                                    class="ma-4"
+                                    color="#009AA4"
+                                    type="submit"
+                                    @click="show"
+                                >
+                                    Buscar
+                                </v-btn>
+
+                                <v-btn
+                                    prepend-icon="mdi-cloud-download"
+                                    variant="tonal"
+                                    class="ma-4"
+                                    color="#009AA4"
+                                >
+                                    <download-excel
+                                        :data="state.tableItems"
+                                        name="consulta_paciente.xls"
+                                    >
+                                        Bajar archivo
+                                    </download-excel>
+                                </v-btn>
+                            </v-row>
+                        </v-form>
+                    </v-expansion-panel-text>
+                </v-expansion-panel>
+            </v-expansion-panels>
         </v-sheet>
 
         <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-2 pa-2'">
@@ -686,7 +682,7 @@ const remove = async (item) => {
                                                         variant="underlined"
                                                     />
 
-                                                                                                        <v-select
+                                                    <v-select
                                                         :items="
                                                             state.list.pueblo
                                                         "
@@ -723,7 +719,6 @@ const remove = async (item) => {
                                                         label="Diagnóstico NNE Permanentes"
                                                     ></v-select>
                                                 </v-col>
-
                                             </v-row>
 
                                             <div class="text-h6">
@@ -764,7 +759,8 @@ const remove = async (item) => {
                                                 <v-col>
                                                     <v-text-field
                                                         v-model="
-                                                            state.editedItem.rut_responsable
+                                                            state.editedItem
+                                                                .rut_responsable
                                                         "
                                                         label="Rut* (12345678-9)"
                                                         id="rut"
@@ -773,7 +769,6 @@ const remove = async (item) => {
                                                         clearable
                                                         variant="underlined"
                                                     ></v-text-field>
-                                                  
 
                                                     <v-text-field
                                                         v-model="
@@ -828,18 +823,18 @@ const remove = async (item) => {
                                                     ></v-switch>
                                                 </v-col>
                                                 <v-switch
-                                                        v-model="
-                                                            state.editedItem
-                                                                .credencial_discapacidad_responsable_id
-                                                        "
-                                                        class="ml-2"
-                                                        label="Credencial discapacidad"
-                                                        color="success"
-                                                        hide-details
-                                                        inset
-                                                        clearable
-                                                        variant="underlined"
-                                                    ></v-switch>
+                                                    v-model="
+                                                        state.editedItem
+                                                            .credencial_discapacidad_responsable_id
+                                                    "
+                                                    class="ml-2"
+                                                    label="Credencial discapacidad"
+                                                    color="success"
+                                                    hide-details
+                                                    inset
+                                                    clearable
+                                                    variant="underlined"
+                                                ></v-switch>
                                                 <v-col>
                                                     <v-text-field
                                                         v-model="
@@ -1018,7 +1013,6 @@ const remove = async (item) => {
                                                         clearable
                                                         variant="underlined"
                                                     />
-                                                 
 
                                                     <v-select
                                                         :items="

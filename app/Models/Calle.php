@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Paciente;
 
-class Calle extends Model
+class Calles extends Model
 {
     use HasFactory;
     public function afp(): BelongsTo
@@ -15,7 +15,7 @@ class Calle extends Model
         return $this->belongsTo(Paciente::class);
     }
     
-    protected $table = 'calle';
+    protected $table = 'Calles';
 
     protected $fillable = [
         'descripcion',

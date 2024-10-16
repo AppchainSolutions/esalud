@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Paciente;
 
-class Genero extends Model
+class Calles extends Model
 {
     use HasFactory;
-    public function genero(): BelongsTo
+    public function afp(): BelongsTo
     {
         return $this->belongsTo(Paciente::class);
     }
-    protected $table = 'genero';
+    
+    protected $table = 'calles';
 
     protected $fillable = [
         'descripcion',

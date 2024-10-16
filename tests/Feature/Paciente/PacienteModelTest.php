@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use App\Models\Afp;
-use App\Models\Calle;
+use App\Models\Calles;
 use App\Models\EstablecimientoEducacional;
 use App\Models\EstadoCivil;
 use App\Models\Genero;
@@ -27,10 +27,9 @@ uses(RefreshDatabase::class);
 
 it('can create a paciente', function () {
     $afp = Afp::factory()->create();
-    $calle = Calle::factory()->create();
+    $Calles = Calles::factory()->create();
     $establecimientoEducacional = EstablecimientoEducacional::factory()->create();
     $leySocial = LeySocial::factory()->create();
-//    $modalidad = Modalidad::factory()->create();
     $nacionalidad = Nacionalidad::factory()->create();
     $nivelInstruccion = NivelInstruccion::factory()->create();
     $prevision = Prevision::factory()->create();
@@ -50,7 +49,7 @@ it('can create a paciente', function () {
         'pertenece_pie' => false,
         'fecha_nacimiento' => '2011-07-19',
         'afp_id' => Afp::inRandomOrder()->first()->id,
-        'calle_id' => Calle::inRandomOrder()->first()->id,
+        'Calles_id' => Calles::inRandomOrder()->first()->id,
         'establecimiento_educacional_id' => EstablecimientoEducacional::factory()->create()->id,
         'estado_civil_id' => EstadoCivil::inRandomOrder()->first()->id,
         'genero_id' => Genero::inRandomOrder()->first()->id,
@@ -98,7 +97,7 @@ it('can create a paciente', function () {
     expect($paciente->religion())->toBeInstanceOf(BelongsTo::class);
     expect($paciente->lista_espera)->toBe(true);
     expect($paciente->apellidos)->toBe('Perez');
-    expect($paciente->calle_id)->toBe($calle->id);
+    expect($paciente->Calles_id)->toBe($Calles->id);
     expect($paciente->ciudad)->toBe('Kemmershire');
     expect($paciente->direccion)->toBe('6806 Labadie Ways Apt. 417');
     expect($paciente->donante)->toBe(false);
@@ -176,7 +175,7 @@ it('has fillable attributes', function () {
         'actilista_espera',
         'afp_id',
         'apellidos',
-        'calle_id',
+        'Calles_id',
         'ciudad',
         'direccion',
         'donante',

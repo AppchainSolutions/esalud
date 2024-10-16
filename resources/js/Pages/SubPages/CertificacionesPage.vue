@@ -57,8 +57,8 @@ export default {
      * @watch
      * @property {boolean} dialog - Represents the state of a dialog box.
      * @property {boolean} dialogDelete - Represents the state of a delete dialog box.
-     * @fires close - Called when the 'dialog' variable becomes false.
-     * @fires closeDelete - Called when the 'dialogDelete' variable becomes false.
+     * @fires close - Callesd when the 'dialog' variable becomes false.
+     * @fires closeDelete - Callesd when the 'dialogDelete' variable becomes false.
      */
     watch: {
         dialog(val) {

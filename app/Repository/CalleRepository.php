@@ -2,12 +2,12 @@
 
 namespace App\Repository;
 
-use App\Models\Calle;
+use App\Models\Calles;
 
 
-class CalleRepository extends Repository
+class CallesRepository extends Repository
 {
-    public function __construct(Calle $model)
+    public function __construct(Calles $model)
     {
         $this->model = $model;
     }

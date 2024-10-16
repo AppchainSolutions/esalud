@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Afp;
 use App\Models\Alergia;
 use App\Models\AntecedenteFamiliar;
-use App\Models\Calle;
+use App\Models\Calles;
 use App\Models\Cirugia;
 use App\Models\Enfermedad;
 use App\Models\EstadoCivil;
@@ -61,9 +61,9 @@ class Paciente extends Model
     {
         return $this->hasMany(AntecedenteFamiliar::class);
     }
-    public function calle(): BelongsTo
+    public function Calles(): BelongsTo
     {
-        return $this->belongsTo(Calle::class);
+        return $this->belongsTo(Calles::class);
     }
     public function seguroSalud(): BelongsTo
     {
@@ -116,52 +116,56 @@ class Paciente extends Model
 
     protected $table = 'paciente';
        protected $fillable = [
-        'actividad_economica',
-        'lista_espera',
-        'afp_id',
+        'apellido_responsable',
         'apellidos',
-        'calle_id',
+        'Calles_id',
+        'Calles_responsable_id',
+        'ciudad_responsable',
         'ciudad',
+        'comunidad_lgbtq',
+        'comunidad_lgtbq_responsable',
+        'credencial_discapacidad_responsable',
+        'credencial_discapacidad',
+        'direccion_responsable',
         'direccion',
+        'donante_responsable',
         'donante',
+        'edad_responsable',
         'edad',
+        'email_responsable',
         'email',
-        'estado_civil_id',
         'establecimiento_educacional_id',
+        'estado_civil_id',
+        'estado_civil_responsable_id',
+        'fecha_nacimiento_responsable',
         'fecha_nacimiento',
         'genero_id',
-        'grupo_sanguineo_id',
-        'ley_social_id',
-        'modalidad_id',
-        'nacionalidad_id',
-        'nivel_instruccion_id',
-        'nombre',
-        'ocupacion',
-        'prevision_id',
-        'pueblo_originario_id',
-        'religion_id',
-        'rut',
-        'seguro_salud_id',
-        'telefono1',
-        'telefono2',
-        'nombre_responsable',
-        'apellido_responsable',
-        'telefono_responsable',
-        'rut_responsable',
-        'direccion_responsable',
-        'email_responsable',
-        'parentesco_responsable',
-        'ocupacion_responsable',
-        'pueblo_originario_responsable_id',
-        'nivel_instruccion_responsable_id',
-        'religion_responsable_id',
-        'fecha_nacimiento_responsable',
-        'edad',
         'genero_responsable_id',
+        'grupo_sanguineo_id',
+        'grupo_sanguineo_responsable_id',
+        'nacionalidad_id',
         'nacionalidad_responsable_id',
-        'comunidad_lgtbq_responsable_id',
-        'credencial_discapacidad_responsable_id',
-        'estado_civil_responsable_id',
+        'nivel_instruccion_id',
+        'nivel_instruccion_responsable_id',
+        'nombre_responsable',
+        'nombre',
+        'ocupacion_responsable',
+        'ocupacion',
+        'parentesco_responsable',
+        'password',
+        'pertenece_pie',
+        'prevision_id',
         'prevision_responsable_id',
+        'profesion',
+        'pueblo_originario_id',
+        'pueblo_originario_responsable_id',
+        'religion_id',
+        'religion_responsable_id',
+        'remember_token',
+        'rut_responsable',
+        'rut',
+        'telefono_responsable',
+        'telefono1',
+        'telefono2'
     ];
 }

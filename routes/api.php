@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AfpController;
-use App\Http\Controllers\CalleController;
+use App\Http\Controllers\CallesController;
 use App\Http\Controllers\DerivacionController;
 use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\EstablecimientoEducacionalController;
@@ -43,7 +43,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('afps', [AfpController::class, 'all'])->name('afp.all');
-Route::get('calles', [CalleController::class, 'all'])->name('calle.all');
+Route::get('Calless', [CallesController::class, 'all'])->name('Calles.all');
 Route::get('estados_civiles', [EstadoCivilController::class, 'all'])->name('estadoCivil.all');
 Route::get('especialidades', [EspecialidadController::class, 'all'])->name('especialidad.all');
 Route::get('establecimientos_educacionales', [EstablecimientoEducacionalController::class, 'all'])->name('establecimientoEducacional.all');

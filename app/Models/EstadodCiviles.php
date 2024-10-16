@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Paciente;
 
-class Afp extends Model
+class EstadosCiviles extends Model
 {
     use HasFactory;
-    public function afp(): BelongsTo
+
+    public function estadoCivil(): BelongsTo
     {
         return $this->belongsTo(Paciente::class);
     }
-    
-    protected $table = 'afp';
+    protected $table = 'estados_civiles';
 
     protected $fillable = [
         'descripcion',

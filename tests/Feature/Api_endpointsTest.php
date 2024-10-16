@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 $endpoints = [
     "afps",
-    "calles",
+    "Calless",
     "estados_civiles",
     "establecimientos_educacionales",
     "especialidades",

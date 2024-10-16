@@ -3,15 +3,15 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Afp;
+use App\Models\Calles;
 
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Afp>
  */
-class AfpFactory extends Factory
+class CallesFactory extends Factory
 {
-    protected $model = Afp::class;
+    protected $model = Calles::class;
     /**
      * Define the model's default state.
      *
@@ -20,7 +20,7 @@ class AfpFactory extends Factory
     public function definition(): array
     {
         return [
-            'descripcion' => $this->faker->company,
+            'descripcion' => $this->faker->address,
         ];
     }
 }

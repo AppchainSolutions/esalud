@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: debian-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
@@ -21,52 +21,43 @@ jobs:
     - name: Deploy to server
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
+          if [ ! -d "/var/www/municb/.git" ]; then
+            git clone https://github.com/AppchainSolutions/esalud.git /var/www/municb
+          else
+            cd /var/www/municb
+            git pull origin muni-deploy
+          fi
+
           cd /var/www/municb
-          git pull origin muni-deploy
 
           # Establece variables de entorno
-          echo "DB_CONNECTION=pgsql" > .env
+          echo "DB_CONNECTION=mysql" > .env
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
           echo "DB_PORT=3306" >> .env
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          
-          # Ejecutar migraciones de base de datos
-          php artisan migrate --force
-          
-          # Eliminar archivos innecesarios
-          rm -rf bootstrap/cache/*
-          rm -rf public/hot
-          rm -rf public/
-          rm -rf storage/logs/*
-          rm -rf storage/framework/cache/*
-          rm -rf storage/framework/sessions/*
-          rm -rf storage/framework/views/*
-          rm -rf resources/js/*
-          rm -rf resources/css/*
-          rm -rf resources/img/*
-          rm -rf cypress
-          rm -rf tests
-          
-          # Cachear la configuración
-          php artisan config:cache
-          
-          # Cachear las rutas
-          php artisan route:cache
-          
-          # Cachear las vistas
-          php artisan view:cache
-          
-          # Optimizar la aplicación
-          php artisan optimize
-          
-          # Generar archivos Ziggy
-          php artisan ziggy:generate
 
-          # Generar la documentación
-          php artisan laravel-docs:generate
-          
-          # Generar la lista de cambios
-          php artisan changelog:generate
+          # Asignar la propiedad de las carpetas al usuario del servidor web
+          sudo chown -R www-data:www-data /var/www/municb
+
+          # Asignar permisos de lectura y escritura a las carpetas necesarias
+          sudo chmod -R 775 /var/www/municb/storage
+          sudo chmod -R 775 /var/www/municb/bootstrap/cache
+
+          # Asegurarse de que los archivos tengan los permisos adecuados
+          sudo find /var/www/municb -type f -exec chmod 644 {} \;
+
+          # Asegurarse de que las carpetas tengan los permisos adecuados
+          sudo find /var/www/municb -type d -exec chmod 755 {} \;
+
+          # Asegurarse de que el archivo .env tenga los permisos adecuados
+          sudo chown www-data:www-data /var/www/municb/.env
+          sudo chmod 664 /var/www/municb/.env
+
+          # Ejecutar comandos de Artisan para optimizar la aplicación
+          php artisan migrate --force
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
         EOF

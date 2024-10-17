@@ -7,6 +7,10 @@ on:
 
 jobs:
   deploy:
+<<<<<<< HEAD
+=======
+    #runs-on: ubuntu-latest
+>>>>>>> eb9149b (Ajustes a workflow)
     runs-on: self-hosted
 
     steps:

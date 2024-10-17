@@ -61,10 +61,10 @@ const state = reactive({
     formTitle: "Vacunas",
     formCrear: "Nueva Vacuna",
     formEdit: "Editar Vacuna",
-    urlShow: "/vacuna/show",
-    urlUpdate: "/vacuna/update",
-    urlDelete: "/vacuna/delete",
-    urlStore: "/vacuna",
+    urlShow: "vacuna/show",
+    urlUpdate: "vacuna/update",
+    urlDelete: "vacuna/delete",
+    urlStore: "vacuna",
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/

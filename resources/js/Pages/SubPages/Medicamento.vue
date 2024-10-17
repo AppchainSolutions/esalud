@@ -45,10 +45,10 @@ const state = reactive({
     formTitle: "Medicamentos",
     formCrear: "Nuevo Medicamento",
     formEdit: "Editar Medicamento",
-    urlShow: "/medicamento/show",
-    urlUpdate: "/medicamento/update",
-    urlDelete: "/medicamento/delete",
-    urlStore: "/medicamento",
+    urlShow: "medicamento/show",
+    urlUpdate: "medicamento/update",
+    urlDelete: "medicamento/delete",
+    urlStore: "medicamento",
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/

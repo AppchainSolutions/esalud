@@ -15,7 +15,7 @@ const nombre = store.getSelected.nombre;
 const apellidos = store.getSelected.apellidos;
 
 const volver = () => {
-    router.get("/paciente");
+    router.get("paciente");
 };
 </script>
 

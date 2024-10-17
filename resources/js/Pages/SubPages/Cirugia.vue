@@ -47,11 +47,11 @@ const state = reactive({
     formTitle: "Cirugías",
     formCrear: "Nueva Cirugía",
     formEdit: "Editar Cirugía",
-    urlSearch: "/cirugia/search",
-    urlShow: "/cirugia/show",
-    urlUpdate: "/cirugia/update",
-    urlDelete: "/cirugia/delete",
-    urlStore: "/cirugia",
+    urlSearch: "cirugia/search",
+    urlShow: "cirugia/show",
+    urlUpdate: "cirugia/update",
+    urlDelete: "cirugia/delete",
+    urlStore: "cirugia",
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/

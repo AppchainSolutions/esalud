@@ -47,10 +47,10 @@
     formTitle: "Enfermedad",
     formCrear: "Nueva enfermedad",
     formEdit: "Editar enfermedad",
-    urlShow: "/enfermedad/show",
-    urlUpdate: "/enfermedad/update",
-    urlDelete: "/enfermedad/delete",
-    urlStore: "/enfermedad",
+    urlShow: "enfermedad/show",
+    urlUpdate: "enfermedad/update",
+    urlDelete: "enfermedad/delete",
+    urlStore: "enfermedad",
   });
 
   //**********\\\\  LIFE CYCLE HOOKS ////*************/

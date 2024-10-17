@@ -186,10 +186,10 @@
     list: [],
     loadingSearch: false,
     tableItems: [],
-    urlDelete: "/paciente/delete",
-    urlShow: "/paciente/show",
-    urlStore: "/paciente",
-    urlUpdate: "/paciente/update",
+    urlDelete: "paciente/delete",
+    urlShow: "paciente/show",
+    urlStore: "paciente",
+    urlUpdate: "paciente/update",
   });
   const date = useDate();
 

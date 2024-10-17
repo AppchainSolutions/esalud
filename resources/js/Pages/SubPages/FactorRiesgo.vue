@@ -45,11 +45,11 @@ const state = reactive({
     formTitle: "Factores de Riesgo",
     formCrear: "Nueva Factor de Riesgo",
     formEdit: "Editar factor de riesgo",
-    urlSearch: "/factor/search",
-    urlShow: "/factor/show",
-    urlUpdate: "/factor/update",
-    urlDelete: "/factor/delete",
-    urlStore: "/factor",
+    urlSearch: "factor/search",
+    urlShow: "factor/show",
+    urlUpdate: "factor/update",
+    urlDelete: "factor/delete",
+    urlStore: "factor",
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/

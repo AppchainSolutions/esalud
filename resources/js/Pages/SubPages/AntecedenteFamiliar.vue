@@ -46,10 +46,10 @@ const state = reactive({
     formTitle: "Antecedentes Familiares",
     formCrear: "Nuevo Antecedente Familiar",
     formEdit: "Editar Antecedentes Familiares",
-    urlShow: "/familiar/show",
-    urlUpdate: "/familiar/update",
-    urlDelete: "/familiar/delete",
-    urlStore: "/familiar",
+    urlShow: "familiar/show",
+    urlUpdate: "familiar/update",
+    urlDelete: "familiar/delete",
+    urlStore: "familiar",
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/

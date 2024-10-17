@@ -46,10 +46,10 @@ const state = reactive({
     formTitle: "Alergias",
     formCrear: "Nueva Alergia",
     formEdit: "Editar Alergia",
-    urlShow: "/alergia/show",
-    urlUpdate: "/alergia/update",
-    urlDelete: "/alergia/delete",
-    urlStore: "/alergia",
+    urlShow: "alergia/show",
+    urlUpdate: "alergia/update",
+    urlDelete: "alergia/delete",
+    urlStore: "alergia",
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/

@@ -107,11 +107,11 @@ const state = reactive({
     formTitle: "Licencias Médicas",
     formCrear: "Nueva Licencia Médica",
     formEdit: "Editar Licencia Médica",
-    urlSearch: "/licencia/search",
-    urlShow: "/licencia/show",
-    urlUpdate: "/licencia/update",
-    urlDelete: "/licencia/delete",
-    urlStore: "/licencia",
+    urlSearch: "licencia/search",
+    urlShow: "licencia/show",
+    urlUpdate: "licencia/update",
+    urlDelete: "licencia/delete",
+    urlStore: "licencia",
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/

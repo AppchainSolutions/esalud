@@ -1,0 +1,72 @@
+name: Deploy Municipalidad CB to Server
+
+on:
+  push:
+    branches:
+      - muniCB-deploy
+
+jobs:
+  deploy:
+    runs-on: debian-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
+          cd /var/www/municb
+          git pull origin muni-deploy
+
+          # Establece variables de entorno
+          echo "DB_CONNECTION=pgsql" > .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          
+          # Ejecutar migraciones de base de datos
+          php artisan migrate --force
+          
+          # Eliminar archivos innecesarios
+          rm -rf bootstrap/cache/*
+          rm -rf public/hot
+          rm -rf public/
+          rm -rf storage/logs/*
+          rm -rf storage/framework/cache/*
+          rm -rf storage/framework/sessions/*
+          rm -rf storage/framework/views/*
+          rm -rf resources/js/*
+          rm -rf resources/css/*
+          rm -rf resources/img/*
+          rm -rf cypress
+          rm -rf tests
+          
+          # Cachear la configuración
+          php artisan config:cache
+          
+          # Cachear las rutas
+          php artisan route:cache
+          
+          # Cachear las vistas
+          php artisan view:cache
+          
+          # Optimizar la aplicación
+          php artisan optimize
+          
+          # Generar archivos Ziggy
+          php artisan ziggy:generate
+
+          # Generar la documentación
+          php artisan laravel-docs:generate
+          
+          # Generar la lista de cambios
+          php artisan changelog:generate
+        EOF

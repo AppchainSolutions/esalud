@@ -47,11 +47,11 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
-    Route::prefix('admin')->group(__DIR__ . '/admin/admin.php');
-    Route::prefix('consulta')->group(__DIR__ . '/consulta.php');
-    Route::prefix('examen')->group(__DIR__ . '/examen.php');
-    Route::prefix('secundaria')->group(__DIR__ . '/secundaria.php');
-    Route::prefix('dashboard')->group(__DIR__ . '/dashboard.php');
+    Route::prefix('admin')->group(__DIR__ . 'adminadmin.php');
+    Route::prefix('consulta')->group(__DIR__ . 'consulta.php');
+    Route::prefix('examen')->group(__DIR__ . 'examen.php');
+    Route::prefix('secundaria')->group(__DIR__ . 'secundaria.php');
+    Route::prefix('dashboard')->group(__DIR__ . 'dashboard.php');
 
     Route::inertia('ficha', 'SubPages/FichaMedica');
     Route::resource('alergia', AlergiaController::class);

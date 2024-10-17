@@ -62,7 +62,17 @@ abstract class Repository implements RepositoryInterface
 
     public function update(Request $request)
     {
-        $data = $request->input('data');
+        $data = $request->all();
+
+        // Check if $data is not null and contains the 'id' key
+        if (is_null($data) || !isset($data['id'])) {
+            // Log the error
+            Log::error('Invalid data: data is null or id is missing');
+
+            // Return a 400 response
+            return Response::json(['error' => 'Invalid data'], 400);
+        }
+
         $id = $data['id'];
 
         // Remove the 'id' key from the data array

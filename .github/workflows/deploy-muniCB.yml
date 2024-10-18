@@ -118,7 +118,5 @@ jobs:
 
             echo "Cleanup complete!"
 
-            
-
             echo "Deployment completed successfully."
           EOF

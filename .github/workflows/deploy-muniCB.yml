@@ -28,8 +28,10 @@ jobs:
           set -e
           echo "Starting deployment..."
           if [ ! -d "/var/www/municb/.git" ]; then
-            echo "Cloning repository..."
-            sudo git clone https://github.com/AppchainSolutions/esalud.git /var/www/municb
+            echo "Creating directory and cloning repository..."
+            sudo mkdir -p /var/www/municb
+            sudo chown ${{ secrets.REMOTE_USER }}:${{ secrets.REMOTE_USER }} /var/www/municb
+            git clone https://github.com/AppchainSolutions/esalud.git /var/www/municb
           else
             echo "Pulling latest changes..."
             cd /var/www/municb

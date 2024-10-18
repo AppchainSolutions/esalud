@@ -1,10 +1,12 @@
 {
-    "name": "municipalidad/laravel",
+    "name": "municipalidad/larcasablanca",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Sistema para la gestión de pacientes Centro Comunitario Municipalidad de Casablanca.",
     "keywords": [
         "laravel",
-        "framework"
+        "framework",
+        "municipalidad",
+        "salud"
     ],
     "license": "MIT",
     "require": {
@@ -38,9 +40,7 @@
         "psr-4": {
             "App\\": "app/",
             "Tests\\": "tests/",
-            "Tightenco\\Ziggy\\": "vendor/tightenco/ziggy/src",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Tightenco\\Ziggy\\": "vendor/tightenco/ziggy/src"
         },
         "files": [
             "app/Helpers/Tools.php"
@@ -49,6 +49,8 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
         }
     },
     "scripts": {
@@ -74,7 +76,9 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true,
+        "sort-packages": true
+    },
+    "config-dev": {
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true,

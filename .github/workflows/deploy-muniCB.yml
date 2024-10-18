@@ -23,7 +23,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "echo 'SSH connection successful'"
 
     - name: Deploy to server
-      run: /
+      run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
           set -e
           echo "Starting deployment..."
@@ -40,18 +40,18 @@ jobs:
             git pull origin muni-deploy
           fi
 
-          cd /var/www/municb
+          # cd /var/www/municb
 
           # Establece variables de entorno
           # echo "Setting environment variables..."
-          echo APP_NAME=Vulco
-          echo APP_ENV=production
-          echo APP_KEY=base64:yB91h0NIlVel0QLDQnKvdOHpIKqEexzsbv8JUQglzWw=
-          echo APP_DEBUG=true
-          echo APP_URL=https://vulco.appchain.solutions
-          echo LOG_CHANNEL=stack
-          echo LOG_DEPRECATIONS_CHANNEL=null
-          LOG_LEVEL=debug
+          # echo APP_NAME=Vulco
+          # echo APP_ENV=production
+          # echo APP_KEY=base64:yB91h0NIlVel0QLDQnKvdOHpIKqEexzsbv8JUQglzWw=
+          # echo APP_DEBUG=true
+          # echo APP_URL=https://vulco.appchain.solutions
+          # echo LOG_CHANNEL=stack
+          # echo LOG_DEPRECATIONS_CHANNEL=null
+          # echo LOG_LEVEL=debug
           # echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> .env
           # echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
           # echo "DB_PORT=3306" >> .env
@@ -60,21 +60,21 @@ jobs:
           # echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
           # Asignar la propiedad de las carpetas al usuario del servidor web
-          echo "Setting permissions..."
-        #  sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb
-        #   sudo chmod -R 775 /var/www/municb/storage
-        #  sudo chmod -R 775 /var/www/municb/bootstrap/cache
-        #  sudo find /var/www/municb -type f -exec chmod 644 {} \;
-        #  sudo find /var/www/municb -type d -exec chmod 755 {} \;
-        #  sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.env
-        #  sudo chmod 664 /var/www/municb/.env
+          # echo "Setting permissions..."
+          # sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb
+          # sudo chmod -R 775 /var/www/municb/storage
+          # sudo chmod -R 775 /var/www/municb/bootstrap/cache
+          # sudo find /var/www/municb -type f -exec chmod 644 {} \;
+          # sudo find /var/www/municb -type d -exec chmod 755 {} \;
+          # sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.env
+          # sudo chmod 664 /var/www/municb/.env
 
           # Ejecutar comandos de Artisan para optimizar la aplicación
-          echo "Running Artisan commands..."
-          #php artisan migrate --force
-          #php artisan config:cache
-          #php artisan route:cache
-          #php artisan view:cache
+          # echo "Running Artisan commands..."
+          # php artisan migrate --force
+          # php artisan config:cache
+          # php artisan route:cache
+          # php artisan view:cache
 
-          echo "Deployment completed successfully."
+          # echo "Deployment completed successfully."
         EOF

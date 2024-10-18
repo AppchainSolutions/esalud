@@ -53,13 +53,13 @@ jobs:
 
           # Asignar la propiedad de las carpetas al usuario del servidor web
           echo "Setting permissions..."
-          sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb
-          sudo chmod -R 775 /var/www/municb/storage
-          sudo chmod -R 775 /var/www/municb/bootstrap/cache
-          sudo find /var/www/municb -type f -exec chmod 644 {} \;
-          sudo find /var/www/municb -type d -exec chmod 755 {} \;
-          sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.env
-          sudo chmod 664 /var/www/municb/.env
+        #  sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb
+        #   sudo chmod -R 775 /var/www/municb/storage
+        #  sudo chmod -R 775 /var/www/municb/bootstrap/cache
+        #  sudo find /var/www/municb -type f -exec chmod 644 {} \;
+        #  sudo find /var/www/municb -type d -exec chmod 755 {} \;
+        #  sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.env
+        #  sudo chmod 664 /var/www/municb/.env
 
           # Ejecutar comandos de Artisan para optimizar la aplicación
           echo "Running Artisan commands..."

@@ -30,8 +30,8 @@ jobs:
           if [ ! -d "/var/www/municb/.git" ]; then
             echo "Creating directory and cloning repository..."
             sudo mkdir -p /var/www/municb
-            sudo chown ${{ secrets.REMOTE_USER }}:${{ secrets.REMOTE_USER }} /var/www/municb
-            git clone https://github.com/AppchainSolutions/esalud.git /var/www/municb
+            sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb
+            git clone git@github.com:AppchainSolutions/esalud.git /var/www/municb
           else
             echo "Pulling latest changes..."
             cd /var/www/municb

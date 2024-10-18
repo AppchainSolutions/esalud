@@ -43,13 +43,13 @@ jobs:
           cd /var/www/municb
 
           # Establece variables de entorno
-          echo "Setting environment variables..."
-          echo "DB_CONNECTION=mysql" > .env
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-          echo "DB_PORT=3306" >> .env
-          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          # echo "Setting environment variables..."
+          # echo "DB_CONNECTION=mysql" > .env
+          # echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          # echo "DB_PORT=3306" >> .env
+          # echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          # echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          # echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
           # Asignar la propiedad de las carpetas al usuario del servidor web
           echo "Setting permissions..."
@@ -63,10 +63,10 @@ jobs:
 
           # Ejecutar comandos de Artisan para optimizar la aplicación
           echo "Running Artisan commands..."
-          php artisan migrate --force
-          php artisan config:cache
-          php artisan route:cache
-          php artisan view:cache
+          #php artisan migrate --force
+          #php artisan config:cache
+          #php artisan route:cache
+          #php artisan view:cache
 
           echo "Deployment completed successfully."
         EOF

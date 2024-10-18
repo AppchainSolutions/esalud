@@ -29,7 +29,7 @@ jobs:
           echo "Starting deployment..."
           if [ ! -d "/var/www/municb/.git" ]; then
             echo "Cloning repository..."
-            git clone https://github.com/AppchainSolutions/esalud.git /var/www/municb
+            sudo git clone https://github.com/AppchainSolutions/esalud.git /var/www/municb
           else
             echo "Pulling latest changes..."
             cd /var/www/municb

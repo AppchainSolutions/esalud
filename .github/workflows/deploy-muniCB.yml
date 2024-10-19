@@ -22,20 +22,16 @@ jobs:
         run: |
           echo "Testing SSH connection..."
           ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "echo 'SSH connection successful'"
-
       - name: Deploy to server
         run: |
-          REPO_BRANCH="muniCB-deploy"
-          DEPLOY_PATH="/var/www/municb"
-
           ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
             set -e
             echo "Starting deployment..."
-            if [ ! -d "$DEPLOY_PATH/.git" ]; then
+            if [ ! -d "/var/www/municb/.git" ]; then
               echo "Creating directory and cloning repository..."
               sudo mkdir -p "/var/www/municb"
               sudo chown ${{ secrets.REMOTE_USER }}:www-data "/var/www/municb"
-              git clone --single-branch $REPO_BRANCH https://${{ secrets.GH_PAT }}@github.com/AppChainSolutions/esalud.git /var/www/municb
+              git clone --single-branch muniCB-deploy https://${{ secrets.GH_PAT }}@github.com/AppChainSolutions/esalud.git /var/www/municb
             else
               echo "Setting permissions for .git directory..."
               sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.git

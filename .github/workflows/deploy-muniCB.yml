@@ -33,7 +33,7 @@ jobs:
             echo "Starting deployment..."
             if [ ! -d "$DEPLOY_PATH/.git" ]; then
               echo "Creating directory and cloning repository..."
-              sudo mkdir -p $DEPLOY_PATH
+              sudo mkdir -p "/var/www/municb"
               sudo chown ${{ secrets.REMOTE_USER }}:www-data $DEPLOY_PATH
               git clone --single-branch $REPO_BRANCH https://${{ secrets.GH_PAT }}@github.com/AppChainSolutions/esalud.git /var/www/municb
             else

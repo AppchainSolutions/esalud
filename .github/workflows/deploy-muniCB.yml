@@ -60,7 +60,7 @@ jobs:
             sudo find /var/www/municb -type d -exec chmod 755 {} \;
 
             # Asegurarse de que el archivo .env tenga los permisos adecuados
-            sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/municb/.env
+            sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.env
             sudo chmod 664 /var/www/municb/.env
 
       - name: Set environment variables

@@ -63,77 +63,41 @@ jobs:
             sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/municb/.env
             sudo chmod 664 /var/www/municb/municb/.env
 
-      - name: Set environment variables
-        run: |
-            USUARIO_DB="municb_user"
-            CLAVE_DB="clave123"
-            APP_NAME="casablanca/ccm"
-            APP_ENV="production"
-            APP_KEY="base64:yB91h0NIlVel0QLDQnKvdOHpIKqEexzsbv8JUQglzWw="
-            APP_URL="https://vulco.appchain.solutions"
-            DB_CONNECTION="pgsql"
-            DB_HOST="localhost"
-            DB_PORT="5432"
-            DB_DATABASE="municb"
-            DB_USERNAME="municb_user"
-            DB_PASSWORD="40I6jimINanggfopnc0F"
-
-
-            # Establece variables de entorno .ENV
-            echo "Setting environment variables..."
-            echo "APP_NAME=$APP_NAME" > .env
-            echo "APP_ENV=$APP_ENV" >> .env
-            echo "APP_KEY=$APP_KEY" >> .env
-            echo "APP_DEBUG=true" >> .env
-            echo "APP_URL=$APP_URL" >> .env
-            echo "LOG_CHANNEL=stack" >> .env
-            echo "LOG_DEPRECATIONS_CHANNEL=null" >> .env
-            echo "LOG_LEVEL=debug" >> .env
-            echo "DB_CONNECTION=$DB_CONNECTION" >> .env
-            echo "DB_HOST=$DB_HOST" >> .env
-            echo "DB_PORT=$DB_PORT" >> .env
-            echo "DB_DATABASE=$DB_DATABASE" >> .env
-            echo "DB_USERNAME=$DB_USERNAME" >> .env
-            echo "DB_PASSWORD=$DB_PASSWORD" >> .env
-            echo "BROADCAST_DRIVER=log" >> .env
-            echo "CACHE_DRIVER=file" >> .env
-            echo "QUEUE_CONNECTION=sync" >> .env
-            echo "SESSION_DRIVER=file" >> .env
-            echo "SESSION_LIFETIME=120" >> .env
-            echo "MAIL_DRIVER=smtp" >> .env
-            # echo "MAIL_HOST=" >> .env
+            # Instalar dependencias de Composer
+            echo "Installing Composer dependencies..."
+            composer install --no-dev --working-dir=/var/www/municb
 
             # Ejecutar comandos de Artisan para optimizar la aplicación
             echo "Running Artisan commands..."
-            php artisan migrate --force
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
+            php /var/www/municb/artisan migrate --force
+            php /var/www/municb/artisan config:cache
+            php /var/www/municb/artisan route:cache
+            php /var/www/municb/artisan view:cache
 
             echo "Clearing cache and optimizing..."
-            php artisan optimize:clear
-            php artisan optimize
+            php /var/www/municb/artisan optimize:clear
+            php /var/www/municb/artisan optimize
 
             echo "Clearing authentication files..."
-            php artisan auth:clear
+            php /var/www/municb/artisan auth:clear
 
             echo "Clearing temporary files..."
-            rm -rf storage/framework/cache/*
-            rm -rf storage/framework/sessions/*
-            rm -rf storage/framework/views/*
-            rm -rf storage/clockwork/*
+            rm -rf /var/www/municb/storage/framework/cache/*
+            rm -rf /var/www/municb/storage/framework/sessions/*
+            rm -rf /var/www/municb/storage/framework/views/*
+            rm -rf /var/www/municb/storage/clockwork/*
 
             echo "Clearing log files..."
-            rm -rf storage/logs/*
+            rm -rf /var/www/municb/storage/logs/*
 
             echo "Clearing root directory except specific files..."
-            find . -mindepth 1 -maxdepth 1 -not -name 'composer.json' -not -name 'artisan' -not -name '.env' -not -name '.' -not -name '..' -exec rm -rf {} +
+            find /var/www/municb -mindepth 1 -maxdepth 1 -not -name 'composer.json' -not -name 'artisan' -not -name '.env' -not -name '.' -not -name '..' -exec rm -rf {} +
 
             echo "Modifying composer.json to remove development dependencies..."
-            jq 'del(.["autoload-dev"], .["config-dev"], .["dependencies-dev"])' composer.json > composer.tmp.json && mv composer.tmp.json composer.json
+            jq 'del(.["autoload-dev"], .["config-dev"], .["dependencies-dev"])' /var/www/municb/composer.json > /var/www/municb/composer.tmp.json && mv /var/www/municb/composer.tmp.json /var/www/municb/composer.json
 
             echo "Installing production dependencies..."
-            composer install --no-dev
+            composer install --no-dev --working-dir=/var/www/municb
 
             echo "Cleanup complete!"
 

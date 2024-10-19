@@ -64,7 +64,7 @@ jobs:
             sudo chmod 664 /var/www/municb/.env
 
             echo "Modifying composer.json to remove development dependencies..."
-            jq 'del(.["autoload-dev"], .["config-dev"], .["dependencies-dev"])' /var/www/municb/composer.json > /var/www/municb/composer.tmp.json && mv /var/www/municb/composer.tmp.json /var/www/municb/composer.json
+            jq 'del(.["config-dev"], .["require-dev"], .["autoload-dev"])' /var/www/municb/composer.json > /var/www/municb/composer.tmp.json && mv /var/www/municb/composer.tmp.json /var/www/municb/composer.json
 
             # Instalar dependencias de Composer
             echo "Installing Composer production dependencies..."
@@ -86,7 +86,7 @@ jobs:
             echo "DB_HOST=localhost" >> .env
             echo "DB_PORT=5432" >> .env
             echo "DB_DATABASE=municb" >> .env
-            echo "DB_USERNAME=municb" >> .env
+            echo "DB_USERNAME=municb_user" >> .env
             echo "DB_PASSWORD=40I6jimINanggfopnc0F" >> .env
             echo "BROADCAST_DRIVER=log" >> .env
             echo "CACHE_DRIVER=file" >> .env

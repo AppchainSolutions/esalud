@@ -63,8 +63,11 @@ jobs:
             sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.env
             sudo chmod 664 /var/www/municb/.env
 
+            echo "Modifying composer.json to remove development dependencies..."
+            jq 'del(.["autoload-dev"], .["config-dev"], .["dependencies-dev"])' /var/www/municb/composer.json > /var/www/municb/composer.tmp.json && mv /var/www/municb/composer.tmp.json /var/www/municb/composer.json
+
             # Instalar dependencias de Composer
-            echo "Installing Composer dependencies..."
+            echo "Installing Composer production dependencies..."
             composer install --no-dev --working-dir=/var/www/municb
 
             # Ejecutar comandos de Artisan para optimizar la aplicación
@@ -93,13 +96,7 @@ jobs:
             echo "Clearing root directory except specific files..."
             find /var/www/municb -mindepth 1 -maxdepth 1 -not -name 'composer.json' -not -name 'artisan' -not -name '.env' -not -name '.' -not -name '..' -exec rm -rf {} +
 
-            echo "Modifying composer.json to remove development dependencies..."
-            jq 'del(.["autoload-dev"], .["config-dev"], .["dependencies-dev"])' /var/www/municb/composer.json > /var/www/municb/composer.tmp.json && mv /var/www/municb/composer.tmp.json /var/www/municb/composer.json
-
-            echo "Installing production dependencies..."
-            composer install --no-dev --working-dir=/var/www/municb
-
-            echo "Cleanup complete!"
+                        echo "Cleanup complete!"
 
             echo "Deployment completed successfully."
             EOF

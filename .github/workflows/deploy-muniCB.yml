@@ -20,8 +20,8 @@ jobs:
 
       - name: Test SSH connection
         run: |
-           ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} 
-           "echo 'SSH connection successful'"
+          echo "Testing SSH connection..."
+          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "echo 'SSH connection successful'"
 
       - name: Deploy to server
         run: |

@@ -24,14 +24,17 @@ jobs:
 
       - name: Deploy to server
         run: |
+          REPO_BRANCH="muniCB-deploy"
+          DEPLOY_PATH="/var/www/municb"
+
           ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
             set -e
             echo "Starting deployment..."
-            if [ ! -d "/var/www/municb/.git" ]; then
+            if [ ! -d "$DEPLOY_PATH/.git" ]; then
               echo "Creating directory and cloning repository..."
-              sudo mkdir -p /var/www/municb
-              sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb
-              git clone --branch muniCB-deploy git@github.com:AppchainSolutions/esalud.git /var/www/municb
+              sudo mkdir -p $DEPLOY_PATH
+              sudo chown ${{ secrets.REMOTE_USER }}:www-data $DEPLOY_PATH
+              git clone --single-branch $REPO_BRANCH https://${{ secrets.GH_PAT }}@github.com/AppChainSolutions/esalud.git /var/www/municb
             else
               echo "Setting permissions for .git directory..."
               sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.git
@@ -59,23 +62,38 @@ jobs:
             sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/municb/.env
             sudo chmod 664 /var/www/municb/municb/.env
 
+      - name: Set environment variables
+        run: |
+            USUARIO_DB="municb_user"
+            CLAVE_DB="clave123"
+            APP_NAME="casablanca/ccm"
+            APP_ENV="production"
+            APP_KEY="base64:yB91h0NIlVel0QLDQnKvdOHpIKqEexzsbv8JUQglzWw="
+            APP_URL="https://vulco.appchain.solutions"
+            DB_CONNECTION="pgsql"
+            DB_HOST="localhost"
+            DB_PORT="5432"
+            DB_DATABASE="municb"
+            DB_USERNAME="municb_user"
+            DB_PASSWORD="40I6jimINanggfopnc0F"
+
 
             # Establece variables de entorno .ENV
             echo "Setting environment variables..."
-            echo "APP_NAME=Vulco" > .env
-            echo "APP_ENV=production" >> .env
-            echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
+            echo "APP_NAME=$APP_NAME" > .env
+            echo "APP_ENV=$APP_ENV" >> .env
+            echo "APP_KEY=$APP_KEY" >> .env
             echo "APP_DEBUG=true" >> .env
-            echo "APP_URL=https://vulco.appchain.solutions" >> .env
+            echo "APP_URL=$APP_URL" >> .env
             echo "LOG_CHANNEL=stack" >> .env
             echo "LOG_DEPRECATIONS_CHANNEL=null" >> .env
             echo "LOG_LEVEL=debug" >> .env
-            echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> .env
-            echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-            echo "DB_PORT=3306" >> .env
-            echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
-            echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+            echo "DB_CONNECTION=$DB_CONNECTION" >> .env
+            echo "DB_HOST=$DB_HOST" >> .env
+            echo "DB_PORT=$DB_PORT" >> .env
+            echo "DB_DATABASE=$DB_DATABASE" >> .env
+            echo "DB_USERNAME=$DB_USERNAME" >> .env
+            echo "DB_PASSWORD=$DB_PASSWORD" >> .env
             echo "BROADCAST_DRIVER=log" >> .env
             echo "CACHE_DRIVER=file" >> .env
             echo "QUEUE_CONNECTION=sync" >> .env
@@ -119,4 +137,4 @@ jobs:
             echo "Cleanup complete!"
 
             echo "Deployment completed successfully."
-          EOF
+            EOF

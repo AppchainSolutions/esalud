@@ -70,6 +70,30 @@ jobs:
             echo "Installing Composer production dependencies..."
             composer install --no-dev --working-dir=/var/www/municb
 
+      - name: Set environment variables
+        run: |
+            # Establece variables de entorno .ENV
+            echo "Setting environment variables..."
+            echo "APP_NAME=municipalidad/casablanca" > .env
+            echo "APP_ENV=production" >> .env
+            echo "APP_KEY=base64:yB91h0NIlVel0QLDQnKvdOHpIKqEexzsbv8JUQglzWw=" >> .env
+            echo "APP_DEBUG=true" >> .env
+            echo "APP_URL=https://vulco.appchain.solutions" >> .env
+            echo "LOG_CHANNEL=stack" >> .env
+            echo "LOG_DEPRECATIONS_CHANNEL=null" >> .env
+            echo "LOG_LEVEL=debug" >> .env
+            echo "DB_CONNECTION=pgsql" >> .env
+            echo "DB_HOST=localhost" >> .env
+            echo "DB_PORT=5432" >> .env
+            echo "DB_DATABASE=municb" >> .env
+            echo "DB_USERNAME=municb" >> .env
+            echo "DB_PASSWORD=40I6jimINanggfopnc0F" >> .env
+            echo "BROADCAST_DRIVER=log" >> .env
+            echo "CACHE_DRIVER=file" >> .env
+            echo "QUEUE_CONNECTION=sync" >> .env
+            echo "SESSION_DRIVER=file" >> .env
+            echo "SESSION_LIFETIME=120" >> .env
+
             # Ejecutar comandos de Artisan para optimizar la aplicación
             echo "Running Artisan commands..."
             php /var/www/municb/artisan migrate --force

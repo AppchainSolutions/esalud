@@ -81,11 +81,35 @@ jobs:
             
             echo "Clearing authentication files..."
             php /var/www/municb/artisan auth:clear
-                       
-            echo "Cleanup complete!"
-            
-            du -h --max-depth=1
 
-            echo "Deployment completed successfully."
+            rm -rf cypress
+            rm -rf tests
+            rm -rf public/vendor
+            rm -rf tests
+            rm -rf resources/css
+            rm -rf resources/js
+            rm -rf resources/img
+            rm .codiumai.toml
+            rm .editorconfig
+            rm access_token.txt
+            rm appchain.github-issues
+            rm babel.config.cjs
+            rm composer-setup.php
+            rm cypress.config.js
+            rm infection.json
+            rm jsconfig.json
+            rm stryker.config.mjs
+            rm package.json
+            rm phpunit.xml
+            rm postcss.config.cjs
+            rm rebel.xml
+            rm tailwind.config.js
+            rm vite.config.js
             
+            
+            
+            
+            echo "Cleanup complete!"
+            du -h --max-depth=1
+            echo "Deployment completed successfully."
             EOF

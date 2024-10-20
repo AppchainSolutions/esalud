@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -32,7 +32,8 @@ jobs:
               sudo mkdir -p "/var/www/municb"
               sudo chown ${{ secrets.REMOTE_USER }}:www-data "/var/www/municb"
               # git clone --single-branch --branch muniCB-deploy git@github.com:AppchainSolutions/esalud.git /var/www/municb
-              git clone -b muniCB-deploy git@github.com:AppchainSolutions/esalud.git /var/www/municb
+              # git clone -b muniCB-deploy git@github.com:AppchainSolutions/esalud.git /var/www/municb
+              git clone -b muniCB-deploy https://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@github.com/AppChainSolutions/esalud.git $REPO_DIR
                 else
               echo "Setting permissions for .git directory..."
               sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.git
@@ -41,44 +42,31 @@ jobs:
               git pull origin muniCB-deploy
             fi
             cd /var/www/municb
+
+            echo "Setting environment variables..."
+            cp .env.deploy .env
+
             # Asignar la propiedad de las carpetas al usuario del servidor web
             sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb
+            
             # Asignar permisos de lectura y escritura a las carpetas necesarias
             sudo chmod -R 775 /var/www/municb/storage
             sudo chmod -R 775 /var/www/municb/bootstrap/cache
+            
             # Asegurarse de que los archivos tengan los permisos adecuados
             sudo find /var/www/municb/ -type f -exec chmod 644 {} \;
+            
             # Asegurarse de que las carpetas tengan los permisos adecuados
             sudo find /var/www/municb -type d -exec chmod 755 {} \;
+            
             # Asegurarse de que el archivo .env tenga los permisos adecuados
             sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.env
             sudo chmod 664 /var/www/municb/.env
-            echo "Modifying composer.json to remove development dependencies..."
-            jq 'del(.["config-dev"], .["require-dev"], .["autoload-dev"])' /var/www/municb/composer.json > /var/www/municb/composer.tmp.json && mv /var/www/municb/composer.tmp.json /var/www/municb/composer.json
+            
             # Instalar dependencias de Composer
             echo "Installing Composer production dependencies..."
             composer install --no-dev --working-dir=/var/www/municb
-            # Establece variables de entorno .ENV
-            echo "APP_NAME=municipalidad/casablanca" > .env
-            echo "APP_DEBUG=true" >> .env
-            echo "APP_ENV=production" >> .env
-            echo "APP_KEY=base64:yB91h0NIlVel0QLDQnKvdOHpIKqEexzsbv8JUQglzWw=" >> .env
-            echo "APP_URL=https://municb.appchain.solutions" >> .env
-            echo "BROADCAST_DRIVER=log" >> .env
-            echo "CACHE_DRIVER=file" >> .env
-            echo "DB_CONNECTION=pgsql" >> .env
-            echo "DB_DATABASE=municb" >> .env
-            echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-            echo "DB_PASSWORD=40I6jimINanggfopnc0F" >> .env
-            echo "DB_PORT=5432" >> .env
-            echo "DB_USERNAME=municb_user" >> .env
-            echo "LOG_CHANNEL=stack" >> .env
-            echo "LOG_DEPRECATIONS_CHANNEL=null" >> .env
-            echo "LOG_LEVEL=debug" >> .env
-            echo "QUEUE_CONNECTION=sync" >> .env
-            echo "SESSION_DRIVER=database" >> .env
-            echo "SESSION_LIFETIME=120" >> .env
-            echo "Setting environment variables..."
+            
             # Ejecutar comandos de Artisan para optimizar la aplicación
             echo "Running Artisan commands..."
             php /var/www/municb/artisan config:cache
@@ -86,21 +74,28 @@ jobs:
             php /var/www/municb/artisan view:cache
             
             # echo "Running migrations"
-            #php /var/www/municb/artisan migrate --force
+            # php /var/www/municb/artisan migrate --force
+            
             echo "Clearing cache and optimizing..."
             php /var/www/municb/artisan optimize:clear
             php /var/www/municb/artisan optimize
+            
             echo "Clearing authentication files..."
             php /var/www/municb/artisan auth:clear
+            
             echo "Clearing temporary files..."
             rm -rf /var/www/municb/storage/framework/cache/*
             rm -rf /var/www/municb/storage/framework/sessions/*
             rm -rf /var/www/municb/storage/framework/views/*
             rm -rf /var/www/municb/storage/clockwork/*
+            
             echo "Clearing log files..."
             rm -rf /var/www/municb/storage/logs/*
-            echo "Clearing root directory except specific files..."
-            find /var/www/municb -mindepth 1 -maxdepth 1 -not -name 'composer.json' -not -name 'artisan' -not -name '.env' -not -name '.' -not -name '..' -exec rm -rf {} +
-                        echo "Cleanup complete!"
+            
+            echo "Cleanup complete!"
+            
+            du -h --max-depth=1
+
             echo "Deployment completed successfully."
+            
             EOF

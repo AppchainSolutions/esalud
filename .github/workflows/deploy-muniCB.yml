@@ -32,13 +32,7 @@ jobs:
               sudo mkdir -p "/var/www/municb"
               sudo chown ${{ secrets.REMOTE_USER }}:www-data "/var/www/municb"
               git clone -b muniCB-deploy https://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@github.com/AppChainSolutions/esalud.git "/var/www/municb"
-                else
-              echo "Setting permissions for .git directory..."
-              sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.git
-              echo "Pulling latest changes..."
-              cd /var/www/municb
-              git pull origin muniCB-deploy
-            fi
+                
             cd /var/www/municb
 
             echo "Setting environment variables..."
@@ -156,3 +150,10 @@ jobs:
             du -h --max-depth=1
             echo "Deployment completed successfully."
             
+            else
+              echo "Pulling latest changes..."
+              cd /var/www/municb
+              git pull origin muniCB-deploy
+              du -h --max-depth=1
+            echo "Deployment completed successfully."
+            fi

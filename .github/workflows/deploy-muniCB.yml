@@ -33,6 +33,7 @@ jobs:
               sudo chown ${{ secrets.REMOTE_USER }}:www-data "/var/www/municb"
               git clone -b muniCB-deploy https://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@github.com/AppChainSolutions/esalud.git "/var/www/municb"
                 
+                
             cd /var/www/municb
 
             echo "Setting environment variables..."
@@ -120,4 +121,4 @@ jobs:
             echo "Cleanup complete!"
             du -h --max-depth=1
             echo "Deployment completed successfully."
-            EOF
+            

@@ -31,8 +31,9 @@ jobs:
               echo "Creating directory and cloning repository..."
               sudo mkdir -p "/var/www/municb"
               sudo chown ${{ secrets.REMOTE_USER }}:www-data "/var/www/municb"
-              git clone --single-branch --branch muniCB-deploy git@github.com:AppchainSolutions/esalud.git /var/www/municb
-              else
+              # git clone --single-branch --branch muniCB-deploy git@github.com:AppchainSolutions/esalud.git /var/www/municb
+              git clone -b muniCB-deploy git@github.com:AppchainSolutions/esalud.git /var/www/municb
+                else
               echo "Setting permissions for .git directory..."
               sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.git
               echo "Pulling latest changes..."

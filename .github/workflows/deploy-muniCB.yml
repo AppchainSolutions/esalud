@@ -74,8 +74,8 @@ jobs:
             php /var/www/municb/artisan view:cache
             
             # echo "Running migrations"
-            # php /var/www/municb/artisan migrate --force
-            
+            #php /var/www/municb/artisan migrate --force
+
             echo "Clearing cache and optimizing..."
             php /var/www/municb/artisan optimize:clear
             php /var/www/municb/artisan optimize

@@ -1,13 +1,21 @@
 # Laravel specific
 /vendor
 /node_modules
-/public/storage
 /storage/*.key
 .env.dev
 .env.deploy
 Homestead.yaml
 Homestead.json
 /.vagrant
+/storage/logs/laravel.log
+storage/clockwork
+/public/hot
+package-lock.json
+database/database.db
+/tests
+/cypress
+/database/factories
+/database/seeders
 
 # IDE specific
 /.idea
@@ -25,7 +33,8 @@ yarn-error.log
 /public
 /bootstrap/ssr/*
 
-storage/logs/laravel.log
-/public/hot
-package-lock.json
-database/database.db
+# vuejs3 soecific
+resources/js
+resources/cypress
+resources/img
+resources/css

@@ -33,98 +33,98 @@ jobs:
               sudo chown ${{ secrets.REMOTE_USER }}:www-data "/var/www/municb"
               git clone -b muniCB-deploy https://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@github.com/AppChainSolutions/esalud.git "/var/www/municb"
                 
-            cd /var/www/municb
+              cd /var/www/municb
 
-            echo "Setting environment variables..."
-            rm .env
-            cp .env.deploy .env
+              echo "Setting environment variables..."
+              rm .env
+              cp .env.deploy .env
 
-            # Asignar la propiedad de las carpetas al usuario del servidor web
-            sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb
-            
-            # Asignar permisos de lectura y escritura a las carpetas necesarias
-            sudo chmod -R 775 /var/www/municb/storage
-            sudo chmod -R 775 /var/www/municb/bootstrap/cache
-            
-            # Asegurarse de que los archivos tengan los permisos adecuados
-            sudo find /var/www/municb/ -type f -exec chmod 644 {} \;
-            
-            # Asegurarse de que las carpetas tengan los permisos adecuados
-            sudo find /var/www/municb -type d -exec chmod 755 {} \;
-            
-            # Asegurarse de que el archivo .env tenga los permisos adecuados
-            sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.env
-            sudo chmod 664 /var/www/municb/.env
-            
-            # Instalar dependencias de Composer
-            echo "Installing Composer production dependencies..."
-            composer install --no-dev --working-dir=/var/www/municb
-                
-            # Ejecutar comandos de Artisan para optimizar la aplicación
-            echo "Running Artisan commands..."
-            php /var/www/municb/artisan config:cache
-            php /var/www/municb/artisan route:cache
-            php /var/www/municb/artisan view:cache
-            
-            # echo "Running migrations"
-            # php /var/www/municb/artisan migrate --force
-            
-            echo "Clearing cache and optimizing..."
-            php /var/www/municb/artisan optimize:clear
-            php /var/www/municb/artisan optimize
-            
-            echo "Clearing authentication files..."
-            php /var/www/municb/artisan auth:clear
+              # Asignar la propiedad de las carpetas al usuario del servidor web
+              sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb
+              
+              # Asignar permisos de lectura y escritura a las carpetas necesarias
+              sudo chmod -R 775 /var/www/municb/storage
+              sudo chmod -R 775 /var/www/municb/bootstrap/cache
+              
+              # Asegurarse de que los archivos tengan los permisos adecuados
+              sudo find /var/www/municb/ -type f -exec chmod 644 {} \;
+              
+              # Asegurarse de que las carpetas tengan los permisos adecuados
+              sudo find /var/www/municb -type d -exec chmod 755 {} \;
+              
+              # Asegurarse de que el archivo .env tenga los permisos adecuados
+              sudo chown ${{ secrets.REMOTE_USER }}:www-data /var/www/municb/.env
+              sudo chmod 664 /var/www/municb/.env
+              
+              # Instalar dependencias de Composer
+              echo "Installing Composer production dependencies..."
+              composer install --no-dev --working-dir=/var/www/municb
+                  
+              # Ejecutar comandos de Artisan para optimizar la aplicación
+              echo "Running Artisan commands..."
+              php /var/www/municb/artisan config:cache
+              php /var/www/municb/artisan route:cache
+              php /var/www/municb/artisan view:cache
+              
+              # echo "Running migrations"
+              # php /var/www/municb/artisan migrate --force
+              
+              echo "Clearing cache and optimizing..."
+              php /var/www/municb/artisan optimize:clear
+              php /var/www/municb/artisan optimize
+              
+              echo "Clearing authentication files..."
+              php /var/www/municb/artisan auth:clear
 
-            # Check and remove directories if they exist
-            # Array of directories to check and remove
-            directories=("cypress" "tests" "public/vendor" "resources/css" "resources/js" "resources/img")
+              # Check and remove directories if they exist
+              # Array of directories to check and remove
+              directories=("cypress" "tests" "public/vendor" "resources/css" "resources/js" "resources/img")
 
-            # Loop through each directory
-            for dir in "${directories[@]}"; do
-                if [ -d "$dir" ]; then
-                    rm -rf "$dir"
-                    echo "Removed directory: $dir"
-                fi
-            done
+              # Loop through each directory
+              for dir in "${directories[@]}"; do
+                  if [ -d "$dir" ]; then
+                      rm -rf "$dir"
+                      echo "Removed directory: $dir"
+                  fi
+              done
 
-            # Check and remove files if they exist
-            # Array of files to check and remove
-            files=(
-                ".codiumai.toml"
-                ".editorconfig"
-                "access_token.txt"
-                "appchain.github-issues"
-                "babel.config.cjs"
-                "composer-setup.php"
-                "cypress.config.js"
-                "infection.json"
-                "jsconfig.json"
-                "stryker.config.mjs"
-                "package.json"
-                "phpunit.xml"
-                "postcss.config.cjs"
-                "rebel.xml"
-                "tailwind.config.js"
-                "vite.config.js"
-            )
+              # Check and remove files if they exist
+              # Array of files to check and remove
+              files=(
+                  ".codiumai.toml"
+                  ".editorconfig"
+                  "access_token.txt"
+                  "appchain.github-issues"
+                  "babel.config.cjs"
+                  "composer-setup.php"
+                  "cypress.config.js"
+                  "infection.json"
+                  "jsconfig.json"
+                  "stryker.config.mjs"
+                  "package.json"
+                  "phpunit.xml"
+                  "postcss.config.cjs"
+                  "rebel.xml"
+                  "tailwind.config.js"
+                  "vite.config.js"
+              )
 
-            # Loop through each file
-            for file in "${files[@]}"; do
-                if [ -f "$file" ]; then
-                    rm "$file"
-                    echo "Removed file: $file"
-                fi
-            done
-            
-            echo "Cleanup complete!"
-            du -h --max-depth=1
-            echo "Deployment completed successfully."
-            
+              # Loop through each file
+              for file in "${files[@]}"; do
+                  if [ -f "$file" ]; then
+                      rm "$file"
+                      echo "Removed file: $file"
+                  fi
+              done
+              
+              echo "Cleanup complete!"
+              du -h --max-depth=1
+              echo "Deployment completed successfully."
+              
             else
               echo "Pulling latest changes..."
               cd /var/www/municb
               git pull origin muniCB-deploy
               du -h --max-depth=1
-            echo "Deployment completed successfully."
+              echo "Deployment completed successfully."
             fi

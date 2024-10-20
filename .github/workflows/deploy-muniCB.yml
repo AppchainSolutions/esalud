@@ -82,11 +82,7 @@ jobs:
             echo "Clearing authentication files..."
             php /var/www/municb/artisan auth:clear
             
-            echo "Clearing temporary files..."
-            rm -rf /var/www/municb/storage/framework/cache/*
-            rm -rf /var/www/municb/storage/framework/sessions/*
-            rm -rf /var/www/municb/storage/framework/views/*
-            rm -rf /var/www/municb/storage/clockwork/*
+            
             
             echo "Clearing log files..."
             rm -rf /var/www/municb/storage/logs/*

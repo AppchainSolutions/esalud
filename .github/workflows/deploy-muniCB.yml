@@ -42,7 +42,8 @@ jobs:
             cd /var/www/municb
 
             echo "Setting environment variables..."
-            # cp .env.deploy .env
+            rm .env
+            cp .env.deploy .env
 
             # Asignar la propiedad de las carpetas al usuario del servidor web
             sudo chown -R ${{ secrets.REMOTE_USER }}:www-data /var/www/municb

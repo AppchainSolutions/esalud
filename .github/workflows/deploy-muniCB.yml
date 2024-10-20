@@ -82,29 +82,75 @@ jobs:
             echo "Clearing authentication files..."
             php /var/www/municb/artisan auth:clear
 
-            rm -rf cypress
-            rm -rf tests
-            rm -rf public/vendor
-            rm -rf tests
-            rm -rf resources/css
-            rm -rf resources/js
-            rm -rf resources/img
-            rm .codiumai.toml
-            rm .editorconfig
-            rm access_token.txt
-            rm appchain.github-issues
-            rm babel.config.cjs
-            rm composer-setup.php
-            rm cypress.config.js
-            rm infection.json
-            rm jsconfig.json
-            rm stryker.config.mjs
-            rm package.json
-            rm phpunit.xml
-            rm postcss.config.cjs
-            rm rebel.xml
-            rm tailwind.config.js
-            rm vite.config.js
+            # Check and remove directories if they exist
+            if [ -d "cypress" ]; then
+              rm -rf cypress
+            fi
+            if [ -d "tests" ]; then
+              rm -rf tests
+            fi
+            if [ -d "public/vendor" ]; then
+              rm -rf public/vendor
+            fi
+            if [ -d "resources/css" ]; then
+              rm -rf resources/css
+            fi
+            if [ -d "resources/js" ]; then
+              rm -rf resources/js
+            fi
+            if [ -d "resources/img" ]; then
+              rm -rf resources/img
+            fi
+
+            # Check and remove files if they exist
+            if [ -f ".codiumai.toml" ]; then
+              rm .codiumai.toml
+            fi
+            if [ -f ".editorconfig" ]; then
+              rm .editorconfig
+            fi
+            if [ -f "access_token.txt" ]; then
+              rm access_token.txt
+            fi
+            if [ -f "appchain.github-issues" ]; then
+              rm appchain.github-issues
+            fi
+            if [ -f "babel.config.cjs" ]; then
+              rm babel.config.cjs
+            fi
+            if [ -f "composer-setup.php" ]; then
+              rm composer-setup.php
+            fi
+            if [ -f "cypress.config.js" ]; then
+              rm cypress.config.js
+            fi
+            if [ -f "infection.json" ]; then
+              rm infection.json
+            fi
+            if [ -f "jsconfig.json" ]; then
+              rm jsconfig.json
+            fi
+            if [ -f "stryker.config.mjs" ]; then
+              rm stryker.config.mjs
+            fi
+            if [ -f "package.json" ]; then
+              rm package.json
+            fi
+            if [ -f "phpunit.xml" ]; then
+              rm phpunit.xml
+            fi
+            if [ -f "postcss.config.cjs" ]; then
+              rm postcss.config.cjs
+            fi
+            if [ -f "rebel.xml" ]; then
+              rm rebel.xml
+            fi
+            if [ -f "tailwind.config.js" ]; then
+              rm tailwind.config.js
+            fi
+            if [ -f "vite.config.js" ]; then
+              rm vite.config.js
+            fi
             
             echo "Cleanup complete!"
             du -h --max-depth=1

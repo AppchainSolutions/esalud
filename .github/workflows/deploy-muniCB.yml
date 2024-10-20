@@ -106,10 +106,7 @@ jobs:
             rm tailwind.config.js
             rm vite.config.js
             
-            
-            
-            
             echo "Cleanup complete!"
             du -h --max-depth=1
             echo "Deployment completed successfully."
-            EOF
+            

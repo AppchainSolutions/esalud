@@ -90,10 +90,12 @@ jobs:
 
             # Ejecutar comandos de Artisan para optimizar la aplicación
             echo "Running Artisan commands..."
-            php /var/www/municb/artisan migrate --force
             php /var/www/municb/artisan config:cache
             php /var/www/municb/artisan route:cache
             php /var/www/municb/artisan view:cache
+            
+            # echo "Running migrations"
+            #php /var/www/municb/artisan migrate --force
 
             echo "Clearing cache and optimizing..."
             php /var/www/municb/artisan optimize:clear

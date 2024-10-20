@@ -77,74 +77,45 @@ jobs:
             php /var/www/municb/artisan auth:clear
 
             # Check and remove directories if they exist
-            if [ -d "cypress" ]; then
-              rm -rf cypress
-            fi
-            if [ -d "tests" ]; then
-              rm -rf tests
-            fi
-            if [ -d "public/vendor" ]; then
-              rm -rf public/vendor
-            fi
-            if [ -d "resources/css" ]; then
-              rm -rf resources/css
-            fi
-            if [ -d "resources/js" ]; then
-              rm -rf resources/js
-            fi
-            if [ -d "resources/img" ]; then
-              rm -rf resources/img
-            fi
+            # Array of directories to check and remove
+            directories=("cypress" "tests" "public/vendor" "resources/css" "resources/js" "resources/img")
+
+            # Loop through each directory
+            for dir in "${directories[@]}"; do
+                if [ -d "$dir" ]; then
+                    rm -rf "$dir"
+                    echo "Removed directory: $dir"
+                fi
+            done
 
             # Check and remove files if they exist
-            if [ -f ".codiumai.toml" ]; then
-              rm .codiumai.toml
-            fi
-            if [ -f ".editorconfig" ]; then
-              rm .editorconfig
-            fi
-            if [ -f "access_token.txt" ]; then
-              rm access_token.txt
-            fi
-            if [ -f "appchain.github-issues" ]; then
-              rm appchain.github-issues
-            fi
-            if [ -f "babel.config.cjs" ]; then
-              rm babel.config.cjs
-            fi
-            if [ -f "composer-setup.php" ]; then
-              rm composer-setup.php
-            fi
-            if [ -f "cypress.config.js" ]; then
-              rm cypress.config.js
-            fi
-            if [ -f "infection.json" ]; then
-              rm infection.json
-            fi
-            if [ -f "jsconfig.json" ]; then
-              rm jsconfig.json
-            fi
-            if [ -f "stryker.config.mjs" ]; then
-              rm stryker.config.mjs
-            fi
-            if [ -f "package.json" ]; then
-              rm package.json
-            fi
-            if [ -f "phpunit.xml" ]; then
-              rm phpunit.xml
-            fi
-            if [ -f "postcss.config.cjs" ]; then
-              rm postcss.config.cjs
-            fi
-            if [ -f "rebel.xml" ]; then
-              rm rebel.xml
-            fi
-            if [ -f "tailwind.config.js" ]; then
-              rm tailwind.config.js
-            fi
-            if [ -f "vite.config.js" ]; then
-              rm vite.config.js
-            fi
+            # Array of files to check and remove
+            files=(
+                ".codiumai.toml"
+                ".editorconfig"
+                "access_token.txt"
+                "appchain.github-issues"
+                "babel.config.cjs"
+                "composer-setup.php"
+                "cypress.config.js"
+                "infection.json"
+                "jsconfig.json"
+                "stryker.config.mjs"
+                "package.json"
+                "phpunit.xml"
+                "postcss.config.cjs"
+                "rebel.xml"
+                "tailwind.config.js"
+                "vite.config.js"
+            )
+
+            # Loop through each file
+            for file in "${files[@]}"; do
+                if [ -f "$file" ]; then
+                    rm "$file"
+                    echo "Removed file: $file"
+                fi
+            done
             
             echo "Cleanup complete!"
             du -h --max-depth=1

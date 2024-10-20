@@ -7,8 +7,9 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 /storage/logs/laravel.log
-storage/clockwork
+/storage/clockwork
 /public/hot
+/public/vendor
 package-lock.json
 database/database.db
 /tests
@@ -28,12 +29,28 @@ Thumbs.db
 npm-debug.log
 yarn-error.log
 
-# Compiled assets
-/public
-/bootstrap/ssr/*
-
 # vuejs3 soecific
 resources/js
 resources/cypress
 resources/img
 resources/css
+
+.codiumai.toml
+.editorconfig
+access_token.txt
+appchain.github-issues
+babel.config.cjs
+composer-setup.php
+cypress.config.js
+infection.json
+jsconfig.json
+stryker.config.mjs
+package.json
+phpunit.xml
+postcss.config.cjs
+rebel.xml
+tailwind.config.js
+vite.config.js
+composer.lock
+src
+.phpunit.cache

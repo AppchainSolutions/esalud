@@ -120,11 +120,4 @@ jobs:
             echo "Cleanup complete!"
             du -h --max-depth=1
             echo "Deployment completed successfully."
-            
-            else
-              echo "Pulling latest changes..."
-              cd /var/www/municb
-              git pull origin muniCB-deploy
-              du -h --max-depth=1
-            echo "Deployment completed successfully."
-            fi
+            EOF

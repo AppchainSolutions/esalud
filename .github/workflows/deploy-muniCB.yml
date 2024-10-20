@@ -58,27 +58,12 @@ jobs:
             # Instalar dependencias de Composer
             echo "Installing Composer production dependencies..."
             composer install --no-dev --working-dir=/var/www/municb
-            # Establece variables de entorno .ENV
-            echo "APP_NAME=municipalidad/casablanca" > .env
-            echo "APP_DEBUG=true" >> .env
-            echo "APP_ENV=production" >> .env
-            echo "APP_KEY=base64:yB91h0NIlVel0QLDQnKvdOHpIKqEexzsbv8JUQglzWw=" >> .env
-            echo "APP_URL=https://municb.appchain.solutions" >> .env
-            echo "BROADCAST_DRIVER=log" >> .env
-            echo "CACHE_DRIVER=file" >> .env
-            echo "DB_CONNECTION=pgsql" >> .env
-            echo "DB_DATABASE=municb" >> .env
-            echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-            echo "DB_PASSWORD=40I6jimINanggfopnc0F" >> .env
-            echo "DB_PORT=5432" >> .env
-            echo "DB_USERNAME=municb_user" >> .env
-            echo "LOG_CHANNEL=stack" >> .env
-            echo "LOG_DEPRECATIONS_CHANNEL=null" >> .env
-            echo "LOG_LEVEL=debug" >> .env
-            echo "QUEUE_CONNECTION=sync" >> .env
-            echo "SESSION_DRIVER=database" >> .env
-            echo "SESSION_LIFETIME=120" >> .env
+            
+            # Ejecutar comandos de entorno
             echo "Setting environment variables..."
+            rm .env
+            mv .env.deploy .env
+          
             # Ejecutar comandos de Artisan para optimizar la aplicación
             echo "Running Artisan commands..."
             php /var/www/municb/artisan config:cache

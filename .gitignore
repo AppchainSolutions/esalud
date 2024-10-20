@@ -3,11 +3,11 @@
 /node_modules
 /public/storage
 /storage/*.key
-.env
+.env.dev
+.env.deploy
 Homestead.yaml
 Homestead.json
 /.vagrant
-
 
 # IDE specific
 /.idea

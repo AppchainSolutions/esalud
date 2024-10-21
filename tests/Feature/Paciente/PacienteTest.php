@@ -6,37 +6,32 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Mockery;
 
-
-use App\Models\Afp;
 use App\Models\Calles;
-use App\Models\EstablecimientoEducacional;
-use App\Models\EstadoCivil;
-use App\Models\Genero;
-use App\Models\GrupoSanguineo;
-use App\Models\Nacionalidad;
-use App\Models\NivelInstruccion;
-use App\Models\Modalidad;
-use App\Models\LeySocial;
-use App\Models\Paciente;
-use App\Models\Prevision;
-use App\Models\PuebloOriginario;
-use App\Models\Religion;
-use App\Models\SeguroSalud;
+use App\Models\EstablecimientosEducacionales;
+use App\Models\EstadosCiviles;
+use App\Models\Generos;
+use App\Models\GruposSanguineos;
+use App\Models\Nacionalidades;
+use App\Models\NivelesInstruccion;
+use App\Models\Pacientes;
+use App\Models\Previsiones;
+use App\Models\PueblosOriginarios;
+use App\Models\Religiones;
 
 uses(RefreshDatabase::class);
-/* 
+ 
 it('can create a paciente', function () {
-    
-    $pacienteData = Paciente::factory()->make()->toArray();
+
+    $pacienteData = Pacientes::factory()->make()->toArray();
      $response = $this->post('/pacientes', $pacienteData);
 
     $response->assertStatus(201);
     $this->assertDatabaseHas('pacientes', $pacienteData); 
 });
- */ 
+
 
 it('can read a paciente', function () {
-    $paciente = Paciente::factory()->create();
+    $paciente = Pacientes::factory()->create();
 
     $response = $this->get('/paciente/' . $paciente->id);
 
@@ -45,8 +40,8 @@ it('can read a paciente', function () {
 });
 
 it('can update a paciente', function () {
-    $paciente = Paciente::factory()->create();
-    $updatedData = Paciente::factory()->make()->toArray();
+    $paciente = Pacientes::factory()->create();
+    $updatedData = Pacientes::factory()->make()->toArray();
 
     $response = $this->put('/pacientes/' . $paciente->id, $updatedData);
 
@@ -55,7 +50,7 @@ it('can update a paciente', function () {
 });
 
 it('can delete a paciente', function () {
-    $paciente = Paciente::factory()->create();
+    $paciente = Pacientes::factory()->create();
 
     $response = $this->delete('/pacientes/' . $paciente->id);
 
@@ -63,23 +58,22 @@ it('can delete a paciente', function () {
     $this->assertDatabaseMissing('pacientes', ['id' => $paciente->id]);
 });
 
-it('Paciente with relationshions', function () {
-   // $afp = Afp::factory()->create();
-    $Calles = Calless::factory()->create();
-    $establecimientoEducacional = EstablecimientoEducacional::factory()->create();
-    $leySocial = LeySocial::factory()->create();
-    $nacionalidad = Nacionalidad::factory()->create();
-    $nivelInstruccion = NivelInstruccion::factory()->create();
-    $prevision = Prevision::factory()->create();
-    $puebloOriginario = PuebloOriginario::factory()->create();
-    $religion = Religion::factory()->create();
-    $seguro = SeguroSalud::factory()->create();
+it('Pacientes with relationshions', function () {
+    $calle = Calles::factory()->create();
+    $establecimientoEducacional = EstablecimientosEducacionales::factory()->create();
+    $estadoCivil = EstadosCiviles::factory()->create();
+    $nacionalidad = Nacionalidades::factory()->create();
+    $nivelInstruccion = NivelesInstruccion::factory()->create();
+    $prevision = Previsiones::factory()->create();
+    $puebloOriginario = PueblosOriginarios::factory()->create();
+    $religion = Religiones::factory()->create();
 
     // Crear un paciente usando el factory
-    $paciente = Paciente::factory()->create(['apellido_responsable' => 'Juanita',
+    $paciente = Pacientes::factory()->create([
+        'apellidos_responsable' => 'Juanita',
         'apellidos' => 'Perez',
-        'Calles_id' => Calles::inRandomOrder()->first()->id,
-        'Calles_responsable_id' => Calles::inRandomOrder()->first()->id,
+        'calle_id' => Calles::inRandomOrder()->first()->id,
+        'calle_responsable_id' => Calles::inRandomOrder()->first()->id,
         'ciudad_responsable' => 'Linares',
         'ciudad' => 'Kemmershire',
         'comunidad_lgbtq' => true,
@@ -94,31 +88,32 @@ it('Paciente with relationshions', function () {
         'edad' => 18,
         'email_responsable' => ' innorio@falesa.com',
         'email' => 'juan.perez@example.com',
-        'establecimiento_educacional_id' => EstablecimientoEducacional::factory()->create()->id,
-        'estado_civil_id' => EstadoCivil::inRandomOrder()->first()->id,
-        'estado_civil_responsable_id' => EstadoCivil::inRandomOrder()->first()->id,
+        'establecimiento_educacional_id' => EstablecimientosEducacionales::factory()->create()->id,
+        'estado_civil_id' => EstadosCiviles::inRandomOrder()->first()->id,
+        'estado_civil_responsable_id' => EstadosCiviles::inRandomOrder()->first()->id,
         'fecha_nacimiento_responsable' => '1970-01-01',
         'fecha_nacimiento' => '2011-07-19',
-        'genero_id' => Genero::inRandomOrder()->first()->id,
-        'genero_responsable_id' => Genero::inRandomOrder()->first()->id,
-        'grupo_sanguineo_id'  => GrupoSanguineo::inRandomOrder()->first()->id,
-        'grupo_sanguineo_responsable_id' => GrupoSanguineo::inRandomOrder()->first()->id,
-        'nacionalidad_id' => Nacionalidad::inRandomOrder()->first()->id,
-        'nacionalidad_responsable_id' => Nacionalidad::inRandomOrder()->first()->id,
-        'nivel_instruccion_id' => NivelInstruccion::inRandomOrder()->first()->id,
-        'nivel_instruccion_responsable_id' => NivelInstruccion::inRandomOrder()->first()->id,
+        'genero_id' => Generos::inRandomOrder()->first()->id,
+        'genero_responsable_id' => Generos::inRandomOrder()->first()->id,
+        'grupo_sanguineo_id'  => GruposSanguineos::inRandomOrder()->first()->id,
+        'grupo_sanguineo_responsable_id' => GruposSanguineos::inRandomOrder()->first()->id,
+        'nacionalidad_id' => Nacionalidades::inRandomOrder()->first()->id,
+        'nacionalidad_responsable_id' => Nacionalidades::inRandomOrder()->first()->id,
+        'nivel_instruccion_id' => NivelesInstruccion::inRandomOrder()->first()->id,
+        'nivel_instruccion_responsable_id' => NivelesInstruccion::inRandomOrder()->first()->id,
         'nombre_responsable' => 'Juanita',
         'nombre' => 'Juan',
         'ocupacion_responsable' => 'Cuidadora',
         'ocupacion' => 'Title Searcher',
         'parentesco_responsable' => "Abuela",
         'pertenece_pie' => false,
-        'prevision_id' => Prevision::inRandomOrder()->first()->id,
-        'prevision_responsable_id' => Prevision::inRandomOrder()->first()->id,
-        'pueblo_originario_id' => PuebloOriginario::inRandomOrder()->first()->id,
-        'pueblo_originario_responsable_id' => PuebloOriginario::inRandomOrder()->first()->id,
-        'religion_id' => Religion::inRandomOrder()->first()->id,
-        'religion_responsable_id' => Religion::inRandomOrder()->first()->id,
+        'prevision_id' => Previsiones::inRandomOrder()->first()->id,
+        'prevision_responsable_id' => Previsiones::inRandomOrder()->first()->id,
+        'profesor' => 'Lilian Garcia',
+        'pueblo_originario_id' => PueblosOriginarios::inRandomOrder()->first()->id,
+        'pueblo_originario_responsable_id' => PueblosOriginarios::inRandomOrder()->first()->id,
+        'religion_id' => Religiones::inRandomOrder()->first()->id,
+        'religion_responsable_id' => Religiones::inRandomOrder()->first()->id,
         'rut_responsable' => '8445678-0',
         'rut' => '12345678-9',
         'telefono_responsable' => '+56 91234567',
@@ -127,58 +122,62 @@ it('Paciente with relationshions', function () {
     ]);
 
 
-    expect($paciente->establecimiento_educacional_id)->toBe($establecimientoEducacional->id);
-/*    expect($paciente->ley_social_id)->toBe($leySocial->id);
-    expect($paciente->nacionalidad_id)->toBe($nacionalidad->id);
-    expect($paciente->nivel_instruccion_id)->toBe($nivelInstruccion->id);
-    expect($paciente->pueblo_originario_id)->toBe($puebloOriginario->id);
-    expect($paciente->seguro_salud_id)->toBe($seguro->id);
-    expect($paciente->prevision_id)->toBe($prevision->id);
-    expect($paciente->religion_id)->toBe($religion->id);
-    expect($paciente->afp())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->establecimientoEducacional())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->leySocial())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->nacionalidad())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->modalidad())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->nivelInstruccion())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->puebloOriginario())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->seguroSalud())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->prevision())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->religion())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->lista_espera)->toBe(true);
     expect($paciente->apellidos)->toBe('Perez');
-    expect($paciente->Calles_id)->toBe($Calles->id);
+    expect($paciente->apellidos_responsable)->toBe('Aguilar');
+    expect($paciente->calle_id)->toBe($calle->id);
+    expect($paciente->calle_responsable_id)->toBe($calle->id);
     expect($paciente->ciudad)->toBe('Kemmershire');
+    expect($paciente->ciudad_responsable)->toBe('Kemmershire');
+    expect($paciente->comunidad_lgbtq)->toBe(true);
+    expect($paciente->comunidad_lgtbq_responsable)->toBe(false);
+    expect($paciente->credencial_discapacidad_responsable)->toBe(false);
+    expect($paciente->credencial_discapacidad)->toBe(false);
+    expect($paciente->direccion_responsable)->toBe('South Park Avenue');
     expect($paciente->direccion)->toBe('6806 Labadie Ways Apt. 417');
     expect($paciente->donante)->toBe(false);
+    expect($paciente->donante_responsable)->toBe(false);
     expect($paciente->edad)->toBe(18);
+    expect($paciente->edad_responsable)->toBe(45);
     expect($paciente->email)->toBe('juan.perez@example.com');
-    expect($paciente->estado_civil)->toBe('Viudo');
+    expect($paciente->email_responsable)->toBe('cclaro@vtr.cl');
+    expect($paciente->establecimiento_educacional_id)->toBe($establecimientoEducacional->id);
+    expect($paciente->estado_civil)->toBe($estadoCivil->id);
+    expect($paciente->estado_civil_responsable)->toBe($estadoCivil->id);
     expect($paciente->fecha_nacimiento)->toBe('2011-07-19');
     expect($paciente->genero)->toBe('Femenino');
     expect($paciente->grupo_sanguineo)->toBe('A+');
-    expect($paciente->modalidad)->toBe('Modalidad1');
+    expect($paciente->nacionalidad_id)->toBe($nacionalidad->id);
+    expect($paciente->nivel_instruccion_id)->toBe($nivelInstruccion->id);
     expect($paciente->nombre)->toBe('Juan');
     expect($paciente->ocupacion)->toBe('Title Searcher');
-    expect($paciente->profesion)->toBe('Substation Maintenance');
+    expect($paciente->prevision_id)->toBe($prevision->id);
+    expect($paciente->profeor)->toBe('Lilian Garcia');
+    expect($paciente->pueblo_originario_id)->toBe($puebloOriginario->id);
+    expect($paciente->religion_id)->toBe($religion->id);
     expect($paciente->rut)->toBe('12345678-9');
     expect($paciente->telefono1)->toBe('337-597-4667');
     expect($paciente->telefono2)->toBe('+1-505-479-9905');
-    expect($paciente)->toBeInstanceOf(Paciente::class);*/
+    expect($paciente->nacionalidad())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->nivelInstruccion())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->prevision())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->puebloOriginario())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->religion())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente)->toBeInstanceOf(Pacientes::class);
+    expect($paciente->seguroSalud())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->establecimientoEducacional())->toBeInstanceOf(BelongsTo::class); 
 });
 
 
 it('has fillable attributes', function () {
-    $paciente = new Paciente();
-    expect($paciente->getFillable())->toEqual([
-        'apellido_responsable',
+    $paciente = new Pacientes();
+    expect($paciente->getFillable())->toEqual(['apellidos_responsable',
         'apellidos',
-        'Calles_id',
-        'Calles_responsable_id',
+        'calle_id',
+        'calle_responsable_id',
         'ciudad_responsable',
         'ciudad',
         'comunidad_lgbtq',
-        'comunidad_lgtbq_responsable',
+        'comunidad_lgbtq_responsable',
         'credencial_discapacidad_responsable',
         'credencial_discapacidad',
         'direccion_responsable',
@@ -207,11 +206,10 @@ it('has fillable attributes', function () {
         'ocupacion_responsable',
         'ocupacion',
         'parentesco_responsable',
-        'password',
         'pertenece_pie',
         'prevision_id',
         'prevision_responsable_id',
-        'profesion',
+        'profesor',
         'pueblo_originario_id',
         'pueblo_originario_responsable_id',
         'religion_id',
@@ -224,34 +222,3 @@ it('has fillable attributes', function () {
         'telefono2'
     ]);
 });
-
-    /*
-    test('it renders paciente page successfully', function () {
-        $pacienteRepositoryMock = Mockery::mock('App\Repository\PacienteRepository');
-        $controller = new PacienteController($pacienteRepositoryMock);
-    
-        Inertia::shouldReceive('render')
-            ->once()
-            ->with('PacientePage')
-            ->andReturn('Rendered PacientePage');
-    
-        $response = $controller->index();
-    
-        expect($response)->toBe('Rendered PacientePage');
-    });
-        
-    test('it handles invalid patient id gracefully', function () {
-        $pacienteRepositoryMock = Mockery::mock('App\Repository\PacienteRepository');
-        $pacienteRepositoryMock->shouldReceive('show')
-            ->once()
-            ->with(Mockery::type(Request::class))
-            ->andReturn(null);
-    
-        $controller = new PacienteController($pacienteRepositoryMock);
-        $request = new Request(['id' => 'invalid-id']);
-    
-        $response = $controller->show($request);
-    
-        expect($response)->toBeNull();
-    });*/
-    

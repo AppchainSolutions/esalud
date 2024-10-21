@@ -2,11 +2,11 @@
 
 namespace App\Repository;
 
-use App\Models\Genero;
+use App\Models\Generos;
 
 class GeneroRepository extends Repository
 {
-    public function __construct(Genero $model)
+    public function __construct(Generos $model)
     {
         $this->model = $model;
     }

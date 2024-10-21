@@ -5,16 +5,34 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Paciente;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Pacientes; // Ensure this class exists in the specified namespace
 
 class Calles extends Model
 {
     use HasFactory;
-    public function afp(): BelongsTo
+
+    /**
+     * Get the patients that live on this street.
+     *
+     * @return HasMany
+     */
+    public function pacientes(): HasMany
     {
-        return $this->belongsTo(Paciente::class);
+        return $this->hasMany(Pacientes::class);
     }
-    
+
+    /**
+     * Get the street that the patient lives on.
+     *
+     * @return BelongsTo
+     */
+
+    public function calle(): BelongsTo
+    {
+        return $this->belongsTo(Calles::class);
+    }
+
     protected $table = 'calles';
 
     protected $fillable = [

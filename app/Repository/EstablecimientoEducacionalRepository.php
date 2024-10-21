@@ -2,12 +2,12 @@
 
 namespace App\Repository;
 
-use App\Models\EstablecimientoEducacional;
+use App\Models\EstablecimientosEducacionales;
 
 
 class EstablecimientoEducacionalRepository extends Repository
 {
-    public function __construct(EstablecimientoEducacional $model)
+    public function __construct(EstablecimientosEducacionales $model)
     {
         $this->model = $model;
     }

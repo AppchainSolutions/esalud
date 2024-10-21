@@ -3,7 +3,9 @@
     "scripts": {
         "build": "vite build && vite build --ssr",
         "dev": "vite",
-        "clear": "sh clear.sh"
+        "clear": "sh clear.sh",
+        "test": "vitest",
+        "test:ui": "vitest --ui"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
@@ -16,6 +18,8 @@
         "@sweetalert2/theme-material-ui": "^5.0.15",
         "@types/node": "^20.10.6",
         "@vitejs/plugin-vue": "^4.5.0",
+        "@vitest/coverage-v8": "^2.1.3",
+        "@vitest/ui": "^2.1.3",
         "@vue/cli-plugin-pwa": "~5.0.0",
         "@vue/server-renderer": "^3.2.31",
         "@vue/test-utils": "^2.4.6",
@@ -35,11 +39,12 @@
         "vee-validate": "^4.12.5",
         "vite": "^5.0.0",
         "vite-plugin-vuetify": "^2.0.1",
+        "vitest": "^2.1.3",
         "vue": "^3.2.31",
         "vue-jest": "^5.0.0-alpha.10",
         "vue-json-excel3": "^1.0.19",
         "vue-sweetalert2": "^5.0.5",
-        "vuetify": "^3.4.0"
+        "vuetify": "^3.7.3"
     },
     "optionalDependencies": {
         "package-json": "9.0.0"

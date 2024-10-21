@@ -2,11 +2,11 @@
 
 namespace App\Repository;
 
-use App\Models\GrupoSanguineo;
+use App\Models\GruposSanguineos;
 
 class GrupoSanguineoRepository extends Repository
 {
-    public function __construct(GrupoSanguineo $model)
+    public function __construct(GruposSanguineos $model)
     {
         $this->model = $model;
     }

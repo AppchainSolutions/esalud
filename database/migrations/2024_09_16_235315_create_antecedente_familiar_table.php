@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('antecedente_familiar', function (Blueprint $table) {
+        Schema::create('antecedentes_familiares', function (Blueprint $table) {
             $table->id();
             $table->integer('paciente_id');
             $table->string('patologia');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('antecedente_familiar');
+        Schema::dropIfExists('antecedentes_familiares');
     }
 };

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grupo_sanguineo', function (Blueprint $table) {
+        Schema::create('grupos_sanguineos', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion');
             $table->timestamps();
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grupo_sanguineo');
+        Schema::dropIfExists('grupos_sanguineos');
     }
 };

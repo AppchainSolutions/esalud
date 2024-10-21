@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Models\Calles;
 
 
-class CallesRepository extends Repository
+class CalleRepository extends Repository
 {
     public function __construct(Calles $model)
     {

@@ -20,7 +20,7 @@ class CallesFactory extends Factory
     public function definition(): array
     {
         return [
-            'descripcion' => $this->faker->address,
+            'descripcion' => $this->faker->streetAddress(),
         ];
     }
 }

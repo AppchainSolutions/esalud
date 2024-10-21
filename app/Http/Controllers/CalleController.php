@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repository\CallesRepository;
+use App\Repository\CalleRepository;
 
-class CallesController extends Controller
+class CalleController extends Controller
 {
-    protected $CallesRepository;
+    protected $calleRepository;
 
-    public function __construct(CallesRepository $CallesRepository)
+    public function __construct(CalleRepository $calleRepository)
     {
-        $this->CallesRepository = $CallesRepository;
+        $this->calleRepository = $calleRepository;
     }
     /**
      * Display a listing of the resource.
@@ -23,19 +23,19 @@ class CallesController extends Controller
 
     public function all()
     {
-        return $this->CallesRepository->all();
+        return $this->calleRepository->all();
     }
     public function show(Request $id)
     {
        // return Inertia::render('SubPages/Calles');
-      // return $this->CallesRepository->all();
+      // return $this->calleRepository->all();
     }
     /**
      * Show the form for creating a new resource.
      */
         public function store(Request $request)
     {
-        //return $this->CallesRepository->store($request);
+        //return $this->calleRepository->store($request);
     }
 
     /**
@@ -43,7 +43,7 @@ class CallesController extends Controller
      */
     public function update(Request $request)
     {
-        //return $this->CallesRepository->update($request);
+        //return $this->calleRepository->update($request);
 
     }
 
@@ -52,6 +52,6 @@ class CallesController extends Controller
      */
     public function destroy(Request $request)
     {
-        //return $this->CallesRepository->delete($request);
+        //return $this->calleRepository->delete($request);
     }
 }

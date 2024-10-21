@@ -2,11 +2,11 @@
 
 namespace App\Repository;
 
-use App\Models\NivelInstruccion;
+use App\Models\NivelesInstruccion;
 
 class NivelInstruccionRepository extends Repository
 {
-    public function __construct(NivelInstruccion $model)
+    public function __construct(NivelesInstruccion $model)
     {
         $this->model = $model;
     }

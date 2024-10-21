@@ -23,19 +23,16 @@ defineOptions({ layout: AppLayout });
 const store = useDataStore();
 const state = reactive({
     endpoints: [
-        "afps",
-        "Calless",
+        "calles",
         "estados_civiles",
         "establecimientos_educacionales",
         "generos",
         "grupos_sanguineos",
-        "leyes_sociales",
         "nacionalidades",
         "niveles_instruccion",
         "previsiones",
         "pueblos_originarios",
         "religiones",
-        "seguros_salud",
     ],
     headers: [
         { title: "Rut", align: "center", sortable: true, key: "rut" },
@@ -99,71 +96,78 @@ const state = reactive({
     searchQuery: {
         id: null,
         rut: null,
-        lista_espera: null,
-        afp_id: null,
+        rut_responsable: null,
         establecimiento_educacional_id: null,
-        nacionalidad_id: null,
-        ley_social_id: null,
-        seguro_salud_id: null,
-        prevision_id: null,
     },
     editedItem: {
-        rut: null,
-        afp_id: null,
         apellidos: null,
-        Calles_id: null,
+        apellidos_responsable: null,
+        calles_id: null,
+        calles_responsable_id: null,
+        ciudad_responsable: null,
         ciudad: null,
+        comunidad_lgbtq: null,
+        comunidad_lgbtq_responsable: null,
+        credencial_discapacidad_responsable: null,
+        credencial_discapacidad: null,
+        direccion_responsable: null,
         direccion: null,
-        donante: false,
+        donante_responsable: null,
+        donante: null,
+        edad_responsable: null,
         edad: null,
+        email_responsable: null,
         email: null,
         establecimiento_educacional_id: null,
         estado_civil_id: null,
+        estado_civil_responsable_id: null,
+        fecha_nacimiento_responsable: null,
         fecha_nacimiento: null,
         genero_id: null,
+        genero_responsable_id: null,
         grupo_sanguineo_id: null,
-        ley_social_id: null,
+        grupo_sanguineo_responsable_id: null,
         nacionalidad_id: null,
+        nacionalidad_responsable_id: null,
         nivel_instruccion_id: null,
+        nivel_instruccion_responsable_id: null,
+        nombre_responsable: null,
         nombre: null,
+        ocupacion_responsable: null,
+        ocupacion: null,
+        parentesco_responsable: null,
+        password: null,
+        pertenece_pie: null,
         prevision_id: null,
+        prevision_responsable_id: null,
+        profesor: null,
         pueblo_originario_id: null,
+        pueblo_originario_responsable_id: null,
         religion_id: null,
-        seguro_salud_id: null,
+        religion_responsable_id: null,
+        remember_token: null,
+        rut_responsable: null,
+        rut: null,
+        telefono_responsable: null,
         telefono1: null,
         telefono2: null,
-        nombre_responsable: null,
-        apellido_responsable: null,
-        telefono_responsable: null,
-        rut_responsable: null,
-        direccion_responsable: null,
-        email_responsable: null,
-        parentesco_responsable: null,
-        ocupacion_responsable: null,
-        pueblo_originario_responsable_id: null,
-        nivel_instruccion_responsable_id: null,
-        religion_responsable_id: null,
-        fecha_nacimiento_responsable: null,
-        edad: null,
-        genero_responsable_id: null,
-        nacionalidad_responsable_id: null,
-        comunidad_lgtbq_responsable: null,
-        credencial_discapacidad_responsable_id: null,
-        estado_civil_responsable_id: null,
-        prevision_responsable_id: null,
     },
     defaultItem: {
-        afp_id: null,
-        apellido_responsable: null,
         apellidos: null,
-        Calles_id: null,
+        apellidos_responsable: null,
+        calles_id: null,
+        calles_responsable_id: null,
+        ciudad_responsable: null,
         ciudad: null,
+        comunidad_lgbtq: null,
         comunidad_lgtbq_responsable: null,
-        credencial_discapacidad_responsable_id: null,
+        credencial_discapacidad_responsable: null,
+        credencial_discapacidad: null,
         direccion_responsable: null,
         direccion: null,
-        donante: false,
-        edad: null,
+        donante_responsable: null,
+        donante: null,
+        edad_responsable: null,
         edad: null,
         email_responsable: null,
         email: null,
@@ -175,7 +179,7 @@ const state = reactive({
         genero_id: null,
         genero_responsable_id: null,
         grupo_sanguineo_id: null,
-        ley_social_id: null,
+        grupo_sanguineo_responsable_id: null,
         nacionalidad_id: null,
         nacionalidad_responsable_id: null,
         nivel_instruccion_id: null,
@@ -183,16 +187,20 @@ const state = reactive({
         nombre_responsable: null,
         nombre: null,
         ocupacion_responsable: null,
+        ocupacion: null,
         parentesco_responsable: null,
+        password: null,
+        pertenece_pie: null,
         prevision_id: null,
         prevision_responsable_id: null,
+        profesor: null,
         pueblo_originario_id: null,
         pueblo_originario_responsable_id: null,
         religion_id: null,
         religion_responsable_id: null,
+        remember_token: null,
         rut_responsable: null,
         rut: null,
-        seguro_salud_id: null,
         telefono_responsable: null,
         telefono1: null,
         telefono2: null,
@@ -215,7 +223,9 @@ const date = useDate();
 
 //**********\\\\  LIFE CYCLE HOOKS ////*************/
 onMounted(async () => {
-    state.list = await fetchAllData(state.endpoints);
+    const result = await fetchAllData(state.endpoints);
+    state.list = result;
+    console.log(state.list.establecimientos_educacionales);
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/
@@ -311,7 +321,9 @@ const remove = async (item) => {
                                     ></v-text-field>
 
                                     <v-text-field
-                                        v-model="state.searchQuery.rut_responsable"
+                                        v-model="
+                                            state.searchQuery.rut_responsable
+                                        "
                                         :rules="state.validationSchema.rutRules"
                                         label="Rut persona encargada"
                                         class="ma-2"
@@ -319,16 +331,15 @@ const remove = async (item) => {
                                         variant="underlined"
                                         clearable
                                     ></v-text-field>
-                                    
                                 </v-col>
                                 <v-col>
                                     <v-select
                                         :items="
                                             state.list
-                                                .establecimiento_educacional
+                                                .establecimientos_educacionales
                                         "
-                                        item-title="descripcion"
-                                        item-value="id"
+                                        :item-title="descripcion"
+                                        :item-value="id"
                                         v-model="
                                             state.searchQuery
                                                 .establecimiento_educacional_id
@@ -421,13 +432,6 @@ const remove = async (item) => {
                                                         "
                                                         label="Rut* (12345678-9)"
                                                         id="rut"
-                                                        type="text"
-                                                        required
-                                                        clearable
-                                                        variant="underlined"
-                                                    ></v-text-field>
-                                                    <v-text-field
-                                                        label="Derivado por*"
                                                         type="text"
                                                         required
                                                         clearable
@@ -729,6 +733,10 @@ const remove = async (item) => {
                                                 <v-col>
                                                     <v-select
                                                         label="Establecimiento educacional"
+                                                        v-model="
+                                                            state.editedItem
+                                                                .establecimiento_educacional_id
+                                                        "
                                                     ></v-select>
                                                 </v-col>
                                                 <v-col>
@@ -811,7 +819,7 @@ const remove = async (item) => {
                                                     <v-switch
                                                         v-model="
                                                             state.editedItem
-                                                                .donante
+                                                                .donante_responsable
                                                         "
                                                         class="ml-2"
                                                         label="Donante"
@@ -821,25 +829,26 @@ const remove = async (item) => {
                                                         clearable
                                                         variant="underlined"
                                                     ></v-switch>
+                                                    <v-switch
+                                                        v-model="
+                                                            state.editedItem
+                                                                .credencial_discapacidad_responsable
+                                                        "
+                                                        class="ml-2"
+                                                        label="Credencial discapacidad"
+                                                        color="success"
+                                                        hide-details
+                                                        inset
+                                                        clearable
+                                                        variant="underlined"
+                                                    ></v-switch>
                                                 </v-col>
-                                                <v-switch
-                                                    v-model="
-                                                        state.editedItem
-                                                            .credencial_discapacidad_responsable_id
-                                                    "
-                                                    class="ml-2"
-                                                    label="Credencial discapacidad"
-                                                    color="success"
-                                                    hide-details
-                                                    inset
-                                                    clearable
-                                                    variant="underlined"
-                                                ></v-switch>
+
                                                 <v-col>
                                                     <v-text-field
                                                         v-model="
                                                             state.editedItem
-                                                                .email
+                                                                .email_responsable
                                                         "
                                                         :rules="
                                                             state
@@ -856,9 +865,9 @@ const remove = async (item) => {
                                                     <v-text-field
                                                         v-model="
                                                             state.editedItem
-                                                                .fecha_nacimiento
+                                                                .fecha_nacimiento_responsable
                                                         "
-                                                        label="Fecha de nacimiento"
+                                                        label="Fecha de nacimientoX"
                                                         clearable
                                                         variant="underlined"
                                                         type="date"
@@ -871,7 +880,7 @@ const remove = async (item) => {
                                                     <v-text-field
                                                         v-model="
                                                             state.editedItem
-                                                                .edad
+                                                                .edad_responsable
                                                         "
                                                         label="Edad*"
                                                         type="text"
@@ -882,7 +891,7 @@ const remove = async (item) => {
                                                     <v-text-field
                                                         v-model="
                                                             state.editedItem
-                                                                .direccion
+                                                                .direccion_responsable
                                                         "
                                                         label="Dirección"
                                                         clearable
@@ -890,21 +899,11 @@ const remove = async (item) => {
                                                     ></v-text-field>
 
                                                     <v-text-field
-                                                        label="teléfono 1"
+                                                        label="teléfono 1X"
                                                         v-model="
                                                             state.editedItem
-                                                                .telefono1
+                                                                .telefono_responsable
                                                         "
-                                                        clearable
-                                                        variant="underlined"
-                                                    ></v-text-field>
-
-                                                    <v-text-field
-                                                        v-model="
-                                                            state.editedItem
-                                                                .telefono2
-                                                        "
-                                                        label="teléfono 2"
                                                         clearable
                                                         variant="underlined"
                                                     ></v-text-field>
@@ -919,7 +918,7 @@ const remove = async (item) => {
                                                         item-value="id"
                                                         v-model="
                                                             state.editedItem
-                                                                .grupo_sanguineo_id
+                                                                .grupo_sanguineo_responsable
                                                         "
                                                         label="Grupo sanguíneo"
                                                         clearable
@@ -935,7 +934,7 @@ const remove = async (item) => {
                                                         item-value="id"
                                                         v-model="
                                                             state.editedItem
-                                                                .estado_civil_id
+                                                                .estado_civil_responsable_id
                                                         "
                                                         label="Estado civil"
                                                         clearable
@@ -951,7 +950,7 @@ const remove = async (item) => {
                                                         item-value="id"
                                                         v-model="
                                                             state.editedItem
-                                                                .nacionalidad_id
+                                                                .nacionalidad_responsable_id
                                                         "
                                                         label="Nacionalidad"
                                                         clearable
@@ -967,7 +966,7 @@ const remove = async (item) => {
                                                         label="Religion / Culto"
                                                         v-model="
                                                             state.editedItem
-                                                                .religion_id
+                                                                .religion_responsable_id
                                                         "
                                                         clearable
                                                         variant="underlined"
@@ -982,7 +981,7 @@ const remove = async (item) => {
                                                         label="Género"
                                                         v-model="
                                                             state.editedItem
-                                                                .genero_id
+                                                                .genero_responsable_id
                                                         "
                                                         clearable
                                                         variant="underlined"
@@ -992,7 +991,7 @@ const remove = async (item) => {
                                                         label="Ciudad"
                                                         v-model="
                                                             state.editedItem
-                                                                .ciudad
+                                                                .ciudad_responsable
                                                         "
                                                         clearable
                                                         variant="underlined"
@@ -1007,7 +1006,7 @@ const remove = async (item) => {
                                                         item-value="id"
                                                         v-model="
                                                             state.editedItem
-                                                                .prevision_id
+                                                                .prevision_responsable_id
                                                         "
                                                         label="Previsión de Salud"
                                                         clearable
@@ -1022,7 +1021,7 @@ const remove = async (item) => {
                                                         item-value="id"
                                                         v-model="
                                                             state.editedItem
-                                                                .pueblo_originario_id
+                                                                .pueblo_originario_responsable_id
                                                         "
                                                         label="Pueblo originario"
                                                         clearable
@@ -1038,7 +1037,7 @@ const remove = async (item) => {
                                                         item-value="id"
                                                         v-model="
                                                             state.editedItem
-                                                                .instruccion
+                                                                .nivel_instruccion_responsable_id
                                                         "
                                                         label="Nivel de Instruccion"
                                                         clearable

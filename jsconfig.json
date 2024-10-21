@@ -13,6 +13,6 @@
             "@/*": ["resources/js/*"]
         }
     },
-    "include": ["resources/js/**/*"],
+    "include": ["resources/js/**/*", "tests/VueTest/test_PacientePage.vue"],
     "exclude": ["node_modules", "public", "test"]
 }

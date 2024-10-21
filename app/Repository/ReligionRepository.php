@@ -2,12 +2,12 @@
 
 namespace App\Repository;
 
-use App\Models\Religion;
+use App\Models\Religiones;
 
 
 class ReligionRepository extends Repository
 {
-    public function __construct(Religion $model)
+    public function __construct(Religiones $model)
     {
         $this->model = $model;
     }

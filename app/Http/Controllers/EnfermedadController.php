@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\EnfermedadRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Repository\EnfermedadRepository;
-use Illuminate\Support\Facades\Log;
 
 class EnfermedadController extends Controller
 {
@@ -15,6 +14,7 @@ class EnfermedadController extends Controller
     {
         $this->enfermedadRepository = $enfermedadRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +26,7 @@ class EnfermedadController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->enfermedadRepository->store($request);
     }
@@ -51,7 +51,7 @@ class EnfermedadController extends Controller
     /**
      * Show the specified resource.
      *
-     * @param Request $request The request object.
+     * @param  Request  $request  The request object.
      * @return mixed The result of the show method of the enfermedadRepository.
      */
     public function show(Request $request)

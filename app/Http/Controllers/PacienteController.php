@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Repository\PacienteRepository;
-
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PacienteController extends Controller
 {
@@ -14,13 +13,13 @@ class PacienteController extends Controller
     /**
      * Class constructor.
      *
-     * @param PacienteRepository $pacienteRepository The patient repository instance.
+     * @param  PacienteRepository  $pacienteRepository  The patient repository instance.
      */
     public function __construct(PacienteRepository $pacienteRepository)
     {
         $this->pacienteRepository = $pacienteRepository;
     }
-    
+
     /**
      * Render the Paciente Page.
      *
@@ -39,7 +38,7 @@ class PacienteController extends Controller
     /**
      * Display the specified patient.
      *
-     * @param Request $request The request containing the patient ID to be displayed.
+     * @param  Request  $request  The request containing the patient ID to be displayed.
      * @return mixed Patient data from the repository.
      */
     public function show(Request $request)
@@ -50,7 +49,7 @@ class PacienteController extends Controller
     /**
      * Update patient data.
      *
-     * @param Request $request The request containing patient data to be updated.
+     * @param  Request  $request  The request containing patient data to be updated.
      * @return mixed Updated patient data from the repository.
      */
     public function update(Request $request)
@@ -61,7 +60,6 @@ class PacienteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -72,7 +70,7 @@ class PacienteController extends Controller
     /**
      * Delete a patient from the system.
      *
-     * @param Request $request The request containing the patient ID to be deleted.
+     * @param  Request  $request  The request containing the patient ID to be deleted.
      * @return mixed Returns true if the patient was deleted successfully, and false otherwise.
      */
     public function destroy(Request $request)

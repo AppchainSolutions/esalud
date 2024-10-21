@@ -2,10 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Mockery;
-
 use App\Models\Calles;
 use App\Models\EstablecimientosEducacionales;
 use App\Models\EstadosCiviles;
@@ -17,23 +13,24 @@ use App\Models\Pacientes;
 use App\Models\Previsiones;
 use App\Models\PueblosOriginarios;
 use App\Models\Religiones;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
- 
+
 it('can create a paciente', function () {
 
     $pacienteData = Pacientes::factory()->make()->toArray();
-     $response = $this->post('/pacientes', $pacienteData);
+    $response = $this->post('/pacientes', $pacienteData);
 
     $response->assertStatus(201);
-    $this->assertDatabaseHas('pacientes', $pacienteData); 
+    $this->assertDatabaseHas('pacientes', $pacienteData);
 });
-
 
 it('can read a paciente', function () {
     $paciente = Pacientes::factory()->create();
 
-    $response = $this->get('/paciente/' . $paciente->id);
+    $response = $this->get('/paciente/'.$paciente->id);
 
     $response->assertStatus(200);
     $response->assertJson($paciente->toArray());
@@ -43,7 +40,7 @@ it('can update a paciente', function () {
     $paciente = Pacientes::factory()->create();
     $updatedData = Pacientes::factory()->make()->toArray();
 
-    $response = $this->put('/pacientes/' . $paciente->id, $updatedData);
+    $response = $this->put('/pacientes/'.$paciente->id, $updatedData);
 
     $response->assertStatus(200);
     $this->assertDatabaseHas('pacientes', $updatedData);
@@ -52,7 +49,7 @@ it('can update a paciente', function () {
 it('can delete a paciente', function () {
     $paciente = Pacientes::factory()->create();
 
-    $response = $this->delete('/pacientes/' . $paciente->id);
+    $response = $this->delete('/pacientes/'.$paciente->id);
 
     $response->assertStatus(204);
     $this->assertDatabaseMissing('pacientes', ['id' => $paciente->id]);
@@ -95,7 +92,7 @@ it('Pacientes with relationshions', function () {
         'fecha_nacimiento' => '2011-07-19',
         'genero_id' => Generos::inRandomOrder()->first()->id,
         'genero_responsable_id' => Generos::inRandomOrder()->first()->id,
-        'grupo_sanguineo_id'  => GruposSanguineos::inRandomOrder()->first()->id,
+        'grupo_sanguineo_id' => GruposSanguineos::inRandomOrder()->first()->id,
         'grupo_sanguineo_responsable_id' => GruposSanguineos::inRandomOrder()->first()->id,
         'nacionalidad_id' => Nacionalidades::inRandomOrder()->first()->id,
         'nacionalidad_responsable_id' => Nacionalidades::inRandomOrder()->first()->id,
@@ -105,7 +102,7 @@ it('Pacientes with relationshions', function () {
         'nombre' => 'Juan',
         'ocupacion_responsable' => 'Cuidadora',
         'ocupacion' => 'Title Searcher',
-        'parentesco_responsable' => "Abuela",
+        'parentesco_responsable' => 'Abuela',
         'pertenece_pie' => false,
         'prevision_id' => Previsiones::inRandomOrder()->first()->id,
         'prevision_responsable_id' => Previsiones::inRandomOrder()->first()->id,
@@ -120,7 +117,6 @@ it('Pacientes with relationshions', function () {
         'telefono1' => '337-597-4667',
         'telefono2' => '+1-505-479-9905',
     ]);
-
 
     expect($paciente->apellidos)->toBe('Perez');
     expect($paciente->apellidos_responsable)->toBe('Aguilar');
@@ -164,12 +160,11 @@ it('Pacientes with relationshions', function () {
     expect($paciente->religion())->toBeInstanceOf(BelongsTo::class);
     expect($paciente)->toBeInstanceOf(Pacientes::class);
     expect($paciente->seguroSalud())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->establecimientoEducacional())->toBeInstanceOf(BelongsTo::class); 
+    expect($paciente->establecimientoEducacional())->toBeInstanceOf(BelongsTo::class);
 });
 
-
 it('has fillable attributes', function () {
-    $paciente = new Pacientes();
+    $paciente = new Pacientes;
     expect($paciente->getFillable())->toEqual(['apellidos_responsable',
         'apellidos',
         'calle_id',
@@ -219,6 +214,6 @@ it('has fillable attributes', function () {
         'rut',
         'telefono_responsable',
         'telefono1',
-        'telefono2'
+        'telefono2',
     ]);
 });

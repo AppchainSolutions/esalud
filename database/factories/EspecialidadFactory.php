@@ -9,7 +9,6 @@ class EspecialidadFactory extends Factory
 {
     protected $model = Especialidad::class;
 
-
     public function definition()
     {
         Especialidad::truncate();

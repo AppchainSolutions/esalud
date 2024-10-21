@@ -2,17 +2,16 @@
 
 namespace App\Repository;
 
+use App\Helpers\Tools;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Database\Eloquent\Model;
-use illuminate\Database\QueryException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Response;
-use App\Helpers\Tools;
 
 abstract class Repository implements RepositoryInterface
 {
-
     protected $model;
 
     public function __construct(Model $model)
@@ -24,12 +23,13 @@ abstract class Repository implements RepositoryInterface
     {
         try {
             $query = $this->model->all();
+
             return Response::json([
-                'result' => $query
+                'result' => $query,
             ]);
         } catch (QueryException $e) {
             return response()->json([
-                'result' => "500",
+                'result' => '500',
                 'message' => 'Se produjo un error.',
                 'error' => $e,
             ], 500);
@@ -48,11 +48,13 @@ abstract class Repository implements RepositoryInterface
             }, $query);
 
             $request = $this->model->create($query);
+
             return response()->json([
                 'message' => 'Registro creado con éxito',
             ], 200);
         } catch (QueryException $e) {
             Log::error('store', [$e]);
+
             return response()->json([
                 'message' => 'Se produjo un error: ',
                 'error' => $e->getMessage(),
@@ -65,7 +67,7 @@ abstract class Repository implements RepositoryInterface
         $data = $request->all();
 
         // Check if $data is not null and contains the 'id' key
-        if (is_null($data) || !isset($data['id'])) {
+        if (is_null($data) || ! isset($data['id'])) {
             // Log the error
             Log::error('Invalid data: data is null or id is missing');
 
@@ -113,7 +115,8 @@ abstract class Repository implements RepositoryInterface
             $filters = $request->input('data');
             Log::info($filters);
             $query = $this->model->query()
-                ->select("*");
+                ->select('*');
+
             return Tools::filterData($filters, $query);
         } catch (QueryException $e) {
             return response()->json([
@@ -129,12 +132,13 @@ abstract class Repository implements RepositoryInterface
         $id = $request->get('id');
         try {
             $this->model->destroy($id);
+
             return Response::json([
                 'message' => 'Registro borrado con exito',
             ], 200);
         } catch (QueryException $e) {
             return Response::json([
-                'result' => "500",
+                'result' => '500',
                 'message' => 'Error al borrar el registro',
                 'error' => $e,
             ], 500);

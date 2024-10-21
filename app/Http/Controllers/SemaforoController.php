@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\SemaforoRepository;
+use Illuminate\Http\Request;
 
 class SemaforoController extends Controller
 {
@@ -13,11 +13,10 @@ class SemaforoController extends Controller
     {
         $this->SemaforoRepository = $SemaforoRepository;
     }
-    
+
     /**
      * Display a listing of the resource.
      */
-
     public function index()
     {
         return $this->SemaforoRepository->all();

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\TipoEnfermedadRepository;
+use Illuminate\Http\Request;
 
 class TipoEnfermedadController extends Controller
 {
@@ -34,10 +34,9 @@ class TipoEnfermedadController extends Controller
     {
         try {
             $query = TipoEnfermedad::all();
-            
-            
+
             return response()->json([
-                'result' => $query
+                'result' => $query,
             ]);
         } catch (QueryException $error) {
             Session::flash('message', 'No se encuentran registros.');

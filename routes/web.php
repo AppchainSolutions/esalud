@@ -2,14 +2,13 @@
 
 use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\AntecedenteFamiliarController;
-use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\CirugiaController;
 use App\Http\Controllers\EnfermedadController;
 use App\Http\Controllers\FactorRiesgoController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\PacienteController;
-use App\Http\Controllers\PsicologiaController;
 use App\Http\Controllers\ProfesionalController;
+use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\VacunaController;
 use Illuminate\Support\Facades\Route;
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\TipoLicenciaRepository;
+use Illuminate\Http\Request;
 
 class TipoLicenciaController extends Controller
 {
@@ -13,6 +13,7 @@ class TipoLicenciaController extends Controller
     {
         $this->tipoLicenciaRepository = $tipoLicenciaRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

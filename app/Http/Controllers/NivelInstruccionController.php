@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\NivelInstruccionRepository;
+use Illuminate\Http\Request;
 
 class NivelInstruccionController extends Controller
 {
@@ -13,6 +13,7 @@ class NivelInstruccionController extends Controller
     {
         $this->nivelInstruccionRepository = $nivelInstruccionRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

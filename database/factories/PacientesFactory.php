@@ -2,19 +2,19 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Helpers\RutGenerator;
 use App\Models\Calles;
-use App\Models\EstadosCiviles;
 use App\Models\EstablecimientosEducacionales;
-use App\Models\GruposSanguineos;
+use App\Models\EstadosCiviles;
 use App\Models\Generos;
-use App\Models\Previsiones;
+use App\Models\GruposSanguineos;
 use App\Models\Nacionalidades;
 use App\Models\NivelesInstruccion;
 use App\Models\Pacientes;
+use App\Models\Previsiones;
 use App\Models\PueblosOriginarios;
 use App\Models\Religiones;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Paciente>
@@ -22,7 +22,6 @@ use App\Models\Religiones;
 class PacientesFactory extends Factory
 {
     protected $model = Pacientes::class;
-
 
     public function definition()
     {
@@ -61,7 +60,7 @@ class PacientesFactory extends Factory
             'estado_civil_responsable_id' => EstadosCiviles::inRandomOrder()->first()->id,
             'fecha_nacimiento_responsable' => $this->faker->date(),
             'fecha_nacimiento' => $this->faker->date(),
-            'genero_id' =>  Generos::inRandomOrder()->first()->id,
+            'genero_id' => Generos::inRandomOrder()->first()->id,
             'genero_responsable_id' => Generos::inRandomOrder()->first()->id,
             'grupo_sanguineo_id' => GruposSanguineos::inRandomOrder()->first()->id,
             'grupo_sanguineo_responsable_id' => GruposSanguineos::inRandomOrder()->first()->id,

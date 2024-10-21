@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\SistemaAfectadoRepository;
+use Illuminate\Http\Request;
 
 class SistemaAfectadoController extends Controller
 {
@@ -13,6 +13,7 @@ class SistemaAfectadoController extends Controller
     {
         $this->sistemaAfectadoRepository = $sistemaAfectadoRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

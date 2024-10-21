@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\DerivacionRepository;
+use Illuminate\Http\Request;
 
 class DerivacionController extends Controller
 {
@@ -13,12 +13,11 @@ class DerivacionController extends Controller
     {
         $this->derivacionRepository = $derivacionRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     public function show()
     {

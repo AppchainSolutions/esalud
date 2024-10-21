@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\GeneroRepository;
+use Illuminate\Http\Request;
 
 class GeneroController extends Controller
 {
@@ -13,12 +13,12 @@ class GeneroController extends Controller
     {
         $this->generoRepository = $generoRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-    }
+    public function index() {}
+
     public function all()
     {
         return $this->generoRepository->all();
@@ -31,7 +31,6 @@ class GeneroController extends Controller
     {
         return $this->generoRepository->store($request);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -51,6 +50,6 @@ class GeneroController extends Controller
 
     public function show(Request $request)
     {
-       // return $this->generoRepository->all();
+        // return $this->generoRepository->all();
     }
 }

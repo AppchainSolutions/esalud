@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\AntecedenteFamiliarRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Repository\AntecedenteFamiliarRepository;
-
 
 class AntecedenteFamiliarController extends Controller
 {
@@ -15,6 +14,7 @@ class AntecedenteFamiliarController extends Controller
     {
         $this->antecedentefamiliarRepository = $antecedentefamiliarRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +26,7 @@ class AntecedenteFamiliarController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->antecedentefamiliarRepository->store($request);
     }

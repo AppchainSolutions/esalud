@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-        /**
+    /**
      * Run the migrations.
      */
     public function up(): void
@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('profesional_id')->nullable()->constrained('profesional');
             $table->foreignId('especialidad_id')->nullable()->constrained('especialidad');
             $table->date('fecha_solicitud')->nullable();
-
 
             $table->boolean('personal_team');
             $table->timestamps();

@@ -24,8 +24,6 @@ class ConsultasController extends Controller
     }
 
     /**
-
-
     /**
      * Display the specified resource.
      */
@@ -57,5 +55,4 @@ class ConsultasController extends Controller
     {
         //
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\EstadoCertificacionRepository;
+use Illuminate\Http\Request;
 
 class EstadoCertificacionController extends Controller
 {
@@ -13,6 +13,7 @@ class EstadoCertificacionController extends Controller
     {
         $this->estadoCertificacionRepository = $estadoCertificacionRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -61,5 +62,4 @@ class EstadoCertificacionController extends Controller
     {
         //
     }
-
 }

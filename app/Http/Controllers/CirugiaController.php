@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\CirugiaRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Repository\CirugiaRepository;
-
 
 class CirugiaController extends Controller
 {
@@ -15,6 +14,7 @@ class CirugiaController extends Controller
     {
         $this->cirugiaRepository = $cirugiaRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +26,7 @@ class CirugiaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->cirugiaRepository->store($request);
     }
@@ -54,7 +54,6 @@ class CirugiaController extends Controller
     {
         return $this->cirugiaRepository->delete($request);
     }
-
 
     public function show(Request $request)
     {

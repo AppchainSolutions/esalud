@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Pacientes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cirugias extends Model
@@ -17,10 +16,11 @@ class Cirugias extends Model
     }
 
     protected $table = 'cirugias';
+
     protected $fillable = [
         'paciente_id',
         'comentario',
         'cirugia',
-        'fecha_cirugia'
+        'fecha_cirugia',
     ];
 }

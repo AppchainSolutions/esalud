@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\LicenciaMedicaRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Repository\LicenciaMedicaRepository;
 
 class LicenciaMedicaController extends Controller
 {
@@ -14,6 +14,7 @@ class LicenciaMedicaController extends Controller
     {
         $this->licenciaMedicaRepository = $licenciaMedicaRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

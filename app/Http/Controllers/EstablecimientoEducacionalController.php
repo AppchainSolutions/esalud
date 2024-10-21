@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\EstablecimientoEducacionalRepository;
+use Illuminate\Http\Request;
 
 class EstablecimientoEducacionalController extends Controller
 {
@@ -13,6 +13,7 @@ class EstablecimientoEducacionalController extends Controller
     {
         $this->establecimientoEducacionalRepository = $establecimientoEducacionalRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -65,5 +66,4 @@ class EstablecimientoEducacionalController extends Controller
     {
         //
     }
-
 }

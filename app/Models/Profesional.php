@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class Profesional extends Model
 {
     use HasFactory;
@@ -13,6 +14,7 @@ class Profesional extends Model
     {
         return $this->belongsTo(Profesional::class);
     }
+
     protected $table = 'profesional';
 
     protected $fillable = [
@@ -25,6 +27,6 @@ class Profesional extends Model
         'nombre',
         'rut',
         'telefono',
-        'vigente'
+        'vigente',
     ];
 }

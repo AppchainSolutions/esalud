@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('alergias', function (Blueprint $table) {
             $table->id();
-//            $table->foreignId('paciente_id')->constrained();
+            //            $table->foreignId('paciente_id')->constrained();
             $table->foreignId('paciente_id')->constrained()->onDelete('cascade');
             $table->string('descripcion');
             $table->timestamps();

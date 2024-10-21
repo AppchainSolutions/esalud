@@ -33,12 +33,12 @@ class ExamVencNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-        ->subject('Vencimiento de examen')
-        ->greeting('Hola!')
-        ->line("El examen del paciente ")
-        ->line("TABLA");
+            ->subject('Vencimiento de examen')
+            ->greeting('Hola!')
+            ->line('El examen del paciente ')
+            ->line('TABLA');
         //->action('Ver detalles', route('exams.show', $this->exam->id))
-       // ->line('Gracias por tu atención.');
+        // ->line('Gracias por tu atención.');
     }
 
     /**

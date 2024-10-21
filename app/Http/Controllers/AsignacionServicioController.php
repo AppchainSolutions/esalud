@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\AsignacionServicioRepository;
-use Log;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+use Log;
 
 class AsignacionServicioController extends Controller
 {
@@ -35,7 +34,7 @@ class AsignacionServicioController extends Controller
     public function show()
     {
         //        return $this->asignacionServicioRepository->show();
-        Log::info("Show");
+        Log::info('Show');
     }
 
     /**

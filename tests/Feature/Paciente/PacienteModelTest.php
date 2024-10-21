@@ -2,24 +2,21 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 use App\Models\Calles;
 use App\Models\EstablecimientosEducacionales;
 use App\Models\EstadosCiviles;
 use App\Models\Generos;
 use App\Models\GruposSanguineos;
+use App\Models\LeyesSociales;
 use App\Models\Nacionalidades;
 use App\Models\NivelesInstruccion;
-use App\Models\LeyesSociales;
 use App\Models\Pacientes;
 use App\Models\Previsiones;
 use App\Models\PueblosOriginarios;
 use App\Models\Religiones;
 use App\Models\SegurosSalud;
-
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
@@ -93,7 +90,6 @@ it('can create a paciente', function () {
         'telefono2' => '+1-505-479-9905',
     ]);
 
-
     expect($paciente->apellidos)->toBe('Perez');
     expect($paciente->apellidos_responsable)->toBe('Aguilar');
     expect($paciente->calle_id)->toBe($calle->id);
@@ -150,7 +146,6 @@ it('belongs to seguro', function () {
     expect($paciente->seguro_salud_id())->toBeInstanceOf(BelongsTo::class);
 });
 
-
 it('belongs to establecimiento educacional', function () {
     $paciente = Pacientes::factory()->create();
     expect($paciente->establecimiento_educacional_id())->toBeInstanceOf(BelongsTo::class);
@@ -195,9 +190,9 @@ it('belongs to modalidad', function () {
     $paciente = Pacientes::factory()->create();
     expect($paciente->modalidad())->toBeInstanceOf(BelongsTo::class);
 });
- 
+
 it('has fillable attributes', function () {
-    $paciente = new Pacientes();
+    $paciente = new Pacientes;
     expect($paciente->getFillable())->toEqual([
         'apellidos_responsable',
         'apellidos',
@@ -249,6 +244,6 @@ it('has fillable attributes', function () {
         'rut',
         'telefono_responsable',
         'telefono1',
-        'telefono2'
+        'telefono2',
     ]);
 });

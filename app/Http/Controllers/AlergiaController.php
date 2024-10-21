@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\AlergiaRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Repository\AlergiaRepository;
-
 
 class AlergiaController extends Controller
 {
@@ -15,6 +14,7 @@ class AlergiaController extends Controller
     {
         $this->alergiaRepository = $alergiaRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +26,7 @@ class AlergiaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->alergiaRepository->store($request);
     }

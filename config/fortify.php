@@ -157,7 +157,6 @@ return [
         ]),
     ],
 
-    
     'redirects' => [
         'logout' => 'login',
     ],

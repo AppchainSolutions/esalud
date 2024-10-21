@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\CalleRepository;
+use Illuminate\Http\Request;
 
 class CalleController extends Controller
 {
@@ -13,27 +13,30 @@ class CalleController extends Controller
     {
         $this->calleRepository = $calleRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $id)
     {
-       // return Inertia::render('SubPages/Calles');
+        // return Inertia::render('SubPages/Calles');
     }
 
     public function all()
     {
         return $this->calleRepository->all();
     }
+
     public function show(Request $id)
     {
-       // return Inertia::render('SubPages/Calles');
-      // return $this->calleRepository->all();
+        // return Inertia::render('SubPages/Calles');
+        // return $this->calleRepository->all();
     }
+
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         //return $this->calleRepository->store($request);
     }

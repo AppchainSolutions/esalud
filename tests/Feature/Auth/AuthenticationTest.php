@@ -1,15 +1,15 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 uses(RefreshDatabase::class, TestCase::class);
 
 test('login screen can be rendered', function () {
     $response = $this->get('/login');
-    
+
     $response->assertStatus(200);
 });
 

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\FactorRiesgoRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Repository\FactorRiesgoRepository;
-
 
 class FactorRiesgoController extends Controller
 {
@@ -15,6 +14,7 @@ class FactorRiesgoController extends Controller
     {
         $this->factorriesgoRepository = $factorriesgoRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +26,7 @@ class FactorRiesgoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->factorriesgoRepository->store($request);
     }

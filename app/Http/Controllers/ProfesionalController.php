@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Repository\ProfesionalRepository;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProfesionalController extends Controller
 {
@@ -14,6 +14,7 @@ class ProfesionalController extends Controller
     {
         $this->profesionalRepository = $profesionalRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

@@ -6,20 +6,20 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 $endpoints = [
-    "afps",
-    "Calless",
-    "estados_civiles",
-    "establecimientos_educacionales",
-    "especialidades",
-    "generos",
-    "grupos_sanguineos",
-    "leyes_sociales",
-    "nacionalidades",
-    "niveles_instruccion",
-    "previsiones",
-    "pueblos_originarios",
-    "religiones",
-    "seguros_salud",
+    'afps',
+    'Calless',
+    'estados_civiles',
+    'establecimientos_educacionales',
+    'especialidades',
+    'generos',
+    'grupos_sanguineos',
+    'leyes_sociales',
+    'nacionalidades',
+    'niveles_instruccion',
+    'previsiones',
+    'pueblos_originarios',
+    'religiones',
+    'seguros_salud',
 ];
 
 uses(RefreshDatabase::class, TestCase::class);

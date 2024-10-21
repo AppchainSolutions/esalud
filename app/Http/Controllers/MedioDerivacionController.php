@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\MedioDerivacionRepository;
+use Illuminate\Http\Request;
 
 class MedioDerivacionController extends Controller
 {
@@ -13,6 +13,7 @@ class MedioDerivacionController extends Controller
     {
         $this->medioderivacionRepository = $medioderivacionRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\ResponsableRepository;
+use Illuminate\Http\Request;
 
 class ResponsableController extends Controller
 {
@@ -13,6 +13,7 @@ class ResponsableController extends Controller
     {
         $this->responsableRepository = $responsableRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Calles;
-
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Afp>
@@ -12,6 +11,7 @@ use App\Models\Calles;
 class CallesFactory extends Factory
 {
     protected $model = Calles::class;
+
     /**
      * Define the model's default state.
      *

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\MedicamentoRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Repository\MedicamentoRepository;
 
 class MedicamentoController extends Controller
 {
@@ -14,6 +14,7 @@ class MedicamentoController extends Controller
     {
         $this->medicamentoRepository = $medicamentoRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +26,7 @@ class MedicamentoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->medicamentoRepository->store($request);
     }

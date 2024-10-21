@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -17,19 +17,19 @@ class UserSeeder extends Seeder
     {
         // Truncar la tabla users
         User::truncate();
-    
+
         User::create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'password' => Hash::make('password123'),
-            'isAdmin' => true
+            'isAdmin' => true,
         ]);
 
         User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => Hash::make('password123'),
-            'isAdmin' => false
+            'isAdmin' => false,
         ]);
 
         // Puedes agregar más usuarios según sea necesario

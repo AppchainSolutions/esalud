@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Helpers\RutGenerator;
 use App\Models\Especialidad;
 use App\Models\Profesional;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Profesional>
@@ -13,7 +13,6 @@ use App\Models\Profesional;
 class ProfesionalFactory extends Factory
 {
     protected $model = Profesional::class;
-
 
     public function definition()
     {

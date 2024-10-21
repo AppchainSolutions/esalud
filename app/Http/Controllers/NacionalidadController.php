@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\NacionalidadRepository;
+use Illuminate\Http\Request;
 
 class NacionalidadController extends Controller
 {
@@ -13,6 +13,7 @@ class NacionalidadController extends Controller
     {
         $this->nacionalidadRepository = $nacionalidadRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -33,7 +34,6 @@ class NacionalidadController extends Controller
     {
         return $this->nacionalidadRepository->store($request);
     }
-
 
     /**
      * Update the specified resource in storage.

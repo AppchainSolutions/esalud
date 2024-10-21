@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\PrevisionRepository;
-
+use Illuminate\Http\Request;
 
 class PrevisionController extends Controller
 {
@@ -25,7 +24,6 @@ class PrevisionController extends Controller
     {
         return $this->previsionRepository->all();
     }
-
 
     /**
      * Show the form for creating a new resource.

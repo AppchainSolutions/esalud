@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Models\Calles;
 
-
 class CalleRepository extends Repository
 {
     public function __construct(Calles $model)

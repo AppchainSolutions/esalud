@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Servicios;
-use App\Models\Pacientes;
-
 
 /**
  * AsignacionServicio model.
@@ -21,8 +18,6 @@ class AsignacionServicio extends Model
 
     /**
      * Get the patient that owns the service assignment.
-     *
-     * @return BelongsTo
      */
     public function pacientes(): BelongsTo
     {
@@ -33,6 +28,7 @@ class AsignacionServicio extends Model
     {
         return $this->hasMany(Servicios::class, 'asignacion_servicio', 'paciente_id', 'servicio_id');
     }
+
     /**
      * The table associated with the model.
      *

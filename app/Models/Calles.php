@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Pacientes; // Ensure this class exists in the specified namespace
+
+// Ensure this class exists in the specified namespace
 
 class Calles extends Model
 {
@@ -14,8 +15,6 @@ class Calles extends Model
 
     /**
      * Get the patients that live on this street.
-     *
-     * @return HasMany
      */
     public function pacientes(): HasMany
     {
@@ -24,10 +23,7 @@ class Calles extends Model
 
     /**
      * Get the street that the patient lives on.
-     *
-     * @return BelongsTo
      */
-
     public function calle(): BelongsTo
     {
         return $this->belongsTo(Calles::class);

@@ -5,10 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Pacientes;
-use App\Models\Especialidades;
-
 
 class Servicios extends Model
 {
@@ -23,8 +19,6 @@ class Servicios extends Model
 
     /**
      * Obtiene la especialidad asociada al servicio.
-     *
-     * @return BelongsTo
      */
     public function especialidad(): BelongsTo
     {
@@ -33,8 +27,6 @@ class Servicios extends Model
 
     /**
      * Obtiene los pacientes asociados al servicio.
-     *
-     * @return BelongsToMany
      */
     public function pacientes(): BelongsToMany
     {
@@ -43,8 +35,6 @@ class Servicios extends Model
 
     /**
      * Obtiene los profesionales asociados al servicio.
-     *
-     * @return BelongsToMany
      */
     public function profesionales(): BelongsToMany
     {

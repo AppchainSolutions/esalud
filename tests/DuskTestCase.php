@@ -44,7 +44,7 @@ abstract class DuskTestCase extends BaseTestCase
             )
         );
     }
-    
+
     /**
      * Define the base URL for the application.
      *

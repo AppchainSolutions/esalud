@@ -1,5 +1,7 @@
 <?php
+
 // app/Helpers/RutGenerator.php
+
 namespace App\Helpers;
 
 class RutGenerator
@@ -8,25 +10,26 @@ class RutGenerator
     {
         $numero = rand(1000000, 25000000); // Genera un número aleatorio
         $dv = self::calcularDigitoVerificador($numero); // Calcula el dígito verificador
-        return $numero . '-' . $dv; // Retorna el RUT en formato "12345678-9"
+
+        return $numero.'-'.$dv; // Retorna el RUT en formato "12345678-9"
     }
 
     private static function calcularDigitoVerificador($numero)
-{
-    $suma = 0;
-    $multiplicador = 2;
+    {
+        $suma = 0;
+        $multiplicador = 2;
 
-    // Convierte el número a cadena para poder acceder a sus dígitos
-    $numeroStr = (string)$numero;
+        // Convierte el número a cadena para poder acceder a sus dígitos
+        $numeroStr = (string) $numero;
 
-    // Calcula la suma de los dígitos multiplicados
-    for ($i = strlen($numeroStr) - 1; $i >= 0; $i--) {
-        $suma += $numeroStr[$i] * $multiplicador;
-        $multiplicador = $multiplicador < 7 ? $multiplicador + 1 : 2; // Ciclo de multiplicadores
+        // Calcula la suma de los dígitos multiplicados
+        for ($i = strlen($numeroStr) - 1; $i >= 0; $i--) {
+            $suma += $numeroStr[$i] * $multiplicador;
+            $multiplicador = $multiplicador < 7 ? $multiplicador + 1 : 2; // Ciclo de multiplicadores
+        }
+
+        $dv = 11 - ($suma % 11);
+
+        return $dv == 10 ? 'K' : ($dv == 11 ? '0' : $dv); // Retorna el dígito verificador
     }
-
-    $dv = 11 - ($suma % 11);
-    return $dv == 10 ? 'K' : ($dv == 11 ? '0' : $dv); // Retorna el dígito verificador
-}
-
 }

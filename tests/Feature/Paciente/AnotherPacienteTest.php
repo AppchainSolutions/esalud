@@ -2,21 +2,9 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Mockery;
-
-use App\Models\Calles;
-use App\Models\EstablecimientosEducacionales;
-use App\Models\EstadosCiviles;
-use App\Models\Generos;
-use App\Models\GruposSanguineos;
-use App\Models\Nacionalidades;
-use App\Models\NivelesInstruccion;
 use App\Models\Pacientes;
-use App\Models\Previsiones;
-use App\Models\PueblosOriginarios;
-use App\Models\Religiones;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery;
 
 uses(RefreshDatabase::class);
 test('it renders paciente page successfully', function () {
@@ -58,7 +46,7 @@ it('Pacientes with relationshions', function () {
 });
 
 it('has fillable attributes', function () {
-    $paciente = new Pacientes();
+    $paciente = new Pacientes;
     expect($paciente->getFillable())->toEqual([
         // ... (existing fillable attributes)
 
@@ -68,10 +56,9 @@ it('has fillable attributes', function () {
         'rut',
         'telefono_responsable',
         'telefono1',
-        'telefono2'
+        'telefono2',
     ]);
 });
-
 
 test('it renders paciente page successfully', function () {
     $pacienteRepositoryMock = Mockery::mock('App\Repository\PacienteRepository');

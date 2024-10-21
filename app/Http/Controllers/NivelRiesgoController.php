@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Inertia\Inertia;
 use App\Repository\NivelRiesgoRepository;
+use Illuminate\Http\Request;
 
 class NivelRiesgoController extends Controller
 {
@@ -14,11 +13,11 @@ class NivelRiesgoController extends Controller
     {
         $this->nivelriesgoRepository = $nivelriesgoRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {}
+    public function index() {}
 
     public function all()
     {
@@ -28,11 +27,10 @@ class NivelRiesgoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->nivelriesgoRepository->store($request);
     }
-
 
     /**
      * Update the specified resource in storage.

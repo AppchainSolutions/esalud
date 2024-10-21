@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\GrupoSanguineoRepository;
-
+use Illuminate\Http\Request;
 
 class GrupoSanguineoController extends Controller
 {
@@ -14,6 +13,7 @@ class GrupoSanguineoController extends Controller
     {
         $this->grupoSanguineoRepository = $grupoSanguineoRepository;
     }
+
     public function index()
     {
         //        return $this->grupoSanguineoRepository->all();
@@ -31,8 +31,6 @@ class GrupoSanguineoController extends Controller
     {
         //
     }
-
-
 
     /**
      * Show the form for editing the specified resource.

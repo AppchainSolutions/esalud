@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\VacunaRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Repository\VacunaRepository;
 
 class VacunaController extends Controller
 {
@@ -19,6 +19,7 @@ class VacunaController extends Controller
     {
         return Inertia::render('Consultas/ConsultaVacuna');
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -35,7 +36,6 @@ class VacunaController extends Controller
 
         return $this->vacunaRepository->store($request);
     }
-
 
     /**
      * Update the specified resource in storage.

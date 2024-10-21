@@ -3,10 +3,9 @@
 namespace App\Repository;
 
 use App\Helpers\Tools;
+use App\Models\LicenciaMedica;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use App\Models\LicenciaMedica;
-use Illuminate\Support\Facades\Response;
 
 class LicenciaMedicaRepository extends Repository
 {
@@ -19,6 +18,7 @@ class LicenciaMedicaRepository extends Repository
     {
         $filters = $request->get('filters');
         $query = Paciente::join('licencia_medica as sec', 'sec.paciente_id', '=', 'paciente.id');
+
         return Tools::filterData($filters, $query);
     }
 }

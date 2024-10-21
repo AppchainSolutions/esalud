@@ -6,7 +6,6 @@ use App\Repository\PacienteRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Mockery;
-use Pest\Laravel\mock;
 
 beforeEach(function () {
     $this->pacienteRepository = Mockery::mock(PacienteRepository::class);

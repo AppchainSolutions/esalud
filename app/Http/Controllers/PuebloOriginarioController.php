@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\PuebloOriginarioRepository;
+use Illuminate\Http\Request;
 
 class PuebloOriginarioController extends Controller
 {
     protected $puebloOriginarioRepository;
-
 
     public function __construct(PuebloOriginarioRepository $puebloOriginarioRepository)
     {
@@ -27,7 +26,6 @@ class PuebloOriginarioController extends Controller
     {
         return $this->puebloOriginarioRepository->all();
     }
-
 
     /**
      * Show the form for creating a new resource.

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\ReligionRepository;
-
+use Illuminate\Http\Request;
 
 class ReligionController extends Controller
 {
@@ -14,6 +13,7 @@ class ReligionController extends Controller
     {
         $this->religionRepository = $religionRepository;
     }
+
     public function index()
     {
         //        return $this->religionRepository->all();
@@ -27,7 +27,7 @@ class ReligionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store()
+    public function store()
     {
         //
     }

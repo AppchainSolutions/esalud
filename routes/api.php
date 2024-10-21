@@ -14,6 +14,7 @@ use App\Http\Controllers\PuebloOriginarioController;
 use App\Http\Controllers\ReligionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,5 +43,3 @@ Route::get('previsiones', [PrevisionController::class, 'all'])->name('prevision.
 Route::get('niveles_instruccion', [NivelInstruccionController::class, 'all'])->name('nivelInstruccion.all');
 Route::get('pueblos_originarios', [PuebloOriginarioController::class, 'all'])->name('puebloOriginario.all');
 Route::get('religiones', [ReligionController::class, 'all'])->name('religion.all');
-
-

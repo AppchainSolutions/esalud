@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repository\TrastornoCronicoRepository;
-use Illuminate\Support\Facades\Log;
-
+use Illuminate\Http\Request;
 
 class TrastornoCronicoController extends Controller
 {
@@ -15,6 +13,7 @@ class TrastornoCronicoController extends Controller
     {
         $this->trastornoCronicoRepository = $trastornoCronicoRepository;
     }
+
     public function index()
     {
         return $this->trastornoCronicoRepository->all();

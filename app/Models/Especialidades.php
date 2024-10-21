@@ -30,7 +30,7 @@ class Especialidades extends Model
      * @var array
      */
     protected $fillable = [
-        'descripcion'
+        'descripcion',
     ];
 
     /**
@@ -40,5 +40,4 @@ class Especialidades extends Model
     {
         return $this->belongsTo(Profesional::class);
     }
-
 }

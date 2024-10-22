@@ -113,11 +113,10 @@ abstract class Repository implements RepositoryInterface
     public function show(Request $request)
     {
         try {
+            Log::info($request->all());
             $filters = $request->input('data');
-            Log::info($filters);
             $query = $this->model->query()
                 ->select('*');
-
             return Tools::filterData($filters, $query);
         } catch (QueryException $e) {
             return response()->json([

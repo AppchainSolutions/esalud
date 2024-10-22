@@ -2,7 +2,6 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import { searchItem, storeItem, deleteItem, editItem, showItem } from "@/crud";
 import { useNotification } from "@kyvg/vue3-notification";
 import { nextTick } from "vue";
-import logger from "vue-logger-plugin";
 
 const { notify } = useNotification();
 //**********\\\\ METHODS ////*************/
@@ -42,8 +41,8 @@ export const fetchAllData = async (endpoints) => {
 
 export const handleStoreItem = async (state) => {
     try {
-        const item = { ...state.editedItem };
-        await storeItem(state.urlCreate, item);
+        console.log('item',state);
+        await storeItem(state.urlCreate, state.editedItem);
         notify({ text: "Datos almacenados exitosamente.", type: "success" });
     } catch (error) {
         console.log(error);
@@ -265,6 +264,7 @@ export const closeForm = (state) => {
 
 export const openToCreate = (state) => {
     state.editedItem = { ...state.defaultItem };
+    console.log(state.editedItem);
     state.editedIndex = -1;
     state.dialog = true;
 };

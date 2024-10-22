@@ -62,7 +62,7 @@ class PacienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         return $this->pacienteRepository->store($request);
     }

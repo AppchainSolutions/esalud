@@ -1,5 +1,6 @@
 import "./bootstrap";
 import { createApp, h } from "vue";
+import { createLogger } from 'vue-logger-plugin'
 import { VueSpinnersPlugin } from "vue3-spinners";
 import { createPinia } from "pinia";
 import { createInertiaApp } from "@inertiajs/vue3";
@@ -58,6 +59,7 @@ createInertiaApp({
             .use(pinia)
             .use(vuetify)
             .use(VueSweetalert2)
+            .use(createLogger())
             .mount(el);
     },
     progress: {

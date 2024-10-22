@@ -2,11 +2,11 @@
 
 namespace App\Repository;
 
-use App\Models\Alergia;
+use App\Models\Alergias;
 
 class AlergiaRepository extends Repository
 {
-    public function __construct(Alergia $model)
+    public function __construct(Alergias $model)
     {
         $this->model = $model;
     }

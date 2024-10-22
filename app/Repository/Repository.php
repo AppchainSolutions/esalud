@@ -41,12 +41,13 @@ abstract class Repository implements RepositoryInterface
         $query = $request->get('data');
 
         Log::info($query);
-
+        
         try {
             $query = array_map(function ($value) {
                 return is_array($value) ? implode(',', $value) : $value;
             }, $query);
-
+            
+            Log::info($query);
             $request = $this->model->create($query);
 
             return response()->json([

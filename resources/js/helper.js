@@ -1,12 +1,10 @@
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { searchItem, storeItem, deleteItem, editItem, showItem } from "@/crud";
 import { useNotification } from "@kyvg/vue3-notification";
-import { useDataStore } from "@/store.js";
 import { nextTick } from "vue";
+import logger from "vue-logger-plugin";
 
-const store = useDataStore();
 const { notify } = useNotification();
-
 //**********\\\\ METHODS ////*************/
 
 export const fetchAllData = async (endpoints) => {
@@ -24,7 +22,8 @@ export const fetchAllData = async (endpoints) => {
                 type: "error",
                 message: `Failed to fetch data from ${endpointUrl}`,
             });
-            console.error(`Error fetching data from ${endpointUrl}:`, error);
+            log.error(`Error fetching data from ${endpointUrl}:`, error);
+
             return { endpoint, data: null };
         }
     });
@@ -44,11 +43,10 @@ export const fetchAllData = async (endpoints) => {
 export const handleStoreItem = async (state) => {
     try {
         const item = { ...state.editedItem };
-        item.paciente_id = store.selected.id;
-        await storeItem(state.urlStore, item);
+        await storeItem(state.urlCreate, item);
         notify({ text: "Datos almacenados exitosamente.", type: "success" });
     } catch (error) {
-        console.error(error);
+        console.log(error);
         notify({
             text: "Se produjo un error, por favor revise que los datos sean correctos.",
             type: "error",

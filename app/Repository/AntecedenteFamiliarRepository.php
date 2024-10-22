@@ -2,11 +2,11 @@
 
 namespace App\Repository;
 
-use App\Models\AntecedenteFamiliar;
+use App\Models\AntecedentesFamiliares;
 
 class AntecedenteFamiliarRepository extends Repository
 {
-    public function __construct(AntecedenteFamiliar $model)
+    public function __construct(AntecedentesFamiliares $model)
     {
         $this->model = $model;
     }

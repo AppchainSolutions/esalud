@@ -4,10 +4,10 @@ describe('Login Test', () => {
         cy.visit('/login');
 
         // Enter email
-        cy.get('input[name="email"]').type('your-email@example.com');
+        cy.get('input[name="email"]').type('admin@example.com');
 
         // Enter password
-        cy.get('input[name="password"]').type('your-password');
+        cy.get('input[name="password"]').type('password123');
 
         // Click the login button
         cy.get('button[type="submit"]').click();

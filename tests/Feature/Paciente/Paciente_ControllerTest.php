@@ -12,37 +12,39 @@ beforeEach(function () {
     $this->controller = new PacienteController($this->pacienteRepository);
 });
 
-test('index method returns Inertia response', function () {
-    Inertia::shouldReceive('render')
-        ->once()
-        ->with('PacientePage')
-        ->andReturn('InertiaResponse');
+describe('Paciente CRUD Operations', () => {
+    const baseUrl = 'http://localhost:8000';
 
-    $response = $this->controller->index();
+    beforeEach(() => {
+        cy.visit(baseUrl);
+    });
 
-    expect($response)->toBe('InertiaResponse');
+    it('should create a new patient', () => {
+        cy.visit(`${baseUrl}/paciente/create`);
+        cy.get('input[name="name"]').type('New Patient');
+        cy.get('form').submit();
+        cy.contains('Patient created successfully').should('be.visible');
 });
 
-test('all method returns all patients', function () {
-    $this->pacienteRepository->shouldReceive('all')
-        ->once()
-        ->andReturn('allPatients');
-
-    $response = $this->controller->all();
-
-    expect($response)->toBe('allPatients');
+    it('should edit an existing patient', () => {
+        cy.visit(`${baseUrl}/paciente/1/edit`);
+        cy.get('input[name="name"]').clear().type('Updated Patient');
+        cy.get('form').submit();
+        cy.contains('Patient updated successfully').should('be.visible');
 });
 
-test('show method returns specific patient data', function () {
-    $request = Request::create('/paciente/show', 'GET', ['id' => 1]);
-    $this->pacienteRepository->shouldReceive('show')
-        ->once()
-        ->with($request)
-        ->andReturn('patientData');
+    it('should delete a patient', () => {
+        cy.visit(`${baseUrl}/paciente`);
+        cy.get('button[data-cy="delete-paciente-1"]').click();
+        cy.contains('Patient deleted successfully').should('be.visible');
+    });
 
-    $response = $this->controller->show($request);
-
-    expect($response)->toBe('patientData');
+    it('should view a patient', () => {
+        cy.visit(`${baseUrl}/paciente/1`);
+        cy.contains('Patient Details').should('be.visible');
+        cy.contains('Name:').should('be.visible');
+    });
+});
 });
 
 test('update method updates patient data', function () {

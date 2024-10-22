@@ -4,13 +4,13 @@ namespace App\Repository;
 
 use App\Helpers\Tools;
 use App\Models\Paciente;
-use App\Models\Vacuna;
+use App\Models\Vacunas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class VacunaRepository extends Repository
 {
-    public function __construct(Vacuna $model)
+    public function __construct(Vacunas $model)
     {
         $this->model = $model;
     }

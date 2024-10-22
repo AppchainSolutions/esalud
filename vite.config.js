@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import { configDefaults } from "vitest/config";
+import vuetify from "vite-plugin-vuetify";
 
 
 export default defineConfig({
@@ -10,12 +10,6 @@ export default defineConfig({
     },
     css: {
         devSourcemap: true,
-    },
-    test: {
-        globals: true,
-        environment: "jsdom",
-        setupFiles: "./tests/setup.js",
-        exclude: [...configDefaults.exclude, "tests/e2e/*"],
     },
     plugins: [
         laravel({
@@ -29,13 +23,15 @@ export default defineConfig({
                     base: null,
                     includeAbsolute: false,
                 },
-                compilerOptions: {
-                    // isCustomElement: (tag) => tag.startsWith('v-')
-                    // isCustomElement: (tag) => ['v-'].indexOf(tag) !== -1
-                },
             },
         }),
+        vuetify({ autoImport: true }), // Automatically imports Vuetify components
     ],
+    test: {
+        globals: true,
+        environment: "jsdom",
+        setupFiles: './vitest.setup.js', // Add this line
+    },
     server: {
         headers: {
             "Cache-Control": "no-cache, no-store, must-revalidate",

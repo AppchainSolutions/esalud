@@ -20,7 +20,7 @@ class Cirugias extends Model
     protected $fillable = [
         'paciente_id',
         'comentario',
-        'cirugia',
+        'descripcion',
         'fecha_cirugia',
     ];
 }

@@ -2,11 +2,11 @@
 
 namespace App\Repository;
 
-use App\Models\FactorRiesgo;
+use App\Models\FactoresRiesgo;
 
 class FactorRiesgoRepository extends Repository
 {
-    public function __construct(FactorRiesgo $model)
+    public function __construct(FactoresRiesgo $model)
     {
         $this->model = $model;
     }

@@ -1,6 +1,6 @@
 # Laravel specific
 /vendor
-/public
+/public/build
 /node_modules
 /storage/*.key
 .env.dev
@@ -21,3 +21,8 @@ Thumbs.db
 # Logs and temp files
 npm-debug.log
 yarn-error.log
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

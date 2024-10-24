@@ -43,3 +43,4 @@ Route::get('previsiones', [PrevisionController::class, 'all'])->name('prevision.
 Route::get('niveles_instruccion', [NivelInstruccionController::class, 'all'])->name('nivelInstruccion.all');
 Route::get('pueblos_originarios', [PuebloOriginarioController::class, 'all'])->name('puebloOriginario.all');
 Route::get('religiones', [ReligionController::class, 'all'])->name('religion.all');
+Route::get('paciente/search', [PacienteController::class, 'search'])->name('paciente.search');

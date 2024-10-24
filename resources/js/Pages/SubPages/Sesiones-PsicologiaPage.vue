@@ -8,7 +8,7 @@ import {
     fetchAllData,
     handleEditItem,
     handleRemoveItem,
-    handleShowItem,
+    handleSearchItem,
     handleStoreItem,
     openToCreate,
     openToEdit,

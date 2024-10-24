@@ -1,16 +1,19 @@
 import Swal from "sweetalert2/dist/sweetalert2.js";
-import { searchItem, storeItem, deleteItem, editItem, showItem } from "@/crud";
+import { storeItem, deleteItem, editItem, showItem } from "@/crud";
+import { get } from "@/api";
 import { useNotification } from "@kyvg/vue3-notification";
 import { nextTick } from "vue";
+import logger from "./logger.js";
 
 const { notify } = useNotification();
+
 //**********\\\\ METHODS ////*************/
 
 export const fetchAllData = async (endpoints) => {
     const fetches = endpoints.map(async (endpoint) => {
         const endpointUrl = "api/" + endpoint;
         try {
-            const response = await axios.get(endpointUrl);
+            const response = await get(endpointUrl);
             return {
                 endpointUrl,
                 data: response.data.result,
@@ -21,7 +24,7 @@ export const fetchAllData = async (endpoints) => {
                 type: "error",
                 message: `Failed to fetch data from ${endpointUrl}`,
             });
-            log.error(`Error fetching data from ${endpointUrl}:`, error);
+            logger.error(`Error fetching data from ${endpointUrl}:`, error);
 
             return { endpoint, data: null };
         }
@@ -41,7 +44,6 @@ export const fetchAllData = async (endpoints) => {
 
 export const handleStoreItem = async (state) => {
     try {
-        console.log('item',state);
         await storeItem(state.urlCreate, state.editedItem);
         notify({ text: "Datos almacenados exitosamente.", type: "success" });
     } catch (error) {
@@ -135,48 +137,23 @@ export const handleRemoveItem = async (state, item) => {
  * @param {number} id - The ID of the item to retrieve.
  * @returns {Promise<any>} - A promise that resolves to the retrieved item.
  */
-export const handleShowItem = async (state) => {
-    const url = state.urlShow;
-    const filter = state.searchQuery;
-    console.log(filter);
-    state.loadingSearch = true;
-    try {
-        const result = await showItem(url, filter);
-        setResponse(state, result);
+export const handleSearchItem = async (filter, route) => {
+    const urlRoute = "api" + route + "/search";
+    const urlFilter = filter;
+    logger.info("ruta", urlRoute);
+    logger.info("filtro", urlFilter);
+
+    /*     try {
+        const response = await get(urlRoute, { urlFilter });
+        logger.info("response", response);
     } catch (error) {
+        logger.error("Error retrieving item:", error);
         notify({
             title: "Error al obtener los datos.",
             text: error,
             type: "error",
         });
-    }
-    state.loadingSearch = false;
-};
-/**
- * Handles the search for an item.
- *
- * @param {string} searchUrl - The URL for the search.
- * @param {string} searchQuery - The query to search for.
- * @returns {Promise} - A promise that resolves with the search response.
- * @throws {Error} - If an error occurs during the search.
- */
-export const handleSearchItem = async (state) => {
-    const filter = state.searchQuery;
-    const url = state.urlSearch;
-    state.loadingSearch = true;
-    try {
-        const result = await searchItem(url, filter);
-        setResponse(state, result);
-    } catch (error) {
-        notify({
-            title: "Error.",
-            text: "Se produjo un error.",
-            type: "error",
-        });
-        console.error(error);
-        state.tableItems = [];
-    }
-    state.loadingSearch = false;
+    } */
 };
 
 async function setResponse(state, result) {
@@ -203,7 +180,7 @@ async function setResponse(state, result) {
         state.tableItems = [];
     }
 }
- 
+
 /**
  * Adds matching item descriptions to the given result data.
  *
@@ -236,7 +213,7 @@ export const addValue = (state, result) => {
                 // Get the matching item's description
                 const matchingItemDescription = getMatchingItem(
                     campo,
-                    updatedItem[campo]
+                    updatedItem[campo],
                 );
 
                 // If a matching item's description is found, update the item's property value with the description
@@ -274,11 +251,11 @@ export const openToEdit = (state, item) => {
         const recordsArray = Object.values(state.formItems);
         const record = recordsArray.find((rec) => rec.id === item.id);
         edit(record);
-    } else {    
+    } else {
         const record = item;
         edit(record);
-    } 
-    
+    }
+
     function edit(record) {
         try {
             const index = state.tableItems.indexOf(item);
@@ -292,7 +269,7 @@ export const openToEdit = (state, item) => {
                 message: `Error ${error}`,
             });
         }
-    } 
+    }
 };
 
 export const validationRules = (value) => {

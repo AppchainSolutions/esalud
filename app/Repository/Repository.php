@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
-abstract class Repository implements RepositoryInterface
+abstract class Repository implements RepoInterface
 {
     protected $model;
 
@@ -110,14 +110,15 @@ abstract class Repository implements RepositoryInterface
         }
     }
 
-    public function show(Request $request)
+    public function search(Request $request)
     {
         try {
-            Log::info($request->all());
-            $filters = $request->input('data');
-            $query = $this->model->query()
-                ->select('*');
-            return Tools::filterData($filters, $query);
+            $filters = $request->input();
+
+            /* $query = $this->model->query()
+            ->select('*');
+            $filteredData = Tools::filterData($filters, $query);
+            Log::info($filteredData); */
         } catch (QueryException $e) {
             return response()->json([
                 'result' => 'error',

@@ -60,4 +60,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    protected function gate(): void
+{
+    Gate::define('viewTelescope', function (User $user) {
+/*         return in_array($user->email, [
+            'crimsonfire@duck.com',
+        ]); */
+    });
+}
 }

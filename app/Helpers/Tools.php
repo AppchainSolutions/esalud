@@ -3,12 +3,14 @@
 namespace App\Helpers;
 
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 
 class Tools
 {
     public static function filterData(array $filters, $query)
     {
-        if (empty($filters)) {
+        return $query->get();
+        /* if (empty($filters)) {
             return $query->get();
         }
 
@@ -24,10 +26,10 @@ class Tools
             return $query->get();
         } catch (QueryException $error) {
             return 'Error al filtrar por fechas';
-        }
+        } */
     }
 
-    private static function applyDateFilter($query, $field, $dates)
+    /* private static function applyDateFilter($query, $field, $dates)
     {
         try {
             if (isset($dates['desde'], $dates['hasta'])) {
@@ -38,5 +40,5 @@ class Tools
         } catch (QueryException $e) {
             return 'Formato de fecha incorrecto';
         }
-    }
+    } */
 }

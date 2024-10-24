@@ -12,21 +12,10 @@ class PsicologiaController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         return Inertia::render('FichaPsicologiaPage');
     }
 
-<<<<<<< HEAD
-=======
-    public function atencion()
-    {
-       return Inertia::render('SubPages/AtencionPsicologicaPage');
-=======
-        //return Inertia::render('FichaPsicologiaPage');
->>>>>>> 3beee4f ("Removed and modified files in app/Http/Controllers, resources/js, routes, and tests directories; updated vite.config.js")
-    }
 
->>>>>>> dfedd27 (Refactor launch.json to add new Chrome configurations)
     /**
      * Show the form for creating a new resource.
      */

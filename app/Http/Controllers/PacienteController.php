@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Repository\PacienteRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Debugbar;
+
 
 class PacienteController extends Controller
 {
@@ -41,9 +43,9 @@ class PacienteController extends Controller
      * @param  Request  $request  The request containing the patient ID to be displayed.
      * @return mixed Patient data from the repository.
      */
-    public function show(Request $request)
+    public function search(Request $request)
     {
-        return $this->pacienteRepository->show($request);
+        return $this->pacienteRepository->search($request);
     }
 
     /**

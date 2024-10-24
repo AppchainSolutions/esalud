@@ -1,6 +1,8 @@
-import "./bootstrap";
+import "./axiosConfig";
 import { createApp, h } from "vue";
-import { createLogger } from 'vue-logger-plugin'
+import { LoadingPlugin } from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
+import logger from "./logger";
 import { VueSpinnersPlugin } from "vue3-spinners";
 import { createPinia } from "pinia";
 import { createInertiaApp } from "@inertiajs/vue3";
@@ -19,7 +21,6 @@ import { aliases, mdi } from "vuetify/iconsets/mdi";
 import "@mdi/font/css/materialdesignicons.css";
 
 const pinia = createPinia();
-const appName = import.meta.env.VITE_APP_NAME || "Centro Comunitario";
 
 const vuetify = createVuetify({
     ssr: true,
@@ -43,34 +44,23 @@ const vuetify = createVuetify({
 });
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,
-            import.meta.glob("./Pages/**/*.vue")
+            import.meta.glob("./Pages/**/*.vue"),
         ),
     setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
-            .component("downloadExcel", JsonExcel)
-            .use(Notifications)
-            .use(VueSpinnersPlugin)
-            .use(ZiggyVue, Ziggy)
+        createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(pinia)
-            .use(vuetify)
-            .use(VueSweetalert2)
-            .use(createLogger())
+            .component("downloadExcel", JsonExcel) // Custom component
+            .use(pinia) // Pinia for state management
+            .use(Notifications) // Notification plugin
+            .use(VueSpinnersPlugin) // Spinner plugin
+            .use(ZiggyVue, Ziggy) // Ziggy for routing
+            .use(vuetify) // Vuetify for UI components
+            .use(VueSweetalert2) // SweetAlert2 for alerts
+            .use(logger) // Logger plugin
+            .use(LoadingPlugin)
             .mount(el);
-    },
-    progress: {
-        color: "red", // Change the color of the progress bar
-        includeCSS: true, // Include the default CSS for the progress bar
-        showSpinner: true, // Show a spinner while the progress bar is loading
-        thickness: "2em", // Change the thickness of the progress bar
-        transition: {
-            duration: 0.3, // Change the duration of the transition
-            opacity: 0.2, // Change the opacity of the progress bar
-            speed: "0.4s", // Change the speed of the progress bar
-        },
     },
 });

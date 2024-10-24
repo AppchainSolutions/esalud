@@ -1,15 +1,9 @@
-// src/logger.js
-import Vue from "vue";
-import VueLogger from "@/vue-logger";
+import { createLogger } from "vue-logger-plugin";
 
-const options = {
-    isEnabled: true,
-    logLevel: "debug", // Puede ser 'debug', 'info', 'warn', 'error', 'fatal'
-    stringifyArguments: false,
-    showLogLevel: true,
-    showMethodName: true,
-    separator: "|",
+// Logger configuration options
+const logger = createLogger({
+    enabled: true,
+    level: "debug",
     showConsoleColors: true,
-};
-
-Vue.use(VueLogger, options);
+});
+export default logger;

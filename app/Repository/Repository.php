@@ -113,12 +113,16 @@ abstract class Repository implements RepoInterface
     public function search(Request $request)
     {
         try {
-            $filters = $request->input();
-
-            /* $query = $this->model->query()
-            ->select('*');
+            $filters = $request->input('data');
+            Log::info($filters);
+            $query = $this->model->query()
+                ->select('*');
             $filteredData = Tools::filterData($filters, $query);
-            Log::info($filteredData); */
+            Log::info($filteredData);
+
+            return response()->json([
+                'result' => $filteredData,
+            ]);
         } catch (QueryException $e) {
             return response()->json([
                 'result' => 'error',

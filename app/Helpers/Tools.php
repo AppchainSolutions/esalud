@@ -9,8 +9,7 @@ class Tools
 {
     public static function filterData(array $filters, $query)
     {
-        return $query->get();
-        /* if (empty($filters)) {
+        if (empty($filters)) {
             return $query->get();
         }
 
@@ -26,10 +25,10 @@ class Tools
             return $query->get();
         } catch (QueryException $error) {
             return 'Error al filtrar por fechas';
-        } */
+        }
     }
 
-    /* private static function applyDateFilter($query, $field, $dates)
+    private static function applyDateFilter($query, $field, $dates)
     {
         try {
             if (isset($dates['desde'], $dates['hasta'])) {
@@ -40,5 +39,5 @@ class Tools
         } catch (QueryException $e) {
             return 'Formato de fecha incorrecto';
         }
-    } */
+    } 
 }

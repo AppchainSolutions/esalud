@@ -4,6 +4,7 @@ import { get } from "@/api";
 import { useNotification } from "@kyvg/vue3-notification";
 import { nextTick } from "vue";
 import logger from "./logger.js";
+import axiosConfig from "./axiosConfig.js";
 
 const { notify } = useNotification();
 
@@ -138,14 +139,16 @@ export const handleRemoveItem = async (state, item) => {
  * @returns {Promise<any>} - A promise that resolves to the retrieved item.
  */
 export const handleSearchItem = async (filter, route) => {
-    const urlRoute = "api" + route + "/search";
+    const urlRoute = "api/" + route + "/search";
     const urlFilter = filter;
-    logger.info("ruta", urlRoute);
-    logger.info("filtro", urlFilter);
-
-    /*     try {
-        const response = await get(urlRoute, { urlFilter });
-        logger.info("response", response);
+    try {
+        const result = await axiosConfig.get(urlRoute, {
+            params: {
+                data: urlFilter,
+            },
+        });
+        logger.info("response", result.status);
+        return result.data.result;
     } catch (error) {
         logger.error("Error retrieving item:", error);
         notify({
@@ -153,12 +156,11 @@ export const handleSearchItem = async (filter, route) => {
             text: error,
             type: "error",
         });
-    } */
+    }
 };
 
 async function setResponse(state, result) {
     const count = result.data.length;
-
     if (count > 0) {
         notify({
             title: "Aviso.",

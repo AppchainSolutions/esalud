@@ -142,7 +142,7 @@
     "/build/assets/Dashboard-YBGY6Dn9.js"
   ],
   "resources/js/Pages/PacientePage.vue": [
-    "/build/assets/PacientePage-Dsd-xId8.js"
+    "/build/assets/PacientePage-DpCZjXCa.js"
   ],
   "resources/js/Pages/PrivacyPolicy.vue": [
     "/build/assets/PrivacyPolicy-Dvn5U9K1.js"
@@ -166,33 +166,33 @@
     "/build/assets/Show-BxAqNUUh.js"
   ],
   "resources/js/Pages/PsicologiaPage.vue": [
-    "/build/assets/PsicologiaPage-DJg9s0k0.js"
+    "/build/assets/PsicologiaPage-Dvqd7GY4.js"
   ],
   "resources/js/Pages/ServicioPage.vue": [
-    "/build/assets/ServicioPage-x4jMggaK.js",
+    "/build/assets/ServicioPage-C4Zzdow_.js",
     "/build/assets/ServicioPage-CvjdIlTR.css"
   ],
   "resources/js/Pages/ServicioPage.vue?vue&type=style&index=0&scoped=88d27706&lang.css": [
-    "/build/assets/ServicioPage-x4jMggaK.js",
+    "/build/assets/ServicioPage-C4Zzdow_.js",
     "/build/assets/ServicioPage-CvjdIlTR.css"
   ],
   "resources/js/Pages/SubPages/AlergiaPage.vue": [
-    "/build/assets/AlergiaPage-Bvm1Kjot.js"
+    "/build/assets/AlergiaPage-BatQG8x7.js"
   ],
   "resources/js/Pages/SubPages/AntecedenteFamiliarPage.vue": [
-    "/build/assets/AntecedenteFamiliarPage-048Rvwsy.js"
+    "/build/assets/AntecedenteFamiliarPage-B0kdegd0.js"
   ],
   "resources/js/Pages/SubPages/CertificacionesPage.vue": [
     "/build/assets/CertificacionesPage-C5t-hAqi.js"
   ],
   "resources/js/Pages/SubPages/CirugiaPage.vue": [
-    "/build/assets/CirugiaPage-COf9jDC_.js"
+    "/build/assets/CirugiaPage-Bt6ki-L9.js"
   ],
   "resources/js/Pages/SubPages/Componentes/Asignacion-ServicioComponente.vue": [
-    "/build/assets/Asignacion-ServicioComponente-CFA2hc0T.js"
+    "/build/assets/Asignacion-ServicioComponente-D9YyHKLq.js"
   ],
   "resources/js/Pages/SubPages/Componentes/DataTable.vue": [
-    "/build/assets/DataTable-DfpkYs0Z.js"
+    "/build/assets/DataTable-B-MPa3aY.js"
   ],
   "resources/js/Pages/SubPages/Componentes/DatosEgreso-PsicologiaComponente.vue": [
     "/build/assets/DatosEgreso-PsicologiaComponente-DZKdmWO-.js"
@@ -227,19 +227,19 @@
     "/build/assets/TablaSesiones-PsicologiaComponente-XVJbOYiT.css"
   ],
   "resources/js/Pages/SubPages/ContextoPage.vue": [
-    "/build/assets/ContextoPage-Dv3xo8sZ.js"
+    "/build/assets/ContextoPage-_mgHj0x_.js"
   ],
   "resources/js/Pages/SubPages/DatosMedicosPage.vue": [
-    "/build/assets/DatosMedicosPage--X8GWuZB.js"
+    "/build/assets/DatosMedicosPage-DHmVoyF_.js"
   ],
   "resources/js/Pages/SubPages/EnfermedadPage.vue": [
-    "/build/assets/EnfermedadPage-BbLOiNlI.js"
+    "/build/assets/EnfermedadPage-DeHwA_ys.js"
   ],
   "resources/js/Pages/SubPages/FactorRiesgoPage.vue": [
-    "/build/assets/FactorRiesgoPage-B9EcSNv2.js"
+    "/build/assets/FactorRiesgoPage-C_DHck1Q.js"
   ],
   "resources/js/Pages/SubPages/FichaMedicaPage.vue": [
-    "/build/assets/FichaMedicaPage-uKqnV8rB.js"
+    "/build/assets/FichaMedicaPage-Bj1w_9Tc.js"
   ],
   "resources/js/Pages/SubPages/HorarioProfesionalPage.vue": [
     "/build/assets/HorarioProfesionalPage-D5BYouok.js",
@@ -250,19 +250,19 @@
     "/build/assets/HorarioProfesionalPage-COf7cHHs.css"
   ],
   "resources/js/Pages/SubPages/MedicamentoPage.vue": [
-    "/build/assets/MedicamentoPage-R8gaXuxv.js"
+    "/build/assets/MedicamentoPage-CyaG6SG5.js"
   ],
   "resources/js/Pages/SubPages/NotificacionPage.vue": [
     "/build/assets/NotificacionPage-DyVJP8Tj.js"
   ],
   "resources/js/Pages/SubPages/ProfesionalPage.vue": [
-    "/build/assets/ProfesionalPage-Mf9tcOpz.js"
+    "/build/assets/ProfesionalPage-DNLY-50J.js"
   ],
   "resources/js/Pages/SubPages/Sesiones-PsicologiaPage.vue": [
-    "/build/assets/Sesiones-PsicologiaPage-Dt6RW9zr.js"
+    "/build/assets/Sesiones-PsicologiaPage-DY59fbMm.js"
   ],
   "resources/js/Pages/SubPages/VacunaPage.vue": [
-    "/build/assets/VacunaPage-D3IgnApx.js"
+    "/build/assets/VacunaPage-BTntCPcz.js"
   ],
   "resources/js/Pages/Teams/Create.vue": [
     "/build/assets/Create-2X1ovdUj.js"
@@ -298,16 +298,19 @@
     "/build/assets/vitamhc-C8RI-1Kv.png"
   ],
   "resources/js/api.js": [
-    "/build/assets/helper--TRqTn-H.js"
+    "/build/assets/helper-BPJLKrkF.js"
+  ],
+  "resources/js/axiosConfig.js": [
+    "/build/assets/helper-BPJLKrkF.js"
   ],
   "resources/js/crud.js": [
-    "/build/assets/helper--TRqTn-H.js"
+    "/build/assets/helper-BPJLKrkF.js"
   ],
   "resources/js/helper.js": [
-    "/build/assets/helper--TRqTn-H.js"
+    "/build/assets/helper-BPJLKrkF.js"
   ],
   "resources/js/logger.js": [
-    "/build/assets/helper--TRqTn-H.js"
+    "/build/assets/helper-BPJLKrkF.js"
   ],
   "resources/js/ssr.js": [],
   "resources/js/store.js": [

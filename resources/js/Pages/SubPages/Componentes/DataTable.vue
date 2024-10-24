@@ -3,7 +3,7 @@ import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
     headers: Array,
-    data: Array
+    tableItems: Array
 });
 
 const emit = defineEmits(['formCreate', 'formEdit', 'formDelete', 'fichaPersonal', 'atencionesDiarias']);
@@ -16,7 +16,7 @@ function emitEvent(eventName, item) {
 <template>
     <v-card >
         <v-card-item>
-            <v-data-table :headers="headers" :items="data">
+            <v-data-table :headers="headers" :items="tableItems">
                 <template v-slot:top>
                     <v-toolbar flat>
                         <v-btn icon="mdi-account-multiple-plus" variant="tonal" class="ma-2" color="#009AA4"

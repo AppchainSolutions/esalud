@@ -19,6 +19,7 @@ defineOptions({ layout: AppLayout });
 
 //const store = useDataStore();
 const logger = useLogger();
+
 const state = reactive({
     endpoints: [
         "calles",
@@ -56,7 +57,17 @@ const state = reactive({
         },
         { title: "Acciones", sortable: false, align: "center", key: "actions" },
     ],
-    tableItems: [],
+
+    //tableItems: [],
+    tableItems: [
+    {
+        nombre: "Luis",
+        rut: "1234567-8",
+        fecha_nacimiento: "2022-01-01",
+        edad: 10,
+        apellidos: "Lira Cataldo"
+    }
+   ],
 
     formFields: [
         {
@@ -172,6 +183,7 @@ const state = reactive({
         telefono1: null,
         telefono2: null,
     },
+
     searchQuery: {
         id: null,
         rut: null,
@@ -193,11 +205,27 @@ const state = reactive({
     },
 });
 
+// const tableItems = reactive([]),
+
+/**
+ * Fetches all data from the specified endpoints and updates the list configuration.
+ * Logs the retrieved endpoints using the logger.
+ */
 onMounted(async () => {
     const result = await fetchAllData(state.endpoints);
     state.config.list = result;
-    logger.info("Endpoints:", result);
+    //logger.info("Endpoints:", result.);
 });
+
+async function buscar() {
+    state.config.loading = true;
+    logger.info("Buscar", state.searchQuery);
+    const result= await handleSearchItem(state.searchQuery, state.config.route);
+    logger.info(result);
+   //state.tableItems = result;
+   
+    state.config.loading = false;
+};
 
 const handleFormCreate = () => {
     console.info("Form Create:");
@@ -210,12 +238,7 @@ function handleFichaPersonal(item) {
 function handleAtencionesDiarias(item) {
     logger.log("Atenciones Diarias event triggered", item);
 }
-const buscar = async () => {
-    logger.info("Buscar", state.searchQuery);
-    state.config.loading = true;
-    await handleSearchItem(state.searchQuery, state.config.route);
-    state.config.loading = false;
-};
+
 const editedItemTitle = computed(() =>
     state.config.editedIndex === -1 ? state.formCrear : state.formEdit,
 );
@@ -391,7 +414,6 @@ const remove = async (item) => {
             <DataTable
                 :headers="state.headers"
                 :items="state.tableItems"
-                @formCreate="handleFormCreate"
             />
         </v-sheet>
     </v-sheet>

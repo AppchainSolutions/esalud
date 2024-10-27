@@ -1,4 +1,3 @@
-import "./axiosConfig";
 import { createApp, h } from "vue";
 import { LoadingPlugin } from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
@@ -38,9 +37,7 @@ const vuetify = createVuetify({
             mdi,
         },
     },
-    theme: {
-        defaultTheme: "light",
-    },
+
 });
 
 createInertiaApp({

@@ -1,17 +1,17 @@
 import { defineConfig } from "cypress";
 
 export default defineConfig({
-  projectId: 'jkgyof',
-  e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
+    projectId: "jkgyof",
+    e2e: {
+        setupNodeEvents(on, config) {
+            // implement node event listeners here
+        },
     },
-  },
 
-  component: {
-    devServer: {
-      framework: "vue-cli",
-      bundler: "webpack",
+    component: {
+        devServer: {
+            framework: "vue-cli",
+            bundler: "webpack",
+        },
     },
-  },
 });

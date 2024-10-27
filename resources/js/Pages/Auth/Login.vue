@@ -1,69 +1,51 @@
 <script setup>
 import { Head, Link, useForm } from "@inertiajs/vue3"
-import { ref } from "vue";
 import { useLoading } from 'vue-loading-overlay'
 
-defineProps({
-    canResetPassword: Boolean,
-    status: String,
-})
-
-const $loading = useLoading({
-    color: 'green',
-    loader: 'dots'
-})
-
-const visible = ref(false)
-const loading = ref(false)
-
+ defineProps({
+     canResetPassword: Boolean,
+     status: String,
+ })
+ const $loading = useLoading({
+    color: "green",
+    loader: "dots",
+    backgroundColor: "#4EC5F1",
+    opacity: 0.2,
+});
 const form = useForm({
     email: "",
     password: "",
     remember: false,
-});
+}); 
 
 const submit = () => {
     const loader = $loading.show();
-    // Optional parameters
     form.transform((data) => ({
         ...data,
         remember: form.remember ? "on" : "",
     })).post(route("login"), {
         onFinish: () => {
-            form.reset("password");
-            loader.hide();
-        },
+          form.reset("password");
+          loader.hide();
+            },
     });
 };
 </script>
 
 <template>
     <div class="login-container">
-
-        <Head title="Ingreso" />
-        <loading v-model:active="visible" :can-cancel="true"></loading>
-
         <div class="login-card">
             <h1 class="login-title">Municipalidad de Casablanca</h1>
-            <div v-if="status">
-                {{ status }}
-            </div>
             <form @submit.prevent="submit">
                 <v-text-field type="email" id="email" v-model="form.email" autofocus label="Email" hide-details required
                     class="mb-1" />
-
                 <v-text-field type="password" id="password" v-model="form.password" required
                     autocomplete="current-password" label="Clave" class="mt-1" />
                 <v-checkbox v-model:checked="form.remember" name="remember" label="Recordar" />
-                <v-btn class="mb-2" type="submit" color="green" :class="{ 'opacity-25': form.processing }"
+                <v-btn class="mb-2" type="submit" color="green" id="ingresar" :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing">
                     Ingresar
                 </v-btn>
-                <p>
-                    <Link v-if="canResetPassword" :href="route('password.request')">
-                    ¿Olvidó su clave?
-                    </Link>
-                </p>
             </form>
         </div>
     </div>

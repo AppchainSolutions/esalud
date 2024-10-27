@@ -1,10 +1,9 @@
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { storeItem, deleteItem, editItem, showItem } from "@/crud";
-import { get } from "@/api";
 import { useNotification } from "@kyvg/vue3-notification";
 import { nextTick } from "vue";
 import logger from "./logger.js";
-import axiosConfig from "./axiosConfig.js";
+import axios from "axios";
 
 const { notify } = useNotification();
 
@@ -14,7 +13,7 @@ export const fetchAllData = async (endpoints) => {
     const fetches = endpoints.map(async (endpoint) => {
         const endpointUrl = "api/" + endpoint;
         try {
-            const response = await get(endpointUrl);
+            const response = await axios.get(endpointUrl);
             return {
                 endpointUrl,
                 data: response.data.result,
@@ -42,6 +41,118 @@ export const fetchAllData = async (endpoints) => {
         return dataByVariable;
     });
 };
+/**
+ * Retrieves an item from the specified endpoint using the provided ID.
+ *
+ * @param {string} route - The endpoint to retrieve the item from.
+ * @param {number} id - The ID of the item to retrieve.
+ * @returns {Promise<any>} - A promise that resolves to the retrieved item.
+ */
+export const handleSearchItem = async (filter, route) => {
+    const urlRoute = "api/" + route + "/search";
+    const urlFilter = filter;
+    try {
+        const result = await axios.get(urlRoute, {
+            params: {
+                data: urlFilter,
+            },
+        });
+        const count = result.data.result.length;
+        if (count > 0) {
+            notify({
+                title: "Aviso.",
+                text: `Se encontraron ${count} registros.`,
+                type: "success",
+            });
+            return result.data.result;
+        } else {
+            notify({
+                title: "Aviso.",
+                text: `No se encontraron registros.`,
+                type: "error",
+            });
+        }
+    } catch (error) {
+        logger.error("Error retrieving item:", error);
+        notify({
+            title: "Error al obtener los datos.",
+            text: error,
+            type: "error",
+        });
+    }
+};
+/* 
+async function setFormItems(result) {
+    
+    } else {
+        notify({
+            title: "Aviso.",
+            text: `No se encontraron registros.`,
+            type: "warning",
+        });
+        state.tableItems = [];
+    }
+}
+ */
+/**
+ * Adds matching item descriptions to the given result data.
+ *
+ * @param {Object} state - The state object containing a `list` property with endpoint arrays and an `endpoints` property with endpoint names.
+ * @param {Object} result - The result object containing a `data` property with an array of items.
+ * @returns {Array|null} - The final result with matching item descriptions added, or null if the result data is empty.
+ */
+/* export const endpointLabel = (state, result) => {
+    if (state.endpoints) {
+        state.tableItems = addLabel(state, result.data);
+    } else {
+        state.tableItems = result.data;
+    }
+    // Check if the result data is empty
+    if (!result.length) {
+        return null;
+    }
+
+    function addLabel(state.list){
+        getMatchingItem(campo, id);
+        finalResult(item);
+    }
+
+    // Helper function to get matching item description
+    const getMatchingItem = (campo, id) => {
+        const matchingItem = state.list[campo].find((col) => col.id === id);
+        if (!matchingItem) return null;
+        return { id: matchingItem.id, descripcion: matchingItem.descripcion };
+    };
+
+    // Map over each item in the result data
+    const finalResult = result.map((item) => {
+        // Create a copy of the item using the spread operator
+        const updatedItem = { ...item };
+
+        // Iterate over each endpoint in the state object
+        state.endpoints.forEach((campo) => {
+            // Check if the endpoint exists in the state object and if the item has a value for that endpoint
+            if (state.list[campo] && updatedItem[campo]) {
+                // Get the matching item's description
+                const matchingItemDescription = getMatchingItem(
+                    campo,
+                    updatedItem[campo],
+                );
+
+                // If a matching item's description is found, update the item's property value with the description
+                if (matchingItemDescription) {
+                    updatedItem[campo] = matchingItemDescription;
+                }
+            }
+        });
+
+        // Return the updated item
+        return updatedItem;
+    });
+
+    // Return the final result with all items updated
+    return finalResult;
+}; */
 
 export const handleStoreItem = async (state) => {
     try {
@@ -130,107 +241,6 @@ export const handleRemoveItem = async (state, item) => {
     } catch (error) {
         console.error(error);
     }
-};
-/**
- * Retrieves an item from the specified endpoint using the provided ID.
- *
- * @param {string} route - The endpoint to retrieve the item from.
- * @param {number} id - The ID of the item to retrieve.
- * @returns {Promise<any>} - A promise that resolves to the retrieved item.
- */
-export const handleSearchItem = async (filter, route) => {
-    const urlRoute = "api/" + route + "/search";
-    const urlFilter = filter;
-    try {
-        const result = await axiosConfig.get(urlRoute, {
-            params: {
-                data: urlFilter,
-            },
-        });
-        logger.info("response", result.status);
-        return result.data.result;
-    } catch (error) {
-        logger.error("Error retrieving item:", error);
-        notify({
-            title: "Error al obtener los datos.",
-            text: error,
-            type: "error",
-        });
-    }
-};
-
-async function setResponse(state, result) {
-    const count = result.data.length;
-    if (count > 0) {
-        notify({
-            title: "Aviso.",
-            text: `Se encontraron ${count} registros.`,
-            type: "success",
-        });
-        state.formItems = { ...result.data };
-        if (state.endpoints) {
-            state.tableItems = addValue(state, result.data);
-        } else {
-            state.tableItems = result.data;
-        }
-    } else {
-        notify({
-            title: "Aviso.",
-            text: `No se encontraron registros.`,
-            type: "warning",
-        });
-        state.tableItems = [];
-    }
-}
-
-/**
- * Adds matching item descriptions to the given result data.
- *
- * @param {Object} state - The state object containing a `list` property with endpoint arrays and an `endpoints` property with endpoint names.
- * @param {Object} result - The result object containing a `data` property with an array of items.
- * @returns {Array|null} - The final result with matching item descriptions added, or null if the result data is empty.
- */
-export const addValue = (state, result) => {
-    // Check if the result data is empty
-    if (!result.length) {
-        return null;
-    }
-
-    // Helper function to get matching item description
-    const getMatchingItem = (campo, id) => {
-        const matchingItem = state.list[campo].find((col) => col.id === id);
-        if (!matchingItem) return null;
-        return { id: matchingItem.id, descripcion: matchingItem.descripcion };
-    };
-
-    // Map over each item in the result data
-    const finalResult = result.map((item) => {
-        // Create a copy of the item using the spread operator
-        const updatedItem = { ...item };
-
-        // Iterate over each endpoint in the state object
-        state.endpoints.forEach((campo) => {
-            // Check if the endpoint exists in the state object and if the item has a value for that endpoint
-            if (state.list[campo] && updatedItem[campo]) {
-                // Get the matching item's description
-                const matchingItemDescription = getMatchingItem(
-                    campo,
-                    updatedItem[campo],
-                );
-
-                // If a matching item's description is found, update the item's property value with the description
-                if (matchingItemDescription) {
-                    updatedItem[campo] = matchingItemDescription;
-                }
-            }
-        });
-
-        // Return the updated item
-        return updatedItem;
-    });
-
-    // Return the final result with all items updated
-    return finalResult;
 };
 
 export const closeForm = (state) => {

@@ -1,10 +1,19 @@
 <script>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { usePage, router } from "@inertiajs/vue3";
 import logo from "../../img/logo_muni_casablanca.png";
+import { useLoading } from "vue-loading-overlay";
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
+const $loading = useLoading({
+    color: "#662d91",
+    loader: "dots",
+    backgroundColor: "#662d91",
+    opacity: 0.2,
+});
+const visible = ref(false);
+const loading = ref(false);
 
 export default {
     inheritAttrs: false,
@@ -31,19 +40,49 @@ export default {
             this.rail = !this.rail;
         },
         inicio() {
-            router.get("dashboard");
+            const loader = $loading.show();
+            router.visit("dashboard", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         paciente() {
-            router.get("paciente");
+            const loader = $loading.show();
+            router.visit("paciente", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         servicio() {
-            router.get("servicio");
+            const loader = $loading.show();
+            router.visit("servicio", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         profesional() {
-            router.get("profesional");
+            const loader = $loading.show();
+            router.visit("profesional", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         psicologia() {
-            router.get("psicologia-pacientes");
+            const loader = $loading.show();
+            router.visit("psicologia", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
 
         salir() {
@@ -57,7 +96,7 @@ export default {
 <template>
     <v-app>
         <v-container fluid>
-            <notifications position="bottom right" width="40%"> </notifications>
+            <notifications position="bottom center" width="40%"> </notifications>
             <v-card>
                 <v-navigation-drawer
                     v-model="drawer"
@@ -144,39 +183,28 @@ export default {
     </v-app>
 </template>
 
-<style>
-.v-navigation-drawer--active .v-list-item .mdi {
-    color: #8e44ad;
-}
+<style scoped>
+.my-notification {
+    padding: 2px;
+    border-radius: 2px;
+    font-size: 4em;
+    display: flex;
 
-.vue-notification {
-    /* styling */
-    margin: 0 10px 10px;
-    padding: 20px;
-    font-size: 18px;
-    color: #ffffff;
+  /* style for title line
+  .notification-title {
+  }
 
-    background: linear-gradient(to bottom, #00b7ea 0%, #006e87 70%);
-    border-left: 5px solid #003f7d;
-
-    &.success {
-        border-left-color: #05fb4b;
-        background: linear-gradient(
-            to bottom,
-            #c9de96 0%,
-            #8ab66b 44%,
-            #398235 100%
-        );
-    }
-
-    &.warn {
-        background: #ffb648;
-        border-left-color: #f48a06;
-    }
-
-    &.error {
-        background: #e54d42;
-        border-left-color: #b82e24;
-    }
+  .notification-content {
+  }
+*/
+  &.success {
+    background: lime;
+  }
+  &.info {
+    background: blue;
+  }
+  &.error {
+    background: red;
+  }
 }
 </style>

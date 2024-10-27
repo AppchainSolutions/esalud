@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useLogger } from "vue-logger-plugin";
+import TableAction from "./TableAction.vue";
 
 const props = defineProps({
     state: Object,
@@ -114,45 +115,11 @@ const create = async () => {
         </template>
 
         <template v-slot:item.actions="{ item }">
-            <v-tooltip text="Ficha Médica" location="top">
-                <template v-slot:activator="{ props }">
-                    <v-btn
-                        v-bind="props"
-                        density="compact"
-                        color="#009AA4"
-                        class="mr-2 ml-2"
-                        variant="tonal"
-                        :icon="'mdi-stethoscope'"
-                        @click="emitEvent('ficha-medica', item)"
-                    ></v-btn>
-                </template>
-            </v-tooltip>
-            <v-tooltip text="Datos Personales" location="top">
-                <template v-slot:activator="{ props }">
-                    <v-btn
-                        v-bind="props"
-                        density="compact"
-                        class="mr-2 ml-2"
-                        color="#009AA4"
-                        variant="tonal"
-                        :icon="'mdi-account-edit-outline'"
-                        @click="emitEvent('ficha-personal', item)"
-                    ></v-btn>
-                </template>
-            </v-tooltip>
-            <v-tooltip text="Eliminar" location="top">
-                <template v-slot:activator="{ props }">
-                    <v-btn
-                        v-bind="props"
-                        density="compact"
-                        class="mr-2 ml-2"
-                        color="#009AA4"
-                        variant="tonal"
-                        :icon="'mdi-delete-outline'"
-                        @click="emitEvent('eliminar', item)"
-                    ></v-btn>
-                </template>
-            </v-tooltip>
+            <table-action :items="item" :icon="'mdi-stethoscope'" :title="'Ficha Medica'" :action-type="'editarFichaMedica'" />
+            <table-action :items="item" :icon="'mdi-account-edit-outline'" :title="'Ficha Personal'" :action-type="'editarFichaPersonal'"/>
+            <table-action :items="item" :icon="'mdi-delete-outline'" :title="'Borrar registro'" :action-type="'eliminarRegistro'"/>
+           
+           
         </template>
     </v-data-table>
     <v-dialog v-model="dialog" persistent>

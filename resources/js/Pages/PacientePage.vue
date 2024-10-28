@@ -57,69 +57,316 @@ const state = reactive({
         { title: "Acciones", sortable: false, align: "center", key: "actions" },
     ],
 
-    /*     formFields: [
+    formItems: [
         {
-            name: "field1",
-            label: "Field 1",
-            rules: [(v) => !!v || "Field 1 is required"],
-        }, */
-    //  { name: 'field2', label: 'Field 2', rules: [(v) => !!v || 'Field 2 is required'] },
-    //  { name: 'field3', label: 'Field 3', rules: [(v) => !!v || 'Field 3 is required'] },
-    // Add all fields that should be checked
-    //],
+            name: "apellidos",
+            label: "Apellidos",
+            type: "text",
+            required: true,
+            row: 1
+        },
+        {
+            name: "apellidos_responsable",
+            label: "Apellidos Responsable",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        {
+            name: "calles_id",
+            label: "Calles ID",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "calles_responsable_id",
+            label: "Calles Responsable ID",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        {
+            name: "ciudad_responsable",
+            label: "Ciudad Responsable",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        { name: "ciudad", label: "Ciudad", type: "text", required: false },
+        {
+            name: "comunidad_lgbtq",
+            label: "Comunidad LGBTQ",
+            type: "switch",
+            required: false,
+            row: 1
+        },
+        {
+            name: "comunidad_lgbtq_responsable",
+            label: "Comunidad LGBTQ Responsable",
+            type: "switch",
+            required: false,
+            row: 2
+        },
+        {
+            name: "credencial_discapacidad_responsable",
+            label: "Credencial Discapacidad Responsable",
+            type: "switch",
+            required: false,
+            row: 2
+        },
+        {
+            name: "credencial_discapacidad",
+            label: "Credencial Discapacidad",
+            type: "switch",
+            required: false,
+            row: 1
+        },
+        {
+            name: "direccion_responsable",
+            label: "Dirección Responsable",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        {
+            name: "direccion",
+            label: "Dirección",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "donante_responsable",
+            label: "Donante Responsable",
+            type: "switch",
+            required: false,
+            row: 2
+        },
+        { name: "donante", label: "Donante", type: "switch", required: false },
+        {
+            name: "edad_responsable",
+            label: "Edad Responsable",
+            type: "number",
+            required: false,
+            row: 2
+        },
+        { name: "edad", label: "Edad", type: "number", required: false, row: 1 },
+        {
+            name: "email_responsable",
+            label: "Email Responsable",
+            type: "email",
+            required: false,
+            row: 2
+        },
+        { name: "email", label: "Email", type: "email", required: false },
+        {
+            name: "establecimiento_educacional_id",
+            label: "Establecimiento Educacional ID",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "estado_civil_id",
+            label: "Estado Civil ID",
+            type: "select",
+            required: false,
+            items: ["Soltero", "Casado", "Divorciado"],
+            row: 1
+        },
+        {
+            name: "estado_civil_responsable_id",
+            label: "Estado Civil Responsable ID",
+            type: "select",
+            required: false,
+            items: ["Soltero", "Casado", "Divorciado"],
+            row: 2
+        },
+        {
+            name: "fecha_nacimiento_responsable",
+            label: "Fecha Nacimiento Responsable",
+            type: "date",
+            required: false,
+            row: 2
+        },
+        {
+            name: "fecha_nacimiento",
+            label: "Fecha Nacimiento",
+            type: "date",
+            required: false,
+            row: 1
+        },
+        {
+            name: "genero_id",
+            label: "Género ID",
+            type: "select",
+            required: false,
+            items: ["Masculino", "Femenino", "Otro"],
+            row: 1
+        },
+        {
+            name: "genero_responsable_id",
+            label: "Género Responsable ID",
+            type: "select",
+            required: false,
+            items: ["Masculino", "Femenino", "Otro"],
+            row: 2
+        },
+        {
+            name: "grupo_sanguineo_id",
+            label: "Grupo Sanguíneo ID",
+            type: "select",
+            required: false,
+            items: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
+            row: 1
+        },
+        {
+            name: "grupo_sanguineo_responsable_id",
+            label: "Grupo Sanguíneo Responsable ID",
+            type: "select",
+            required: false,
+            items: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
+            row: 2
+        },
+        {
+            name: "nacionalidad_id",
+            label: "Nacionalidad ID",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "nacionalidad_responsable_id",
+            label: "Nacionalidad Responsable ID",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        {
+            name: "nivel_instruccion_id",
+            label: "Nivel Instrucción ID",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "nivel_instruccion_responsable_id",
+            label: "Nivel Instrucción Responsable ID",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        {
+            name: "nombre_responsable",
+            label: "Nombre Responsable",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        { name: "nombre", label: "Nombre", type: "text", required: false },
+        {
+            name: "ocupacion_responsable",
+            label: "Ocupación Responsable",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "ocupacion",
+            label: "Ocupación",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "parentesco_responsable",
+            label: "Parentesco Responsable",
+            type: "text",
+            required: false,
+            row: 2
+        },
 
-    editedItem: {
-        apellidos: null,
-        apellidos_responsable: null,
-        calles_id: null,
-        calles_responsable_id: null,
-        ciudad_responsable: null,
-        ciudad: null,
-        comunidad_lgbtq: null,
-        comunidad_lgbtq_responsable: null,
-        credencial_discapacidad_responsable: null,
-        credencial_discapacidad: null,
-        direccion_responsable: null,
-        direccion: null,
-        donante_responsable: null,
-        donante: null,
-        edad_responsable: null,
-        edad: null,
-        email_responsable: null,
-        email: null,
-        establecimiento_educacional_id: null,
-        estado_civil_id: null,
-        estado_civil_responsable_id: null,
-        fecha_nacimiento_responsable: null,
-        fecha_nacimiento: null,
-        genero_id: null,
-        genero_responsable_id: null,
-        grupo_sanguineo_id: null,
-        grupo_sanguineo_responsable_id: null,
-        nacionalidad_id: null,
-        nacionalidad_responsable_id: null,
-        nivel_instruccion_id: null,
-        nivel_instruccion_responsable_id: null,
-        nombre_responsable: null,
-        nombre: null,
-        ocupacion_responsable: null,
-        ocupacion: null,
-        parentesco_responsable: null,
-        password: null,
-        pertenece_pie: null,
-        prevision_id: null,
-        prevision_responsable_id: null,
-        profesor: null,
-        pueblo_originario_id: null,
-        pueblo_originario_responsable_id: null,
-        religion_id: null,
-        religion_responsable_id: null,
-        rut_responsable: null,
-        rut: null,
-        telefono_responsable: null,
-        telefono1: null,
-        telefono2: null,
-    },
+        {
+            name: "pertenece_pie",
+            label: "Pertenece PIE",
+            type: "switch",
+            required: false,
+            row: 1
+        },
+        {
+            name: "prevision_id",
+            label: "Previsión ID",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "prevision_responsable_id",
+            label: "Previsión Responsable ID",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        { name: "profesor", label: "Profesor", type: "text", required: false },
+        {
+            name: "pueblo_originario_id",
+            label: "Pueblo Originario ID",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "pueblo_originario_responsable_id",
+            label: "Pueblo Originario Responsable ID",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        {
+            name: "religion_id",
+            label: "Religión ID",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "religion_responsable_id",
+            label: "Religión Responsable ID",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        {
+            name: "rut_responsable",
+            label: "RUT Responsable",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        { name: "rut", label: "RUT", type: "text", required: false },
+        {
+            name: "telefono_responsable",
+            label: "Teléfono Responsable",
+            type: "text",
+            required: false,
+            row: 2
+        },
+        {
+            name: "telefono1",
+            label: "Teléfono 1",
+            type: "text",
+            required: false,
+            row: 1
+        },
+        {
+            name: "telefono2",
+            label: "Teléfono 2",
+            type: "text",
+            required: false,
+            row: 1
+        },
+    ],
 
     searchQuery: {
         id: null,
@@ -154,10 +401,9 @@ onMounted(async () => {
 });
 
 /**
- * Initiates a search operation based on the current search query and route.
- * Sets the loading state to true while the search is in progress and updates
- * the table items with the search results. Logs relevant information before
- * and after the search.
+ * Initiates a search operation using the current search query and route.
+ * Updates the table items with the search results and manages the loading state.
+ * Logs the search query and the retrieved data.
  *
  * @returns {Promise<void>}
  */
@@ -170,7 +416,19 @@ async function buscar() {
     state.config.loading = false;
 }
 
-
+/**
+ * Guarda la información de un formulario en un objeto formData.
+ *
+ * @description Itera sobre los elementos del formulario y los agrega al objeto formData.
+ *              Luego, puedes manejar formData como desees, por ejemplo, enviándolo a una API.
+ */
+async function saveForm() {
+    const formData = {};
+    this.formItems.forEach((item) => {
+        formData[item.name] = item.value;
+    });
+    console.log(formData); // Aquí puedes enviar formData a tu API o manejarlo como necesites
+}
 </script>
 
 <template>
@@ -251,7 +509,7 @@ async function buscar() {
                 </v-expansion-panel-text>
             </v-expansion-panel>
         </v-expansion-panels>
-        
+
         <v-sheet color="white" :elevation="4" :class="'rounded-lg mt-4'">
             <data-table :state="state" />
         </v-sheet>

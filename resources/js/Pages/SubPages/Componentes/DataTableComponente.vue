@@ -1,102 +1,50 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useLogger } from "vue-logger-plugin";
 import TableAction from "./TableAction.vue";
-
 const props = defineProps({
     state: Object,
 });
 const logger = useLogger();
 let dialog = ref(false);
-const formTitle ="HOLA";
+const formTitle = "HOLA";
 const formCreate = () => {
     logger.info("Form Create");
     dialog.value = true;
 };
-function fichaPersonal(item) {
-    openToEdit(state, item);
-    handleInputChange();
-}
-function editarfichaMedica(item) {
-    store.selected = item;
-    try {
-        router.get("ficha-medica");
-    } catch (error) {
-        console.error(
-            '"An error occurred while fetching daily attention data."',
-        );
-    }
-}
-function editarFichaPersonal(item) {
-    openToEdit(state, item);
-    handleInputChange();
-}
 function close() {
     dialog.value = false;
 }
-/*
-
-const editedItemTitle = computed(() =>
-    state.config.editedIndex === -1 ? state.formCrear : state.formEdit,
-);
-
-const calcEdad = (fecNac) => {
-    let now = new Date();
-    let birthDate = new Date(fecNac);
-    let age = now.getFullYear() - birthDate.getFullYear();
-    return age;
-};
-
-const handleInputChange = () => {
-    let fecNac = state.editedItem.fecha_nacimiento;
-    let age = calcEdad(fecNac);
-    state.editedItem.edad = ref(age);
-};
-
-const update = async () => {
-    await handleEditItem(state);
-    closeForm(state);
-};
-
-const remove = async (item) => {
-    handleRemoveItem(state, item);
+function getComponentType(type) {
+    switch (type) {
+        case "text":
+            return "v-text-field";
+        case "number":
+            return "v-text-field";
+        case "email":
+            return "v-text-field";
+        case "password":
+            return "v-text-field";
+        case "switch":
+            return "v-switch";
+        case "select":
+            return "v-select";
+        case "date":
+            return "v-text-field";
+        default:
+            return "v-text-field";
+    }
 }
-
-function submit() {
-  // Access the form data from the state
-  const formData = this.state.editedItem;
-  console.logger('Form Data:', formData);
-
+function getRows() {
+    const rows = {};
+    if (props.state && props.state.formItems) {
+        props.state.formItems.forEach((item) => {
+            rows[item.row] = rows[item.row] || [];
+            rows[item.row].push(item);
+        });
+    }
+    return Object.values(rows);
 }
-
-methods: {
-  storeItems() {
-    return this.state.editedIndex > -1 ? this.update() : this.create();
-  },
-  create() {
-    console.logger('create', this.state);
-    // Handle create operation
-  },
-  update() {
-    console.logger('update', this.state);
-    // Handle update operation
-  },
-  close() {
-    this.dialogger = false;
-  }, 
-},
-
-function storeItems() {
-    return state.editedIndex > -1 ? update() : create();
-}
-
-const create = async () => {
-    console.logger("create", state);
-    await handleStoreItem(state);
-    closeForm(state);
-};
-
-*/
 </script>
 
 <template>
@@ -115,11 +63,24 @@ const create = async () => {
         </template>
 
         <template v-slot:item.actions="{ item }">
-            <table-action :items="item" :icon="'mdi-stethoscope'" :title="'Ficha Medica'" :action-type="'editarFichaMedica'" />
-            <table-action :items="item" :icon="'mdi-account-edit-outline'" :title="'Ficha Personal'" :action-type="'editarFichaPersonal'"/>
-            <table-action :items="item" :icon="'mdi-delete-outline'" :title="'Borrar registro'" :action-type="'eliminarRegistro'"/>
-           
-           
+            <table-action
+                :items="item"
+                :icon="'mdi-stethoscope'"
+                :title="'Ficha Medica'"
+                :action-type="'editarFichaMedica'"
+            />
+            <table-action
+                :items="item"
+                :icon="'mdi-account-edit-outline'"
+                :title="'Ficha Personal'"
+                :action-type="'editarFichaPersonal'"
+            />
+            <table-action
+                :items="item"
+                :icon="'mdi-delete-outline'"
+                :title="'Borrar registro'"
+                :action-type="'eliminarRegistro'"
+            />
         </template>
     </v-data-table>
     <v-dialog v-model="dialog" persistent>
@@ -129,8 +90,31 @@ const create = async () => {
             </v-card-title>
             <v-card-text>
                 <v-container>
+                    <v-form>
+                        <v-container>
+                            <template v-for="(row, rowIndex) in getRows()">
+                                <v-row>
+                                    <v-col
+                                        v-for="item in row"
+                                        :key="item.name"
+                                        :cols="item.cols || 6"
+                                        :md="item.md || 2"
+                                        :sm="item.sm || 4"
+                                    >
+                                        <component
+                                            :is="getComponentType(item.type)"
+                                            :label="item.label"
+                                            :required="item.required"
+                                            :items="item.items"
+                                            :type="item.inputType"
+                                        ></component>
+                                    </v-col>
+                                </v-row>
+                            </template>
+                        </v-container>
+                    </v-form>
                 </v-container>
-            </v-card-text> 
+            </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue-darken-1" variant="tonal" @click="close">
@@ -139,4 +123,4 @@ const create = async () => {
             </v-card-actions>
         </v-card>
     </v-dialog>
-    </template>
+</template>

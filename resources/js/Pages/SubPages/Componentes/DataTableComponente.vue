@@ -30,7 +30,7 @@ function getComponentType(type) {
         case "select":
             return "v-select";
         case "date":
-            return "v-text-field";
+            return "v-date-";
         default:
             return "v-text-field";
     }
@@ -97,15 +97,19 @@ function getRows() {
                                     <v-col
                                         v-for="item in row"
                                         :key="item.name"
-                                        :cols="item.cols || 6"
-                                        :md="item.md || 2"
-                                        :sm="item.sm || 4"
+                                        :cols="item.cols || 12"
+                                        :md="item.md || 4"
+                                        :sm="item.sm || 2"
                                     >
                                         <component
                                             :is="getComponentType(item.type)"
                                             :label="item.label"
                                             :required="item.required"
+                                            :clearable="item.clearable"
+                                            :variant="item.variant"
                                             :items="item.items"
+                                            :color="item.color"
+                                            :inset="item.inset"
                                             :type="item.inputType"
                                         ></component>
                                     </v-col>

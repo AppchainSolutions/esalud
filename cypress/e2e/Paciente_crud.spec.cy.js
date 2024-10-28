@@ -1,18 +1,16 @@
 describe.only("Paciente CRUD Operations", () => {
-     beforeEach(() => {
-         cy.login("admin@example.com", "password123");
-     });
+  
 
     // afterEach(() => {
     //     cy.get('.v-navigation-drawer__append > .v-btn');
     // });
 
     it("should create a new patient", () => {
-        //cy.login("admin@example.com", "password123");
-        cy.contains("Dashboard");
+        cy.login("admin@example.com", "password123");
         cy.get(".v-list > :nth-child(3)").click();
         cy.get(".v-toolbar__content > .v-btn").click();
-        // cy.get("#rut").type("12345678-9");
+        cy.contains('Nombre').type("Alonso");
+        //cy.get("RUT").type("12345678-9");
         // cy.get("#input-109").type("xoxo@vtr.com");
         // cy.get("#nombre").type("John Doe");
         // cy.get("#apellidos").type("Salazar");

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repository\GrupoSanguineoRepository;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 class GrupoSanguineoController extends Controller
 {
     protected $grupoSanguineoRepository;
@@ -16,7 +17,8 @@ class GrupoSanguineoController extends Controller
 
     public function index()
     {
-        //        return $this->grupoSanguineoRepository->all();
+        $grupo_sanguineo = $this->grupoSanguineoRepository->all();
+        return response()->json($grupo_sanguineo);
     }
 
     public function all()

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repository\GeneroRepository;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 class GeneroController extends Controller
 {
     protected $generoRepository;
@@ -17,11 +18,9 @@ class GeneroController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {}
-
-    public function all()
-    {
-        return $this->generoRepository->all();
+    public function index() {
+        $generoRepository = $this->generoRepository->all();
+        return response()->json($generoRepository);
     }
 
     /**

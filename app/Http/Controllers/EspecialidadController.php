@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repository\EspecialidadRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 class EspecialidadController extends Controller
 {
@@ -19,12 +21,8 @@ class EspecialidadController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    public function all()
-    {
-        return $this->especialidadRepository->all();
+        $especialidadRepository = $this->especialidadRepository->all();
+        return response()->json($especialidad);
     }
 
     /**

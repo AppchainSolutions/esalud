@@ -14,11 +14,11 @@ export const fetchAllData = async (endpoints) => {
         const endpointUrl = "api/" + endpoint;
         try {
             const response = await axios.get(endpointUrl);
-            return {
-                endpointUrl,
-                data: response.data.result,
-                endpoint,
-            };
+             return {
+                 endpointUrl,
+                 data: response.data.original.result,
+                 endpoint,
+             };
         } catch (error) {
             notify({
                 type: "error",

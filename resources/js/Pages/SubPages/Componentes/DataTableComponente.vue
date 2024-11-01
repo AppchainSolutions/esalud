@@ -1,20 +1,30 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useLogger } from "vue-logger-plugin";
 import TableAction from "./TableAction.vue";
+import {
+    handleRemoveItem,
+    handleStoreItem,
+    handleEditItem,
+    openToEdit,
+} from "@/helper.js";
+
 const props = defineProps({
     state: Object,
 });
+
 const logger = useLogger();
+
 let dialog = ref(false);
-const formTitle = "HOLA";
+
 const formCreate = () => {
-    logger.info("Form Create");
     dialog.value = true;
 };
+
 function close() {
     dialog.value = false;
 }
+
 function getComponentType(type) {
     switch (type) {
         case "text":
@@ -30,11 +40,12 @@ function getComponentType(type) {
         case "select":
             return "v-select";
         case "date":
-            return "v-date-";
+            return "v-text-field";
         default:
             return "v-text-field";
     }
 }
+
 function getRows() {
     const rows = {};
     if (props.state && props.state.formItems) {
@@ -45,6 +56,7 @@ function getRows() {
     }
     return Object.values(rows);
 }
+
 </script>
 
 <template>
@@ -83,14 +95,14 @@ function getRows() {
             />
         </template>
     </v-data-table>
-    <v-dialog v-model="dialog" persistent>
+    <v-dialog v-model="dialog">
         <v-card>
             <v-card-title>
-                <span class="text-h5">{{ formTitle }}</span>
+                <span class="text-h5">{{ state.config.formTitle }}</span>
             </v-card-title>
             <v-card-text>
-                <v-container>
-                    <v-form>
+                <!-- <v-container>
+                    <v-form @submit.prevent="submit">
                         <v-container>
                             <template v-for="(row, rowIndex) in getRows()">
                                 <v-row>
@@ -111,20 +123,29 @@ function getRows() {
                                             :color="item.color"
                                             :inset="item.inset"
                                             :type="item.inputType"
+                                            v-model="item.value" 
                                         ></component>
                                     </v-col>
                                 </v-row>
                             </template>
-                        </v-container>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                color="blue-darken-1"
+                                variant="tonal"
+                                @click="close"
+                                >
+                                Cancelar
+                            </v-btn>
+                            
+                            <v-btn class="me-4" type="submit" > submit </v-btn>
+                        </v-card-actions>
+                    </v-container>
                     </v-form>
-                </v-container>
+                </v-container> -->
             </v-card-text>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="tonal" @click="close">
-                    Cancelar
-                </v-btn>
-            </v-card-actions>
         </v-card>
+       
     </v-dialog>
 </template>
+

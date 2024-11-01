@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repository\EstablecimientoEducacionalRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 class EstablecimientoEducacionalController extends Controller
 {
@@ -19,13 +21,11 @@ class EstablecimientoEducacionalController extends Controller
      */
     public function index()
     {
-        // return $this->establecimientoEducacionalRepository->all();
+        $establecimientos = $this->establecimientoEducacionalRepository->all();
+        return response()->json($establecimientos);
     }
 
-    public function all()
-    {
-        return $this->establecimientoEducacionalRepository->all();
-    }
+
 
     /**
      * Show the form for creating a new resource.

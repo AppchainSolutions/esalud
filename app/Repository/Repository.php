@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Helpers\Tools;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -21,12 +22,21 @@ abstract class Repository implements RepoInterface
 
     public function all()
     {
-        try {
-            $query = $this->model->all();
+        $cacheKey = get_class($this->model) . '_cache';
+        $cacheDuration = 3600; // Cache duration in seconds (e.g., 1 hour)
 
-            return Response::json([
-                'result' => $query,
-            ]);
+        try {
+             // Check if data is in cache
+             Log::info('Checking cache for key: ' . $cacheKey);
+             $data = Cache::remember($cacheKey, $cacheDuration, function () {
+                 $query = $this->model->all();
+                 Log::info('Data cached in Redis:', ['data' => $query]);
+                 return $query;
+             });
+ 
+             return Response::json([
+                 'result' => $data,
+             ]);
         } catch (QueryException $e) {
             return response()->json([
                 'result' => '500',

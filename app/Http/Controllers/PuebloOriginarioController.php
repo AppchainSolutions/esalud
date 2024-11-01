@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repository\PuebloOriginarioRepository;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 class PuebloOriginarioController extends Controller
 {
     protected $puebloOriginarioRepository;
@@ -19,12 +20,8 @@ class PuebloOriginarioController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    public function all()
-    {
-        return $this->puebloOriginarioRepository->all();
+        $pueblo_originario = $this->puebloOriginarioRepository->all();
+        return response()->json($pueblo_originario);
     }
 
     /**

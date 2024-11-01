@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repository\ReligionRepository;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 class ReligionController extends Controller
 {
     protected $religionRepository;
@@ -16,13 +17,11 @@ class ReligionController extends Controller
 
     public function index()
     {
-        //        return $this->religionRepository->all();
+        $religion = $this->religionRepository->all();
+        return response()->json($religion);
     }
 
-    public function all()
-    {
-        return $this->religionRepository->all();
-    }
+
 
     /**
      * Show the form for creating a new resource.

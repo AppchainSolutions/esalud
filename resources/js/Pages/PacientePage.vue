@@ -3,36 +3,28 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { reactive, ref, onMounted, computed } from "vue";
 import { useLogger } from "vue-logger-plugin";
 import DataTable from "./SubPages/Componentes/DataTableComponente.vue";
-
-import {
-    fetchAllData,
-    handleRemoveItem,
-    handleSearchItem,
-    handleStoreItem,
-    handleEditItem,
-    closeForm,
-    openToCreate,
-    openToEdit,
-} from "@/helper.js";
+import { fetchAllData, handleSearchItem } from "@/helper.js";
 
 defineOptions({ layout: AppLayout });
 
 //const store = useDataStore();
 const logger = useLogger();
 const state = reactive({
-    endpoints: [
-        "calles",
+     endpoints: [
+         "calles",
         "estados_civiles",
-        "establecimientos_educacionales",
-        "generos",
-        "grupos_sanguineos",
-        "nacionalidades",
-        "niveles_instruccion",
+         "establecimientos_educacionales",
+         "generos",
+         "grupos_sanguineos",
+         "nacionalidades",
+         "niveles_instruccion",
         "previsiones",
         "pueblos_originarios",
         "religiones",
     ],
 
+    
+ 
     headers: [
         { title: "Rut", align: "center", sortable: true, key: "rut" },
         { title: "Nombre", align: "center", sortable: true, key: "nombre" },
@@ -57,15 +49,17 @@ const state = reactive({
         { title: "Acciones", sortable: false, align: "center", key: "actions" },
     ],
 
-    formItems: [
+ /*   
+ formItems: [
         {
             name: "rut",
             label: "RUT",
             type: "text",
-            required: false,
+            required: true,
             clearable: true,
             variant: "underlined",
             cols: 12,
+            endpoint: null,
             md: 4,
             sm: 2,
             row: 1,
@@ -75,7 +69,7 @@ const state = reactive({
             name: "nombre",
             label: "Nombre",
             type: "text",
-            required: false,
+            required: true,
             clearable: true,
             variant: "underlined",
             cols: 12,
@@ -116,7 +110,7 @@ const state = reactive({
             required: false,
             clearable: true,
             variant: "underlined",
-            items: [],
+            items: ["calle 1", "calle 2", "calle 3"],
             cols: 12,
             md: 4,
             sm: 2,
@@ -163,7 +157,7 @@ const state = reactive({
             name: "comunidad_lgbtq",
             label: "Comunidad LGBTQ",
             type: "switch",
-            color:"green-darken-3", 
+            color: "green-darken-3",
             inset: true,
             required: false,
             clearable: true,
@@ -177,7 +171,7 @@ const state = reactive({
             name: "comunidad_lgbtq_responsable",
             label: "Comunidad LGBTQ Responsable",
             type: "switch",
-            color:"green-darken-3", 
+            color: "green-darken-3",
             inset: true,
             required: false,
             clearable: true,
@@ -191,7 +185,7 @@ const state = reactive({
             name: "credencial_discapacidad_responsable",
             label: "Credencial Discapacidad Responsable",
             type: "switch",
-            color:"green-darken-3", 
+            color: "green-darken-3",
             inset: true,
             required: false,
             clearable: true,
@@ -205,7 +199,7 @@ const state = reactive({
             name: "credencial_discapacidad",
             label: "Credencial Discapacidad",
             type: "switch",
-            color:"green-darken-3", 
+            color: "green-darken-3",
             inset: true,
             required: false,
             clearable: true,
@@ -244,7 +238,7 @@ const state = reactive({
             label: "Donante Responsable",
             type: "switch",
             required: false,
-            color:"green-darken-3", 
+            color: "green-darken-3",
             inset: true,
             clearable: true,
             variant: "underlined",
@@ -257,7 +251,7 @@ const state = reactive({
             name: "donante",
             label: "Donante",
             type: "switch",
-            color:"green-darken-3", 
+            color: "green-darken-3",
             inset: true,
             required: false,
             clearable: true,
@@ -282,7 +276,8 @@ const state = reactive({
         {
             name: "edad",
             label: "Edad",
-            type: "number",
+            type:"number",
+            inputType: "number",
             required: false,
             clearable: true,
             variant: "underlined",
@@ -323,7 +318,7 @@ const state = reactive({
             inputType: "email",
             required: false,
             clearable: true,
-            items: [],
+            items: endpoints.establecimientos_educacionales,
             variant: "underlined",
             cols: 12,
             md: 4,
@@ -336,7 +331,7 @@ const state = reactive({
             type: "select",
             required: false,
             clearable: true,
-            items: ["Soltero", "Casado", "Divorciado"],
+            items: endpoints.estados_civiles,
             variant: "underlined",
             cols: 12,
             md: 4,
@@ -436,7 +431,7 @@ const state = reactive({
         },
         {
             name: "nacionalidad_id",
-            label: "Nacionalidad ID",
+            label: "Nacionalidad",
             type: "select",
             items: [],
             required: false,
@@ -686,14 +681,14 @@ const state = reactive({
             row: 1,
         },
     ],
-
+*/
     searchQuery: {
         id: null,
         rut: null,
         rut_responsable: null,
         establecimiento_educacional_id: null,
     },
-
+ 
     config: {
         editedIndex: -1,
         loading: false,
@@ -701,7 +696,6 @@ const state = reactive({
         editedIndex: -1,
         formCrear: "Nuevo Paciente",
         formEdit: "Editar datos del Paciente",
-        formItems: [],
         formTitle: "Gestión de Pacientes",
         list: [],
         route: "paciente",
@@ -717,6 +711,7 @@ const state = reactive({
 onMounted(async () => {
     const result = await fetchAllData(state.endpoints);
     state.config.list = result;
+    logger.log("List", result);
 });
 
 /**
@@ -753,7 +748,7 @@ async function saveForm() {
 <template>
     <v-sheet :elevation="4" :class="'rounded-lg ma-2 pa-2'">
         <v-expansion-panels>
-            <v-expansion-panel title="Ficha de Pacientes" color="#009AA4">
+            <v-expansion-panel title="Ficha de Pacientes" id="ficha" color="#009AA4">
                 <v-expansion-panel-text>
                     <v-form fast-fail @submit.prevent>
                         <v-row>
@@ -832,5 +827,6 @@ async function saveForm() {
         <v-sheet color="white" :elevation="4" :class="'rounded-lg mt-4'">
             <data-table :state="state" />
         </v-sheet>
+
     </v-sheet>
 </template>

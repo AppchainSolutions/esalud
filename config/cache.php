@@ -33,7 +33,7 @@ return [
 
     'stores' => [
 
-        'apc' => [
+        /* 'apc' => [
             'driver' => 'apc',
         ],
 
@@ -72,7 +72,7 @@ return [
                     'weight' => 100,
                 ],
             ],
-        ],
+        ], */
 
         'redis' => [
             'driver' => 'redis',
@@ -80,7 +80,7 @@ return [
             'lock_connection' => 'default',
         ],
 
-        'dynamodb' => [
+       /*  'dynamodb' => [
             'driver' => 'dynamodb',
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
@@ -91,7 +91,7 @@ return [
 
         'octane' => [
             'driver' => 'octane',
-        ],
+        ], */
 
     ],
 

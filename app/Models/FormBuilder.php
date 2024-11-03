@@ -14,17 +14,28 @@ class FormBuilder extends Model
 
     protected $fillable = 
         [
+            'frm_id',
             'name',
             'label',
+            'order',
             'type',
             'required',
             'clearable',
             'variant',
             'endpoint',
+            'rules',
+            'readonly',
+            'disabled',
+            'expanded',
+            'multiple',
+            'dense',
+            'items',
+            'autofocus',
+            'hide_details',
             'cols',
             'row',
+            'lg',
             'md',
             'sm',
-            'order',
         ];
 }

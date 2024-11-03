@@ -26,11 +26,8 @@ abstract class Repository implements RepoInterface
         $cacheDuration = 3600; // Cache duration in seconds (e.g., 1 hour)
 
         try {
-             // Check if data is in cache
-             Log::info('Checking cache for key: ' . $cacheKey);
              $data = Cache::remember($cacheKey, $cacheDuration, function () {
                  $query = $this->model->all();
-                 Log::info('Data cached in Redis:', ['data' => $query]);
                  return $query;
              });
  
@@ -38,6 +35,7 @@ abstract class Repository implements RepoInterface
                  'result' => $data,
              ]);
         } catch (QueryException $e) {
+            Log::info('Error encontrado:', $e);
             return response()->json([
                 'result' => '500',
                 'message' => 'Se produjo un error.',
@@ -124,11 +122,12 @@ abstract class Repository implements RepoInterface
     {
         try {
             $filters = $request->input('data');
-            Log::info($filters);
             $query = $this->model->query()
-                ->select('*');
+            ->select('*');
             $filteredData = Tools::filterData($filters, $query);
-            Log::info($filteredData);
+            
+            Log::info("Data filter", $filters);
+            Log::info("Filtered data", [$filteredData]);
 
             return response()->json([
                 'result' => $filteredData,

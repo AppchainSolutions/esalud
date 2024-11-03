@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\FormBuilder;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
+
 
 class FormBuilderController extends Controller
 {
@@ -14,6 +19,12 @@ class FormBuilderController extends Controller
         //
     }
 
+    public function getFormBuilderValues(Request $request)
+    {
+        return Cache::remember("form-builder-{$request->id}", now()->addMinutes(120), function () use ($request) {
+            return FormBuilder::where('form_id', $request->id)->get();
+        });
+    }
     /**
      * Show the form for creating a new resource.
      */

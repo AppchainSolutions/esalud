@@ -4,6 +4,7 @@ use App\Http\Controllers\CalleController;
 use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\EstablecimientoEducacionalController;
 use App\Http\Controllers\EstadoCivilController;
+use App\Http\Controllers\FormBuilderController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\GrupoSanguineoController;
 use App\Http\Controllers\NacionalidadController;
@@ -44,3 +45,4 @@ Route::get('niveles_instruccion', [NivelInstruccionController::class, 'index'])-
 Route::get('pueblos_originarios', [PuebloOriginarioController::class, 'index'])->name('puebloOriginario.index');
 Route::get('religiones', [ReligionController::class, 'index'])->name('religion.index');
 Route::get('paciente/search', [PacienteController::class, 'search'])->name('paciente.search');
+Route::get('formbuilder/getItems', [FormBuilderController::class, 'getFormBuilderValues'])->name('formBuilder.getItems');

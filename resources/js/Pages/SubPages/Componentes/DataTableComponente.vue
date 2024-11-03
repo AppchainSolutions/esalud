@@ -1,23 +1,58 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useLogger } from "vue-logger-plugin";
 import TableAction from "./TableAction.vue";
+import { useField, useForm } from "vee-validate";
 import {
     handleRemoveItem,
     handleStoreItem,
     handleEditItem,
     openToEdit,
+    getFormBuilderValues,
 } from "@/helper.js";
 
 const props = defineProps({
     state: Object,
 });
+const { handleSubmit, handleReset } = useForm({
+     validationSchema: {
+        name(value) {
+            if (value?.length >= 2) return true
+
+            return 'Name needs to be at least 2 characters.'
+        },
+        phone(value) {
+            if (/^[0-9-]{7,}$/.test(value)) return true
+
+            return 'Phone number needs to be at least 7 digits.'
+        },
+        email(value) {
+            if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
+
+            return 'Must be a valid e-mail.'
+        },
+},
+});
+
+const isValid = ref(false);
 
 const logger = useLogger();
 
 let dialog = ref(false);
 
-const formCreate = () => {
+let formItems = ref([]);
+
+const item = ref({});
+
+const formCreate = async () => {
+    try {
+        const id = props.state.formName; // Replace with the actual ID you want to retrieve
+        const data = await getFormBuilderValues(id);
+        formItems.value = Object.values(data);
+        logger.log("Form data:", formItems.value);
+    } catch (error) {
+        logger.error("Error loading form items:", error);
+    }
     dialog.value = true;
 };
 
@@ -47,16 +82,16 @@ function getComponentType(type) {
 }
 
 function getRows() {
-    const rows = {};
-    if (props.state && props.state.formItems) {
-        props.state.formItems.forEach((item) => {
-            rows[item.row] = rows[item.row] || [];
-            rows[item.row].push(item);
-        });
-    }
-    return Object.values(rows);
-}
+    if (!formItems.value) return [];
 
+    logger.log("Form items:", formItems.value);
+
+    return formItems.value.reduce((rows, item) => {
+        logger.log("Item:", item);
+        (rows[item.row] = rows[item.row] || []).push(item);
+        return rows;
+    }, {});
+}
 </script>
 
 <template>
@@ -95,35 +130,46 @@ function getRows() {
             />
         </template>
     </v-data-table>
+
     <v-dialog v-model="dialog">
+        <v-container fluid>
         <v-card>
             <v-card-title>
-                <span class="text-h5">{{ state.config.formTitle }}</span>
+                <span class="text-h5 ma-4 pa-4">{{ state.config.formTitle }} </span>
             </v-card-title>
             <v-card-text>
-                <!-- <v-container>
-                    <v-form @submit.prevent="submit">
+                <v-container>
+                    <form @submit.prevent="submit">
                         <v-container>
                             <template v-for="(row, rowIndex) in getRows()">
                                 <v-row>
                                     <v-col
                                         v-for="item in row"
                                         :key="item.name"
-                                        :cols="item.cols || 12"
-                                        :md="item.md || 4"
-                                        :sm="item.sm || 2"
+                                        :cols="12"
+                                        :lg="3"
+                                        
                                     >
                                         <component
                                             :is="getComponentType(item.type)"
+                                            :name="item.name"
                                             :label="item.label"
-                                            :required="item.required"
-                                            :clearable="item.clearable"
+                                            :type="item.type"
+                                            :density="item.density"
+                                            :input-type="item.inputType"
                                             :variant="item.variant"
-                                            :items="item.items"
-                                            :color="item.color"
-                                            :inset="item.inset"
-                                            :type="item.inputType"
-                                            v-model="item.value" 
+                                            :v-model="item.value"
+                                            v-bind:readonly="item.readonly"
+                                            v-bind:chips="item.chips"
+                                            v-bind:multiple="item.multiple"
+                                            v-bind:clearable="item.clearable"
+                                            v-bind:hide-details="item.hide-details"
+                                            v-bind:inset="item.inset"
+                                            v-bind:color="item.color || []"
+                                            v-bind:rules="item.rules || []"
+                                            v-bind:items="item.items || []"
+
+                                            
                                         ></component>
                                     </v-col>
                                 </v-row>
@@ -131,21 +177,23 @@ function getRows() {
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn
-                                color="blue-darken-1"
-                                variant="tonal"
-                                @click="close"
+                                    color="blue-darken-1"
+                                    variant="tonal"
+                                    @click="close"
                                 >
-                                Cancelar
-                            </v-btn>
-                            
-                            <v-btn class="me-4" type="submit" > submit </v-btn>
-                        </v-card-actions>
-                    </v-container>
-                    </v-form>
-                </v-container> -->
+                                    Cancelar
+                                </v-btn>
+
+                                <v-btn class="me-4" type="submit" color="blue-darken-1"
+                                variant="tonal" :disabled="!isValid">
+                                    Grabar
+                                </v-btn>
+                            </v-card-actions>
+                        </v-container>
+                    </form>
+                </v-container>
             </v-card-text>
         </v-card>
-       
+    </v-container>
     </v-dialog>
 </template>
-

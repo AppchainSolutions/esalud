@@ -15,10 +15,6 @@ class RedirectIfRefreshed
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if the request is a page refresh
-        /*        if ($request->headers->get('referer') === $request->fullUrl()) {
-                  return redirect()->route('dashboard');
-              }  */
         return $next($request);
     }
 }

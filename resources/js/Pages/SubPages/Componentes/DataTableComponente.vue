@@ -131,7 +131,7 @@ function getRows() {
         </template>
     </v-data-table>
 
-    <v-dialog v-model="dialog">
+    <v-dialog v-model="dialog" max-width="800px">
         <v-container fluid>
         <v-card>
             <v-card-title>

@@ -33,9 +33,9 @@ return new class extends Migration
             $table->integer('md')->nullable();
             $table->integer('sm')->nullable();
             $table->integer('row')->nullable();
-            $table->string('items')->nullable();
+            $table->json('items')->nullable();
             $table->string('item-title')->nullable();
-            $table->string('items-value')->nullable();
+            $table->string('item-value')->nullable();
             $table->string('endpoint')->nullable();
             $table->boolean('false-value')->default(false);
             $table->boolean('true-value')->default(true);

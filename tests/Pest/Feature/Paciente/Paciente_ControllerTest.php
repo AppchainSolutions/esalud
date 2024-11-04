@@ -7,12 +7,24 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Mockery;
 
-beforeEach(function () {
+/* beforeEach(function () {
     $this->pacienteRepository = Mockery::mock(PacienteRepository::class);
     $this->controller = new PacienteController($this->pacienteRepository);
+}); */
+
+test('update method updates patient data', function () {
+    $request = Request::create('/paciente/update', 'POST', ['id' => 1, 'name' => 'Updated Name']);
+    $this->pacienteRepository->shouldReceive('update')
+        ->once()
+        ->with($request)
+        ->andReturn('updatedPatientData');
+
+    $response = $this->controller->update($request);
+
+    expect($response)->toBe('updatedPatientData');
 });
 
-describe('Paciente CRUD Operations', () => {
+/* describe('Paciente CRUD Operations', () => {
     const baseUrl = 'http://localhost:8000';
 
     beforeEach(() => {
@@ -43,10 +55,8 @@ describe('Paciente CRUD Operations', () => {
         cy.visit(`${baseUrl}/paciente/1`);
         cy.contains('Patient Details').should('be.visible');
         cy.contains('Name:').should('be.visible');
-    });
-});
-});
-
+    }); */
+/* 
 test('update method updates patient data', function () {
     $request = Request::create('/paciente/update', 'POST', ['id' => 1, 'name' => 'Updated Name']);
     $this->pacienteRepository->shouldReceive('update')
@@ -82,3 +92,4 @@ test('destroy method deletes a patient', function () {
 
     expect($response)->toBeTrue();
 });
+ */

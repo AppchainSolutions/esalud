@@ -2,5 +2,6 @@
     "git.ignoreLimitWarning": true,
     "explorer.excludeGitIgnore": true,
     "search.useGlobalIgnoreFiles": true,
-    "search.useParentIgnoreFiles": true
+    "search.useParentIgnoreFiles": true,
+    "vscode-aiconfig.pythonInterpreter": "/var/www/esalud/.conda/bin/python"
 }

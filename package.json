@@ -14,7 +14,7 @@
     "@kyvg/vue3-notification": "^3.1.4",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
-    "@playwright/test": "^1.48.1",
+    "@playwright/test": "^1.48.2",
     "@stryker-mutator/javascript-mutator": "^4.0.0",
     "@stryker-mutator/vitest-runner": "^8.5.0",
     "@sweetalert2/theme-material-ui": "^5.0.15",

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repository\NivelInstruccionRepository;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 class NivelInstruccionController extends Controller
 {
     protected $nivelInstruccionRepository;
@@ -17,11 +18,9 @@ class NivelInstruccionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {}
-
-    public function all()
-    {
-        return $this->nivelInstruccionRepository->all();
+    public function index() {
+        $nivel_instruccion = $this->nivelInstruccionRepository->all();
+        return response()->json($nivel_instruccion);
     }
 
     /**

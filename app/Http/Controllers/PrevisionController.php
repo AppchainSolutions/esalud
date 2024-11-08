@@ -16,8 +16,8 @@ class PrevisionController extends Controller
 
     public function index()
     {
-        // This method is intentionally left empty because it is not yet implemented.
-        // Future implementation will handle the display of the index page.
+        $prevision = $this->previsionRepository->all();
+        return response()->json($prevision);
     }
 
     public function all()

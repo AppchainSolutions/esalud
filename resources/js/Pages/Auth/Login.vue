@@ -37,12 +37,12 @@ const submit = () => {
         <div class="login-card">
             <h1 class="login-title">Municipalidad de Casablanca</h1>
             <form @submit.prevent="submit">
-                <v-text-field type="email" id="email" v-model="form.email" autofocus label="Email" hide-details required
+                <v-text-field type="email" v-model="form.email" autofocus label="Email" hide-details required
                     class="mb-1" />
-                <v-text-field type="password" id="password" v-model="form.password" required
+                <v-text-field type="password"  v-model="form.password" required
                     autocomplete="current-password" label="Clave" class="mt-1" />
                 <v-checkbox v-model:checked="form.remember" name="remember" label="Recordar" />
-                <v-btn class="mb-2" type="submit" color="green" id="ingresar" :class="{ 'opacity-25': form.processing }"
+                <v-btn class="mb-2" type="submit" id="Login" color="green" :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing">
                     Ingresar
                 </v-btn>

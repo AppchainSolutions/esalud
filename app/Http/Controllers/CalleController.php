@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Repository\CalleRepository;
+use App\Models\Calles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 class CalleController extends Controller
 {
@@ -17,14 +21,11 @@ class CalleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $id)
+    public function index()
     {
-        // return Inertia::render('SubPages/Calles');
-    }
-
-    public function all()
-    {
-        return $this->calleRepository->all();
+       // Call the all method to get the cached data
+       $calles = $this->calleRepository->all();
+       return response()->json($calles);
     }
 
     public function show(Request $id)

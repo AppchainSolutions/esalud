@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repository\NacionalidadRepository;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 class NacionalidadController extends Controller
 {
     protected $nacionalidadRepository;
@@ -19,12 +20,8 @@ class NacionalidadController extends Controller
      */
     public function index()
     {
-        //        return $this->nacionalidadRepository->all();
-    }
-
-    public function all()
-    {
-        return $this->nacionalidadRepository->all();
+        $nacionalidad = $this->nacionalidadRepository->all();
+        return response()->json($nacionalidad);
     }
 
     /**

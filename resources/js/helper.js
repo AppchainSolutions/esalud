@@ -14,11 +14,11 @@ export const fetchAllData = async (endpoints) => {
         const endpointUrl = "api/" + endpoint;
         try {
             const response = await axios.get(endpointUrl);
-            return {
-                endpointUrl,
-                data: response.data.result,
-                endpoint,
-            };
+             return {
+                 endpointUrl,
+                 data: response.data.original.result,
+                 endpoint,
+             };
         } catch (error) {
             notify({
                 type: "error",
@@ -79,6 +79,21 @@ export const handleSearchItem = async (filter, route) => {
             text: error,
             type: "error",
         });
+    }
+};
+
+export const getFormBuilderValues = async (id) => {
+    const urlRoute = "api/formbuilder/getItems";
+    try {
+        const response = await axios.get(urlRoute, {
+            params: {
+                id: id,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        logger.error("Error fetching form builder values:", error);
+        throw error;
     }
 };
 /* 
@@ -285,7 +300,7 @@ export const openToEdit = (state, item) => {
 };
 
 export const validationRules = (value) => {
-    const rutRules = [
+    const rut = [
         (value) => (value ? true : "Se necesita el rut."),
 
         (value) =>
@@ -314,5 +329,5 @@ export const validationRules = (value) => {
         },
     ];
 
-    return { rutRules };
+    return { rut };
 };

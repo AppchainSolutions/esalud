@@ -20,7 +20,7 @@ const rules = {
 const especialidad = ref(especialidades.value[0]); // Inicializar especialidad por defecto
 
 const buscarPaciente = async () => {
-    try {
+    /* try {
         const { data } = await useAxios(`/api/pacientes/${rut.value}`);
         if (data.value) {
             nombrePaciente.value = data.value.nombre;
@@ -32,7 +32,7 @@ const buscarPaciente = async () => {
     } catch (error) {
         nombrePaciente.value = "";
         pacienteEncontrado.value = false;
-    }
+    } */
 };
 
 const submit = async () => {

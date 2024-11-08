@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Helpers\Tools;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -21,13 +22,20 @@ abstract class Repository implements RepoInterface
 
     public function all()
     {
-        try {
-            $query = $this->model->all();
+        $cacheKey = get_class($this->model) . '_cache';
+        $cacheDuration = 3600; // Cache duration in seconds (e.g., 1 hour)
 
-            return Response::json([
-                'result' => $query,
-            ]);
+        try {
+             $data = Cache::remember($cacheKey, $cacheDuration, function () {
+                 $query = $this->model->all();
+                 return $query;
+             });
+ 
+             return Response::json([
+                 'result' => $data,
+             ]);
         } catch (QueryException $e) {
+            Log::info('Error encontrado:', $e);
             return response()->json([
                 'result' => '500',
                 'message' => 'Se produjo un error.',
@@ -114,11 +122,12 @@ abstract class Repository implements RepoInterface
     {
         try {
             $filters = $request->input('data');
-            Log::info($filters);
             $query = $this->model->query()
-                ->select('*');
+            ->select('*');
             $filteredData = Tools::filterData($filters, $query);
-            Log::info($filteredData);
+            
+            Log::info("Data filter", $filters);
+            Log::info("Filtered data", [$filteredData]);
 
             return response()->json([
                 'result' => $filteredData,

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repository\EstadoCivilRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 class EstadoCivilController extends Controller
 {
@@ -16,12 +18,8 @@ class EstadoCivilController extends Controller
 
     public function index()
     {
-        //   return $this->estadoCivilRepository->all();
-    }
-
-    public function all()
-    {
-        return $this->estadoCivilRepository->all();
+        $estado_civil = $this->estadoCivilRepository->all();
+        return response()->json($estado_civil);
     }
 
     /**

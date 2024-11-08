@@ -11,6 +11,8 @@ use App\Http\Controllers\ProfesionalController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\VacunaController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 Route::middleware([
     'auth:sanctum',
@@ -33,4 +35,11 @@ Route::middleware([
     Route::inertia('psicologia-pacientes', 'PsicologiaPage')->name('psicologia.pacientes');
     Route::inertia('psicologia-sesiones', 'SubPages/Sesiones-PsicologiaPage')->name('psicologia.sesiones');
     Route::inertia('psicologia-registro-sesion', 'SubPages/Componentes/Psicologia-Registro-SesionComponente')->name('psicologia.registro');
+});
+
+Route::get('/test-redis', function () {
+    Cache::put('test_key', 'test_value', 3600);
+    $value = Cache::get('test_key');
+    Log::info('Test Redis value:', ['value' => $value]);
+    return $value;
 });

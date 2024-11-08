@@ -14,9 +14,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property string $descripcion Description of the educational establishment
  *
- * @method static \Illuminate\Database\Eloquent\Builder|EstablecimientosEducacionales newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EstablecimientosEducacionales newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|EstablecimientosEducacionales query()
  *
  * @mixin \Eloquent
  */

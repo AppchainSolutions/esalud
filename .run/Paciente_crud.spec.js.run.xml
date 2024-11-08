@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Paciente_crud.spec.js" type="JavaScriptTestRunnerPlaywright" nameIsGenerated="true">
+    <config value="$PROJECT_DIR$/playwright.config.mjs" />
+    <node-interpreter value="/usr/bin/node" />
+    <playwright-package value="$PROJECT_DIR$/node_modules/@playwright/test" />
+    <working-dir value="$PROJECT_DIR$/tests/e2e" />
+    <envs />
+    <scope-kind value="TEST_FILE" />
+    <test-file value="$PROJECT_DIR$/tests/e2e/Paciente_crud.spec.js" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -11,7 +11,21 @@ export default defineConfig({
     component: {
         devServer: {
             framework: "vue-cli",
-            bundler: "webpack",
+            bundler: "vite",
         },
     },
 });
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+    e2e: {
+        // e2e options here
+        setupNodeEvents(on, config) {
+    },
+        component: {
+            devServer: {
+                framework: "vue-cli",
+                bundler: "vite",
+            },
+        },
+})

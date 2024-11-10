@@ -41,7 +41,7 @@ export default {
         },
         inicio() {
             const loader = $loading.show();
-            router.visit("dashboard", {
+            router.visit("/dashboard", {
                 method: 'get', 
                 onSuccess: () => {
                         loader.hide();
@@ -50,7 +50,7 @@ export default {
         },
         paciente() {
             const loader = $loading.show();
-            router.visit("paciente", {
+            router.visit("/paciente", {
                 method: 'get', 
                 onSuccess: () => {
                         loader.hide();
@@ -59,7 +59,7 @@ export default {
         },
         servicio() {
             const loader = $loading.show();
-            router.visit("servicio", {
+            router.visit("/servicio", {
                 method: 'get', 
                 onSuccess: () => {
                         loader.hide();

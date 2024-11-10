@@ -21,14 +21,14 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('clave123'),
             'isAdmin' => true,
         ]);
 
         User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('clave123'),
             'isAdmin' => false,
         ]);
 

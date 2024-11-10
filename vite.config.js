@@ -1,8 +1,7 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
-import vue from '@vitejs/plugin-vue';
+import { defineConfig } from "vite";
+import laravel from "laravel-vite-plugin";
+import vue from "@vitejs/plugin-vue";
 import vuetify from "vite-plugin-vuetify";
-
 
 export default defineConfig({
     build: {
@@ -13,8 +12,8 @@ export default defineConfig({
     },
     plugins: [
         laravel({
-            input: "resources/js/app.js",
-            ssr: "resources/js/ssr.js",
+            input: ["resources/js/app.js"],
+            ssr: ["resources/js/ssr.js"],
             refresh: true,
         }),
         vue({
@@ -30,7 +29,7 @@ export default defineConfig({
     test: {
         globals: true,
         environment: "jsdom",
-        setupFiles: './vitest.setup.js', // Add this line
+        setupFiles: "./vitest.setup.js", // Add this line
     },
     server: {
         headers: {

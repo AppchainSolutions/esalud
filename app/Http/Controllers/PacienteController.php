@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Repository\PacienteRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Debugbar;
+use Illuminate\Support\Facades\Log;
+use App\Models\FormBuilder;
+use Illuminate\Support\Facades\Cache;
 
 
 class PacienteController extends Controller
@@ -48,6 +50,25 @@ class PacienteController extends Controller
         return $this->pacienteRepository->search($request);
     }
 
+    public function create(Request $request)
+    {
+        // Get the title and id from the request
+        $title = $request->input('form_title');
+        $id = $request->input('form_id');
+
+        // Use cache to store the results of the query
+        $response = Cache::remember("form-builder-{$id}", now()->addMinutes(120), function () use ($id) {
+            return FormBuilder::where('form_id', $id)->get();
+        });
+
+        // Render the view with the cached data
+        return Inertia::render('SubPages/FormSchemaPage', [
+            'data' => $response,
+            'title' => $title,
+        ]);
+    }
+
+    public function show(Request $request) {}
     /**
      * Update patient data.
      *
@@ -64,7 +85,7 @@ class PacienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function store(Request $request)
     {
         return $this->pacienteRepository->store($request);
     }

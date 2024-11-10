@@ -13,6 +13,65 @@ class FormBuilderSeeder extends Seeder
      * @return void
      */
     public function run()
+    /*public function run()
+{
+    $this->truncateAndSeedFormBuilder();
+    $this->seedPatientForm();
+    $this->seedEducationalData();
+}
+
+private function truncateAndSeedFormBuilder()
+{
+    FormBuilder::truncate();
+}
+
+private function seedPatientForm()
+{
+    $patientFormFields = [
+        $this->createFormField(1, 'frmPacientes', 'rut', 'rut', 'RUT', 1, 1, 'text', true, true, 'underlined'),
+        $this->createFormField(2, 'frmPacientes', 'nombre', 'name', 'Nombre', 2, 1, 'text', true, true, 'underlined', 'compact'),
+        // ... Add other patient form fields here
+    ];
+
+    foreach ($patientFormFields as $field) {
+        FormBuilder::create($field);
+    }
+}
+
+private function seedEducationalData()
+{
+    $educationalFields = [
+        $this->createFormField(26, 'frmPacientes', 'subsection', null, 'Subsección Datos Educacionales', 1, 2, 'h2', false, false, null, null, 'text-h2'),
+        $this->createFormField(27, 'frmPacientes', 'establecimiento_educacional_id', null, 'Establecimiento educacional', 2, 2, 'select', true, false, 'underlined', 'compact', null, json_encode([]), 'descripcion', 'id'),
+        $this->createFormField(28, 'frmPacientes', 'profesor', null, 'Profesor', 3, 2, 'text', true, false, 'underlined', 'compact'),
+    ];
+
+    foreach ($educationalFields as $field) {
+        FormBuilder::create($field);
+    }
+}
+
+private function createFormField($id, $formId, $name, $rules, $label, $order, $row, $type, $clearable, $required, $variant, $density = null, $class = null, $items = null, $itemTitle = null, $itemValue = null)
+{
+    return [
+        'id' => $id,
+        'form_id' => $formId,
+        'name' => $name,
+        'rules' => $rules,
+        'label' => $label,
+        'order' => $order,
+        'row' => $row,
+        'type' => $type,
+        'clearable' => $clearable,
+        'required' => $required,
+        'variant' => $variant,
+        'density' => $density,
+        'class' => $class,
+        'items' => $items,
+        'item-title' => $itemTitle,
+        'item-value' => $itemValue,
+    ];
+}*/
     {
         // Truncar la tabla users
         FormBuilder::truncate();
@@ -364,8 +423,6 @@ class FormBuilderSeeder extends Seeder
 
         ]);
 
-
-
         FormBuilder::create([
             'id' => 22,
             'form_id' => 'frmPacientes',
@@ -420,7 +477,7 @@ class FormBuilderSeeder extends Seeder
             'name' => 'telefono2',
             'label' => 'Teléfono 2',
             'density' => 'compact',
-            'order' => 26,
+            'order' => 25,
             'row' => 1,
             'type' => 'text',
             'clearable' => true,
@@ -431,28 +488,29 @@ class FormBuilderSeeder extends Seeder
         FormBuilder::create([
             'id' => 26,
             'form_id' => 'frmPacientes',
-            'name' => 'subsection',
-            'label' => 'Subsección Datos Educacionales',
-            'density' => 'compact',
-            'order' => 1,
-            'row' => 2,
-            'type' => 'subsection',
-            'clearable' => true,
-            'variant' => 'underlined',
-        ]);
-
-        FormBuilder::create([
-            'id' => 27,
-            'form_id' => 'frmPacientes',
             'name' => 'establecimiento_educacional_id',
             'label' => 'Establecimiento educacional',
             'items' => json_encode([]),
             'item-title' => 'descripcion',
             'item-value' => 'id',
             'density' => 'compact',
-            'order' => 2,
-            'row' => 2,
+            'order' => 26,
+            'row' => 1,
             'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 27,
+            'form_id' => 'frmPacientes',
+            'name' => 'profesor',
+            'label' => 'Profesor',
+            'density' => 'compact',
+            'order' => 27,
+            'row' => 1,
+            'type' => 'text',
             'clearable' => true,
             'variant' => 'underlined',
 
@@ -461,10 +519,387 @@ class FormBuilderSeeder extends Seeder
         FormBuilder::create([
             'id' => 28,
             'form_id' => 'frmPacientes',
-            'name' => 'profesor',
-            'label' => 'Profesor',
+            'name' => 'rut_responsable',
+            'label' => 'Rut responsable',
+            'density' => 'compact',
+            'order' => 1,
+            'row' => 2,
+            'type' => 'text',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 29,
+            'form_id' => 'frmPacientes',
+            'name' => 'nombre_responsable',
+            'label' => 'Nombre responsable',
+            'density' => 'compact',
+            'order' => 2,
+            'row' => 2,
+            'type' => 'text',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+   
+        FormBuilder::create([
+            'id' => 30,
+            'form_id' => 'frmPacientes',
+            'name' => 'apellidos_responsable',
+            'label' => 'Apellidos responsable',
             'density' => 'compact',
             'order' => 3,
+            'row' => 2,
+            'type' => 'text',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 31,
+            'form_id' => 'frmPacientes',
+            'name' => 'calle_responsable_id',
+            'label' => 'Calle responsable',
+            'items' => json_encode([]),
+            'item-title' => 'descripcion',
+            'item-value' => 'id',
+            'density' => 'compact',
+            'order' => 4,
+            'row' => 1,
+            'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 32,
+            'form_id' => 'frmPacientes',
+            'name' => 'ciudad_responsable',
+            'label' => 'Ciudad responsable',
+            'density' => 'compact',
+            'order' => 5,
+            'row' => 2,
+            'type' => 'text',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 33,
+            'form_id' => 'frmPacientes',
+            'name' => 'direccion_responsable',
+            'label' => 'Direcciòn responsable',
+            'density' => 'compact',
+            'order' => 6,
+            'row' => 2,
+            'type' => 'switch',
+            'inset' => true,
+            'clearable' => true,
+            'variant' => 'underlined',
+            'color' => 'primary',
+            'hide_details' => true,
+
+        ]);
+
+
+        FormBuilder::create([
+            'id' => 34,
+            'form_id' => 'frmPacientes',
+            'name' => 'comunidad_lgbtq_responsable',
+            'label' => 'Comunidada lgbtq responsable',
+            'density' => 'compact',
+            'order' => 7,
+            'row' => 2,
+            'type' => 'switch',
+            'inset' => true,
+            'clearable' => true,
+            'variant' => 'underlined',
+            'color' => 'primary',
+            'hide_details' => true,
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 35,
+            'form_id' => 'frmPacientes',
+            'name' => 'credencial_discapacidad_responsable',
+            'label' => 'Credencial discapacidad responsable',
+            'density' => 'compact',
+            'order' => 8,
+            'row' => 2,
+            'type' => 'switch',
+            'inset' => true,
+            'clearable' => true,
+            'variant' => 'underlined',
+            'color' => 'primary',
+            'hide_details' => true,
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 36,
+            'form_id' => 'frmPacientes',
+            'name' => 'donante_responsable',
+            'label' => 'Donante responsable',
+            'density' => 'compact',
+            'order' => 9,
+            'row' => 2,
+            'type' => 'switch',
+            'inset' => true,
+            'clearable' => true,
+            'variant' => 'underlined',
+            'color' => 'primary',
+            'hide_details' => true,
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 37,
+            'form_id' => 'frmPacientes',
+            'name' => 'fecha_nacimiento_responsable',
+            'label' => 'Fecha nacimiento responsable',
+            'density' => 'compact',
+            'order' => 10,
+            'row' => 2,
+            'type' => 'date',
+            'inset' => true,
+            'clearable' => true,
+            'variant' => 'underlined',
+            'color' => 'primary',
+            'hide_details' => true,
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 38,
+            'form_id' => 'frmPacientes',
+            'name' => 'edad_responsable',
+            'label' => 'Edad responsable',
+            'density' => 'compact',
+            'order' => 11,
+            'row' => 2,
+            'type' => 'number',
+            'inset' => true,
+            'clearable' => true,
+            'variant' => 'underlined',
+            'color' => 'primary',
+            'hide_details' => true,
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 39,
+            'form_id' => 'frmPacientes',
+            'name' => 'email_responsable',
+            'label' => 'Email responsable',
+            'density' => 'compact',
+            'order' => 12,
+            'row' => 2,
+            'type' => 'email',
+            'inset' => true,
+            'clearable' => true,
+            'variant' => 'underlined',
+            'color' => 'primary',
+            'hide_details' => true,
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 40,
+            'form_id' => 'frmPacientes',
+            'name' => 'email_responsable',
+            'label' => 'Email responsable',
+            'density' => 'compact',
+            'order' => 12,
+            'row' => 2,
+            'type' => 'email',
+            'inset' => true,
+            'clearable' => true,
+            'variant' => 'underlined',
+            'color' => 'primary',
+            'hide_details' => true,
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 41,
+            'form_id' => 'frmPacientes',
+            'name' => 'estado_civil_responsable_id',
+            'label' => 'Estado civil responsable',
+            'items' => json_encode([]),
+            'item-title' => 'descripcion',
+            'item-value' => 'id',
+            'density' => 'compact',
+            'order' => 13,
+            'row' => 2,
+            'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 42,
+            'form_id' => 'frmPacientes',
+            'name' => 'genero_responsable_id',
+            'label' => 'Género responsable',
+            'items' => json_encode([]),
+            'item-title' => 'descripcion',
+            'item-value' => 'id',
+            'density' => 'compact',
+            'order' => 14,
+            'row' => 2,
+            'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 43,
+            'form_id' => 'frmPacientes',
+            'name' => 'grupo_sanguineo_responsable_id',
+            'label' => 'Grupo sanguíneo responsable',
+            'items' => json_encode([]),
+            'item-title' => 'descripcion',
+            'item-value' => 'id',
+            'density' => 'compact',
+            'order' => 15,
+            'row' => 2,
+            'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 44,
+            'form_id' => 'frmPacientes',
+            'name' => 'nacionalidad_responsable_id',
+            'label' => 'Nacionalidad responsable',
+            'items' => json_encode([]),
+            'item-title' => 'descripcion',
+            'item-value' => 'id',
+            'density' => 'compact',
+            'order' => 16,
+            'row' => 2,
+            'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 45,
+            'form_id' => 'frmPacientes',
+            'name' => 'nivel_instruccion_responsable_id',
+            'label' => 'Nivel instrucción responsable',
+            'items' => json_encode([]),
+            'item-title' => 'descripcion',
+            'item-value' => 'id',
+            'density' => 'compact',
+            'order' => 17,
+            'row' => 2,
+            'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 46,
+            'form_id' => 'frmPacientes',
+            'name' => 'ocupacion_responsable_id',
+            'label' => 'Ocupación responsable',
+            'items' => json_encode([]),
+            'item-title' => 'descripcion',
+            'item-value' => 'id',
+            'density' => 'compact',
+            'order' => 18,
+            'row' => 2,
+            'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 47,
+            'form_id' => 'frmPacientes',
+            'name' => 'parentesco_responsable',
+            'label' => 'Parentesco responsable',
+            'density' => 'compact',
+            'order' => 19,
+            'row' => 2,
+            'type' => 'text',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 48,
+            'form_id' => 'frmPacientes',
+            'name' => 'prevision_responsable_id',
+            'label' => 'Previsión responsable',
+            'items' => json_encode([]),
+            'item-title' => 'descripcion',
+            'item-value' => 'id',
+            'density' => 'compact',
+            'order' => 20,
+            'row' => 2,
+            'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 49,
+            'form_id' => 'frmPacientes',
+            'name' => 'pueblo_originario_responsable_id',
+            'label' => 'Pueblo originario responsable',
+            'items' => json_encode([]),
+            'item-title' => 'descripcion',
+            'item-value' => 'id',
+            'density' => 'compact',
+            'order' => 21,
+            'row' => 2,
+            'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 50,
+            'form_id' => 'frmPacientes',
+            'name' => 'religion_responsable_id',
+            'label' => 'Religión responsable',
+            'items' => json_encode([]),
+            'item-title' => 'descripcion',
+            'item-value' => 'id',
+            'density' => 'compact',
+            'order' => 22,
+            'row' => 2,
+            'type' => 'select',
+            'clearable' => true,
+            'variant' => 'underlined',
+
+        ]);
+
+        FormBuilder::create([
+            'id' => 51,
+            'form_id' => 'frmPacientes',
+            'name' => 'telefono_responsable',
+            'label' => 'Teléfono responsable',
+            'density' => 'compact',
+            'order' => 23,
             'row' => 2,
             'type' => 'text',
             'clearable' => true,

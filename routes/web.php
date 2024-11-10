@@ -35,6 +35,7 @@ Route::middleware([
     Route::inertia('psicologia-pacientes', 'PsicologiaPage')->name('psicologia.pacientes');
     Route::inertia('psicologia-sesiones', 'SubPages/Sesiones-PsicologiaPage')->name('psicologia.sesiones');
     Route::inertia('psicologia-registro-sesion', 'SubPages/Componentes/Psicologia-Registro-SesionComponente')->name('psicologia.registro');
+    Route::get('paciente/create', [PacienteController::class, 'create'])->name('paciente.create');
 });
 
 Route::get('/test-redis', function () {

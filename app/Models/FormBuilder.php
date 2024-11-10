@@ -12,7 +12,7 @@ class FormBuilder extends Model
 
     protected $table = 'form_builder';
 
-    protected $fillable = 
+    protected $fillable =
         [
             'frm_id',
             'name',
@@ -36,6 +36,7 @@ class FormBuilder extends Model
             'inset',
             'autofocus',
             'hide_details',
+            'class',
             'cols',
             'row',
             'lg',

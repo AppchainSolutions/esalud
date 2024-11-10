@@ -1,1 +1,0 @@
-{"version":3,"file":"SectionBorder-DyqoGRve.js","sources":["../../../resources/js/Components/SectionBorder.vue"],"sourcesContent":["<template>\n    <div class=\"hidden sm:block\">\n        <div class=\"py-8\">\n            <div class=\"border-t border-gray-200\" />\n        </div>\n    </div>\n</template>\n"],"names":[],"mappings":";;;;AAAA,SAAA,eAAA,MAAA,OAAA,SACc;;;;;;;;;;"}

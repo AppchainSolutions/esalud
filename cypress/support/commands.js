@@ -29,6 +29,6 @@ Cypress.Commands.add("login", (username, password) => {
         cy.visit("http://localhost:8000/login");
         cy.get("#email").type(username);
         cy.get("#password").type(password);
-        cy.contains("Ingresar").click();
+        cy.get("#login").click();
     //});
 });

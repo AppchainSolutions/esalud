@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('item-title')->nullable();
             $table->string('item-value')->nullable();
             $table->string('endpoint')->nullable();
+            $table->string('class')->nullable();
             $table->boolean('false-value')->default(false);
             $table->boolean('true-value')->default(true);
             $table->string('color')->default('primary');

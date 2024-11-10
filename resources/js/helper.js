@@ -1,5 +1,5 @@
 import Swal from "sweetalert2/dist/sweetalert2.js";
-import { storeItem, deleteItem, editItem, showItem } from "@/crud";
+import { storeItem, deleteItem, editItem } from "@/crud";
 import { useNotification } from "@kyvg/vue3-notification";
 import { nextTick } from "vue";
 import logger from "./logger.js";
@@ -96,19 +96,7 @@ export const getFormBuilderValues = async (id) => {
         throw error;
     }
 };
-/* 
-async function setFormItems(result) {
-    
-    } else {
-        notify({
-            title: "Aviso.",
-            text: `No se encontraron registros.`,
-            type: "warning",
-        });
-        state.tableItems = [];
-    }
-}
- */
+
 /**
  * Adds matching item descriptions to the given result data.
  *
@@ -309,7 +297,7 @@ export const validationRules = (value) => {
                 : "El rut no puede ser mayor a 11 caracteres",
 
         (value) => {
-            const regex = /^[0-9]+[-|‐]{1}[0-9kK]{1}$/;
+            const regex = /^\d+[-—][\dkK]$/;
             if (!regex.test(value)) {
                 return false;
             }

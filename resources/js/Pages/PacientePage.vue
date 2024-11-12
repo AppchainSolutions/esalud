@@ -5,13 +5,14 @@ import { useLogger } from "vue-logger-plugin";
 import { fetchAllData, handleSearchItem } from "../helper.js";
 import TableAction from "./SubPages/Componentes/TableAction.vue";
 import { router } from '@inertiajs/vue3';
+import { useDataStore } from "@/store"
 
 defineOptions({ layout: AppLayout });
 
-//const store = useDataStore();
+const store = useDataStore();
 const logger = useLogger();
 const state = reactive({
-    
+
     endpoints: [
         "calles",
         "estados_civiles",
@@ -77,6 +78,9 @@ const state = reactive({
 onMounted(async () => {
     try {
         state.config.list = await fetchAllData(state.endpoints);
+        if (state.config.list) {
+            store.setEndpoints({...state.config.list});
+        }
     } catch (error) {
         logger.error("Error loading endpoints:", error);
     }
@@ -100,9 +104,10 @@ async function buscar() {
 
 const formCreate = () => {
     try {
-        const result = router.get('paciente/create', { 
+        const result = router.get('paciente/create', {
             form_title: "Nuevo paciente",
-            form_id: "frmPacientes"
+            form_id: "frmPacientes",
+            endpoints: state.config.list
         });
         logger.log('result', result);
     } catch (error) {
@@ -127,11 +132,11 @@ const formCreate = () => {
                             </v-col>
                             <v-col>
                                 <v-select :items="state.config.list
-                                        .establecimientos_educacionales
+                                    .establecimientos_educacionales
                                     " item-title="descripcion" item-value="id" v-model="state.searchQuery
-                                            .establecimiento_educacional_id
-                                        " clearable label="Establecimiento Educacional" class="ma-2" variant="underlined"
-                                    single />
+                                        .establecimiento_educacional_id
+                                        " clearable label="Establecimiento Educacional" class="ma-2"
+                                    variant="underlined" single />
                             </v-col>
                         </v-row>
 

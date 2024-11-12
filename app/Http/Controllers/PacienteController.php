@@ -68,7 +68,9 @@ class PacienteController extends Controller
         ]);
     }
 
-    public function show(Request $request) {}
+    public function show(Request $request) {
+        //code here
+    }
     /**
      * Update patient data.
      *

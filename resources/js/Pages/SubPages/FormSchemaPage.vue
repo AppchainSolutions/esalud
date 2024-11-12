@@ -4,14 +4,13 @@ import AppLayout from "../../Layouts/AppLayout.vue";
 import { onMounted, ref } from "vue";
 import { useLogger } from "vue-logger-plugin";
 import { useForm } from "vee-validate";
-import {
-    getFormBuilderValues,
-} from "@/helper.js";
-import { usePage } from '@inertiajs/vue3'
-
-const page = usePage()
+import { usePage, router } from "@inertiajs/vue3";
+import { useDataStore } from "@/store";
 
 defineOptions({ layout: AppLayout });
+
+const page = usePage();
+const store = useDataStore();
 
 const { handleSubmit, handleReset } = useForm({
     validationSchema: {
@@ -38,20 +37,32 @@ const isValid = ref(false);
 const logger = useLogger();
 
 let formItems = ref([]);
+let endpoints = ref([]);
 
 const item = ref({});
 
 onMounted(async () => {
     try {
-        formItems.value = page.props.data;
+        formItems = page.props.data;
+        //let data = JSON.parse(JSON.stringify(store.endpoints));
+
+        formItems.forEach((formItem) => {
+            const { endpoint } = formItem;
+
+            if (endpoint) {
+                logger.info("Processing form endpoint:", endpoint);
+
+                const formattedEndpoint = endpoint;
+                logger.log("Formatted endpoint:", formattedEndpoint);
+
+                const endpointData = store.endpoints[formattedEndpoint];
+                logger.log("Endpoint data:", endpointData);
+            }
+        });
     } catch (error) {
         logger.error("Error loading form items:", error);
     }
 });
-
-function close() {
-    dialog.value = false;
-}
 
 function getComponentType(type) {
     switch (type) {
@@ -92,7 +103,13 @@ function getRows() {
         rows[item.row].push(item);
         return rows;
     }, {});
-} 
+}
+function volver() {
+    router.get("/paciente"); // O
+}
+function storeForm(items) {
+    logger.log("Form items:", Object.values(formItems.value));
+}
 </script>
 
 <template>
@@ -100,46 +117,75 @@ function getRows() {
         <v-card>
             <v-card-title>
                 <v-toolbar flat>
-                    <div class="text-h4 ma-4">
+                    <div class="text-h4 ma-4 pa-4">
                         {{ page.props.title }}
                     </div>
                 </v-toolbar>
             </v-card-title>
 
             <v-card-text>
-                <v-sheet :class="'rounded-lg ma-2 pa-2'" :elevation="4">
-                    <form @submit.prevent="submit">
-                        <template v-for="(row, rowIndex) in getRows()">
+                {{ store.endpoints["calles"] }}
+                <form @submit.prevent="submit">
+                    <v-container fluid class="ma-4 pa-4">
+                        <template
+                            v-for="(row, rowIndex) in getRows()"
+                            :key="rowIndex"
+                        >
                             <v-row>
-                                <v-col v-for="item in row" :key="item.name" :cols="12" :lg="2">
-                                    <component :is="getComponentType(item.type)
-                                        " v-bind:name="item.name" v-bind:label="item.label"
-                                        v-bind:type="item.type" v-bind:density="item.density"
-                                        v-bind:input-type="item.inputType" v-bind:variant="item.variant"
-                                        v-bind:v-model="item.value" v-bind:class="item.class" v-bind:chips="item.chips"
-                                        v-bind:multiple="item.multiple" v-bind:clearable="item.clearable
-                                            " v-bind:hide-details="item.hide - details
-                                                        " v-bind:inset="item.inset" v-bind:color="item.color || []"
-                                        v-bind:rules="item.rules || []" v-bind:items="item.items || []">
+                                <v-col
+                                    v-for="item in row"
+                                    :key="item.name"
+                                    :cols="12"
+                                    :lg="2"
+                                    :class="'ma-2'"
+                                >
+                                    <component
+                                        :is="getComponentType(item.type)"
+                                        v-bind:name="item.name"
+                                        v-bind:label="item.label"
+                                        v-bind:type="item.type"
+                                        v-bind:density="item.density"
+                                        v-bind:input-type="item.inputType"
+                                        v-bind:variant="item.variant"
+                                        v-bind:class="item.class"
+                                        v-bind:chips="item.chips"
+                                        v-bind:multiple="item.multiple"
+                                        v-bind:clearable="!item.clearable"
+                                        v-bind:inset="item.inset"
+                                        v-bind:color="item.color || []"
+                                        v-bind:items="item.items"
+                                        v-bind:item-title="'descripcion'"
+                                        v-bind:item-value="'id'"
+                                        v-model="item.value"
+                                    >
                                     </component>
                                 </v-col>
                             </v-row>
                         </template>
-                        <v-card-actions>
-                            <!-- <v-spacer></v-spacer>
-                                    <v-btn color="blue-darken-1" variant="tonal" @click="close">
-                                        Cancelar
-                                    </v-btn>
+                    </v-container>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="blue-darken-1"
+                            variant="tonal"
+                            @click="volver"
+                        >
+                            Volver
+                        </v-btn>
 
-                                    <v-btn class="me-4" type="submit" color="blue-darken-1" variant="tonal"
-                                        :disabled="!isValid">
-                                        Grabar
-                                    </v-btn> -->
-                        </v-card-actions>
-                    </form>
-                </v-sheet>
+                        <v-btn
+                            class="me-4"
+                            type="submit"
+                            color="blue-darken-1"
+                            variant="tonal"
+                            :disabled="isValid"
+                            @click="storeForm()"
+                        >
+                            Grabar
+                        </v-btn>
+                    </v-card-actions>
+                </form>
             </v-card-text>
         </v-card>
     </v-container>
-
 </template>

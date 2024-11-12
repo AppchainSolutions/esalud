@@ -21,9 +21,9 @@ return new class extends Migration
             $table->boolean('disabled')->nullable();
             $table->boolean('expanded')->nullable();
             $table->boolean('hide_details')->nullable();
-            $table->boolean('inset')->nullable();           
+            $table->boolean('inset')->nullable();
             $table->boolean('multiple')->nullable();
-            $table->boolean('query_search')->nullable();   
+            $table->boolean('query_search')->nullable();
             $table->boolean('readonly')->nullable();
             $table->boolean('required')->nullable();
             $table->boolean('single')->nullable();
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->integer('md')->nullable();
             $table->integer('sm')->nullable();
             $table->integer('row')->nullable();
-            $table->json('items')->nullable();
+            $table->string('items')->nullable();
             $table->string('item-title')->nullable();
             $table->string('item-value')->nullable();
             $table->string('endpoint')->nullable();

@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('hemograma')->nullable();
             $table->string('optometria')->nullable();
             $table->string('trigliceridos')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

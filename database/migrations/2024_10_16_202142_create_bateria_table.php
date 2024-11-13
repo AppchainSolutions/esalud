@@ -13,10 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bateria', function (Blueprint $table) {
+            $table->id();
             $table->string('descripcion')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
-            $table->increments('id');
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

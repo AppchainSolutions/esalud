@@ -13,10 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('afp', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->string('descripcion');
-            $table->timestamp('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestamp('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
     }
 

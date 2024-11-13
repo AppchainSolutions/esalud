@@ -16,8 +16,8 @@ return new class extends Migration
             $table->bigInteger('id')->primary();
             $table->integer('area')->nullable();
             $table->string('descripcion')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

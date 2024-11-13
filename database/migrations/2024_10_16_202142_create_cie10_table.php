@@ -13,11 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cie10', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->string('descripcion')->nullable();
             $table->string('codigo', 20)->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timeTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timeTz('updated_at');
         });
     }
 

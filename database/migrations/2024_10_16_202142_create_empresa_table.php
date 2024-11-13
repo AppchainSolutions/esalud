@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('empresa', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->string('direccion')->nullable();
             $table->string('email')->nullable();
             $table->string('descripcion');
@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('representante')->nullable();
             $table->string('responsable')->nullable();
             $table->string('telefono')->nullable();
-            $table->timestamp('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestamp('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->string('rut', 20)->nullable();
         });
     }

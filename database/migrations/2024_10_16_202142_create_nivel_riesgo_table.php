@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('nivel_riesgo', function (Blueprint $table) {
             $table->bigInteger('id')->primary();
             $table->string('descripcion')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

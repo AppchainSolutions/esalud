@@ -22,8 +22,8 @@ return new class extends Migration
             $table->integer('numero_solicitud')->nullable();
             $table->string('resultado')->nullable();
             $table->integer('tipo_examen')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
             $table->integer('semaforo')->nullable();
             $table->integer('estado_epo')->nullable();
             $table->integer('id')->primary();

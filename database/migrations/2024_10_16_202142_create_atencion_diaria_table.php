@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('atencion_diaria', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->integer('paciente_id')->default(0);
             $table->integer('accidente')->nullable()->default(0);
             $table->integer('accidente_condicion')->nullable()->default(0);
@@ -44,8 +44,8 @@ return new class extends Migration
             $table->integer('tipo_atencion')->nullable()->default(0);
             $table->integer('tipo_licencia')->nullable()->default(0);
             $table->integer('turno')->nullable()->default(0);
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
             $table->boolean('acompanado')->nullable()->default(false);
             $table->text('comentario')->nullable();
         });

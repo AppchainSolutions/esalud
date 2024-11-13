@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('grupo_sanguineo', function (Blueprint $table) {
             $table->bigInteger('id')->primary();
             $table->string('descripcion');
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

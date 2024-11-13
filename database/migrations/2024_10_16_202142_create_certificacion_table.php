@@ -13,14 +13,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('certificacion', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->bigInteger('paciente_id')->nullable();
             $table->string('certificacion')->nullable();
             $table->date('fecha_certificacion')->nullable();
             $table->date('fecha_caducidad')->nullable();
             $table->integer('estado_certificacion')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

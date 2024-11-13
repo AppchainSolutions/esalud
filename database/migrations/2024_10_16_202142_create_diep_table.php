@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('diep', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->integer('paciente_id');
             $table->integer('seguro')->nullable();
             $table->string('comentario')->nullable();

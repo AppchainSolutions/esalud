@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('paciente_id');
             $table->string('factor_riesgo')->nullable();
             $table->string('comentario')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('quickdash')->nullable();
             $table->string('derivacion')->nullable();
             $table->string('comentario')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

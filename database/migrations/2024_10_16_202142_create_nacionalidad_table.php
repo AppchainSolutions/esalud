@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('nacionalidad', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descripcion')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

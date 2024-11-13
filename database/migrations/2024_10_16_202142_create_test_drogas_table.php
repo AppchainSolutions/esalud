@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('test_drogas', function (Blueprint $table) {
             $table->bigInteger('id')->primary();
             $table->string('descripcion')->nullable();
-            $table->timestamp('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestamp('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
     }
 

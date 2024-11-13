@@ -19,8 +19,8 @@ return new class extends Migration
             $table->date('fecha_ingreso')->nullable();
             $table->date('fecha_prox_control')->nullable();
             $table->date('fecha_ult_control')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
             $table->increments('id');
             $table->integer('estatus')->nullable();
         });

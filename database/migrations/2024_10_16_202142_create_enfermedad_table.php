@@ -13,11 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('enfermedad', function (Blueprint $table) {
-            $table->integer('paciente_id');
+            $table->id();
             $table->string('comentario')->nullable();
-            $table->timestamp('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestamp('updated_at')->nullable()->default(DB::raw("now()"));
-            $table->increments('id');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->integer('trastorno_cronico')->nullable();
         });
     }

@@ -13,12 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('antecedente_familiar', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->integer('paciente_id');
             $table->string('patologia')->nullable();
             $table->string('parentesco')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
         });
     }
 

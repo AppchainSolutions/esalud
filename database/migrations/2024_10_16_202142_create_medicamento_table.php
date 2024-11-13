@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('paciente_id');
             $table->string('medicamento')->nullable();
             $table->string('comentario')->nullable();
-            $table->timestamp('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestamp('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
     }
 

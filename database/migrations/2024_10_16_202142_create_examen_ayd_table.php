@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('idpgp')->nullable();
             $table->date('fecha_control')->nullable();
             $table->string('comentario')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
             $table->integer('test_drogas')->nullable();
         });
     }

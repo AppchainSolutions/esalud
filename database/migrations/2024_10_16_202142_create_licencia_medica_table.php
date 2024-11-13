@@ -21,8 +21,8 @@ return new class extends Migration
             $table->date('fecha_recepcion')->nullable();
             $table->date('fecha_termino')->nullable();
             $table->integer('folio')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestampTz('created_at');
+            $table->timestampTz('updated_at');
             $table->string('caract_reposo')->nullable();
             $table->string('lugar_reposo')->nullable();
             $table->string('tipo_licencia')->nullable();

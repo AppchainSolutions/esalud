@@ -163,6 +163,7 @@ export const handleSearchItem = async (state) => {
     state.loadingSearch = true;
     try {
         const result = await searchItem(url, filter);
+        console.log(result);
         setResponse(state, result);
     } catch (error) {
         notify({
@@ -177,7 +178,7 @@ export const handleSearchItem = async (state) => {
 };
 
 async function setResponse(state, result) {
-    const count = result.data.length;
+    const count = result.length;
     
     if (count > 0) {
         notify({
@@ -188,7 +189,7 @@ async function setResponse(state, result) {
         state.formItems = { ...result.data };
         console.log(state.formItems);
         if (state.endpoints) {
-            state.tableItems = addValue(state, result.data);
+            state.tableItems = addValue(state, result);
         } else {
             state.tableItems = result.data;
         }

@@ -7,6 +7,8 @@ use App\Models\Vacuna;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
+
 
 class VacunaRepository extends Repository
 {

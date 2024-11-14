@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\Log;
-use QueryException;
+use \Illuminate\Database\QueryException;
 class Tools
 {
     public static function filterData(array $filters, object $query)

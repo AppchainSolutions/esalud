@@ -94,7 +94,7 @@ function close() {
     closeForm(state);
 }
 //**********\\\\  CRUD ////*************/
-const handleShow = async () => {
+const showItem = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
     await handleShowItem(state);
 };
@@ -103,23 +103,24 @@ function openFormCreate() {
     openToCreate(state);
 }
 
-function storeItems() {
+function storeItems(item) {
     return state.editedIndex > -1 ? update() : create();
 }
 
 const create = async () => {
-    await handleStoreItem(state);
+    await handleStoreItem(state, "create");
+    closeForm(state);
+};
+
+const update = async () => {
+    await handleStoreItem(state, "edit");
     closeForm(state);
 };
 
 function openFormEdit(item) {
-    openToEdit(state, item);
+   openToEdit(state, item);
 }
 
-const update = async () => {
-    await handleEditItem(state);
-    closeForm(state);
-};
 
 const remove = async (item) => {
     await handleRemoveItem(state, item);
@@ -141,7 +142,7 @@ const remove = async (item) => {
                                 class="ma-2"
                                 color="#009AA4"
                                 variant="tonal"
-                                @click="handleShow"
+                                @click="showItem"
                             >
                             </v-btn>
                             <v-btn
@@ -370,7 +371,7 @@ const remove = async (item) => {
                 </v-tooltip>
             </template>
             <template v-slot:no-data>
-                <v-btn color="#009AA4" variant="tonal" @click="handleShow">
+                <v-btn color="#009AA4" variant="tonal" @click="showItem">
                     Iniciar
                 </v-btn>
             </template>

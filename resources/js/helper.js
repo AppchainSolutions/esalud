@@ -36,12 +36,14 @@ export const fetchData = async (endpoints) => {
     });
 };
 
-export const handleStoreItem = async (state) => {
+export const handleStoreItem = async (state, mode) => {
+    if (mode === "create") {
+     
     try {
         const item = { ...state.editedItem };
         item.paciente_id = store.selected.id;
-        await storeItem(state.urlStore, item);
         notify({ text: "Datos almacenados exitosamente.", type: "success" });
+        return await storeItem(state.urlStore, item);
     } catch (error) {
         console.error(error);
         notify({
@@ -49,6 +51,26 @@ export const handleStoreItem = async (state) => {
             type: "error",
         });
     }
+} else {
+    try {
+        const item = { ...state.editedItem };
+        console.log(item);
+        const url = state.urlUpdate;
+        notify({
+            title: "Informacion importante.",
+            text: "El registro, ha sido correctamente actualizado.",
+            type: "info",
+        });
+        return await editItem(url, item);
+    } catch (error) {
+        notify({
+            title: "Error.",
+            text: "Error al actualizar el registro: ",
+            type: "error",
+        });
+        console.error(error);
+    }
+}
 };
 /**
  * Handles the editing of an item.
@@ -60,14 +82,15 @@ export const handleStoreItem = async (state) => {
  */
 export const handleEditItem = async (state) => {
     try {
-        const itemToEdit = { ...state.editedItem };
+        const item = { ...state.editedItem };
+        console.log(item);
         const url = state.urlUpdate;
         notify({
             title: "Informacion importante.",
             text: "El registro, ha sido correctamente actualizado.",
             type: "info",
         });
-        return await editItem(url, itemToEdit);
+        return await editItem(url, item);
     } catch (error) {
         notify({
             title: "Error.",
@@ -139,7 +162,8 @@ export const handleShowItem = async (state) => {
     state.loadingSearch = true;
     try {
         const result = await showItem(url, filter);
-        setResponse(state, result);
+        console.log(result);
+        setResponse(state, result.data);
     } catch (error) {
         notify({
             title: "Error.",
@@ -163,7 +187,6 @@ export const handleSearchItem = async (state) => {
     state.loadingSearch = true;
     try {
         const result = await searchItem(url, filter);
-        console.log(result);
         setResponse(state, result);
     } catch (error) {
         notify({
@@ -179,6 +202,7 @@ export const handleSearchItem = async (state) => {
 
 async function setResponse(state, result) {
     const count = result.length;
+    console.log(result);    
     
     if (count > 0) {
         notify({
@@ -186,12 +210,11 @@ async function setResponse(state, result) {
             text: `Se encontraron ${count} registros.`,
             type: "success",
         });
-        state.formItems = { ...result.data };
-        console.log(state.formItems);
+        state.formItems = { ...result };
         if (state.endpoints) {
             state.tableItems = addValue(state, result);
         } else {
-            state.tableItems = result.data;
+            state.tableItems = result;
         }
     } else {
         notify({
@@ -267,28 +290,13 @@ export const openToCreate = (state) => {
 };
 
 export const openToEdit = (state, item) => {
-    if (state.endpoints) {
-        const recordsArray = Object.values(state.formItems);
-        const record = recordsArray.find((rec) => rec.id === item.id);
-        edit(record);
-    } else {
-        const record = item;
-        edit(record);
-    }
-
-    function edit(record) {
-        try {
-            const index = state.tableItems.indexOf(item);
-            const editedItemCopy = { ...record };
-            state.editedIndex = index;
-            // const edItem = Object.assign({}, record);
-            //console.log(Object.assign({}, record));
-            state.editedItem = editedItemCopy;
-            state.dialog = true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
+     /* const record = state.endpoints
+     ? Object.values(state.formItems).find((rec) => rec.id === item.id)
+     : item;
+     console.log(record); */
+    state.editedIndex = state.tableItems.indexOf(item);
+    state.editedItem = item;
+    state.dialog = true;
 };
 
 export const validationRules = (value) => {

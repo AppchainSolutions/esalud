@@ -120,58 +120,50 @@
   });
 
   //**********\\\\  LIFE CYCLE HOOKS ////*************/
-  onMounted(async () => {
+onMounted(async () => {
     state.list = await fetchData(state.endpoints);
-  });
+});
 
-  //**********\\\\  COMPUTE PROPERTIES ////*************/
-  const editedItemTitle = computed(() =>
+//**********\\\\  COMPUTE PROPERTIES ////*************/
+const editedItemTitle = computed(() =>
     state.editedIndex === -1 ? state.formCrear : state.formEdit
-  );
+);
 
-  //**********\\\\ METHODS ////*************/
-  function volver() {
-    window.history.back();
-  }
-  function close() {
+function close() {
     closeForm(state);
-  }
-  //**********\\\\  CRUD ////*************/
-  const handleShow = async () => {
+}
+//**********\\\\  CRUD ////*************/
+const showItem = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
     await handleShowItem(state);
-  };
+};
 
-  function openFormCreate() {
+function openFormCreate() {
     openToCreate(state);
-  }
+}
 
-  function storeItems() {
+function storeItems(item) {
     return state.editedIndex > -1 ? update() : create();
-  }
+}
 
-  const create = async () => {
-    await handleStoreItem(state);
+const create = async () => {
+    await handleStoreItem(state, "create");
     closeForm(state);
-  };
+};
 
-  function openFormEdit(item) {
-    openToEdit(state, item);
-  }
-
-  const update = async () => {
-    await handleEditItem(state);
+const update = async () => {
+    await handleStoreItem(state, "edit");
     closeForm(state);
-  };
+};
 
-  const remove = async (item) => {
+function openFormEdit(item) {
+   openToEdit(state, item);
+}
+
+
+const remove = async (item) => {
     await handleRemoveItem(state, item);
-  };
-  /*
-const getIconReview = async (val) => {
-    await console.log(val);
-           // return val === 0 ? "mdi-eye-off-outline" : "mdi-eye-outline";
-        };*/
+};
 </script>
 
 <template>
@@ -190,7 +182,7 @@ const getIconReview = async (val) => {
                 class="ma-2"
                 color="#009AA4"
                 :loading="state.loadingSearch"
-                @click="handleShow"
+                @click="showItem"
               >
               </v-btn>
               <v-btn
@@ -362,7 +354,7 @@ const getIconReview = async (val) => {
         </v-tooltip>
       </template>
       <template v-slot:no-data>
-        <v-btn color="#009AA4" variant="tonal" @click="handleShow"> Iniciar </v-btn>
+        <v-btn color="#009AA4" variant="tonal" @click="showItem"> Iniciar </v-btn>
       </template>
     </v-data-table>
   </v-container>

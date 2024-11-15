@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Repository\ExAlcoholRepository;
+use Illuminate\Support\Facades\Log;
 
 class ExAlcoholController extends Controller
 {
@@ -15,14 +16,14 @@ class ExAlcoholController extends Controller
         $this->exalcoholRepository = $exalcoholRepository;
     }
 
-    public function consulta(Request $request)
+    public function consulta()
     {
         return Inertia::render('Consultas/ConsultaExAlcohol');
     }
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $id)
+    public function index()
     {
         return Inertia::render('SubPages/ExAlcoholPage');
     }

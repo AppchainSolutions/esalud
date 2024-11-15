@@ -39,6 +39,7 @@ abstract class Repository implements RepositoryInterface
     public function store(Request $request)
     {
         $query = $request->get('data');
+        Log::info($request);
 
         try {
             $query = array_map(function ($value) {
@@ -60,42 +61,24 @@ abstract class Repository implements RepositoryInterface
 
     public function update(Request $request)
     {
-        $data = $request->all();
+        // Extract the 'id' from the incoming request data
+        $id = $request->input('data.id');
+        Log::info('Updating model with ID: ' . $id);
 
-        // Check if $data is not null and contains the 'id' key
-        if (is_null($data) || !isset($data['id'])) {
-            // Log the error
-            Log::error('Invalid data: data is null or id is missing');
-
-            // Return a 400 response
-            return Response::json(['error' => 'Invalid data'], 400);
-        }
-
-        $id = $data['id'];
-
-        // Remove the 'id' key from the data array
-        $dataNoId = $data;
-        unset($dataNoId['id']);
+        // Clone the data array and remove the 'id' key for updating the model
+        $dataToUpdate = $request->input('data');
+        Log::info('Data : ', $dataToUpdate);
+        unset($dataToUpdate['id']);
+        Log::info('Data to update: ', $dataToUpdate);
 
         try {
-            // Retrieve the model instance
+            // Retrieve the model instance or fail if not found
             $model = $this->model->findOrFail($id);
-
-            // Log the retrieved model instance
-            Log::info($model);
-
-            // Update the model instance
-            $model->fill($dataNoId);
+            // Update the model instance with the new data
+            $model->fill($dataToUpdate);
             $model->save();
-
             // Return a successful response
             return Response::json(['message' => 'Model updated successfully']);
-        } catch (ModelNotFoundException $e) {
-            // Log the error
-            Log::error($e);
-
-            // Return a 404 response
-            return Response::json(['error' => 'Model not found'], 404);
         } catch (QueryException $e) {
             // Log the error
             Log::error($e);
@@ -109,8 +92,9 @@ abstract class Repository implements RepositoryInterface
     {
         try {
             $filters = $request->input('data');
+            Log::info($request);
             $query = $this->model->query()
-                ->select("*");
+            ->select("*");
             return Tools::filterData($filters, $query);
         } catch (QueryException $e) {
             return response()->json([

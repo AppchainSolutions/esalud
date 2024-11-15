@@ -19,12 +19,12 @@ const state = reactive({
             sortable: true,
             key: "idpgp",
         },
-        {
+/*         {
             title: "Estatus",
             align: "start",
             sortable: true,
             key: "estatus",
-        },
+        }, */
         {
             title: "Fecha Ingreso",
             align: "start",
@@ -56,7 +56,6 @@ const state = reactive({
         paciente_id: null,
         idpgp: null,
         fecha_ingreso: null,
-        fecha_control: null,
         fecha_prox_control: null,
         fecha_ult_control: null,
         comentario: null,
@@ -65,7 +64,6 @@ const state = reactive({
         paciente_id: null,
         idpgp: null,
         fecha_ingreso: null,
-        fecha_control: null,
         fecha_prox_control: null,
         fecha_ult_control: null,
         comentario: null,
@@ -97,7 +95,7 @@ function close() {
     closeForm(state);
 }
 //**********\\\\  CRUD ////*************/
-const handleShow = async () => {
+const showItem = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
     await handleShowItem(state);
 };
@@ -106,23 +104,24 @@ function openFormCreate() {
     openToCreate(state);
 }
 
-function storeItems() {
+function storeItems(item) {
     return state.editedIndex > -1 ? update() : create();
 }
 
 const create = async () => {
-    await handleStoreItem(state);
+    await handleStoreItem(state, "create");
+    closeForm(state);
+};
+
+const update = async () => {
+    await handleStoreItem(state, "edit");
     closeForm(state);
 };
 
 function openFormEdit(item) {
-    openToEdit(state, item);
+   openToEdit(state, item);
 }
 
-const update = async () => {
-    await handleEditItem(state);
-    closeForm(state);
-};
 
 const remove = async (item) => {
     await handleRemoveItem(state, item);
@@ -144,7 +143,7 @@ const remove = async (item) => {
                                 class="ma-2"
                                 color="#009AA4"
                                 variant="tonal"
-                                @click="handleShow"
+                                @click="showItem"
                             >
                             </v-btn>
                             <v-btn
@@ -178,14 +177,14 @@ const remove = async (item) => {
                                                     variant="underlined"
                                                 ></v-text-field>
 
-                                                <v-text-field
+                                                <!-- <v-text-field
                                                     v-model="
                                                         state.editedItem.estatus
                                                     "
                                                     label="Estatus"
                                                     type="text"
                                                     variant="underlined"
-                                                ></v-text-field>
+                                                ></v-text-field> -->
 
                                                 <v-text-field
                                                     v-model="
@@ -196,16 +195,7 @@ const remove = async (item) => {
                                                     type="date"
                                                     variant="underlined"
                                                 ></v-text-field>
-
-                                                <v-text-field
-                                                    v-model="
-                                                        state.editedItem
-                                                            .fecha_control
-                                                    "
-                                                    label="Fecha control"
-                                                    type="date"
-                                                    variant="underlined"
-                                                ></v-text-field>
+                                                
                                             </v-col>
 
                                             <v-col>
@@ -254,7 +244,7 @@ const remove = async (item) => {
                                     <v-btn
                                         color="#009AA4"
                                         variant="tonal"
-                                        @click="storeItems"
+                                        @click="storeItems(item)"
                                     >
                                         Guardar
                                     </v-btn>
@@ -295,7 +285,7 @@ const remove = async (item) => {
                 </v-tooltip>
             </template>
             <template v-slot:no-data>
-                <v-btn color="#009AA4" variant="tonal" @click="handleShow">
+                <v-btn color="#009AA4" variant="tonal" @click="showItem">
                     Iniciar
                 </v-btn>
             </template>

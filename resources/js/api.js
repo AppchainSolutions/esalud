@@ -20,9 +20,8 @@ export const post = async (endpoint, data) => {
 
 export const put = async (endpoint, data) => {
     try {
-        const result = await axios.post(endpoint, {
-            ...data,
-            _method: "PUT",
+        const result = await axios.put(endpoint, {
+            data,
         });
         if (result) {
             return result;
@@ -34,10 +33,9 @@ export const put = async (endpoint, data) => {
 
 export const remove = async (endpoint, id) => {
     try {
-        const result = await axios.post(endpoint, {
+        const result = await axios.delete(endpoint, {
             params: {
                 id,
-                _method: "DELETE",
             },
         });
         if (result) {

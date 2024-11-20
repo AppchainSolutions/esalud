@@ -1,9 +1,10 @@
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive, computed, onMounted } from "vue";
 import { useDataStore } from "@/store.js";
 import {
     closeForm,
     handleEditItem,
+    fetchData,
     handleRemoveItem,
     handleShowItem,
     handleStoreItem,
@@ -12,6 +13,8 @@ import {
 } from "@/helper.js";
 const store = useDataStore();
 const state = reactive({
+    endpoints: ["estado_epo"],
+
     headers: [
         {
             title: "IDPGP",
@@ -19,12 +22,7 @@ const state = reactive({
             sortable: true,
             key: "idpgp",
         },
-        {
-            title: "Estatus",
-            align: "start",
-            sortable: true,
-            key: "estatus",
-        },
+        
         {
             title: "Fecha Ingreso",
             align: "start",
@@ -59,6 +57,7 @@ const state = reactive({
         fecha_control: null,
         fecha_prox_control: null,
         fecha_ult_control: null,
+        estatus:null, 
         comentario: null,
     },
     defaultItem: {
@@ -68,6 +67,7 @@ const state = reactive({
         fecha_control: null,
         fecha_prox_control: null,
         fecha_ult_control: null,
+        estatus: null,
         comentario: null,
     },
     searchQuery: {
@@ -87,10 +87,13 @@ const state = reactive({
     urlDelete: "/examen/aldehido/delete",
     urlStore: "/examen/aldehido",
 });
-
+//**********\\\\  LIFE CYCLE HOOKS ////*************/
+onMounted(async () => {
+    state.list = await fetchData(state.endpoints);
+});
 //**********\\\\  COMPUTE PROPERTIES ////*************/
 const editedItemTitle = computed(() =>
-    state.editedIndex === -1 ? state.formCrear : state.formEdit
+    state.editedIndex === -1 ? state.formCrear : state.formEdit,
 );
 
 function close() {
@@ -121,9 +124,8 @@ const update = async () => {
 };
 
 function openFormEdit(item) {
-   openToEdit(state, item);
+    openToEdit(state, item);
 }
-
 
 const remove = async (item) => {
     await handleRemoveItem(state, item);
@@ -179,14 +181,19 @@ const remove = async (item) => {
                                                     variant="underlined"
                                                 ></v-text-field>
 
-                                                <v-text-field
+                                                <v-select
                                                     v-model="
-                                                        state.editedItem.estatus
+                                                        state.editedItem
+                                                            .estatus                                      "
+                                                    :items="
+                                                        state.list.estado_epo
                                                     "
+                                                    item-title="descripcion"
+                                                    item-value="id"
                                                     label="Estatus"
-                                                    type="text"
                                                     variant="underlined"
-                                                ></v-text-field>
+                                                    clearable
+                                                ></v-select>
 
                                                 <v-text-field
                                                     v-model="

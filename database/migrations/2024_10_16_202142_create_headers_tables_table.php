@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('headers_tables', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('tabla');
             $table->integer('idtabla');
             $table->string('json');

@@ -18,6 +18,7 @@ class ExAlcohol extends Model
     protected $table = 'examen_ayd';
     protected $fillable = [
         'paciente_id',
+        'estado_id',
         'idpgp',
         'fecha_control',
         'test_drogas',

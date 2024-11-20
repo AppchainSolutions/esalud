@@ -13,6 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('examen_epo', function (Blueprint $table) {
+            $table->id();
             $table->integer('paciente_id');
             $table->text('comentario')->nullable();
             $table->date('fecha_realizacion')->nullable()->default('1900-01-01');
@@ -22,13 +23,12 @@ return new class extends Migration
             $table->integer('numero_solicitud')->nullable();
             $table->string('resultado')->nullable();
             $table->integer('tipo_examen')->nullable();
-            $table->timestampTz('created_at');
-            $table->timestampTz('updated_at');
             $table->integer('semaforo')->nullable();
             $table->integer('estado_epo')->nullable();
-            $table->integer('id')->primary();
             $table->integer('bateria')->nullable();
             $table->integer('codigo_verificacion')->nullable();
+            $table->timestamps();
+
         });
     }
 

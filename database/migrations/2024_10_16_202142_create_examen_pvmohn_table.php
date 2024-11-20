@@ -13,16 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('examen_pvmohn', function (Blueprint $table) {
+            $table->id();
+            $table->integer('estatus_id')->nullable();
             $table->integer('paciente_id');
             $table->integer('idpgp')->nullable();
             $table->string('comentario')->nullable();
             $table->date('fecha_ingreso')->nullable();
             $table->date('fecha_prox_control')->nullable();
             $table->date('fecha_ult_control')->nullable();
-            $table->timestampTz('created_at');
-            $table->timestampTz('updated_at');
-            $table->increments('id');
-            $table->integer('estatus')->nullable();
+            $table->timestamps();
+
         });
     }
 

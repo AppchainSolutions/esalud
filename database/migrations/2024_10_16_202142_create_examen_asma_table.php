@@ -12,18 +12,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('examen_pvmor', function (Blueprint $table) {
+        Schema::create('examen_asma', function (Blueprint $table) {
+            $table->id();
+            $table->integer('estatus_id')->nullable();
             $table->integer('paciente_id');
             $table->integer('idpgp')->nullable();
-            $table->integer('estatus')->nullable();
             $table->string('comentario')->nullable();
             $table->date('fecha_control')->nullable();
             $table->date('fecha_ingreso')->nullable();
             $table->date('fecha_prox_control')->nullable();
             $table->date('fecha_ult_control')->nullable();
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->increments('id');
+            $table->timestamps();
+
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('examen_pvmor');
+        Schema::dropIfExists('examen_asma');
     }
 };

@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tipo_examen', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->string('descripcion')->nullable();
             $table->timestampTz('created_at');
             $table->timestampTz('updated_at');

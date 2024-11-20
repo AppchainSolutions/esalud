@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('semaforo', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->string('descripcion')->nullable();
             $table->string('created_at')->nullable();
             $table->timestampTz('updated_at')->nullable();

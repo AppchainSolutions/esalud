@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('grupo_sanguineo', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->string('descripcion');
             $table->timestampTz('created_at');
             $table->timestampTz('updated_at');

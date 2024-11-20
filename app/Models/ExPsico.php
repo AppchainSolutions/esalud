@@ -17,6 +17,7 @@ class ExPsico extends Model
     protected $table = 'examen_psm';
     protected $fillable = [
         'paciente_id',
+        'estatus_id',
         'tipo_vehiculo',
         'contraindicacion',
         'fecha_solicitud',

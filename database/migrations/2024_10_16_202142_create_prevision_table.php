@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('prevision', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->string('descripcion');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');

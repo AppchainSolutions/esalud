@@ -22,10 +22,7 @@ class ExEpo extends Model
     {
         return $this->belongsTo(Bateria::class);
     }
-/*     public function resultado(): BelongsTo
-    {
-        return $this->belongsTo(Resultado::class);
-    } */
+
     public function semaforo(): BelongsTo
     {
         return $this->belongsTo(Semaforo::class);

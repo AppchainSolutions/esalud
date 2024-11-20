@@ -19,7 +19,7 @@ class ExRuido extends Model
     protected $fillable = [
         'paciente_id',
         'idpgp',
-        'estatus',
+        'estatus_id',
         'fecha_control',
         'fecha_ingreso',
         'fecha_prox_control',

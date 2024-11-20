@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('factor_riesgo', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
             $table->integer('paciente_id');
             $table->string('factor_riesgo')->nullable();
             $table->string('comentario')->nullable();

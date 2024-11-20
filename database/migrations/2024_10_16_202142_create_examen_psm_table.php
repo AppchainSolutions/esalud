@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('examen_psm', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
+            $table->integer('estatus_id')->nullable();
             $table->integer('paciente_id');
             $table->string('contraindicacion')->nullable();
             $table->date('fecha_solicitud')->nullable();
@@ -21,9 +22,8 @@ return new class extends Migration
             $table->date('fecha_vencimiento')->nullable();
             $table->integer('dias_restantes')->nullable();
             $table->string('comentario')->nullable();
-            $table->timestamps();
             $table->string('tipo_vehiculo')->nullable();
-            $table->integer('estado_epo')->nullable();
+            $table->timestamps();
         });
     }
 

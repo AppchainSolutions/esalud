@@ -13,7 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('examen_salud', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
+            $table->integer('estatus_id')->nullable();
             $table->integer('paciente_id');
             $table->string('colesterol_hdl')->nullable();
             $table->string('colesterol_ldl')->nullable();
@@ -22,7 +23,6 @@ return new class extends Migration
             $table->string('creatinemia')->nullable();
             $table->string('ecg')->nullable();
             $table->string('espirometria')->nullable();
-            $table->string('estatus')->nullable();
             $table->date('fecha_recepcion')->nullable();
             $table->string('framingham')->nullable();
             $table->string('glicemia')->nullable();
@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('hemograma')->nullable();
             $table->string('optometria')->nullable();
             $table->string('trigliceridos')->nullable();
-            $table->timestampTz('created_at');
-            $table->timestampTz('updated_at');
+            $table->timestamps();
+
         });
     }
 

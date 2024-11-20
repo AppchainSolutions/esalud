@@ -13,7 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('examen_pvmosol', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->id();
+            $table->integer('estatus_id')->nullable();
             $table->integer('paciente_id');
             $table->integer('idpgp')->nullable();
             $table->string('comentario')->nullable();
@@ -21,8 +22,8 @@ return new class extends Migration
             $table->date('fecha_ingreso')->nullable();
             $table->date('fecha_prox_control')->nullable();
             $table->date('fecha_ult_control')->nullable();
-            $table->time('created_at');
-            $table->time('updated_at');
+            $table->timestamps();
+
         });
     }
 

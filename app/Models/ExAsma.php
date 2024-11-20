@@ -20,7 +20,7 @@ class ExAsma extends Model
     protected $fillable = [
         'paciente_id',
         'idpgp',
-        'estatus',
+        'estatus_id',
         'fecha_ingreso',
         'fecha_control',
         'fecha_prox_control',

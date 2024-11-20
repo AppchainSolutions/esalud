@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExAlcoholController;
 use App\Http\Controllers\ExAldehidoController;
+use App\Http\Controllers\ExAsmaController;
 use App\Http\Controllers\ExEpoController;
 use App\Http\Controllers\ExEquilibrioController;
 use App\Http\Controllers\ExHumoNegroController;
@@ -23,6 +24,7 @@ Route::middleware([
 ])->group(function () {
     Route::resource('alcohol', ExAlcoholController::class);
     Route::resource('aldehido', ExAldehidoController::class);
+    Route::resource('asma', ExAsmaController::class);
     Route::resource('epo', ExEpoController::class);
     Route::resource('equilibrio', ExEquilibrioController::class);
     Route::resource('humonegro', ExHumoNegroController::class);

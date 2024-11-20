@@ -13,7 +13,7 @@ import {
 } from "@/helper.js";
 const store = useDataStore();
 const state = reactive({
-    endpoints: ["estado_epo"],
+    endpoints: ["estado_examen"],
 
     headers: [
         {
@@ -57,7 +57,7 @@ const state = reactive({
         fecha_control: null,
         fecha_prox_control: null,
         fecha_ult_control: null,
-        estatus:null, 
+        estado_id:null, 
         comentario: null,
     },
     defaultItem: {
@@ -67,7 +67,7 @@ const state = reactive({
         fecha_control: null,
         fecha_prox_control: null,
         fecha_ult_control: null,
-        estatus: null,
+        estado_id: null,
         comentario: null,
     },
     searchQuery: {
@@ -184,13 +184,13 @@ const remove = async (item) => {
                                                 <v-select
                                                     v-model="
                                                         state.editedItem
-                                                            .estatus                                      "
+                                                            .estado_id                                      "
                                                     :items="
-                                                        state.list.estado_epo
+                                                        state.list.estado_examen
                                                     "
                                                     item-title="descripcion"
                                                     item-value="id"
-                                                    label="Estatus"
+                                                    label="Estado_id"
                                                     variant="underlined"
                                                     clearable
                                                 ></v-select>

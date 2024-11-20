@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Paciente>
  */
-class PacientesFactory extends Factory
+class PacienteFactory extends Factory
 {
     protected $model = Paciente::class;
 

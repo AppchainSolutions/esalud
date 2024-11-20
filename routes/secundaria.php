@@ -15,6 +15,7 @@ use App\Http\Controllers\EstadoCertificacionController;
 use App\Http\Controllers\EstadoCivilController;
 use App\Http\Controllers\EstadoEpoController;
 use App\Http\Controllers\EstadoMentalController;
+use App\Http\Controllers\EstadoExamenController;
 use App\Http\Controllers\ExposicionController;
 use App\Http\Controllers\FuenteIncidenteController;
 use App\Http\Controllers\GeneroController;
@@ -76,6 +77,7 @@ Route::middleware([
     Route::resource('error_critico', ErrorCriticoController::class);
     Route::resource('estado_certificacion', EstadoCertificacionController::class);
     Route::resource('estado_civil', EstadoCivilController::class);
+    Route::resource('estado_examen', EstadoExamenController::class);
     Route::resource('estado_epo', EstadoEpoController::class);
     Route::resource('estado_mental', EstadoMentalController::class);
     Route::resource('exposicion', ExposicionController::class);

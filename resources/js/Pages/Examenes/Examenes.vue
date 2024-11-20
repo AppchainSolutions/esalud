@@ -1,6 +1,7 @@
 <script>
 import ExAlcohol from "./ExamenAlcohol.vue";
 import ExAldehido from "./ExamenAldehido.vue";
+import ExAsma from "./ExamenAsma.vue";
 import ExEpo from "./ExamenEPO.vue";
 import ExEquilibrio from "./ExamenEquilibrio.vue";
 import ExHumoNegro from "./ExamenHumoNegro.vue";
@@ -18,6 +19,7 @@ export default {
     components: {
         ExAlcohol,
         ExAldehido,
+        ExAsma,
         ExEpo,
         ExEquilibrio,
         ExHumoNegro,
@@ -42,6 +44,12 @@ export default {
 <template>
     <v-row class="mt-2">
         <v-col>
+            <ex-asma />
+            <v-divider
+                :thickness="3"
+                class="border-opacity-100"
+                color="info"
+            ></v-divider>
             <ex-alcohol />
             <v-divider
                 :thickness="3"

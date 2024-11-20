@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Prevision;
+use App\Models\Afp;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PrevisionFactory extends Factory
+class AfpFactory extends Factory
 {
-    protected $model = Prevision::class;
+    protected $model = Afp::class;
 
     public function definition()
     {

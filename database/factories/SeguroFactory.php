@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Prevision;
+use App\Models\Unidad;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PrevisionFactory extends Factory
+class UnidadsFactory extends Factory
 {
-    protected $model = Prevision::class;
+    protected $model = Unidad::class;
 
     public function definition()
     {

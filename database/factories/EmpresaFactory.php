@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Prevision;
+use App\Models\Ceco;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PrevisionFactory extends Factory
+class CecoFactory extends Factory
 {
-    protected $model = Prevision::class;
+    protected $model = Ceco::class;
 
     public function definition()
     {

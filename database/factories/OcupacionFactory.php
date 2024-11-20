@@ -17,7 +17,7 @@ class OcupacionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'descripcion' => $this->faker->jobTitle,
         ];
     }
 }

@@ -22,10 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('profile_photo_path', 2048)->nullable();
             $table->string('rut');
-            $table->text('two_factor_recovery_codes')->nullable();
-            $table->text('two_factor_secret')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->timestamp('two_factor_confirmed_at')->nullable();
             $table->timestamps();
         });
     }

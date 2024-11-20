@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\EstadosCiviles;
+use App\Models\Planta;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class EstadosCivilesFactory extends Factory
+class PlantaFactory extends Factory
 {
-    protected $model = EstadosCiviles::class;
+    protected $model = Planta::class;
 
     public function definition()
     {

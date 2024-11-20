@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('apellidos');
             $table->boolean('activo')->nullable()->default(true);
             $table->boolean('donante')->nullable()->default(false);
+            $table->boolean('protocolo_minsal')->nullable()->default(false);
             $table->date('fecha_nacimiento')->nullable();
             $table->integer('afp')->nullable();
             $table->integer('area')->nullable();

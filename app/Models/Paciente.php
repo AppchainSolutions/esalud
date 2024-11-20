@@ -203,6 +203,7 @@ class Paciente extends Model
         'planta',
         'prevision',
         'profesion',
+        'protocolo_minsal',
         'pueblo',
         'religion',
         'seguro',

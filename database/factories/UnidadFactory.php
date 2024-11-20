@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Religiones;
+use App\Models\Seguro;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ReligionesFactory extends Factory
+class SegurosFactory extends Factory
 {
-    protected $model = Religiones::class;
+    protected $model = Seguro::class;
 
     public function definition()
     {

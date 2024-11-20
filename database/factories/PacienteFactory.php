@@ -2,18 +2,26 @@
 
 namespace Database\Factories;
 
+use App\Models\Afp;
+use App\Models\Area;
+use App\Models\Ceco;
+use App\Models\Empresa;
 use App\Helpers\RutGenerator;
-use App\Models\Calles;
-use App\Models\EstablecimientoEducacional;
 use App\Models\EstadoCivil;
+use App\Models\Exposicion;
 use App\Models\Genero;
 use App\Models\GrupoSanguineo;
+use App\Models\Instruccion;
+use App\Models\LeySocial;
 use App\Models\Nacionalidad;
-use App\Models\NivelInstruccion;
+use App\Models\Modalidad;
 use App\Models\Paciente;
+use App\Models\Planta;
 use App\Models\Prevision;
 use App\Models\Pueblo;
 use App\Models\Religion;
+use App\Models\Seguro;
+use App\Models\Unidad;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,43 +33,62 @@ class PacienteFactory extends Factory
 
     public function definition()
     {
+        Afp::factory()->create();
+        Area::factory()->create();
+        Ceco::factory()->create();
+        Empresa::factory()->create();
         EstadoCivil::factory()->create();
+        Exposicion::factory()->create();
         Genero::factory()->create();
         GrupoSanguineo::factory()->create();
+        Instruccion::factory()->create();
+        LeySocial::factory()->create();
         Nacionalidad::factory()->create();
+        Modalidad::factory()->create();
+        Planta::factory()->create();
         Prevision::factory()->create();
         Pueblo::factory()->create();
         Religion::factory()->create();
+        Seguro::factory()->create();
+        Unidad::factory()->create();
 
         return [
-            'apellidos_responsable' => $this->faker->lastName,
-            'apellidos' => $this->faker->lastName,
-            'ciudad' => $this->faker->city,
-            'comunidad_lgbtq' => true,
-            'comunidad_lgbtq_responsable' => false,
-            'credencial_discapacidad_responsable' => false,
-            'credencial_discapacidad' => false,
-            'direccion_responsable' => $this->faker->streetAddress(),
-            'direccion' => $this->faker->streetAddress(),
-            'donante_responsable' => $this->faker->boolean,
-            'donante' => $this->faker->boolean,
-            'edad_responsable' => $this->faker->numberBetween(18, 65),
-            'edad' => $this->faker->numberBetween(0, 99),
-            'email_responsable' => $this->faker->unique()->safeEmail(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'estado_civil_id' => EstadoCivil::inRandomOrder()->first()->id,
-            'fecha_nacimiento' => $this->faker->date(),
-            'genero_id' => Genero::inRandomOrder()->first()->id,
-            'grupo_sanguineo_id' => GrupoSanguineo::inRandomOrder()->first()->id,
-            'nacionalidad_id' => Nacionalidad::inRandomOrder()->first()->id,
-            'nombre' => $this->faker->firstName,
-            'ocupacion' => $this->faker->jobTitle,
-            'prevision_id' => Prevision::inRandomOrder()->first()->id,
-            'pueblo_originario_id' => Pueblo::inRandomOrder()->first()->id,
-            'religion_id' => Religion::inRandomOrder()->first()->id,
-            'rut' => RutGenerator::generarRut(),
-            'telefono1' => $this->faker->phoneNumber,
-            'telefono2' => $this->faker->phoneNumber,
+            // 'actividad_economica' => $this->faker->jobTitle,
+            // 'activo'=> $this->faker->boolean,
+            // 'afp' => Afp::inRandomOrder()->first()->id,
+             'apellidos' => $this->faker->lastName,
+            // 'area' => Area::inRandomOrder()->first()->id,
+            // 'cargo' => $this->faker->jobTitle,
+            // 'ceco' => Ceco::inRandomOrder()->first()->id,
+            // 'ciudad' => $this->faker->city,
+            // 'direccion' => $this->faker->streetAddress(),
+            // 'donante' => $this->faker->boolean,
+            // 'edad' => $this->faker->numberBetween(0, 99),
+            // 'email' => $this->faker->unique()->safeEmail(),
+            // 'empresa' => Empresa::inRandomOrder()->first()->id,
+            // 'estado_civil' => EstadoCivil::inRandomOrder()->first()->id,
+            // 'exposicion' => Exposicion::inRandomOrder()->first()->id,
+            // 'fecha_nacimiento' => $this->faker->date(),
+            // 'genero' => Genero::inRandomOrder()->first()->id,
+            // 'grupo_sanguineo' => GrupoSanguineo::inRandomOrder()->first()->id,
+            // 'instruccion'=> Instruccion::inRandomOrder()->first()->id,
+            // 'ley_social'=> LeySocial::inRandomOrder()->first()->id,
+            // 'modalidad'=> Modalidad::inRandomOrder()->first()->id,
+            // 'nacionalidad' => Nacionalidad::inRandomOrder()->first()->id,
+             'nombre' => $this->faker->firstName,
+            // 'ocupacion' => $this->faker->jobTitle,
+            // 'planta' => Planta::inRandomOrder()->first()->id,
+            // 'prevision' => Prevision::inRandomOrder()->first()->id,
+            // 'profesion' => $this->faker->jobTitle,
+            // 'protocolo_minsal' => $this->faker->boolean,
+            // 'pueblo' => Pueblo::inRandomOrder()->first()->id,
+            // 'religion' => Religion::inRandomOrder()->first()->id,
+             'rut' => RutGenerator::generarRut(),
+            // 'seguro' => Seguro::inRandomOrder()->first()->id,
+            // 'telefono1' => $this->faker->phoneNumber,
+            // 'telefono2' => $this->faker->phoneNumber,
+            // 'unidad' => Unidad::inRandomOrder()->first()->id,
+            
         ];
     }
 }

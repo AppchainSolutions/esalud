@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\PueblosOriginarios;
+use App\Models\Instruccion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PueblosOriginariosFactory extends Factory
+class InstruccionFactory extends Factory
 {
-    protected $model = PueblosOriginarios::class;
+    protected $model = Instruccion::class;
 
     public function definition()
     {

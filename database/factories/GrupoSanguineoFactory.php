@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\GruposSanguineos;
+use App\Models\GrupoSanguineo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class GruposSanguineosFactory extends Factory
+class GrupoSanguineoFactory extends Factory
 {
-    protected $model = GruposSanguineos::class;
+    protected $model = GrupoSanguineo::class;
 
     public function definition()
     {

@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Prevision;
+use App\Models\EstadoCivil;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PrevisionFactory extends Factory
+class EstadoCivilFactory extends Factory
 {
-    protected $model = Prevision::class;
+    protected $model = EstadoCivil::class;
 
     public function definition()
     {

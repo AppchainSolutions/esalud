@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Nacionalidades;
+use App\Models\Nacionalidad;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class NacionalidadesFactory extends Factory
+class NacionalidadFactory extends Factory
 {
-    protected $model = Nacionalidades::class;
+    protected $model = Nacionalidad::class;
 
     public function definition()
     {

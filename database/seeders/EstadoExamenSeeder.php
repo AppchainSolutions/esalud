@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\EstadoExamen;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class UserSeeder extends Seeder
+class EstadoExamenSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,9 +16,9 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Truncar la tabla users
-        User::truncate();
+        EstadoExamen::truncate();
 
-        User::create([
+        EstadoExamen::create([
             'name' => 'Admin',
             'lastname' => 'User',
             'rut' => '12345678-9',
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             'isAdmin' => true,
         ]);
 
-        User::create([
+        EstadoExamen::create([
             'name' => 'Test',
             'lastname' => 'User',
             'rut' => '12345678-0',

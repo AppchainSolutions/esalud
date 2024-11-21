@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Area;
+use App\Models\Ceco;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class AreaFactory extends Factory
+class CecoFactory extends Factory
 {
-    protected $model = Area::class;
+    protected $model = Ceco::class;
 
     public function definition()
     {

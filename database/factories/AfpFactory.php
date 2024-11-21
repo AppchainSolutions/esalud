@@ -2,17 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Planta;
+use App\Models\Afp;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PlantaFactory extends Factory
+class AfpFactory extends Factory
 {
-    protected $model = Planta::class;
-
+    protected $model = Afp::class;
+    
     public function definition()
     {
+        Afp::truncate();
         return [
-            'descripcion' => $this->faker->word,
+            'descripcion' => $this->faker->company,
         ];
     }
 }

@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Instruccion;
+use App\Models\LeySocial;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class InstruccionFactory extends Factory
+class LeySocialFactory extends Factory
 {
-    protected $model = Instruccion::class;
+    protected $model = LeySocial::class;
 
     public function definition()
     {

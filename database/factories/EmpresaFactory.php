@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Ceco;
+use App\Models\Empresa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CecoFactory extends Factory
+class EmpresaFactory extends Factory
 {
-    protected $model = Ceco::class;
+    protected $model = Empresa::class;
 
     public function definition()
     {
         return [
-            'descripcion' => $this->faker->word,
+            'descripcion' => $this->faker->company,
         ];
     }
 }

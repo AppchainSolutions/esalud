@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Pueblo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PueblosFactory extends Factory
+class PuebloFactory extends Factory
 {
     protected $model = Pueblo::class;
 

@@ -475,6 +475,14 @@
                           class="ml-2"
                           color="green-darken-3"
                           inset
+                          label="Activos"
+                        ></v-switch>
+                        <v-switch
+                          v-model="state.editedItem.activo"
+                          hide-details
+                          class="ml-2"
+                          color="green-darken-3"
+                          inset
                           label="Activo"
                         ></v-switch>
                       </v-col>

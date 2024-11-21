@@ -147,32 +147,32 @@ const user = computed(() => page.props.auth.user);
                             </template>
                             <v-list-item
                                 title="Atenciones Diarias"
-                                value="consultas"
+                                value="atenciones"
                                 @click="atenciones"
                             />
                             <v-list-item
                                 title="Licencia Medicas"
-                                value="consultas"
+                                value="licencias"
                                 @click="licencia"
                             />
                             <v-list-item
                                 title="Certificaciones"
-                                value="consultas"
+                                value="certificaciones"
                                 @click="certificacion"
                             />
                             <v-list-item
                                 title="DIAT"
-                                value="consultas"
+                                value="diat"
                                 @click="diatConsulta"
                             />
                             <v-list-item
                                 title="DIEP"
-                                value="consultas"
+                                value="diep"
                                 @click="diepConsulta"
                             />
                             <v-list-item
                                 title="Vacunas"
-                                value="consultas"
+                                value="vacunas"
                                 @click="vacunaConsulta"
                             />
                         </v-list-group>
@@ -187,62 +187,62 @@ const user = computed(() => page.props.auth.user);
 
                             <v-list-item
                                 title="Ocupacionales y Preocupacionales"
-                                value="examenes"
+                                value="epo"
                                 @click="exepo"
                             />
                             <v-list-item
                                 title="Psicosensometrico"
-                                value="examenes"
+                                value="psico"
                                 @click="expsico"
                             />
                             <v-list-item
                                 title="Estado de Salud"
-                                value="examenes"
+                                value="salud"
                                 @click="exsalud"
                             />
                             <v-list-item
                                 title="Respirador"
-                                value="examenes"
+                                value="respirador"
                                 @click="exrespirador"
                             />
                             <v-list-item
                                 title="Equilibrio"
-                                value="examenes"
+                                value="equilibrio"
                                 @click="exequilibrio"
                             />
                             <v-list-item
                                 title="Somnolencia"
-                                value="examenes"
+                                value="somnolencia"
                                 @click="exsomnolencia"
                             />
                             <v-list-item
                                 title="PVT MERT"
-                                value="examenes"
+                                value="tmert"
                                 @click="expvt"
                             />
                             <v-list-item
                                 title="PVMO Ruido"
-                                value="examenes"
+                                value="ruido"
                                 @click="exruido"
                             />
                             <v-list-item
                                 title="PVMO Metales"
-                                value="examenes"
+                                value="metales"
                                 @click="exmetales"
                             />
                             <v-list-item
                                 title="PVMO Humos Negros"
-                                value="examenes"
+                                value="humos"
                                 @click="exhumos"
                             />
                             <v-list-item
                                 title="PVMO Aldehidos"
-                                value="examenes"
+                                value="aldehidos"
                                 @click="exaldehido"
                             />
                             <v-list-item
                                 title="Alcohol y drogas"
-                                value="examenes"
+                                value="alcohol"
                                 @click="exalcohol"
                             />
                         </v-list-group>

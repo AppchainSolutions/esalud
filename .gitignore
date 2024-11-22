@@ -5,10 +5,9 @@
 .vite
 .lapce
 /public/hot
-.gitignore
 /public/build/*
-public/build/manifest.json
+/public/build/manifest.json
 /bootstrap/ssr/*
 /bootstrap/cache/*
-bootstrap/ssr/ssr-manifest.json
-bootstrap/ssr/ssr.js
+/bootstrap/ssr/ssr-manifest.json
+/bootstrap/ssr/ssr.js

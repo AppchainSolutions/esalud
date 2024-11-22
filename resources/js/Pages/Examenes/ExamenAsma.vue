@@ -3,7 +3,6 @@ import { reactive, computed, onMounted } from "vue";
 import { useDataStore } from "@/store.js";
 import {
     closeForm,
-    handleEditItem,
     fetchData,
     handleRemoveItem,
     handleShowItem,

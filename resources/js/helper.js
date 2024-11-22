@@ -65,11 +65,13 @@ export const handleStoreItem = async (state, mode) => {
                 text: "El registro, ha sido correctamente actualizado.",
                 type: "success",
             });
+            
+            if (state.endpoints){
             state.endpoints.forEach((campo) => {
                 if (item[campo] && item[campo].id) {
                     item[campo] = item[campo].id;
                 }
-            });
+            });}
             return editItem(url, item);
         } catch (error) {
             notify({

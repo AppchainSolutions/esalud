@@ -3,6 +3,7 @@
 .idea
 .vscode
 .vite
+.lapce
 /public/hot
 .gitignore
 /public/build/*

@@ -11,3 +11,6 @@
 /bootstrap/cache/*
 /bootstrap/ssr/ssr-manifest.json
 /bootstrap/ssr/ssr.js
+storage/framework/views/*
+storage/framework/cache/data/*
+storage/logs/*

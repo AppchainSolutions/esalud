@@ -103,7 +103,6 @@ const state = reactive({
         ceco: null,
         activo: true,
         protocolo_minsal: false,
-        protocolo_minsal: false,
         exposicion: [],
     },
     editedItem: {
@@ -326,7 +325,7 @@ const remove = async (item) => {
                             variant="underlined"
                             color="green-darken-3"
                             inset
-                            label="Protocolo Minsal"
+                            label="Seguimiento Exposición"
                         ></v-switch>
                     </v-col>
                     <v-col>

@@ -60,33 +60,40 @@ abstract class Repository implements RepositoryInterface
     }
 
     public function update(Request $request)
-    {
-        // Extract the 'id' from the incoming request data
-        $id = $request->input('data.id');
-        Log::info('Updating model with ID: ' . $id);
+{
+    // Extract the 'id' from the incoming request data
+    $id = $request->input('data.id');
+    Log::info('Attempting to update model with ID: ' . $id);
 
-        // Clone the data array and remove the 'id' key for updating the model
-        $dataToUpdate = $request->input('data');
-        Log::info('Data : ', $dataToUpdate);
-        unset($dataToUpdate['id']);
-        Log::info('Data to update: ', $dataToUpdate);
+    // Retrieve the data to update and log it
+    $dataToUpdate = $request->input('data');
+    Log::info('Incoming data for update: ', $dataToUpdate);
 
-        try {
-            // Retrieve the model instance or fail if not found
-            $model = $this->model->findOrFail($id);
-            // Update the model instance with the new data
-            $model->fill($dataToUpdate);
-            $model->save();
-            // Return a successful response
-            return Response::json(['message' => 'Model updated successfully']);
-        } catch (QueryException $e) {
-            // Log the error
-            Log::error($e);
+    // Remove the 'id' key to prepare for updating the model
+    unset($dataToUpdate['id']);
+    
+    // Log the data that will be used for the update
+    Log::info('Data prepared for update: ', $dataToUpdate);
 
-            // Return a 500 response
-            return Response::json(['error' => 'Database error'], 500);
-        }
+    try {
+        // Retrieve the model instance or fail if not found
+        $model = $this->model->findOrFail($id);
+        
+        // Update the model instance with the new data
+        $model->fill($dataToUpdate);
+        $model->save();
+
+        Log::info('Model updated successfully with ID: ' . $id);
+        
+        return response()->json(['message' => 'Model updated successfully.'], 200);
+    } catch (ModelNotFoundException $e) {
+        Log::error('Model not found for ID: ' . $id);
+        return response()->json(['error' => 'Model not found.'], 404);
+    } catch (\Exception $e) {
+        Log::error('Error updating model with ID: ' . $id . '. Error: ' . $e->getMessage());
+        return response()->json(['error' => 'An error occurred while updating the model.'], 500);
     }
+}
 
     public function show(Request $request)
     {

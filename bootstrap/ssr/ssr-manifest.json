@@ -70,15 +70,15 @@
     "/build/assets/AdminPage-dDN7f97K.css"
   ],
   "resources/js/Layouts/AppLayout.vue": [
-    "/build/assets/AppLayout-DWwVzWfA.js",
+    "/build/assets/AppLayout-BvGqA6L6.js",
     "/build/assets/AppLayout-DkTQncBU.css"
   ],
   "resources/js/Layouts/AppLayout.vue?vue&type=style&index=0&lang.css": [
-    "/build/assets/AppLayout-DWwVzWfA.js",
+    "/build/assets/AppLayout-BvGqA6L6.js",
     "/build/assets/AppLayout-DkTQncBU.css"
   ],
   "resources/js/Pages/API/Index.vue": [
-    "/build/assets/Index-Dm8jQaI7.js"
+    "/build/assets/Index-BSrWwKEl.js"
   ],
   "resources/js/Pages/API/Partials/ApiTokenManager.vue": [
     "/build/assets/ApiTokenManager-Bv2hkOoQ.js"
@@ -100,12 +100,12 @@
     "/build/assets/app-BUgWzofg.css"
   ],
   "resources/js/Pages/Auth/Login.vue": [
-    "/build/assets/Login-5Nzna7Hy.js",
+    "/build/assets/Login-B9vU7tK6.js",
     "/build/assets/Login-DHh4jCVf.css",
     "/build/assets/app-BUgWzofg.css"
   ],
   "resources/js/Pages/Auth/Login.vue?vue&type=style&index=0&scoped=e4ebae0a&lang.css": [
-    "/build/assets/Login-5Nzna7Hy.js",
+    "/build/assets/Login-B9vU7tK6.js",
     "/build/assets/Login-DHh4jCVf.css",
     "/build/assets/app-BUgWzofg.css"
   ],
@@ -126,109 +126,112 @@
     "/build/assets/app-BUgWzofg.css"
   ],
   "resources/js/Pages/Consultas/ConsultaAtencionDiaria.vue": [
-    "/build/assets/ConsultaAtencionDiaria-Bit3UAyj.js"
+    "/build/assets/ConsultaAtencionDiaria-BRvvO7LA.js"
   ],
   "resources/js/Pages/Consultas/ConsultaCertificacion.vue": [
-    "/build/assets/ConsultaCertificacion-CFdaVN77.js"
+    "/build/assets/ConsultaCertificacion-BhjOZS3D.js"
   ],
   "resources/js/Pages/Consultas/ConsultaDiat.vue": [
-    "/build/assets/ConsultaDiat-Cy7JMRDi.js"
+    "/build/assets/ConsultaDiat-Ciy_ionH.js"
   ],
   "resources/js/Pages/Consultas/ConsultaDiep.vue": [
-    "/build/assets/ConsultaDiep-CNkFAYDT.js"
+    "/build/assets/ConsultaDiep-CDPR0-nu.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExAlcohol.vue": [
-    "/build/assets/ConsultaExAlcohol-CVJ7mxNk.js"
+    "/build/assets/ConsultaExAlcohol-HGnJFBq0.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExAldehido.vue": [
-    "/build/assets/ConsultaExAldehido-BbSsAgm-.js"
+    "/build/assets/ConsultaExAldehido-CqBY6E4h.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExEpo.vue": [
-    "/build/assets/ConsultaExEpo-BjkiE5VW.js"
+    "/build/assets/ConsultaExEpo-Cfq3z4va.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExEquilibrio.vue": [
-    "/build/assets/ConsultaExEquilibrio-CxCZdxGD.js"
+    "/build/assets/ConsultaExEquilibrio-DHE-fOGZ.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExHumoNegro.vue": [
-    "/build/assets/ConsultaExHumoNegro-BPSRJgDk.js"
+    "/build/assets/ConsultaExHumoNegro-Cg5Bur2x.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExMetales.vue": [
-    "/build/assets/ConsultaExMetales-C7UOCubz.js"
+    "/build/assets/ConsultaExMetales-Cni5axUS.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExPVTMERT.vue": [
-    "/build/assets/ConsultaExPVTMERT-C6f1uReA.js"
+    "/build/assets/ConsultaExPVTMERT-kuP12Cqm.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExPsico.vue": [
-    "/build/assets/ConsultaExPsico-BIm92Nqi.js"
+    "/build/assets/ConsultaExPsico-CXzECXpP.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExRespirador.vue": [
-    "/build/assets/ConsultaExRespirador-D29HgPeC.js"
+    "/build/assets/ConsultaExRespirador-OYLHwxtu.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExRuido.vue": [
-    "/build/assets/ConsultaExRuido-DXZLiVI2.js"
+    "/build/assets/ConsultaExRuido-C5Oo5whx.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExSalud.vue": [
-    "/build/assets/ConsultaExSalud-BSHUQ3Sz.js"
+    "/build/assets/ConsultaExSalud-DhbXa_TY.js"
   ],
   "resources/js/Pages/Consultas/ConsultaExSomnolencia.vue": [
-    "/build/assets/ConsultaExSomnolencia-nJy3uWfL.js"
+    "/build/assets/ConsultaExSomnolencia-D5RPbIPI.js"
   ],
   "resources/js/Pages/Consultas/ConsultaLicenciaMedica.vue": [
-    "/build/assets/ConsultaLicenciaMedica-Sl9p4dXl.js"
+    "/build/assets/ConsultaLicenciaMedica-CmHopG4K.js"
   ],
   "resources/js/Pages/Consultas/ConsultaVacuna.vue": [
-    "/build/assets/ConsultaVacuna-PYlnOd0w.js"
+    "/build/assets/ConsultaVacuna-jtFlnM-X.js"
   ],
   "resources/js/Pages/Dashboard.vue": [
-    "/build/assets/Dashboard-BRfjyfMq.js"
+    "/build/assets/Dashboard-BqKQZT0q.js"
   ],
   "resources/js/Pages/Examenes/ExamenAlcohol.vue": [
-    "/build/assets/ExamenAlcohol-C0bzBXLV.js"
+    "/build/assets/ExamenAlcohol-CsWr9Wlm.js"
   ],
   "resources/js/Pages/Examenes/ExamenAldehido.vue": [
-    "/build/assets/ExamenAldehido-QdhGqrQY.js"
+    "/build/assets/ExamenAldehido-c9vRi6Ju.js"
+  ],
+  "resources/js/Pages/Examenes/ExamenAsma.vue": [
+    "/build/assets/ExamenAsma-DzkM7axe.js"
   ],
   "resources/js/Pages/Examenes/ExamenEPO.vue": [
-    "/build/assets/ExamenEPO-CvhWIJfJ.js"
+    "/build/assets/ExamenEPO-CiIjCmVI.js"
   ],
   "resources/js/Pages/Examenes/ExamenEquilibrio.vue": [
-    "/build/assets/ExamenEquilibrio-4HjB9dK_.js"
+    "/build/assets/ExamenEquilibrio-iAwcQoCZ.js"
   ],
   "resources/js/Pages/Examenes/ExamenHumoNegro.vue": [
-    "/build/assets/ExamenHumoNegro-BmXLm2Bc.js"
+    "/build/assets/ExamenHumoNegro-BsuJ2qHo.js"
   ],
   "resources/js/Pages/Examenes/ExamenMetales.vue": [
-    "/build/assets/ExamenMetales-Drm_cBcO.js"
+    "/build/assets/ExamenMetales-0esBNcMB.js"
   ],
   "resources/js/Pages/Examenes/ExamenPVTMERT.vue": [
-    "/build/assets/ExamenPVTMERT-COY8uL9y.js"
+    "/build/assets/ExamenPVTMERT-C4SQ7iUr.js"
   ],
   "resources/js/Pages/Examenes/ExamenPsico.vue": [
-    "/build/assets/ExamenPsico-DzWARi32.js"
+    "/build/assets/ExamenPsico-CJgNCEyC.js"
   ],
   "resources/js/Pages/Examenes/ExamenRespirador.vue": [
-    "/build/assets/ExamenRespirador-CvZC91oe.js"
+    "/build/assets/ExamenRespirador-BKqyei3W.js"
   ],
   "resources/js/Pages/Examenes/ExamenRuido.vue": [
-    "/build/assets/ExamenRuido-D4DwJu8U.js"
+    "/build/assets/ExamenRuido-C7_0d0s2.js"
   ],
   "resources/js/Pages/Examenes/ExamenSalud.vue": [
-    "/build/assets/ExamenSalud-BkCfTgul.js"
+    "/build/assets/ExamenSalud-DSqSZbuH.js"
   ],
   "resources/js/Pages/Examenes/ExamenSilice.vue": [
-    "/build/assets/ExamenSilice-L8A0TC5O.js"
+    "/build/assets/ExamenSilice-DC-g3bXt.js"
   ],
   "resources/js/Pages/Examenes/ExamenSolvente.vue": [
-    "/build/assets/ExamenSolvente-DnBTtZgS.js"
+    "/build/assets/ExamenSolvente-Bnm-ykM1.js"
   ],
   "resources/js/Pages/Examenes/ExamenSomnolencia.vue": [
-    "/build/assets/ExamenSomnolencia-msR-BXUL.js"
+    "/build/assets/ExamenSomnolencia-BMDw0E_a.js"
   ],
   "resources/js/Pages/Examenes/Examenes.vue": [
-    "/build/assets/Examenes-RBhtZZko.js"
+    "/build/assets/Examenes-CiNBy4TO.js"
   ],
   "resources/js/Pages/PacientePage.vue": [
-    "/build/assets/PacientePage-Dj1YmPR2.js"
+    "/build/assets/PacientePage-DoSdczCk.js"
   ],
   "resources/js/Pages/PrivacyPolicy.vue": [
     "/build/assets/PrivacyPolicy-BpiKwPKg.js"
@@ -249,37 +252,37 @@
     "/build/assets/UpdateProfileInformationForm-DIRzCx_Q.js"
   ],
   "resources/js/Pages/Profile/Show.vue": [
-    "/build/assets/Show-jFHqBiNi.js"
+    "/build/assets/Show-BqzSYk0s.js"
   ],
   "resources/js/Pages/SubPages/Alergia.vue": [
-    "/build/assets/Alergia-Cc6Qgf60.js"
+    "/build/assets/Alergia-DJynvBq7.js"
   ],
   "resources/js/Pages/SubPages/AntecedenteFamiliar.vue": [
-    "/build/assets/AntecedenteFamiliar-YfhxculC.js"
+    "/build/assets/AntecedenteFamiliar-Q41JOfP0.js"
   ],
   "resources/js/Pages/SubPages/AtencionDiaria.vue": [
-    "/build/assets/AtencionDiaria-9mPQnhu1.js"
+    "/build/assets/AtencionDiaria-aHkW4-7-.js"
   ],
   "resources/js/Pages/SubPages/Certificaciones.vue": [
     "/build/assets/Certificaciones-Cy3AgsOY.js"
   ],
   "resources/js/Pages/SubPages/Cirugia.vue": [
-    "/build/assets/Cirugia-B52pWZjT.js"
+    "/build/assets/Cirugia-C_tPm8B9.js"
   ],
   "resources/js/Pages/SubPages/DashCecos.vue": [
     "/build/assets/DashCecos-DHlUM3GU.js"
   ],
   "resources/js/Pages/SubPages/DashEnfermedadEmpresa.vue": [
-    "/build/assets/DashEnfermedadEmpresa-BtbF6CMj.js"
+    "/build/assets/DashEnfermedadEmpresa-CiJxXcM5.js"
   ],
   "resources/js/Pages/SubPages/DashEnfermedadPlanta.vue": [
-    "/build/assets/DashEnfermedadPlanta-4E0NpI7D.js"
+    "/build/assets/DashEnfermedadPlanta-BkL_TMKH.js"
   ],
   "resources/js/Pages/SubPages/DashExpoEmpresa.vue": [
-    "/build/assets/DashExpoEmpresa-DhBF83R2.js"
+    "/build/assets/DashExpoEmpresa-3eHf-hqd.js"
   ],
   "resources/js/Pages/SubPages/DashExpoPlanta.vue": [
-    "/build/assets/DashExpoPlanta-B_d5XUqp.js"
+    "/build/assets/DashExpoPlanta-YRKublxQ.js"
   ],
   "resources/js/Pages/SubPages/DashExpoTotal.vue": [
     "/build/assets/DashExpoTotal-CTUhvhpm.js"
@@ -291,40 +294,40 @@
     "/build/assets/DashPersPlanta-DUsqRn8Q.js"
   ],
   "resources/js/Pages/SubPages/DatosMedicos.vue": [
-    "/build/assets/DatosMedicos-xDviSvRH.js"
+    "/build/assets/DatosMedicos-BNlxjzNO.js"
   ],
   "resources/js/Pages/SubPages/DiatDiep.vue": [
-    "/build/assets/DiatDiep-D8jTKoy6.js"
+    "/build/assets/DiatDiep-C5jNV2Pe.js"
   ],
   "resources/js/Pages/SubPages/DiatPage.vue": [
-    "/build/assets/DiatPage-eowiv2ef.js"
+    "/build/assets/DiatPage-DzF_zWeA.js"
   ],
   "resources/js/Pages/SubPages/DiepPage.vue": [
-    "/build/assets/DiepPage-BqDwQUSY.js"
+    "/build/assets/DiepPage-DwUhE0I0.js"
   ],
   "resources/js/Pages/SubPages/Enfermedad.vue": [
-    "/build/assets/Enfermedad-BzN4EueM.js"
+    "/build/assets/Enfermedad-B0rBlssb.js"
   ],
   "resources/js/Pages/SubPages/FactorRiesgo.vue": [
-    "/build/assets/FactorRiesgo-B7qnCdyU.js"
+    "/build/assets/FactorRiesgo-Dh428aCD.js"
   ],
   "resources/js/Pages/SubPages/FichaMedica.vue": [
-    "/build/assets/FichaMedica-CHY3xa4s.js"
+    "/build/assets/FichaMedica-DeCYysxb.js"
   ],
   "resources/js/Pages/SubPages/LicenciaMedica.vue": [
-    "/build/assets/LicenciaMedica-DqTMsP3V.js"
+    "/build/assets/LicenciaMedica-D14ePhQS.js"
   ],
   "resources/js/Pages/SubPages/Medicamento.vue": [
-    "/build/assets/Medicamento-CQ80-VT2.js"
+    "/build/assets/Medicamento-D6DYJ8lA.js"
   ],
   "resources/js/Pages/SubPages/Notificacion.vue": [
     "/build/assets/Notificacion-B4bPO0Z0.js"
   ],
   "resources/js/Pages/SubPages/Vacuna.vue": [
-    "/build/assets/Vacuna-5wklkyF1.js"
+    "/build/assets/Vacuna-DeEOnOTa.js"
   ],
   "resources/js/Pages/Teams/Create.vue": [
-    "/build/assets/Create-Bf4Mq-e_.js"
+    "/build/assets/Create-Dy6iQ00c.js"
   ],
   "resources/js/Pages/Teams/Partials/CreateTeamForm.vue": [
     "/build/assets/CreateTeamForm-BbEHC8M1.js"
@@ -339,7 +342,7 @@
     "/build/assets/UpdateTeamNameForm-BbcGPZMK.js"
   ],
   "resources/js/Pages/Teams/Show.vue": [
-    "/build/assets/Show-B27o5CMF.js"
+    "/build/assets/Show-BJDCKzCX.js"
   ],
   "resources/js/Pages/TermsOfService.vue": [
     "/build/assets/TermsOfService-D4FTV77Q.js"
@@ -357,13 +360,13 @@
     "/build/assets/vitamhc-C8RI-1Kv.png"
   ],
   "resources/js/api.js": [
-    "/build/assets/helper-CuTOZPBY.js"
+    "/build/assets/helper-C-ktBUeA.js"
   ],
   "resources/js/crud.js": [
-    "/build/assets/helper-CuTOZPBY.js"
+    "/build/assets/helper-C-ktBUeA.js"
   ],
   "resources/js/helper.js": [
-    "/build/assets/helper-CuTOZPBY.js"
+    "/build/assets/helper-C-ktBUeA.js"
   ],
   "resources/js/ssr.js": [],
   "resources/js/store.js": [

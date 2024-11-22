@@ -1,9 +1,10 @@
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive, computed, onMounted } from "vue";
 import { useDataStore } from "@/store.js";
 import {
     closeForm,
     handleEditItem,
+    fetchData,
     handleRemoveItem,
     handleShowItem,
     handleStoreItem,
@@ -12,6 +13,8 @@ import {
 } from "@/helper.js";
 const store = useDataStore();
 const state = reactive({
+    endpoints: ["estado_examen"],
+
     headers: [
         {
             title: "IDPGP",
@@ -20,53 +23,54 @@ const state = reactive({
             key: "idpgp",
         },
         {
-            title: "estatus",
+            title: "Estado",
             align: "start",
             sortable: true,
-            key: "estatus",
+            key: "estado_examen.descripcion",
         },
         {
-            title: "Fecha de Control",
-            align: "start",
-            sortable: true,
-            key: "fecha_control",
-        },
-        {
-            title: "Fecha de Ingreso",
+            title: "Fecha Ingreso",
             align: "start",
             sortable: true,
             key: "fecha_ingreso",
         },
         {
-            title: "Fecha próx. control",
+            title: "Fecha Control",
+            align: "start",
+            sortable: true,
+            key: "fecha_control",
+        },
+        {
+            title: "Fecha Próx. Control",
             align: "start",
             sortable: true,
             key: "fecha_prox_control",
         },
         {
-            title: "Fecha últ. control",
+            title: "Fecha Últ. Control",
             align: "start",
             sortable: true,
             key: "fecha_ult_control",
         },
         { title: "Acciones", align: "center", key: "actions" },
     ],
+
     editedItem: {
         paciente_id: null,
+        estado_examen:null, 
         idpgp: null,
-        estatus: null,
-        fecha_control: null,
         fecha_ingreso: null,
+        fecha_control: null,
         fecha_prox_control: null,
         fecha_ult_control: null,
         comentario: null,
     },
     defaultItem: {
         paciente_id: null,
+        estado_examen: null,
         idpgp: null,
-        estatus: null,
-        fecha_control: null,
         fecha_ingreso: null,
+        fecha_control: null,
         fecha_prox_control: null,
         fecha_ult_control: null,
         comentario: null,
@@ -80,18 +84,21 @@ const state = reactive({
     list: [],
     loading: false,
     valid: null,
-    formTitle: "Ruido",
-    formCrear: "Nuevo exámen de Ruido",
-    formEdit: "Editar exámen de Ruido",
+    formTitle: "Ruidos",
+    formCrear: "Nuevo exámen de Ruidos",
+    formEdit: "Editar exámen de Ruidos",
     urlShow: "/examen/ruido/show",
     urlUpdate: "/examen/ruido/update",
     urlDelete: "/examen/ruido/delete",
     urlStore: "/examen/ruido",
 });
-
+//**********\\\\  LIFE CYCLE HOOKS ////*************/
+onMounted(async () => {
+    state.list = await fetchData(state.endpoints);
+});
 //**********\\\\  COMPUTE PROPERTIES ////*************/
 const editedItemTitle = computed(() =>
-    state.editedIndex === -1 ? state.formCrear : state.formEdit
+    state.editedIndex === -1 ? state.formCrear : state.formEdit,
 );
 
 function close() {
@@ -122,9 +129,8 @@ const update = async () => {
 };
 
 function openFormEdit(item) {
-   openToEdit(state, item);
+    openToEdit(state, item);
 }
-
 
 const remove = async (item) => {
     await handleRemoveItem(state, item);
@@ -143,17 +149,17 @@ const remove = async (item) => {
                         <template v-slot:activator="{ props }">
                             <v-btn
                                 icon="mdi-update"
+                                variant="tonal"
                                 class="ma-2"
                                 color="#009AA4"
-                                variant="tonal"
                                 @click="showItem"
                             >
                             </v-btn>
                             <v-btn
                                 icon="mdi-account-multiple-plus"
+                                variant="tonal"
                                 class="ma-2"
                                 color="#009AA4"
-                                variant="tonal"
                                 @click="openFormCreate"
                             >
                             </v-btn>
@@ -179,49 +185,59 @@ const remove = async (item) => {
                                                     type="number"
                                                     variant="underlined"
                                                 ></v-text-field>
-                                                <v-text-field
-                                                    v-model="
-                                                        state.editedItem.estatus
+
+                                                <v-select
+                                                    :items="
+                                                        state.list.estado_examen
                                                     "
-                                                    label="Estatus"
-                                                    type="text"
-                                                    variant="underlined"
-                                                ></v-text-field>
-                                                <v-text-field
                                                     v-model="
                                                         state.editedItem
-                                                            .fecha_control
-                                                    "
-                                                    label="Fecha de control"
-                                                    type="date"
+                                                            .estado_examen                                      "
+                                                    item-title="descripcion"
+                                                    item-value="id"
+                                                    label="Estado"
                                                     variant="underlined"
-                                                ></v-text-field>
+                                                    clearable
+                                                ></v-select>
+
                                                 <v-text-field
                                                     v-model="
                                                         state.editedItem
                                                             .fecha_ingreso
                                                     "
-                                                    label="Fecha de ingreso"
+                                                    label="Ingreso"
+                                                    type="date"
+                                                    variant="underlined"
+                                                ></v-text-field>
+
+                                                <v-text-field
+                                                    v-model="
+                                                        state.editedItem
+                                                            .fecha_control
+                                                    "
+                                                    label="Fecha control"
                                                     type="date"
                                                     variant="underlined"
                                                 ></v-text-field>
                                             </v-col>
+
                                             <v-col>
                                                 <v-text-field
                                                     v-model="
                                                         state.editedItem
                                                             .fecha_prox_control
                                                     "
-                                                    label="Fecha próx. control"
+                                                    label="Fecha prox. control"
                                                     type="date"
                                                     variant="underlined"
                                                 ></v-text-field>
+
                                                 <v-text-field
                                                     v-model="
                                                         state.editedItem
                                                             .fecha_ult_control
                                                     "
-                                                    label="Fecha últ. control"
+                                                    label="Fecha ult. control"
                                                     type="date"
                                                     variant="underlined"
                                                 ></v-text-field>
@@ -242,16 +258,16 @@ const remove = async (item) => {
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn
-                                        color="#009AA4"
+                                        color="blue-darken-1"
                                         variant="tonal"
                                         @click="close"
                                     >
                                         Cancelar
                                     </v-btn>
                                     <v-btn
-                                        color="#009AA4"
+                                        color="blue-darken-1"
                                         variant="tonal"
-                                        @click="storeItems"
+                                        @click="storeItems(item)"
                                     >
                                         Guardar
                                     </v-btn>
@@ -283,8 +299,8 @@ const remove = async (item) => {
                             v-bind="props"
                             density="compact"
                             class="mr-2 ml-2"
-                            color="#009AA4"
                             variant="tonal"
+                            color="#009AA4"
                             :icon="'mdi-delete'"
                             @click="remove(item)"
                         ></v-btn>

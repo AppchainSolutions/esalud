@@ -18,7 +18,7 @@ class ExRespirador extends Model
     protected $table = 'examen_respirador';
     protected $fillable = [
         'paciente_id',
-        'estatus_id',
+        'estado_examen',
         'fecha_examen',
         'prueba_ajuste',
         'talla_respirador',

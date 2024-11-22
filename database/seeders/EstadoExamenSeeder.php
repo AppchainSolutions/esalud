@@ -19,23 +19,23 @@ class EstadoExamenSeeder extends Seeder
         EstadoExamen::truncate();
 
         EstadoExamen::create([
-            'name' => 'Admin',
-            'lastname' => 'User',
-            'rut' => '12345678-9',
-            'email' => 'admin@example.com',
-            'isAdmin' => true,
-            'password' => Hash::make('clave123'),
-            'isAdmin' => true,
+            'descripcion' => 'Evaluación realizada',
         ]);
 
         EstadoExamen::create([
-            'name' => 'Test',
-            'lastname' => 'User',
-            'rut' => '12345678-0',
-            'email' => 'test@example.com',
-            'isAdmin' => false,
-            'password' => Hash::make('clave123'),
-            'isAdmin' => false,
+            'descripcion' => 'Inasistente',
+        ]);
+
+        EstadoExamen::create([
+            'descripcion' => 'Rechaza evaluación',
+        ]);
+
+        EstadoExamen::create([
+            'descripcion' => 'Desvinculado',
+        ]);
+
+        EstadoExamen::create([
+            'descripcion' => 'En evaluación',
         ]);
 
         // Puedes agregar más usuarios según sea necesario

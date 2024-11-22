@@ -19,7 +19,7 @@ class ExAldehido extends Model
     protected $fillable = [
         'paciente_id',
         'idpgp',
-        'estado_id',
+        'estado_examen',
         'fecha_control',
         'fecha_ingreso',
         'fecha_prox_control',

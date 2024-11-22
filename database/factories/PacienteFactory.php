@@ -52,6 +52,8 @@ class PacienteFactory extends Factory
         Seguro::factory()->create();
         Unidad::factory()->create();
 
+        Paciente::Truncate();
+
         return [
             'actividad_economica' => $this->faker->jobTitle,
             'activo' => $this->faker->boolean,
@@ -67,7 +69,7 @@ class PacienteFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'empresa' => Empresa::inRandomOrder()->first()->id,
             'estado_civil' => EstadoCivil::inRandomOrder()->first()->id,
-            'exposicion' => Exposicion::inRandomOrder()->first()->id,
+            'exposicion' => Exposicion::inRandomOrder()->first()->descripcion,
             'fecha_nacimiento' => $this->faker->date(),
             'genero' => Genero::inRandomOrder()->first()->id,
             'grupo_sanguineo' => GrupoSanguineo::inRandomOrder()->first()->id,
@@ -78,7 +80,7 @@ class PacienteFactory extends Factory
             'nombre' => $this->faker->firstName,
             'ocupacion' => $this->faker->jobTitle,
             'planta' => Planta::inRandomOrder()->first()->id,
-             'prevision' => Prevision::inRandomOrder()->first()->id,
+            'prevision' => Prevision::inRandomOrder()->first()->id,
             'profesion' => $this->faker->jobTitle,
             'protocolo_minsal' => $this->faker->boolean,
             'pueblo' => Pueblo::inRandomOrder()->first()->id,

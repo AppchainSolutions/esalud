@@ -17,7 +17,7 @@ class ExEquilibrio extends Model
     protected $table = 'examen_equilibrio';
     protected $fillable = [
         'paciente_id',
-        'estatus_id',
+        'estado_examen',
         'fecha_examen',
         'comentario',
     ];

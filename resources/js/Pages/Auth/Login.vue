@@ -38,6 +38,7 @@ const submit = () => {
                         v-model="form.email"
                         autofocus
                         label="Usuario"
+                        autocomplete
                         hide-details
                         required
                         class="mb-1"

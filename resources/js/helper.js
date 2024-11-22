@@ -38,68 +38,52 @@ export const fetchData = async (endpoints) => {
 
 export const handleStoreItem = async (state, mode) => {
     if (mode === "create") {
-     
-    try {
-        const item = { ...state.editedItem };
-        item.paciente_id = store.selected.id;
-        notify({ text: "Datos almacenados exitosamente.", type: "success" });
-        return await storeItem(state.urlStore, item);
-    } catch (error) {
-        console.error(error);
-        notify({
-            text: "Se produjo un error, por favor revise que los datos sean correctos.",
-            type: "error",
-        });
-    }
-} else {
-    try {
-        const item = { ...state.editedItem };
-        console.log(item);
-        const url = state.urlUpdate;
-        notify({
-            title: "Informacion importante.",
-            text: "El registro, ha sido correctamente actualizado.",
-            type: "info",
-        });
-        return await editItem(url, item);
-    } catch (error) {
-        notify({
-            title: "Error.",
-            text: "Error al actualizar el registro: ",
-            type: "error",
-        });
-        console.error(error);
-    }
-}
-};
-/**
- * Handles the editing of an item.
- *
- * @param {string} route - The route to update the item.
- * @param {object} editedItem - The edited item.
- * @returns {Promise} - A promise that resolves with the updated item.
- * @throws {Error} - If there is an error updating the item.
- */
-export const handleEditItem = async (state) => {
-    try {
-        const item = { ...state.editedItem };
-        console.log(item);
-        const url = state.urlUpdate;
-        notify({
-            title: "Informacion importante.",
-            text: "El registro, ha sido correctamente actualizado.",
-            type: "info",
-        });
-        return await editItem(url, item);
-    } catch (error) {
-        notify({
-            title: "Error.",
-            text: "Error al actualizar el registro: ",
-            type: "error",
-        });
-        console.error(error);
+        try {
+            const item = { ...state.editedItem };
+            item.paciente_id = store.selected.id;
+            notify({
+                text: "Datos almacenados exitosamente.",
+                type: "success",
+            });
+
+            return await storeItem(state.urlStore, item);
+        } catch (error) {
+            console.error(error);
+            notify({
+                text: "Se produjo un error, por favor revise que los datos sean correctos.",
+                type: "error",
+            });
+        }
+    } else if (mode === "edit") {
+        try {
+//            const item = { ...state.editedItem };
+            const item = state.editedItem;
+            console.log(item);
+            const url = state.urlUpdate;
+            notify({
+                title: "Información importante.",
+                text: "El registro, ha sido correctamente actualizado.",
+                type: "success",
+            });
+            state.endpoints.forEach((campo) => {
+                if (item[campo] && item[campo].id) {
+                    item[campo] = item[campo].id;
+                }
+            });
+            return editItem(url, item);
+        } catch (error) {
+            notify({
+                title: "Error.",
+                text: "Error al actualizar el registro: ",
+                type: "error",
+            });
+            console.error(error);
+        }
     }
 };
+
+export const handleEditItem = (state, item) => {};
+
 /**
  * Handles the removal of an item.
  *
@@ -149,12 +133,12 @@ export const handleRemoveItem = async (state, item) => {
         console.error(error);
     }
 };
+
 /**
  * Retrieves an item from the specified endpoint using the provided ID.
  *
- * @param {string} route - The endpoint to retrieve the item from.
- * @param {number} id - The ID of the item to retrieve.
  * @returns {Promise<any>} - A promise that resolves to the retrieved item.
+ * @param state
  */
 export const handleShowItem = async (state) => {
     const url = state.urlShow;
@@ -162,7 +146,6 @@ export const handleShowItem = async (state) => {
     state.loadingSearch = true;
     try {
         const result = await showItem(url, filter);
-        console.log(result);
         setResponse(state, result.data);
     } catch (error) {
         notify({
@@ -173,6 +156,7 @@ export const handleShowItem = async (state) => {
     }
     state.loadingSearch = false;
 };
+
 /**
  * Handles the search for an item.
  *
@@ -202,8 +186,7 @@ export const handleSearchItem = async (state) => {
 
 async function setResponse(state, result) {
     const count = result.length;
-    console.log(result);    
-    
+
     if (count > 0) {
         notify({
             title: "Aviso.",
@@ -225,6 +208,7 @@ async function setResponse(state, result) {
         state.tableItems = [];
     }
 }
+
 /**
  * Adds matching item descriptions to the given result data.
  *
@@ -246,10 +230,9 @@ export const addValue = (state, result) => {
     };
 
     // Map over each item in the result data
-    const finalResult = result.map((item) => {
+    return result.map((item) => {
         // Create a copy of the item using the spread operator
         const updatedItem = { ...item };
-
         // Iterate over each endpoint in the state object
         state.endpoints.forEach((campo) => {
             // Check if the endpoint exists in the state object and if the item has a value for that endpoint
@@ -257,24 +240,25 @@ export const addValue = (state, result) => {
                 // Get the matching item's description
                 const matchingItemDescription = getMatchingItem(
                     campo,
-                    updatedItem[campo]
+                    updatedItem[campo],
                 );
-
                 // If a matching item's description is found, update the item's property value with the description
                 if (matchingItemDescription) {
                     updatedItem[campo] = matchingItemDescription;
                 }
             }
         });
-
         // Return the updated item
         return updatedItem;
     });
-
     // Return the final result with all items updated
-    return finalResult;
 };
 
+/**
+ * Closes the form dialog and resets the edited item and index.
+ *
+ * @param {Object} state - The state object containing the dialog, editedItem, and editedIndex properties.
+ */
 export const closeForm = (state) => {
     state.dialog = false;
     nextTick(() => {
@@ -290,7 +274,7 @@ export const openToCreate = (state) => {
 };
 
 export const openToEdit = (state, item) => {
-     /* const record = state.endpoints
+    /* const record = state.endpoints
      ? Object.values(state.formItems).find((rec) => rec.id === item.id)
      : item;
      console.log(record); */

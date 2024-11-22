@@ -24,7 +24,7 @@ class ExSalud extends Model
         'creatinemia',
         'ecg',
         'espirometria',
-        'estatus_id',
+        'estado_examen',
         'fecha_recepcion',
         'framingham',
         'glicemia',

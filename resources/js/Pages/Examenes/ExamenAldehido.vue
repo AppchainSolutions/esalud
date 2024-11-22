@@ -22,7 +22,12 @@ const state = reactive({
             sortable: true,
             key: "idpgp",
         },
-        
+        {
+            title: "Estado",
+            align: "start",
+            sortable: true,
+            key: "estado_examen.descripcion",
+        },
         {
             title: "Fecha Ingreso",
             align: "start",
@@ -52,22 +57,22 @@ const state = reactive({
 
     editedItem: {
         paciente_id: null,
+        estado_examen:null, 
         idpgp: null,
         fecha_ingreso: null,
         fecha_control: null,
         fecha_prox_control: null,
         fecha_ult_control: null,
-        estado_id:null, 
         comentario: null,
     },
     defaultItem: {
         paciente_id: null,
+        estado_examen: null,
         idpgp: null,
         fecha_ingreso: null,
         fecha_control: null,
         fecha_prox_control: null,
         fecha_ult_control: null,
-        estado_id: null,
         comentario: null,
     },
     searchQuery: {
@@ -182,15 +187,15 @@ const remove = async (item) => {
                                                 ></v-text-field>
 
                                                 <v-select
-                                                    v-model="
-                                                        state.editedItem
-                                                            .estado_id                                      "
                                                     :items="
                                                         state.list.estado_examen
                                                     "
+                                                    v-model="
+                                                        state.editedItem
+                                                            .estado_examen                                      "
                                                     item-title="descripcion"
                                                     item-value="id"
-                                                    label="Estado_id"
+                                                    label="Estado"
                                                     variant="underlined"
                                                     clearable
                                                 ></v-select>

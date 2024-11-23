@@ -5,7 +5,7 @@
 .vite
 .lapce
 /public/hot
-/public/build/*
+/public/build/assets/*
 /public/build/manifest.json
 /bootstrap/ssr/*
 /bootstrap/cache/*

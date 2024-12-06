@@ -8,12 +8,17 @@ class Tools
 {
     public static function filterData(array $filters, object $query)
     {
-        if (isset($filters)){
+        if (isset($filters)) {
             try {
                 foreach ($filters as $key => $value) {
                     //** Filter by date */
-                    if (str_contains($key, 'fecha')) {
+                    if ($key === 'fecha') {
                         self::applyDateFilter($query, $key, $value);
+                    } elseif ($key === 'exposicion') {
+                        foreach ($value as $val) {
+                            $query->whereFullText($key, '"' . $val . '\"');
+                            $query->orWhereFullText($key, $val);
+                        }
                     } else {
                         $query->where($key, $value);
                     }

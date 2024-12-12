@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Repository\ExAlcoholRepository;
-tro
+
 class ExAlcoholController extends Controller
 {
     protected $exalcoholRepository;

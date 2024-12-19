@@ -16,6 +16,7 @@ use App\Models\Enfermedad;
 use App\Models\Empresa;
 use App\Models\EstadoCertificacion;
 use App\Models\EstadoCivil;
+use App\Models\ExAsma;
 use App\Models\ExAlcohol;
 use App\Models\ExEpo;
 use App\Models\Exposicion;
@@ -48,64 +49,68 @@ class Paciente extends Model
     }
     public function licencia(): HasMany
     {
-        return $this->hasMany(LicenciaMedica::class, 'paciente_id', 'id');
+        return $this->hasMany(LicenciaMedica::class);
     }
     public function alergia(): HasMany
     {
-        return $this->hasMany(Alergia::class, 'paciente_id', 'id');
+        return $this->hasMany(Alergia::class);
     }
     public function enfermedad(): HasMany
     {
-        return $this->hasMany(Enfermedad::class, 'paciente_id', 'id');
+        return $this->hasMany(Enfermedad::class);
     }
     public function cirugia(): HasMany
     {
-        return $this->hasMany(Cirugia::class, 'paciente_id', 'id');
+        return $this->hasMany(Cirugia::class);
     }
     public function factor(): HasMany
     {
-        return $this->hasMany(FactorRiesgo::class, 'paciente_id', 'id');
+        return $this->hasMany(FactorRiesgo::class);
     }
     public function medicamento(): HasMany
     {
-        return $this->hasMany(Medicamento::class, 'paciente_id', 'id');
+        return $this->hasMany(Medicamento::class);
     }
     public function vacuna(): HasMany
     {
-        return $this->hasMany(Vacuna::class, 'paciente_id', 'id');
+        return $this->hasMany(Vacuna::class);
     }
     public function familiar(): HasMany
     {
-        return $this->hasMany(AntecedenteFamiliar::class, 'paciente_id', 'id');
+        return $this->hasMany(AntecedenteFamiliar::class);
     }
     public function diat(): HasMany
     {
-        return $this->hasMany(Diat::class, 'paciente_id', 'id');
+        return $this->hasMany(Diat::class);
     }
     public function diep(): HasMany
     {
-        return $this->hasMany(Diep::class, 'paciente_id', 'id');
+        return $this->hasMany(Diep::class);
     }
     public function certificacion(): HasMany
     {
-        return $this->hasMany(Certificacion::class, 'paciente_id', 'id');
+        return $this->hasMany(Certificacion::class);
     }
     public function estado_certificacion(): HasMany
     {
-        return $this->hasMany(EstadoCertificacion::class, 'paciente_id', 'id');
+        return $this->hasMany(EstadoCertificacion::class);
+    }
+    public function exasma(): HasMany
+    {
+        return $this->hasMany(ExAsma::class);
     }
     public function exalcohol(): HasMany
     {
-        return $this->hasMany(ExAlcohol::class, 'paciente_id', 'id');
+        return $this->hasMany(ExAlcohol::class);
     }
     public function exepo(): HasMany
     {
-        return $this->hasMany(ExEpo::class, 'paciente_id', 'id');
+        return $this->hasMany(ExEpo::class);
     }
 
     public function exequilibrio(): HasMany
     {
-        return $this->hasMany(ExEquilibrio::class, 'paciente_id', 'id');
+        return $this->hasMany(ExEquilibrio::class);
     }
 
     public function empresa(): BelongsTo

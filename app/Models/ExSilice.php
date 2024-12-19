@@ -17,7 +17,7 @@ class ExSilice extends Model
     protected $table = 'examen_pvmos';
     protected $fillable = [
         'paciente_id',
-        'estatus_id',
+        'estado_examen',
         'idpgp',
         'fecha_control',
         'fecha_ingreso',

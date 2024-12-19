@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('examen_equilibrio', function (Blueprint $table) {
             $table->id();
-            $table->integer('estatus_id')->nullable();
+            $table->integer('estado_id')->nullable();
             $table->integer('paciente_id');
             $table->date('fecha_examen')->nullable();
             $table->string('comentario')->nullable();

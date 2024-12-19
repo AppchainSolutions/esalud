@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('examen_psm', function (Blueprint $table) {
             $table->id();
-            $table->integer('estatus_id')->nullable();
+            $table->integer('estado_id')->nullable();
             $table->integer('paciente_id');
             $table->string('contraindicacion')->nullable();
             $table->date('fecha_solicitud')->nullable();

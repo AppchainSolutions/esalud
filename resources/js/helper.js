@@ -56,9 +56,7 @@ export const handleStoreItem = async (state, mode) => {
         }
     } else if (mode === "edit") {
         try {
-//            const item = { ...state.editedItem };
             const item = state.editedItem;
-            console.log(item);
             const url = state.urlUpdate;
             notify({
                 title: "Información importante.",
@@ -68,7 +66,7 @@ export const handleStoreItem = async (state, mode) => {
             
             if (state.endpoints){
             state.endpoints.forEach((campo) => {
-                if (item[campo] && item[campo].id) {
+                if (item?.[campo]?.id) {
                     item[campo] = item[campo].id;
                 }
             });}
@@ -186,8 +184,10 @@ export const handleSearchItem = async (state) => {
     state.loadingSearch = false;
 };
 
-async function setResponse(state, result) {
+function setResponse(state, result) {
     const count = result.length;
+    console.log(state.endpoints);
+    console.log(result);
 
     if (count > 0) {
         notify({
@@ -196,11 +196,7 @@ async function setResponse(state, result) {
             type: "success",
         });
         state.formItems = { ...result };
-        if (state.endpoints) {
-            state.tableItems = addValue(state, result);
-        } else {
-            state.tableItems = result;
-        }
+        state.tableItems = state.endpoints ? addValue(state, result) : result;
     } else {
         notify({
             title: "Aviso.",

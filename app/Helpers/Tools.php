@@ -20,30 +20,31 @@ class Tools
      * @return mixed Returns the filtered query results as a collection if successful,
      *               or a string error message if an exception occurs during filtering.
      */
-    public static function filterData(array $filters, object $query): Collection|string
+    public static function filterData(array $filters, object $query)
     {
         if (empty($filters)) {
             return $query->all()->get();
+        }
 
-            try {
-                foreach ($filters as $field => $criteria) {
-                    switch ($field) {
-                        case 'fecha':
-                            self::applyDateFilter($query, $field, $criteria);
-                            break;
-                        case 'exposicion':
-                            self::applyExposicionFilter($query, $field, $criteria);
-                            break;
-                        default:
-                            $query->where($field, $criteria);
-                            break;
-                    }
+
+        try {
+            foreach ($filters as $field => $criteria) {
+                switch ($field) {
+                    case 'fecha':
+                        self::applyDateFilter($query, $field, $criteria);
+                        break;
+                    case 'exposicion':
+                        self::applyExposicionFilter($query, $field, $criteria);
+                        break;
+                    default:
+                        $query->where($field, $criteria);
+                        break;
                 }
-                return $query->get();
-            } catch (QueryException $exception) {
-                Log::error($exception);
-                return 'Error filtering data: ' . $exception->getMessage();
             }
+            return $query->get();
+        } catch (QueryException $exception) {
+            Log::error($exception);
+            return 'Error filtering data: ' . $exception->getMessage();
         }
     }
     /**
@@ -62,7 +63,6 @@ class Tools
     private static function applyDateFilter(object $query, $field, $dates)
     {
         try {
-
             if (isset($dates['desde']) && isset($dates['hasta'])) {
                 return $query->whereBetween($field, [$dates['desde'], $dates['hasta']]);
             } else {
@@ -89,8 +89,7 @@ class Tools
         try {
             foreach ($criteria as $term) {
                 $query->whereFullText($field, '"' . $term . '\"');
-                $query->orWhereFullText($field, $term);
-                return $query;
+                return $query->orWhereFullText($field, $term);
             }
         } catch (QueryException $e) {
             return 'Error al aplicar filtro de exposición';

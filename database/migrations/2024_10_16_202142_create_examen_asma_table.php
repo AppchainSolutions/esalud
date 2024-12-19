@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('examen_asma', function (Blueprint $table) {
             $table->id();
-            $table->integer('estatus_id')->nullable();
+            $table->integer('estado_id')->nullable();
             $table->integer('paciente_id');
             $table->integer('idpgp')->nullable();
             $table->string('comentario')->nullable();

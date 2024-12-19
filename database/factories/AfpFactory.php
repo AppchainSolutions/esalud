@@ -11,9 +11,9 @@ class AfpFactory extends Factory
     
     public function definition()
     {
-        Afp::truncate();
+        Afp::Truncate();
         return [
-            'descripcion' => $this->faker->company,
+            'descripcion' => $this->faker->company(),
         ];
     }
 }

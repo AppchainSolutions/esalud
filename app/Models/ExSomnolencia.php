@@ -17,7 +17,7 @@ class ExSomnolencia extends Model
     protected $table = 'examen_somnolencia';
     protected $fillable = [
         'paciente_id',
-        'estatus_id',
+        'estado_examen',
         'fecha_examen',
         'fecha_primer',
         'fecha_segundo',

@@ -14,3 +14,7 @@
 storage/framework/views/*
 storage/framework/cache/data/*
 storage/logs/*
+Data.session.sql
+DataBase.session.sql
+Local.session.sql
+database/database.db

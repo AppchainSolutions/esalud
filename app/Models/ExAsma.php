@@ -10,9 +10,15 @@ use App\Models\Paciente;
 class ExAsma extends Model
 {
     use HasFactory;
+
+    /**
+     * The paciente that owns the ExAsma
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function paciente(): BelongsTo
     {
-        return $this->belongsTo(Paciente::class, 'paciente_id', 'id');
+        return $this->belongsTo(Paciente::class);
     }
     
     protected $table = 'examen_asma';

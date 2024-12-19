@@ -1,0 +1,12 @@
+{
+    "source": {
+        "directories": [
+            "app"
+        ]
+    },
+    "tests": {
+        "directories": [
+            "tests/Feature"
+        ]
+    }
+}

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\EstadoEpo;
 use App\Models\Bateria;
-use App\Models\Resultado;
+use App\Models\Paciente;
 use App\Models\Semaforo;
 use App\Models\TipoExamen;
 
@@ -32,6 +32,11 @@ class ExEpo extends Model
         return $this->belongsTo(TipoExamen::class);
     }
 
+    public function paciente(): BelongsTo
+    {
+        return $this->belongsTo(Paciente::class);
+    }
+
     protected $table = 'examen_epo';
     protected $fillable = [
         'paciente_id',
@@ -42,7 +47,7 @@ class ExEpo extends Model
         'fecha_recepcion',
         'fecha_solicitud',
         'fecha_vencimiento',
-        'bateria',
+        'bateria_id',
         'numero_solicitud',
         'resultado',
         'semaforo',

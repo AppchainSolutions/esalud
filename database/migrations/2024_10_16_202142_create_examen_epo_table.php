@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('tipo_examen')->nullable();
             $table->integer('semaforo')->nullable();
             $table->integer('estado_epo')->nullable();
-            $table->integer('bateria')->nullable();
+            $table->integer('bateria_id')->nullable();
             $table->integer('codigo_verificacion')->nullable();
             $table->timestamps();
 

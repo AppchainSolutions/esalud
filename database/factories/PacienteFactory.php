@@ -23,6 +23,7 @@ use App\Models\Religion;
 use App\Models\Seguro;
 use App\Models\Unidad;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Paciente>
@@ -33,6 +34,7 @@ class PacienteFactory extends Factory
 
     public function definition()
     {
+        Paciente::Truncate();
         Afp::factory()->create();
         Area::factory()->create();
         Ceco::factory()->create();
@@ -52,7 +54,6 @@ class PacienteFactory extends Factory
         Seguro::factory()->create();
         Unidad::factory()->create();
 
-        Paciente::Truncate();
 
         return [
             'actividad_economica' => $this->faker->jobTitle,

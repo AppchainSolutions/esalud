@@ -1,0 +1,23 @@
+# Laravel specific
+/vendor
+/public
+/node_modules
+/storage/*.key
+.env.dev
+Homestead.yaml
+Homestead.json
+/.vagrant
+/storage/logs/laravel.log
+/storage/clockwork
+
+# IDE specific
+/.idea
+/.vscode
+
+# System specific
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+npm-debug.log
+yarn-error.log

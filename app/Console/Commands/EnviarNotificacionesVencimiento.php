@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\ExEpo;
-use App\Models\Paciente;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
@@ -33,7 +32,7 @@ class EnviarNotificacionesVencimiento extends Command
                 'apellidos' => $examen->paciente->apellidos,
                 'rut' => $examen->paciente->rut,
                 'fecha_vencimiento' => $examen->fecha_vencimiento,
-                'bateria' => $examen->bateria->descripcion,
+                'bateria' => $examen->bateria,
                 'email' => $examen->paciente->email,
                 'codigo_verificacion' => $examen->codigo_verificacion,
                 'numero_solicitud' => $examen->numero_solicitud,

@@ -2,14 +2,14 @@
 
 namespace App\Repository;
 
-use App\Models\ExMetales;
+use App\Models\ExMetal;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use App\Helpers\Tools;
 
-class ExMetalesRepository extends Repository
+class ExMetalRepository extends Repository
 {
-    public function __construct(ExMetales $model)
+    public function __construct(ExMetal $model)
     {
         $this->model = $model;
     }

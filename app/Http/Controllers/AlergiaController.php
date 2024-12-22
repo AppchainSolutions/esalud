@@ -26,7 +26,7 @@ class AlergiaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->alergiaRepository->store($request);
     }
@@ -37,7 +37,6 @@ class AlergiaController extends Controller
     public function update(Request $request)
     {
         return $this->alergiaRepository->update($request);
-
     }
 
     /**

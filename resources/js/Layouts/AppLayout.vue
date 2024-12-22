@@ -78,8 +78,8 @@ const user = computed(() => page.props.auth.user);
         exruido() {
             router.get("/consulta/exruido");
         },
-        exmetales() {
-            router.get("/consulta/exmetales");
+        exmetal() {
+            router.get("/consulta/exmetal");
         },
         exhumos() {
             router.get("/consulta/exhumonegro");
@@ -228,7 +228,7 @@ const user = computed(() => page.props.auth.user);
                             <v-list-item
                                 title="PVMO Metales"
                                 value="metales"
-                                @click="exmetales"
+                                @click="exmetal"
                             />
                             <v-list-item
                                 title="PVMO Humos Negros"

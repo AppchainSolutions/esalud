@@ -13,12 +13,12 @@ class Enfermedad extends Model
     public function trastorno_cronico(): BelongsTo
     {
         return $this->belongsTo(TrastornoCronico::class);
-    } 
+    }
    
     protected $table = 'enfermedad';
     protected $fillable = [
         'paciente_id',
-        'comentario',
         'trastorno_cronico',
+        'comentario',
     ];
 }

@@ -133,7 +133,7 @@ const state = reactive({
   list: [],
   valid: null,
   formTitle: "Examen Metales",
-  urlSearch: "/consulta/exmetales/search",
+  urlSearch: "/consulta/exmetal/search",
 });
 
 //**********\\\\  LIFE CYCLE HOOKS ////*************/

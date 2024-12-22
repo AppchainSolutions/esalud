@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Repository\ExMetalesRepository;
+use App\Repository\ExMetalRepository;
 
-class ExMetalesController extends Controller
+class ExMetalController extends Controller
 {
-    protected $exmetalesRepository;
+    protected $exmetalRepository;
 
-    public function __construct(ExMetalesRepository $exmetalesRepository)
+    public function __construct(ExMetalRepository $exmetalRepository)
     {
-        $this->exmetalesRepository = $exmetalesRepository;
+        $this->exmetalRepository = $exmetalRepository;
     }
 
     public function consulta(Request $request)
@@ -32,31 +32,31 @@ class ExMetalesController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->exmetalesRepository->store($request);
+        return $this->exmetalRepository->store($request);
     }
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request)
     {
-        return $this->exmetalesRepository->update($request);
+        return $this->exmetalRepository->update($request);
     }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request)
     {
-        return $this->exmetalesRepository->delete($request);
+        return $this->exmetalRepository->delete($request);
     }
 
     public function show(Request $request)
     {
-        return $this->exmetalesRepository->show($request);
+        return $this->exmetalRepository->show($request);
     }
 
     public function search(Request $request)
     {
-        return $this->exmetalesRepository->search($request);
+        return $this->exmetalRepository->search($request);
     }
 
 }

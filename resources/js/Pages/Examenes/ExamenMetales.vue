@@ -87,10 +87,10 @@ const state = reactive({
     formTitle: "Metales",
     formCrear: "Nuevo exámen de Metales",
     formEdit: "Editar exámen de Metales",
-    urlShow: "/examen/metales/show",
-    urlUpdate: "/examen/metales/update",
-    urlDelete: "/examen/metales/delete",
-    urlStore: "/examen/metales",
+    urlShow: "/examen/metal/show",
+    urlUpdate: "/examen/metal/update",
+    urlDelete: "/examen/metal/delete",
+    urlStore: "/examen/metal",
 });
 //**********\\\\  LIFE CYCLE HOOKS ////*************/
 onMounted(async () => {

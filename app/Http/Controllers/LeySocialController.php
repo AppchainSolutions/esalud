@@ -34,7 +34,7 @@ class LeySocialController extends Controller
     public function all()
     {
         try {
-            $query = LeySocialModel::all();
+            $query = LeySocial::all();
              return response()->json([
                 'result' => $query
             ]);

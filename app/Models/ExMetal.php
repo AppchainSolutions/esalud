@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Paciente;
 
-class ExMetales extends Model
+class ExMetal extends Model
 {
     use HasFactory;
     public function paciente(): BelongsTo

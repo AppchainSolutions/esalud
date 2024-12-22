@@ -5,7 +5,6 @@ import {
     handleRemoveItem,
     handleShowItem,
     handleStoreItem,
-    handleEditItem,
     closeForm,
     openToCreate,
     openToEdit,
@@ -119,10 +118,13 @@ const editedItemTitle = computed(() =>
     state.editedIndex === -1 ? state.formCrear : state.formEdit
 );
 
+//**********\\\\ METHODS ////*************/
+
 function close() {
     closeForm(state);
 }
 //**********\\\\  CRUD ////*************/
+
 const handleShow = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
     await handleShowItem(state);
@@ -137,7 +139,12 @@ function storeItems() {
 }
 
 const create = async () => {
-    await handleStoreItem(state);
+    await handleStoreItem(state, "create");
+    closeForm(state);
+};
+
+const update = async () => {
+    await handleStoreItem(state, "edit");
     closeForm(state);
 };
 
@@ -145,13 +152,8 @@ function openFormEdit(item) {
     openToEdit(state, item);
 }
 
-const update = async () => {
-    await handleEditItem(state);
-    closeForm(state);
-};
-
 const remove = async (item) => {
-    await handleRemoveItem(state, item);
+    handleRemoveItem(state, item);
 };
 </script>
 

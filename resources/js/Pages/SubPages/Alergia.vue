@@ -2,11 +2,10 @@
 import { reactive, computed } from "vue";
 import { useDataStore } from "@/store.js";
 import {
-    closeForm,
-    handleEditItem,
     handleRemoveItem,
     handleShowItem,
     handleStoreItem,
+    closeForm,
     openToCreate,
     openToEdit,
 } from "@/helper.js";
@@ -42,10 +41,12 @@ const state = reactive({
     tableItems: [],
     editedIndex: -1,
     list: [],
+    loading: false,
     valid: null,
     formTitle: "Alergias",
     formCrear: "Nueva Alergia",
     formEdit: "Editar Alergia",
+    urlSearch: "alergia/search",
     urlShow: "alergia/show",
     urlUpdate: "alergia/update",
     urlDelete: "alergia/delete",
@@ -57,10 +58,13 @@ const editedItemTitle = computed(() =>
     state.editedIndex === -1 ? state.formCrear : state.formEdit
 );
 
+//**********\\\\ METHODS ////*************/
+
 function close() {
     closeForm(state);
 }
 //**********\\\\  CRUD ////*************/
+
 const handleShow = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
     await handleShowItem(state);
@@ -89,7 +93,7 @@ function openFormEdit(item) {
 }
 
 const remove = async (item) => {
-    await handleRemoveItem(state, item);
+    handleRemoveItem(state, item);
 };
 </script>
 
@@ -122,7 +126,7 @@ const remove = async (item) => {
                         </template>
 
                         <v-card>
-                            <v-form>
+                            <form @submit.prevent="submit">
                                 <v-card-title>
                                     <span class="text-h5"
                                         >{{ editedItemTitle }}
@@ -131,6 +135,7 @@ const remove = async (item) => {
 
                                 <v-card-text>
                                     <v-container>
+                                        <!------------->
                                         <v-row>
                                             <v-col>
                                                 <v-text-field
@@ -138,6 +143,16 @@ const remove = async (item) => {
                                                         state.editedItem.alergia
                                                     "
                                                     label="alergia"
+                                                    type="text"
+                                                    variant="underlined"
+                                                ></v-text-field>
+
+                                                <v-text-field
+                                                    v-model="
+                                                        state.editedItem
+                                                            .fecha_alergia
+                                                    "
+                                                    label="Fecha de la cirugía (escriba una fecha aproximada)"
                                                     type="text"
                                                     variant="underlined"
                                                 ></v-text-field>
@@ -153,6 +168,7 @@ const remove = async (item) => {
                                                 ></v-text-field>
                                             </v-col>
                                         </v-row>
+                                        <!------------->
                                     </v-container>
                                 </v-card-text>
 
@@ -173,7 +189,7 @@ const remove = async (item) => {
                                         Guardar
                                     </v-btn>
                                 </v-card-actions>
-                            </v-form>
+                            </form>
                         </v-card>
                     </v-dialog>
                 </v-toolbar>
@@ -201,8 +217,8 @@ const remove = async (item) => {
                             density="compact"
                             class="mr-2 ml-2"
                             color="#009AA4"
-                            variant="tonal"
                             :icon="'mdi-delete'"
+                            variant="tonal"
                             @click="remove(item)"
                         ></v-btn>
                     </template>

@@ -5,7 +5,6 @@ import {
     handleRemoveItem,
     handleShowItem,
     handleStoreItem,
-    handleEditItem,
     closeForm,
     openToCreate,
     openToEdit,
@@ -20,18 +19,19 @@ const state = reactive({
             sortable: true,
             key: "parentesco",
         },
-        { title: "Patología", key: "patologia", sortable: false },
+        { title: "Patologia", key: "patologia", sortable: false },
         { title: "Acciones", align: "center", key: "actions" },
     ],
+
     editedItem: {
+        paciente_id: null,
         parentesco: null,
-        patologia: null,
         comentario: null,
     },
+
     defaultItem: {
         paciente_id: null,
         parentesco: null,
-        patologia: null,
         comentario: null,
     },
     searchQuery: {
@@ -44,8 +44,9 @@ const state = reactive({
     loading: false,
     valid: null,
     formTitle: "Antecedentes Familiares",
-    formCrear: "Nuevo Antecedente Familiar",
+    formCrear: "Nueva Antecedentes Familiares",
     formEdit: "Editar Antecedentes Familiares",
+    urlSearch: "familiar/search",
     urlShow: "familiar/show",
     urlUpdate: "familiar/update",
     urlDelete: "familiar/delete",
@@ -57,10 +58,13 @@ const editedItemTitle = computed(() =>
     state.editedIndex === -1 ? state.formCrear : state.formEdit
 );
 
+//**********\\\\ METHODS ////*************/
+
 function close() {
     closeForm(state);
 }
 //**********\\\\  CRUD ////*************/
+
 const handleShow = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
     await handleShowItem(state);
@@ -75,7 +79,12 @@ function storeItems() {
 }
 
 const create = async () => {
-    await handleStoreItem(state);
+    await handleStoreItem(state, "create");
+    closeForm(state);
+};
+
+const update = async () => {
+    await handleStoreItem(state, "edit");
     closeForm(state);
 };
 
@@ -83,45 +92,34 @@ function openFormEdit(item) {
     openToEdit(state, item);
 }
 
-const update = async () => {
-    await handleEditItem(state);
-    closeForm(state);
-};
-
 const remove = async (item) => {
-    await handleRemoveItem(state, item);
+    handleRemoveItem(state, item);
 };
 </script>
 
 <template>
     <v-container>
-        <v-data-table
-            :headers="state.headers"
-            :items="state.tableItems"
-            class="elevation-1"
-            style="min-width: 850px"
-        >
+        <v-data-table :headers="state.headers" :items="state.tableItems" style="min-width: 850px"       >
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>{{ state.formTitle }}</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
-
                     <v-dialog v-model="state.dialog">
                         <template v-slot:activator="{ props }">
                             <v-btn
                                 icon="mdi-update"
-                                variant="underlined"
+                                variant="tonal"
                                 class="ma-2"
-                                color="#662D91"
+                                color="#009AA4"
                                 @click="handleShow"
                             >
                             </v-btn>
                             <v-btn
                                 icon="mdi-account-multiple-plus"
-                                variant="underlined"
+                                variant="tonal"
                                 class="ma-2"
-                                color="#662D91"
+                                color="#009AA4"
                                 @click="openFormCreate"
                             >
                             </v-btn>
@@ -137,14 +135,24 @@ const remove = async (item) => {
 
                                 <v-card-text>
                                     <v-container>
+                                        <!------------->
                                         <v-row>
                                             <v-col>
                                                 <v-text-field
                                                     v-model="
-                                                        state.editedItem
-                                                            .parentesco
+                                                        state.editedItem.parentesco
                                                     "
                                                     label="Parentesco"
+                                                    type="text"
+                                                    variant="underlined"
+                                                ></v-text-field>
+
+                                                <v-text-field
+                                                    v-model="
+                                                        state.editedItem
+                                                            .fecha_parentesco
+                                                    "
+                                                    label="Fecha de la cirugía (escriba una fecha aproximada)"
                                                     type="text"
                                                     variant="underlined"
                                                 ></v-text-field>
@@ -160,6 +168,7 @@ const remove = async (item) => {
                                                 ></v-text-field>
                                             </v-col>
                                         </v-row>
+                                        <!------------->
                                     </v-container>
                                 </v-card-text>
 
@@ -167,14 +176,14 @@ const remove = async (item) => {
                                     <v-spacer></v-spacer>
                                     <v-btn
                                         color="blue-darken-1"
-                                        variant="underlined"
+                                        variant="tonal"
                                         @click="close"
                                     >
                                         Cancelar
                                     </v-btn>
                                     <v-btn
                                         color="blue-darken-1"
-                                        variant="underlined"
+                                        variant="tonal"
                                         @click="storeItems"
                                     >
                                         Guardar
@@ -193,8 +202,9 @@ const remove = async (item) => {
                             v-bind="props"
                             density="compact"
                             class="mr-2 ml-2"
-                            color="#662D91"
+                            color="#009AA4"
                             :icon="'mdi-account-edit'"
+                            variant="tonal"
                             @click="openFormEdit(item)"
                         ></v-btn>
                     </template>
@@ -206,15 +216,16 @@ const remove = async (item) => {
                             v-bind="props"
                             density="compact"
                             class="mr-2 ml-2"
-                            color="#662D91"
+                            color="#009AA4"
                             :icon="'mdi-delete'"
+                            variant="tonal"
                             @click="remove(item)"
                         ></v-btn>
                     </template>
                 </v-tooltip>
             </template>
             <template v-slot:no-data>
-                <v-btn type="solo" @click="handleShow"> Iniciar </v-btn>
+                <v-btn variant="tonal" @click="handleShow"> Iniciar </v-btn>
             </template>
         </v-data-table>
     </v-container>

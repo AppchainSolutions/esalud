@@ -2,14 +2,13 @@
 import { reactive, computed, onMounted } from "vue";
 import { useDataStore } from "@/store.js";
 import {
-    fetchData,
     handleRemoveItem,
     handleShowItem,
     handleStoreItem,
-    handleEditItem,
     closeForm,
     openToCreate,
     openToEdit,
+    fetchData
 } from "@/helper.js";
 
 const store = useDataStore();
@@ -17,7 +16,7 @@ const state = reactive({
     endpoints: ["trastorno_cronico"],
     headers: [
         {
-            title: "Trastorno Crónico",
+            title: "Enfermedad",
             align: "start",
             sortable: true,
             key: "trastorno_cronico.descripcion",
@@ -25,11 +24,13 @@ const state = reactive({
         { title: "Comentario", key: "comentario", sortable: false },
         { title: "Acciones", align: "center", key: "actions" },
     ],
+
     editedItem: {
         paciente_id: null,
-        trastorno_cronico: "",
-        comentario: "",
+        trastorno_cronico: null,
+        comentario: null,
     },
+
     defaultItem: {
         paciente_id: null,
         trastorno_cronico: null,
@@ -44,30 +45,31 @@ const state = reactive({
     list: [],
     loading: false,
     valid: null,
-    formTitle: "Enfermedad",
-    formCrear: "Nueva enfermedad",
-    formEdit: "Editar enfermedad",
+    formTitle: "Enfermedades",
+    formCrear: "Nueva Enfermedades",
+    formEdit: "Editar Enfermedades",
+    urlSearch: "enfermedad/search",
     urlShow: "enfermedad/show",
     urlUpdate: "enfermedad/update",
     urlDelete: "enfermedad/delete",
     urlStore: "enfermedad",
 });
-
 //**********\\\\  LIFE CYCLE HOOKS ////*************/
 onMounted(async () => {
     state.list = await fetchData(state.endpoints);
 });
-
 //**********\\\\  COMPUTE PROPERTIES ////*************/
 const editedItemTitle = computed(() =>
-    state.editedIndex === -1 ? state.formCrear : state.formEdit,
+    state.editedIndex === -1 ? state.formCrear : state.formEdit
 );
+
+//**********\\\\ METHODS ////*************/
 
 function close() {
     closeForm(state);
 }
-
 //**********\\\\  CRUD ////*************/
+
 const handleShow = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
     await handleShowItem(state);
@@ -96,7 +98,7 @@ function openFormEdit(item) {
 }
 
 const remove = async (item) => {
-    await handleRemoveItem(state, item);
+    handleRemoveItem(state, item);
 };
 </script>
 
@@ -138,22 +140,30 @@ const remove = async (item) => {
 
                                 <v-card-text>
                                     <v-container>
+                                        <!------------->
                                         <v-row>
                                             <v-col>
+                                                <v-text-field
+                                                    v-model="
+                                                        state.editedItem.enfermedad
+                                                    "
+                                                    label="enfermedad"
+                                                    type="text"
+                                                    variant="underlined"
+                                                ></v-text-field>
+
                                                 <v-select
                                                     v-model="
-                                                        state.editedItem
-                                                            .trastorno_cronico
+                                                        state.editedItem.trastorno_cronico
                                                     "
-                                                    :items="
-                                                        state.list
-                                                            .trastorno_cronico
-                                                    "
+                                                    :items="state.list.trastorno_cronico"
                                                     item-title="descripcion"
                                                     item-value="id"
                                                     label="Trastorno Crónico"
                                                     variant="underlined"
+                                                    clearable
                                                 ></v-select>
+
                                                 <v-text-field
                                                     v-model="
                                                         state.editedItem
@@ -165,6 +175,7 @@ const remove = async (item) => {
                                                 ></v-text-field>
                                             </v-col>
                                         </v-row>
+                                        <!------------->
                                     </v-container>
                                 </v-card-text>
 
@@ -199,8 +210,8 @@ const remove = async (item) => {
                             density="compact"
                             class="mr-2 ml-2"
                             color="#009AA4"
-                            variant="tonal"
                             :icon="'mdi-account-edit'"
+                            variant="tonal"
                             @click="openFormEdit(item)"
                         ></v-btn>
                     </template>
@@ -213,15 +224,15 @@ const remove = async (item) => {
                             density="compact"
                             class="mr-2 ml-2"
                             color="#009AA4"
-                            variant="tonal"
                             :icon="'mdi-delete'"
+                            variant="tonal"
                             @click="remove(item)"
                         ></v-btn>
                     </template>
                 </v-tooltip>
             </template>
             <template v-slot:no-data>
-                <v-btn variant="tonal" @click="handleShow"> Iniciar</v-btn>
+                <v-btn variant="tonal" @click="handleShow"> Iniciar </v-btn>
             </template>
         </v-data-table>
     </v-container>

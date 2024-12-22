@@ -6,7 +6,7 @@ use App\Http\Controllers\ExAsmaController;
 use App\Http\Controllers\ExEpoController;
 use App\Http\Controllers\ExEquilibrioController;
 use App\Http\Controllers\ExHumoNegroController;
-use App\Http\Controllers\ExMetalesController;
+use App\Http\Controllers\ExMetalController;
 use App\Http\Controllers\ExPVTMERTController;
 use App\Http\Controllers\ExPsicoController;
 use App\Http\Controllers\ExRespiradorController;
@@ -28,7 +28,7 @@ Route::middleware([
     Route::resource('epo', ExEpoController::class);
     Route::resource('equilibrio', ExEquilibrioController::class);
     Route::resource('humonegro', ExHumoNegroController::class);
-    Route::resource('metal', ExMetalesController::class);
+    Route::resource('metal', ExMetalController::class);
     Route::resource('psico', ExPsicoController::class);
     Route::resource('pvtmert', ExPVTMERTController::class);
     Route::resource('respirador', ExRespiradorController::class);

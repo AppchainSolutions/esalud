@@ -47,14 +47,6 @@ class MedicamentoController extends Controller
         return $this->medicamentoRepository->delete($request);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function search(Request $request)
-    {
-        return $this->medicamentoRepository->search($request);
-    }
-
     public function show(Request $request)
     {
         return $this->medicamentoRepository->show($request);

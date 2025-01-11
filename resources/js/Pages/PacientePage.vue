@@ -285,138 +285,149 @@ const remove = async (item) => {
 
 <template>
     <v-container fluid>
-        <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-2 pa-2'">
+        <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-4 pa-4'">
             <div class="text-h6 ma-2">{{ state.formTitle }}</div>
-            <v-divider thickness="4px" color="#009AA4"></v-divider>
-            <v-form fast-fail @submit.prevent>
-                <v-row class="ma-4 pa-4">
-                    <v-col>
-                        <v-text-field
-                            v-model="state.searchQuery.rut"
-                            :rules="state.validationSchema.rutRules"
-                            label="Rut* (12345678-9)"
-                            type="text"
-                            variant="underlined"
-                            clearable
-                        ></v-text-field>
+            <v-expansion-panels>
+                <v-expansion-panel>
+                    <v-expansion-panel-title color="#009AA4">Criterios de Búsqueda</v-expansion-panel-title>
+                    <v-expansion-panel-text>
+                        <v-form fast-fail @submit.prevent>
+                            <v-row>
+                                <v-col>
+                                    <v-text-field
+                                        v-model="state.searchQuery.rut"
+                                        :rules="state.validationSchema.rutRules"
+                                        label="Rut* (12345678-9)"
+                                        type="text"
+                                        variant="underlined"
+                                        clearable
+                                    ></v-text-field>
 
-                        <v-select
-                            :items="state.list.ceco"
-                            item-title="descripcion"
-                            item-value="id"
-                            v-model="state.searchQuery.ceco"
-                            label="Area de Trabajo (Cencos)"
-                            clearable
-                            variant="underlined"
-                            single
-                        ></v-select>
-                        <v-switch
-                            v-model="state.searchQuery.activo"
-                            hide-details
-                            variant="underlined"
-                            color="green-darken-3"
-                            inset
-                            label="Activo"
-                        ></v-switch>
+                                    <v-select
+                                        :items="state.list.ceco"
+                                        item-title="descripcion"
+                                        item-value="id"
+                                        v-model="state.searchQuery.ceco"
+                                        label="Area de Trabajo (Cencos)"
+                                        clearable
+                                        variant="underlined"
+                                        single
+                                    ></v-select>
+                                    <v-switch
+                                        v-model="state.searchQuery.activo"
+                                        hide-details
+                                        variant="underlined"
+                                        color="green-darken-3"
+                                        inset
+                                        label="Activo"
+                                    ></v-switch>
 
-                        <v-switch
-                            v-model="state.searchQuery.protocolo_minsal"
-                            hide-details
-                            variant="underlined"
-                            color="green-darken-3"
-                            inset
-                            label="Seguimiento Exposición"
-                        ></v-switch>
-                    </v-col>
-                    <v-col>
-                        <v-select
-                            :items="state.list.empresa"
-                            item-title="descripcion"
-                            item-value="id"
-                            v-model="state.searchQuery.empresa"
-                            label="Empresa"
-                            clearable
-                            variant="underlined"
-                            single
-                        ></v-select>
-                        <v-select
-                            :items="state.list.planta"
-                            item-title="descripcion"
-                            item-value="id"
-                            v-model="state.searchQuery.planta"
-                            label="Planta"
-                            clearable
-                            variant="underlined"
-                            single
-                            :key="'planta'"
-                        ></v-select>
-                        <v-select
-                            :items="state.list.exposicion"
-                            item-title="descripcion"
-                            item-value="descripcion"
-                            v-model="state.searchQuery.exposicion"
-                            label="Exposicion"
-                            clearable
-                            variant="underlined"
-                            chips
-                            multiple
-                        ></v-select>
-                    </v-col>
-                    <v-col>
-                        <v-select
-                            :items="state.list.unidad"
-                            item-title="descripcion"
-                            item-value="id"
-                            v-model="state.searchQuery.unidad"
-                            clearable
-                            label="Unidad"
-                            variant="underlined"
-                            single
-                        ></v-select>
-                        <v-select
-                            :items="state.list.area"
-                            item-title="descripcion"
-                            item-value="id"
-                            v-model="state.searchQuery.area"
-                            clearable
-                            label="Area"
-                            variant="underlined"
-                            single
-                        ></v-select>
-                    </v-col>
-                </v-row>
+                                    <v-switch
+                                        v-model="
+                                            state.searchQuery.protocolo_minsal
+                                        "
+                                        hide-details
+                                        variant="underlined"
+                                        color="green-darken-3"
+                                        inset
+                                        label="Seguimiento Exposición"
+                                    ></v-switch>
+                                </v-col>
+                                <v-col>
+                                    <v-select
+                                        :items="state.list.empresa"
+                                        item-title="descripcion"
+                                        item-value="id"
+                                        v-model="state.searchQuery.empresa"
+                                        label="Empresa"
+                                        clearable
+                                        variant="underlined"
+                                        single
+                                    ></v-select>
+                                    <v-select
+                                        :items="state.list.planta"
+                                        item-title="descripcion"
+                                        item-value="id"
+                                        v-model="state.searchQuery.planta"
+                                        label="Planta"
+                                        clearable
+                                        variant="underlined"
+                                        single
+                                        :key="'planta'"
+                                    ></v-select>
+                                    <v-select
+                                        :items="state.list.exposicion"
+                                        item-title="descripcion"
+                                        item-value="descripcion"
+                                        v-model="state.searchQuery.exposicion"
+                                        label="Exposicion"
+                                        clearable
+                                        variant="underlined"
+                                        chips
+                                        multiple
+                                    ></v-select>
+                                </v-col>
+                                <v-col>
+                                    <v-select
+                                        :items="state.list.unidad"
+                                        item-title="descripcion"
+                                        item-value="id"
+                                        v-model="state.searchQuery.unidad"
+                                        clearable
+                                        label="Unidad"
+                                        variant="underlined"
+                                        single
+                                    ></v-select>
+                                    <v-select
+                                        :items="state.list.area"
+                                        item-title="descripcion"
+                                        item-value="id"
+                                        v-model="state.searchQuery.area"
+                                        clearable
+                                        label="Area"
+                                        variant="underlined"
+                                        single
+                                    ></v-select>
+                                </v-col>
+                            </v-row>
 
-                <v-row>
-                    <v-btn
-                        prepend-icon="mdi-file-search"
-                        variant="tonal"
-                        class="ma-4"
-                        color="#009AA4"
-                        :loading="state.loadingSearch"
-                        type="submit"
-                        @click="show"
-                    >
-                        Buscar
-                    </v-btn>
+                            <v-row>
+                                <v-btn
+                                    prepend-icon="mdi-file-search"
+                                    variant="tonal"
+                                    class="ma-4"
+                                    color="#009AA4"
+                                    :loading="state.loadingSearch"
+                                    type="submit"
+                                    @click="show"
+                                >
+                                    Buscar
+                                </v-btn>
 
-                    <v-btn
-                        prepend-icon="mdi-cloud-download"
-                        variant="tonal"
-                        class="ma-4"
-                        color="#009AA4"
-                    >
-                        <download-excel
-                            :data="state.tableItems"
-                            name="consulta_paciente.xls"
-                        >
-                            Bajar archivo
-                        </download-excel>
-                    </v-btn>
-                </v-row>
-            </v-form>
-        </v-sheet>
+                                <v-btn
+                                    prepend-icon="mdi-cloud-download"
+                                    variant="tonal"
+                                    class="ma-4"
+                                    color="#009AA4"
+                                >
+                                    <download-excel
+                                        :data="state.tableItems"
+                                        name="consulta_paciente.xls"
+                                    >
+                                        Bajar archivo
+                                    </download-excel>
+                                </v-btn>
+                            </v-row>
 
-        <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-2 pa-2'">
+                        </v-form>
+                    </v-expansion-panel-text>
+                </v-expansion-panel>
+            </v-expansion-panels>
+
+            <v-divider thickness="4px" color="#009AA4" class="ma-4"></v-divider>
+
+            <v-sheet color="white" :elevation="4" :class="'rounded-lg pa-2'">
+
             <v-data-table
                 :headers="state.headers"
                 :items="state.tableItems"
@@ -964,7 +975,7 @@ const remove = async (item) => {
                             </v-form>
                         </v-dialog>
                     </v-toolbar>
-                </template>
+                    </template>
 
                 <template v-slot:item.actions="{ item }">
                     <v-tooltip text="Atenciones Diarias" location="top">
@@ -1024,6 +1035,7 @@ const remove = async (item) => {
                     </v-tooltip>
                 </template>
             </v-data-table>
+            </v-sheet>
         </v-sheet>
     </v-container>
 </template>

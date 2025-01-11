@@ -13,7 +13,7 @@
     "/build/assets/logo-HUznXB3o.jpg"
   ],
   "resources/img/logo_muni_casablanca.png": [
-    "/build/assets/AppLayout-D5Ml9-dY.js",
+    "/build/assets/AppLayout-CPH0Fv3Z.js",
     "/build/assets/AppLayout-DjM4E4RF.css",
     "/build/assets/logo_muni_casablanca-C8F-l-iQ.png"
   ],
@@ -82,17 +82,17 @@
     "/build/assets/logo-HUznXB3o.jpg"
   ],
   "resources/js/Layouts/AppLayout.vue": [
-    "/build/assets/AppLayout-D5Ml9-dY.js",
+    "/build/assets/AppLayout-CPH0Fv3Z.js",
     "/build/assets/AppLayout-DjM4E4RF.css",
     "/build/assets/logo_muni_casablanca-C8F-l-iQ.png"
   ],
   "resources/js/Layouts/AppLayout.vue?vue&type=style&index=0&scoped=838512c9&lang.css": [
-    "/build/assets/AppLayout-D5Ml9-dY.js",
+    "/build/assets/AppLayout-CPH0Fv3Z.js",
     "/build/assets/AppLayout-DjM4E4RF.css",
     "/build/assets/logo_muni_casablanca-C8F-l-iQ.png"
   ],
   "resources/js/Pages/API/Index.vue": [
-    "/build/assets/Index-WyuFGl41.js"
+    "/build/assets/Index-w7NtSwj-.js"
   ],
   "resources/js/Pages/API/Partials/ApiTokenManager.vue": [
     "/build/assets/ApiTokenManager-Bv2hkOoQ.js"
@@ -139,10 +139,13 @@
     "/build/assets/app-BUgWzofg.css"
   ],
   "resources/js/Pages/Dashboard.vue": [
-    "/build/assets/Dashboard-Dtg-amQ8.js"
+    "/build/assets/Dashboard-BcygyWP5.js"
   ],
   "resources/js/Pages/PacientePage.vue": [
-    "/build/assets/PacientePage-Cyt8e9tu.js"
+    "/build/assets/PacientePage-Dlr4jrOo.js"
+  ],
+  "resources/js/Pages/PacientePageOp2.vue": [
+    "/build/assets/PacientePageOp2-Bhqg7ccZ.js"
   ],
   "resources/js/Pages/PrivacyPolicy.vue": [
     "/build/assets/PrivacyPolicy-BpiKwPKg.js"
@@ -163,33 +166,33 @@
     "/build/assets/UpdateProfileInformationForm-DIRzCx_Q.js"
   ],
   "resources/js/Pages/Profile/Show.vue": [
-    "/build/assets/Show-CET-_eIo.js"
+    "/build/assets/Show-BjtcwYqJ.js"
   ],
   "resources/js/Pages/PsicologiaPage.vue": [
-    "/build/assets/PsicologiaPage-ClhC3xjo.js"
+    "/build/assets/PsicologiaPage-CDM0qh6F.js"
   ],
   "resources/js/Pages/ServicioPage.vue": [
-    "/build/assets/ServicioPage-CiZdF116.js",
+    "/build/assets/ServicioPage-BSfklxtk.js",
     "/build/assets/ServicioPage-DMy6B-uM.css"
   ],
   "resources/js/Pages/ServicioPage.vue?vue&type=style&index=0&scoped=c62917aa&lang.css": [
-    "/build/assets/ServicioPage-CiZdF116.js",
+    "/build/assets/ServicioPage-BSfklxtk.js",
     "/build/assets/ServicioPage-DMy6B-uM.css"
   ],
   "resources/js/Pages/SubPages/AlergiaPage.vue": [
-    "/build/assets/AlergiaPage-BBbYbAaG.js"
+    "/build/assets/AlergiaPage-BBF8ZXzZ.js"
   ],
   "resources/js/Pages/SubPages/AntecedenteFamiliarPage.vue": [
-    "/build/assets/AntecedenteFamiliarPage-Cmdm_9pF.js"
+    "/build/assets/AntecedenteFamiliarPage-39yejFut.js"
   ],
   "resources/js/Pages/SubPages/CertificacionesPage.vue": [
-    "/build/assets/CertificacionesPage-czAOJcLN.js"
+    "/build/assets/CertificacionesPage-NduC_Fix.js"
   ],
   "resources/js/Pages/SubPages/CirugiaPage.vue": [
-    "/build/assets/CirugiaPage-tAYZU4bI.js"
+    "/build/assets/CirugiaPage-DCyLLnk3.js"
   ],
   "resources/js/Pages/SubPages/Componentes/Asignacion-ServicioComponente.vue": [
-    "/build/assets/Asignacion-ServicioComponente-D_anwhLV.js"
+    "/build/assets/Asignacion-ServicioComponente-Ba-UvhMW.js"
   ],
   "resources/js/Pages/SubPages/Componentes/DatosEgreso-PsicologiaComponente.vue": [
     "/build/assets/DatosEgreso-PsicologiaComponente-clGHxaS-.js"
@@ -215,11 +218,11 @@
     "/build/assets/PlanTrabajo-PsicologiaComponente-DI7xag2h.js"
   ],
   "resources/js/Pages/SubPages/Componentes/Solicitud-ServicioComponente.vue": [
-    "/build/assets/Solicitud-ServicioComponente-BqHPnT5E.js",
+    "/build/assets/Solicitud-ServicioComponente-CpbCtn54.js",
     "/build/assets/ServicioPage-DMy6B-uM.css"
   ],
   "resources/js/Pages/SubPages/Componentes/Solicitud-ServicioComponente.vue?vue&type=style&index=0&scoped=029e4dc8&lang.css": [
-    "/build/assets/Solicitud-ServicioComponente-BqHPnT5E.js",
+    "/build/assets/Solicitud-ServicioComponente-CpbCtn54.js",
     "/build/assets/ServicioPage-DMy6B-uM.css"
   ],
   "resources/js/Pages/SubPages/Componentes/TablaSesiones-PsicologiaComponente.vue": [
@@ -230,22 +233,22 @@
     "/build/assets/TableAction-DE3GbK5H.js"
   ],
   "resources/js/Pages/SubPages/ContextoPage.vue": [
-    "/build/assets/ContextoPage-26a8bAx6.js"
+    "/build/assets/ContextoPage-CCfXaqj_.js"
   ],
   "resources/js/Pages/SubPages/DatosMedicosPage.vue": [
-    "/build/assets/DatosMedicosPage-Dm84ynsV.js"
+    "/build/assets/DatosMedicosPage-CGLT8TOR.js"
   ],
   "resources/js/Pages/SubPages/EnfermedadPage.vue": [
-    "/build/assets/EnfermedadPage-CfoA1YCG.js"
+    "/build/assets/EnfermedadPage-BK7BNgOV.js"
   ],
   "resources/js/Pages/SubPages/FactorRiesgoPage.vue": [
-    "/build/assets/FactorRiesgoPage-BD52VVY4.js"
+    "/build/assets/FactorRiesgoPage-BhQCSdo4.js"
   ],
   "resources/js/Pages/SubPages/FichaMedicaPage.vue": [
-    "/build/assets/FichaMedicaPage-CInR6Nt1.js"
+    "/build/assets/FichaMedicaPage-DPCcMDQA.js"
   ],
   "resources/js/Pages/SubPages/FormSchemaPage.vue": [
-    "/build/assets/FormSchemaPage-J32ufTau.js"
+    "/build/assets/FormSchemaPage-d7isgCxr.js"
   ],
   "resources/js/Pages/SubPages/HorarioProfesionalPage.vue": [
     "/build/assets/HorarioProfesionalPage-DNTbuXn_.js",
@@ -256,22 +259,22 @@
     "/build/assets/HorarioProfesionalPage-CC8lsLJw.css"
   ],
   "resources/js/Pages/SubPages/MedicamentoPage.vue": [
-    "/build/assets/MedicamentoPage-BS_n61Sh.js"
+    "/build/assets/MedicamentoPage-ChRBuF6a.js"
   ],
   "resources/js/Pages/SubPages/NotificacionPage.vue": [
     "/build/assets/NotificacionPage-O7VwXdaz.js"
   ],
   "resources/js/Pages/SubPages/ProfesionalPage.vue": [
-    "/build/assets/ProfesionalPage-CP5TDp5j.js"
+    "/build/assets/ProfesionalPage-Cek_wUbx.js"
   ],
   "resources/js/Pages/SubPages/Sesiones-PsicologiaPage.vue": [
-    "/build/assets/Sesiones-PsicologiaPage-F9ugmf7O.js"
+    "/build/assets/Sesiones-PsicologiaPage-0-wG54E7.js"
   ],
   "resources/js/Pages/SubPages/VacunaPage.vue": [
-    "/build/assets/VacunaPage-DH1a1YbU.js"
+    "/build/assets/VacunaPage-pv3wQC9s.js"
   ],
   "resources/js/Pages/Teams/Create.vue": [
-    "/build/assets/Create-DzMe7YFI.js"
+    "/build/assets/Create-CWjhHyN4.js"
   ],
   "resources/js/Pages/Teams/Partials/CreateTeamForm.vue": [
     "/build/assets/CreateTeamForm-BbEHC8M1.js"
@@ -286,7 +289,7 @@
     "/build/assets/UpdateTeamNameForm-BbcGPZMK.js"
   ],
   "resources/js/Pages/Teams/Show.vue": [
-    "/build/assets/Show-CoTG_R5b.js"
+    "/build/assets/Show-DlDBr22y.js"
   ],
   "resources/js/Pages/TermsOfService.vue": [
     "/build/assets/TermsOfService-D4FTV77Q.js"
@@ -304,20 +307,20 @@
     "/build/assets/vitamhc-C8RI-1Kv.png"
   ],
   "resources/js/api.js": [
-    "/build/assets/helper-C0cF_F2S.js"
+    "/build/assets/helper-BVkQOSvY.js"
   ],
   "resources/js/crud.js": [
-    "/build/assets/helper-C0cF_F2S.js"
+    "/build/assets/helper-BVkQOSvY.js"
   ],
   "resources/js/helper.js": [
-    "/build/assets/helper-C0cF_F2S.js"
+    "/build/assets/helper-BVkQOSvY.js"
   ],
   "resources/js/logger.js": [
-    "/build/assets/helper-C0cF_F2S.js"
+    "/build/assets/helper-BVkQOSvY.js"
   ],
   "resources/js/ssr.js": [],
   "resources/js/store.js": [
-    "/build/assets/store-CHGALank.js"
+    "/build/assets/store-Dwa255xy.js"
   ],
   "vendor/tightenco/ziggy/dist/index.js": []
 }

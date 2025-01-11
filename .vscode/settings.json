@@ -3,5 +3,14 @@
     "explorer.excludeGitIgnore": true,
     "search.useGlobalIgnoreFiles": true,
     "search.useParentIgnoreFiles": true,
-    "vscode-aiconfig.pythonInterpreter": "/var/www/esalud/.conda/bin/python"
+    "vscode-aiconfig.pythonInterpreter": "/var/www/esalud/.conda/bin/python",
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Data",
+            "database": "${workspaceFolder:esalud}/database/database.db"
+        }
+    ]
 }

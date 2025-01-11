@@ -12,7 +12,7 @@ defineOptions({ layout: AppLayout });
 const page = usePage();
 const store = useDataStore();
 
-const { handleSubmit, handleReset } = useForm({
+/* const { handleSubmit, handleReset } = useForm({
     validationSchema: {
         name(value) {
             if (value?.length >= 2) return true;
@@ -30,13 +30,13 @@ const { handleSubmit, handleReset } = useForm({
             return "Must be a valid e-mail.";
         },
     },
-});
+}); */
 
 const isValid = ref(false);
 
 const logger = useLogger();
 
-let formItems = ref([]);
+const formItems = ref([]);
 let endpoints = ref([]);
 
 const item = ref({});
@@ -44,21 +44,17 @@ const item = ref({});
 onMounted(async () => {
     try {
         formItems = page.props.data;
-        //let data = JSON.parse(JSON.stringify(store.endpoints));
-
+/* 
         formItems.forEach((formItem) => {
             const { endpoint } = formItem;
-
             if (endpoint) {
                 logger.info("Processing form endpoint:", endpoint);
-
                 const formattedEndpoint = endpoint;
                 logger.log("Formatted endpoint:", formattedEndpoint);
-
                 const endpointData = store.endpoints[formattedEndpoint];
                 logger.log("Endpoint data:", endpointData);
             }
-        });
+        }); */
     } catch (error) {
         logger.error("Error loading form items:", error);
     }
@@ -95,14 +91,17 @@ function getComponentType(type) {
  * @return {Array} Array of row objects, each containing an array of form items.
  */
 function getRows() {
-    if (!formItems.value) return [];
+    console.log(formItems)
+
+    /* if (!formItems) return [];
     return formItems.value.reduce((rows, item) => {
         if (!rows[item.row]) {
             rows[item.row] = [];
         }
         rows[item.row].push(item);
+
         return rows;
-    }, {});
+    }, {}); */
 }
 function volver() {
     router.get("/paciente"); // O
@@ -124,7 +123,6 @@ function storeForm(items) {
             </v-card-title>
 
             <v-card-text>
-                {{ store.endpoints["calles"] }}
                 <form @submit.prevent="submit">
                     <v-container fluid class="ma-4 pa-4">
                         <template

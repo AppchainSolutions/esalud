@@ -56,16 +56,21 @@ class PacienteController extends Controller
         $title = $request->input('form_title');
         $id = $request->input('form_id');
 
+        Log::info($title);
+        Log::info($id);
+
         // Use cache to store the results of the query
-        $response = Cache::remember("form-builder-{$id}", now()->addMinutes(120), function () use ($id) {
+         $response = Cache::remember("form-builder-{$id}", now()->addMinutes(120), function () use ($id) {
             return FormBuilder::where('form_id', $id)->get();
-        });
+        }); 
+        
+        Log::info($response);
 
         // Render the view with the cached data
         return Inertia::render('SubPages/FormSchemaPage', [
             'data' => $response,
             'title' => $title,
-        ]);
+        ]); 
     }
 
     public function show(Request $request) {

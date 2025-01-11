@@ -1,6 +1,7 @@
 # Laravel specific
 /vendor
-/public/build
+/public/*
+/bootstrap/*
 /node_modules
 /storage/*.key
 .env.dev

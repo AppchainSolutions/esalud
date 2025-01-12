@@ -4,13 +4,12 @@ use App\Http\Controllers\AtencionDiariaController;
 use App\Http\Controllers\CertificacionController;
 use App\Http\Controllers\DiatController;
 use App\Http\Controllers\DiepController;
-use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\ExAlcoholController;
 use App\Http\Controllers\ExAldehidoController;
 use App\Http\Controllers\ExEpoController;
 use App\Http\Controllers\ExEquilibrioController;
 use App\Http\Controllers\ExHumoNegroController;
-use App\Http\Controllers\ExMetalesController;
+use App\Http\Controllers\ExMetalController;
 use App\Http\Controllers\ExPVTMERTController;
 use App\Http\Controllers\ExPsicoController;
 use App\Http\Controllers\ExRespiradorController;
@@ -132,12 +131,12 @@ Route::middleware([
 
     Route::get(
         'exmetales',
-        [ExMetalesController::class, 'consulta']
+        [ExMetalController::class, 'consulta']
     )->name('exmetales.consulta');
 
     Route::get(
         'exmetales/search',
-        [ExMetalesController::class, 'search']
+        [ExMetalController::class, 'search']
     )->name('exmetales.search');
 
     Route::get(

@@ -29,7 +29,7 @@ use Inertia\Inertia;
 |
 */
 
-
+/* 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -39,13 +39,16 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('send-mail', [MailController::class, 'index']);
+Route::get('send-mail', [MailController::class, 'index']); */
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    Route::inertia('/', 'login');
+
+
     Route::prefix('consulta')->group(__DIR__ . '/consulta.php');
     Route::prefix('examen')->group(__DIR__ . '/examen.php');
     Route::prefix('secundaria')->group(__DIR__ . '/secundaria.php');

@@ -232,7 +232,12 @@ const user = computed(() => page.props.auth.user);
         salir() {
             const loader = $loading.show();
             localStorage.removeItem("auth_token");
-            router.post("/logout");
+            router.visit("/logout", {
+                method: 'post', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
     }
 };

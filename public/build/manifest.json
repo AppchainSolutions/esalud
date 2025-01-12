@@ -1,0 +1,1603 @@
+{
+  "_ActionMessage-CI7d3rV5.js": {
+    "file": "assets/ActionMessage-CI7d3rV5.js",
+    "name": "ActionMessage",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_AppLayout-!~{01p}~.js": {
+    "file": "assets/AppLayout-KV5Z3FqN.css",
+    "src": "_AppLayout-!~{01p}~.js"
+  },
+  "_AppLayout-BMxtgnBU.js": {
+    "file": "assets/AppLayout-BMxtgnBU.js",
+    "name": "AppLayout",
+    "imports": [
+      "resources/js/app.js",
+      "_logo-DIp7Rf8v.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/AppLayout-KV5Z3FqN.css"
+    ]
+  },
+  "_AuthenticationCard-CfWTBfpj.js": {
+    "file": "assets/AuthenticationCard-CfWTBfpj.js",
+    "name": "AuthenticationCard",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_AuthenticationCardLogo-C3-NVAFl.js": {
+    "file": "assets/AuthenticationCardLogo-C3-NVAFl.js",
+    "name": "AuthenticationCardLogo",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_Checkbox-_7oDAuxp.js": {
+    "file": "assets/Checkbox-_7oDAuxp.js",
+    "name": "Checkbox",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_ConfirmationModal-CtNhwdEe.js": {
+    "file": "assets/ConfirmationModal-CtNhwdEe.js",
+    "name": "ConfirmationModal",
+    "imports": [
+      "resources/js/app.js",
+      "_Modal-CyMZTasF.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_DangerButton-C7wcVenz.js": {
+    "file": "assets/DangerButton-C7wcVenz.js",
+    "name": "DangerButton",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_DialogModal-BfCKBKnl.js": {
+    "file": "assets/DialogModal-BfCKBKnl.js",
+    "name": "DialogModal",
+    "imports": [
+      "resources/js/app.js",
+      "_Modal-CyMZTasF.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_FormSection-C1sTxDut.js": {
+    "file": "assets/FormSection-C1sTxDut.js",
+    "name": "FormSection",
+    "imports": [
+      "resources/js/app.js",
+      "_SectionTitle-Cgh5GuIq.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_InputLabel-BZNiD9n8.js": {
+    "file": "assets/InputLabel-BZNiD9n8.js",
+    "name": "InputLabel",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_Modal-CyMZTasF.js": {
+    "file": "assets/Modal-CyMZTasF.js",
+    "name": "Modal",
+    "imports": [
+      "resources/js/app.js",
+      "_SectionTitle-Cgh5GuIq.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_PrimaryButton-DMwAUzG6.js": {
+    "file": "assets/PrimaryButton-DMwAUzG6.js",
+    "name": "PrimaryButton",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_SecondaryButton-OfwBh4Ze.js": {
+    "file": "assets/SecondaryButton-OfwBh4Ze.js",
+    "name": "SecondaryButton",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_SectionBorder-B7LSDTsu.js": {
+    "file": "assets/SectionBorder-B7LSDTsu.js",
+    "name": "SectionBorder",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_SectionTitle-Cgh5GuIq.js": {
+    "file": "assets/SectionTitle-Cgh5GuIq.js",
+    "name": "SectionTitle",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_TextInput-CupZMmWl.js": {
+    "file": "assets/TextInput-CupZMmWl.js",
+    "name": "TextInput",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "__plugin-vue_export-helper-DlAUqK2U.js": {
+    "file": "assets/_plugin-vue_export-helper-DlAUqK2U.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "_app-!~{01G}~.js": {
+    "file": "assets/app-B3SRh887.css",
+    "src": "_app-!~{01G}~.js"
+  },
+  "_chartjs-plugin-autocolors.esm-D_RAVkx7.js": {
+    "file": "assets/chartjs-plugin-autocolors.esm-D_RAVkx7.js",
+    "name": "chartjs-plugin-autocolors.esm",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_helper-B6kLQ4yt.js": {
+    "file": "assets/helper-B6kLQ4yt.js",
+    "name": "helper",
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "_logo-DIp7Rf8v.js": {
+    "file": "assets/logo-DIp7Rf8v.js",
+    "name": "logo",
+    "assets": [
+      "assets/logo-HUznXB3o.jpg"
+    ]
+  },
+  "_store-yQyc7bVv.js": {
+    "file": "assets/store-yQyc7bVv.js",
+    "name": "store",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "node_modules/@mdi/font/fonts/materialdesignicons-webfont.eot": {
+    "file": "assets/materialdesignicons-webfont-CSr8KVlo.eot",
+    "src": "node_modules/@mdi/font/fonts/materialdesignicons-webfont.eot"
+  },
+  "node_modules/@mdi/font/fonts/materialdesignicons-webfont.ttf": {
+    "file": "assets/materialdesignicons-webfont-B7mPwVP_.ttf",
+    "src": "node_modules/@mdi/font/fonts/materialdesignicons-webfont.ttf"
+  },
+  "node_modules/@mdi/font/fonts/materialdesignicons-webfont.woff": {
+    "file": "assets/materialdesignicons-webfont-PXm3-2wK.woff",
+    "src": "node_modules/@mdi/font/fonts/materialdesignicons-webfont.woff"
+  },
+  "node_modules/@mdi/font/fonts/materialdesignicons-webfont.woff2": {
+    "file": "assets/materialdesignicons-webfont-Dp5v-WZN.woff2",
+    "src": "node_modules/@mdi/font/fonts/materialdesignicons-webfont.woff2"
+  },
+  "resources/img/logo.jpg": {
+    "file": "assets/logo-HUznXB3o.jpg",
+    "src": "resources/img/logo.jpg"
+  },
+  "resources/img/vitamhc.png": {
+    "file": "assets/vitamhc-C8RI-1Kv.png",
+    "src": "resources/img/vitamhc.png"
+  },
+  "resources/js/Pages/API/Index.vue": {
+    "file": "assets/Index-CZcfcGuU.js",
+    "name": "Index",
+    "src": "resources/js/Pages/API/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "resources/js/Pages/API/Partials/ApiTokenManager.vue",
+      "_AppLayout-BMxtgnBU.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_ActionMessage-CI7d3rV5.js",
+      "_Modal-CyMZTasF.js",
+      "_SectionTitle-Cgh5GuIq.js",
+      "_Checkbox-_7oDAuxp.js",
+      "_ConfirmationModal-CtNhwdEe.js",
+      "_DangerButton-C7wcVenz.js",
+      "_DialogModal-BfCKBKnl.js",
+      "_FormSection-C1sTxDut.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "_SecondaryButton-OfwBh4Ze.js",
+      "_SectionBorder-B7LSDTsu.js",
+      "_logo-DIp7Rf8v.js"
+    ]
+  },
+  "resources/js/Pages/API/Partials/ApiTokenManager.vue": {
+    "file": "assets/ApiTokenManager-DxLeKeZ1.js",
+    "name": "ApiTokenManager",
+    "src": "resources/js/Pages/API/Partials/ApiTokenManager.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_ActionMessage-CI7d3rV5.js",
+      "_Modal-CyMZTasF.js",
+      "_Checkbox-_7oDAuxp.js",
+      "_ConfirmationModal-CtNhwdEe.js",
+      "_DangerButton-C7wcVenz.js",
+      "_DialogModal-BfCKBKnl.js",
+      "_FormSection-C1sTxDut.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "_SecondaryButton-OfwBh4Ze.js",
+      "_SectionBorder-B7LSDTsu.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_SectionTitle-Cgh5GuIq.js"
+    ]
+  },
+  "resources/js/Pages/Admin/AdminPage.vue": {
+    "file": "assets/AdminPage-MEIYlfR1.js",
+    "name": "AdminPage",
+    "src": "resources/js/Pages/Admin/AdminPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_logo-DIp7Rf8v.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/AdminPage-BEz40qNV.css"
+    ]
+  },
+  "resources/js/Pages/Admin/LoginAdmin.vue": {
+    "file": "assets/LoginAdmin-Ca6NKw2n.js",
+    "name": "LoginAdmin",
+    "src": "resources/js/Pages/Admin/LoginAdmin.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AuthenticationCard-CfWTBfpj.js",
+      "_Checkbox-_7oDAuxp.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/app-B3SRh887.css"
+    ]
+  },
+  "resources/js/Pages/Auth/ConfirmPassword.vue": {
+    "file": "assets/ConfirmPassword-DXEnnsz7.js",
+    "name": "ConfirmPassword",
+    "src": "resources/js/Pages/Auth/ConfirmPassword.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AuthenticationCard-CfWTBfpj.js",
+      "_AuthenticationCardLogo-C3-NVAFl.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/app-B3SRh887.css"
+    ]
+  },
+  "resources/js/Pages/Auth/ForgotPassword.vue": {
+    "file": "assets/ForgotPassword-WE796U88.js",
+    "name": "ForgotPassword",
+    "src": "resources/js/Pages/Auth/ForgotPassword.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AuthenticationCard-CfWTBfpj.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/app-B3SRh887.css"
+    ]
+  },
+  "resources/js/Pages/Auth/Login.vue": {
+    "file": "assets/Login-BLuRNMjA.js",
+    "name": "Login",
+    "src": "resources/js/Pages/Auth/Login.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/Login-DBU45ihE.css",
+      "assets/app-B3SRh887.css"
+    ]
+  },
+  "resources/js/Pages/Auth/Register.vue": {
+    "file": "assets/Register-CxgTPzcc.js",
+    "name": "Register",
+    "src": "resources/js/Pages/Auth/Register.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AuthenticationCard-CfWTBfpj.js",
+      "_Checkbox-_7oDAuxp.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/app-B3SRh887.css"
+    ]
+  },
+  "resources/js/Pages/Auth/ResetPassword.vue": {
+    "file": "assets/ResetPassword-D3iNurpN.js",
+    "name": "ResetPassword",
+    "src": "resources/js/Pages/Auth/ResetPassword.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AuthenticationCard-CfWTBfpj.js",
+      "_AuthenticationCardLogo-C3-NVAFl.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/app-B3SRh887.css"
+    ]
+  },
+  "resources/js/Pages/Auth/TwoFactorChallenge.vue": {
+    "file": "assets/TwoFactorChallenge-qX3QL8HS.js",
+    "name": "TwoFactorChallenge",
+    "src": "resources/js/Pages/Auth/TwoFactorChallenge.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AuthenticationCard-CfWTBfpj.js",
+      "_AuthenticationCardLogo-C3-NVAFl.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/app-B3SRh887.css"
+    ]
+  },
+  "resources/js/Pages/Auth/VerifyEmail.vue": {
+    "file": "assets/VerifyEmail-CR0iXDgs.js",
+    "name": "VerifyEmail",
+    "src": "resources/js/Pages/Auth/VerifyEmail.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AuthenticationCard-CfWTBfpj.js",
+      "_AuthenticationCardLogo-C3-NVAFl.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/app-B3SRh887.css"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaAtencionDiaria.vue": {
+    "file": "assets/ConsultaAtencionDiaria-BpoXYB5c.js",
+    "name": "ConsultaAtencionDiaria",
+    "src": "resources/js/Pages/Consultas/ConsultaAtencionDiaria.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaCertificacion.vue": {
+    "file": "assets/ConsultaCertificacion-CVmpphgR.js",
+    "name": "ConsultaCertificacion",
+    "src": "resources/js/Pages/Consultas/ConsultaCertificacion.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaDiat.vue": {
+    "file": "assets/ConsultaDiat-X2ZBsN68.js",
+    "name": "ConsultaDiat",
+    "src": "resources/js/Pages/Consultas/ConsultaDiat.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaDiep.vue": {
+    "file": "assets/ConsultaDiep-CLXFb8l6.js",
+    "name": "ConsultaDiep",
+    "src": "resources/js/Pages/Consultas/ConsultaDiep.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExAlcohol.vue": {
+    "file": "assets/ConsultaExAlcohol-D-QAYw9k.js",
+    "name": "ConsultaExAlcohol",
+    "src": "resources/js/Pages/Consultas/ConsultaExAlcohol.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExAldehido.vue": {
+    "file": "assets/ConsultaExAldehido-CVW22FUm.js",
+    "name": "ConsultaExAldehido",
+    "src": "resources/js/Pages/Consultas/ConsultaExAldehido.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExEpo.vue": {
+    "file": "assets/ConsultaExEpo-BkfrdBq0.js",
+    "name": "ConsultaExEpo",
+    "src": "resources/js/Pages/Consultas/ConsultaExEpo.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExEquilibrio.vue": {
+    "file": "assets/ConsultaExEquilibrio-D-IaR5F2.js",
+    "name": "ConsultaExEquilibrio",
+    "src": "resources/js/Pages/Consultas/ConsultaExEquilibrio.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExHumoNegro.vue": {
+    "file": "assets/ConsultaExHumoNegro-OcnV-dnT.js",
+    "name": "ConsultaExHumoNegro",
+    "src": "resources/js/Pages/Consultas/ConsultaExHumoNegro.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExMetales.vue": {
+    "file": "assets/ConsultaExMetales-DBfYxM4u.js",
+    "name": "ConsultaExMetales",
+    "src": "resources/js/Pages/Consultas/ConsultaExMetales.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExPVTMERT.vue": {
+    "file": "assets/ConsultaExPVTMERT-Dic5HUEr.js",
+    "name": "ConsultaExPVTMERT",
+    "src": "resources/js/Pages/Consultas/ConsultaExPVTMERT.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExPsico.vue": {
+    "file": "assets/ConsultaExPsico-DWNFQoCY.js",
+    "name": "ConsultaExPsico",
+    "src": "resources/js/Pages/Consultas/ConsultaExPsico.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExRespirador.vue": {
+    "file": "assets/ConsultaExRespirador-R9pMIldO.js",
+    "name": "ConsultaExRespirador",
+    "src": "resources/js/Pages/Consultas/ConsultaExRespirador.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExRuido.vue": {
+    "file": "assets/ConsultaExRuido-CkEINWwH.js",
+    "name": "ConsultaExRuido",
+    "src": "resources/js/Pages/Consultas/ConsultaExRuido.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExSalud.vue": {
+    "file": "assets/ConsultaExSalud-B76xkyUW.js",
+    "name": "ConsultaExSalud",
+    "src": "resources/js/Pages/Consultas/ConsultaExSalud.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaExSomnolencia.vue": {
+    "file": "assets/ConsultaExSomnolencia-CauicXrz.js",
+    "name": "ConsultaExSomnolencia",
+    "src": "resources/js/Pages/Consultas/ConsultaExSomnolencia.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaLicenciaMedica.vue": {
+    "file": "assets/ConsultaLicenciaMedica-BHGam3Ea.js",
+    "name": "ConsultaLicenciaMedica",
+    "src": "resources/js/Pages/Consultas/ConsultaLicenciaMedica.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Consultas/ConsultaVacuna.vue": {
+    "file": "assets/ConsultaVacuna-8dOYdx0L.js",
+    "name": "ConsultaVacuna",
+    "src": "resources/js/Pages/Consultas/ConsultaVacuna.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Dashboard.vue": {
+    "file": "assets/Dashboard-piMWe5n0.js",
+    "name": "Dashboard",
+    "src": "resources/js/Pages/Dashboard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "resources/js/Pages/SubPages/DashPersEmpresa.vue",
+      "resources/js/Pages/SubPages/DashPersPlanta.vue",
+      "resources/js/Pages/SubPages/DashCecos.vue",
+      "resources/js/Pages/SubPages/DashExpoEmpresa.vue",
+      "resources/js/Pages/SubPages/DashExpoPlanta.vue",
+      "resources/js/Pages/SubPages/DashEnfermedadEmpresa.vue",
+      "resources/js/Pages/SubPages/DashEnfermedadPlanta.vue",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_chartjs-plugin-autocolors.esm-D_RAVkx7.js",
+      "_helper-B6kLQ4yt.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenAlcohol.vue": {
+    "file": "assets/ExamenAlcohol-jlibrjen.js",
+    "name": "ExamenAlcohol",
+    "src": "resources/js/Pages/Examenes/ExamenAlcohol.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenAldehido.vue": {
+    "file": "assets/ExamenAldehido-DT32Slcz.js",
+    "name": "ExamenAldehido",
+    "src": "resources/js/Pages/Examenes/ExamenAldehido.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenAsma.vue": {
+    "file": "assets/ExamenAsma-REERqlVm.js",
+    "name": "ExamenAsma",
+    "src": "resources/js/Pages/Examenes/ExamenAsma.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenEPO.vue": {
+    "file": "assets/ExamenEPO-BBwYkPME.js",
+    "name": "ExamenEPO",
+    "src": "resources/js/Pages/Examenes/ExamenEPO.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenEquilibrio.vue": {
+    "file": "assets/ExamenEquilibrio-CD0JMpTO.js",
+    "name": "ExamenEquilibrio",
+    "src": "resources/js/Pages/Examenes/ExamenEquilibrio.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenHumoNegro.vue": {
+    "file": "assets/ExamenHumoNegro-Cn1F3mZt.js",
+    "name": "ExamenHumoNegro",
+    "src": "resources/js/Pages/Examenes/ExamenHumoNegro.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenMetales.vue": {
+    "file": "assets/ExamenMetales-Cr2eYZDE.js",
+    "name": "ExamenMetales",
+    "src": "resources/js/Pages/Examenes/ExamenMetales.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenPVTMERT.vue": {
+    "file": "assets/ExamenPVTMERT-c-HnPwxI.js",
+    "name": "ExamenPVTMERT",
+    "src": "resources/js/Pages/Examenes/ExamenPVTMERT.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenPsico.vue": {
+    "file": "assets/ExamenPsico-4YJT4KgM.js",
+    "name": "ExamenPsico",
+    "src": "resources/js/Pages/Examenes/ExamenPsico.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenRespirador.vue": {
+    "file": "assets/ExamenRespirador-C794cbX0.js",
+    "name": "ExamenRespirador",
+    "src": "resources/js/Pages/Examenes/ExamenRespirador.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenRuido.vue": {
+    "file": "assets/ExamenRuido-DVrc_yYo.js",
+    "name": "ExamenRuido",
+    "src": "resources/js/Pages/Examenes/ExamenRuido.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenSalud.vue": {
+    "file": "assets/ExamenSalud-D-iLHK4d.js",
+    "name": "ExamenSalud",
+    "src": "resources/js/Pages/Examenes/ExamenSalud.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenSilice.vue": {
+    "file": "assets/ExamenSilice-BuEkcsrW.js",
+    "name": "ExamenSilice",
+    "src": "resources/js/Pages/Examenes/ExamenSilice.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenSolvente.vue": {
+    "file": "assets/ExamenSolvente-CmNFD2HF.js",
+    "name": "ExamenSolvente",
+    "src": "resources/js/Pages/Examenes/ExamenSolvente.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/ExamenSomnolencia.vue": {
+    "file": "assets/ExamenSomnolencia-DIui-s5c.js",
+    "name": "ExamenSomnolencia",
+    "src": "resources/js/Pages/Examenes/ExamenSomnolencia.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Examenes/Examenes.vue": {
+    "file": "assets/Examenes-CsUu_-9O.js",
+    "name": "Examenes",
+    "src": "resources/js/Pages/Examenes/Examenes.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/Examenes/ExamenAlcohol.vue",
+      "resources/js/Pages/Examenes/ExamenAldehido.vue",
+      "resources/js/Pages/Examenes/ExamenAsma.vue",
+      "resources/js/Pages/Examenes/ExamenEPO.vue",
+      "resources/js/Pages/Examenes/ExamenEquilibrio.vue",
+      "resources/js/Pages/Examenes/ExamenHumoNegro.vue",
+      "resources/js/Pages/Examenes/ExamenMetales.vue",
+      "resources/js/Pages/Examenes/ExamenPsico.vue",
+      "resources/js/Pages/Examenes/ExamenPVTMERT.vue",
+      "resources/js/Pages/Examenes/ExamenRespirador.vue",
+      "resources/js/Pages/Examenes/ExamenRuido.vue",
+      "resources/js/Pages/Examenes/ExamenSalud.vue",
+      "resources/js/Pages/Examenes/ExamenSilice.vue",
+      "resources/js/Pages/Examenes/ExamenSolvente.vue",
+      "resources/js/Pages/Examenes/ExamenSomnolencia.vue",
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js"
+    ]
+  },
+  "resources/js/Pages/PacientePage.vue": {
+    "file": "assets/PacientePage-CSRflXEb.js",
+    "name": "PacientePage",
+    "src": "resources/js/Pages/PacientePage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js"
+    ]
+  },
+  "resources/js/Pages/PrivacyPolicy.vue": {
+    "file": "assets/PrivacyPolicy-B4oTT4Ys.js",
+    "name": "PrivacyPolicy",
+    "src": "resources/js/Pages/PrivacyPolicy.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AuthenticationCardLogo-C3-NVAFl.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Profile/Partials/DeleteUserForm.vue": {
+    "file": "assets/DeleteUserForm-CazEmepQ.js",
+    "name": "DeleteUserForm",
+    "src": "resources/js/Pages/Profile/Partials/DeleteUserForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_Modal-CyMZTasF.js",
+      "_DangerButton-C7wcVenz.js",
+      "_DialogModal-BfCKBKnl.js",
+      "_TextInput-CupZMmWl.js",
+      "_SecondaryButton-OfwBh4Ze.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_SectionTitle-Cgh5GuIq.js"
+    ]
+  },
+  "resources/js/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue": {
+    "file": "assets/LogoutOtherBrowserSessionsForm-D25ysvZ5.js",
+    "name": "LogoutOtherBrowserSessionsForm",
+    "src": "resources/js/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_ActionMessage-CI7d3rV5.js",
+      "_Modal-CyMZTasF.js",
+      "_DialogModal-BfCKBKnl.js",
+      "_TextInput-CupZMmWl.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "_SecondaryButton-OfwBh4Ze.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_SectionTitle-Cgh5GuIq.js"
+    ]
+  },
+  "resources/js/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue": {
+    "file": "assets/TwoFactorAuthenticationForm-DhQ9i4_V.js",
+    "name": "TwoFactorAuthenticationForm",
+    "src": "resources/js/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_Modal-CyMZTasF.js",
+      "_DialogModal-BfCKBKnl.js",
+      "_TextInput-CupZMmWl.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "_SecondaryButton-OfwBh4Ze.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_DangerButton-C7wcVenz.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_SectionTitle-Cgh5GuIq.js"
+    ]
+  },
+  "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue": {
+    "file": "assets/UpdatePasswordForm-D35gha42.js",
+    "name": "UpdatePasswordForm",
+    "src": "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_ActionMessage-CI7d3rV5.js",
+      "_FormSection-C1sTxDut.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_SectionTitle-Cgh5GuIq.js"
+    ]
+  },
+  "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue": {
+    "file": "assets/UpdateProfileInformationForm-befM4jDq.js",
+    "name": "UpdateProfileInformationForm",
+    "src": "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_ActionMessage-CI7d3rV5.js",
+      "_FormSection-C1sTxDut.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "_SecondaryButton-OfwBh4Ze.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_SectionTitle-Cgh5GuIq.js"
+    ]
+  },
+  "resources/js/Pages/Profile/Show.vue": {
+    "file": "assets/Show-Dvjrv7OW.js",
+    "name": "Show",
+    "src": "resources/js/Pages/Profile/Show.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "resources/js/Pages/Profile/Partials/DeleteUserForm.vue",
+      "resources/js/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue",
+      "_SectionBorder-B7LSDTsu.js",
+      "resources/js/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue",
+      "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue",
+      "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_Modal-CyMZTasF.js",
+      "_SectionTitle-Cgh5GuIq.js",
+      "_DangerButton-C7wcVenz.js",
+      "_DialogModal-BfCKBKnl.js",
+      "_TextInput-CupZMmWl.js",
+      "_SecondaryButton-OfwBh4Ze.js",
+      "_ActionMessage-CI7d3rV5.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_FormSection-C1sTxDut.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/Alergia.vue": {
+    "file": "assets/Alergia-DeOw39_2.js",
+    "name": "Alergia",
+    "src": "resources/js/Pages/SubPages/Alergia.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/AntecedenteFamiliar.vue": {
+    "file": "assets/AntecedenteFamiliar-DaYJQHyz.js",
+    "name": "AntecedenteFamiliar",
+    "src": "resources/js/Pages/SubPages/AntecedenteFamiliar.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/AtencionDiaria.vue": {
+    "file": "assets/AtencionDiaria-DC0_sf8d.js",
+    "name": "AtencionDiaria",
+    "src": "resources/js/Pages/SubPages/AtencionDiaria.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/Certificaciones.vue": {
+    "file": "assets/Certificaciones-CpBCUQye.js",
+    "name": "Certificaciones",
+    "src": "resources/js/Pages/SubPages/Certificaciones.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_store-yQyc7bVv.js",
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/Cirugia.vue": {
+    "file": "assets/Cirugia-C54ItJa_.js",
+    "name": "Cirugia",
+    "src": "resources/js/Pages/SubPages/Cirugia.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DashCecos.vue": {
+    "file": "assets/DashCecos-P514chx3.js",
+    "name": "DashCecos",
+    "src": "resources/js/Pages/SubPages/DashCecos.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DashEnfermedadEmpresa.vue": {
+    "file": "assets/DashEnfermedadEmpresa-JcLZ7iO5.js",
+    "name": "DashEnfermedadEmpresa",
+    "src": "resources/js/Pages/SubPages/DashEnfermedadEmpresa.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_chartjs-plugin-autocolors.esm-D_RAVkx7.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DashEnfermedadPlanta.vue": {
+    "file": "assets/DashEnfermedadPlanta-CrXdpcKL.js",
+    "name": "DashEnfermedadPlanta",
+    "src": "resources/js/Pages/SubPages/DashEnfermedadPlanta.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_chartjs-plugin-autocolors.esm-D_RAVkx7.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DashExpoEmpresa.vue": {
+    "file": "assets/DashExpoEmpresa-CLlQTQiW.js",
+    "name": "DashExpoEmpresa",
+    "src": "resources/js/Pages/SubPages/DashExpoEmpresa.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_chartjs-plugin-autocolors.esm-D_RAVkx7.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DashExpoPlanta.vue": {
+    "file": "assets/DashExpoPlanta-DLPaZr8z.js",
+    "name": "DashExpoPlanta",
+    "src": "resources/js/Pages/SubPages/DashExpoPlanta.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_chartjs-plugin-autocolors.esm-D_RAVkx7.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_store-yQyc7bVv.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DashExpoTotal.vue": {
+    "file": "assets/DashExpoTotal-4mIyz3k3.js",
+    "name": "DashExpoTotal",
+    "src": "resources/js/Pages/SubPages/DashExpoTotal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_chartjs-plugin-autocolors.esm-D_RAVkx7.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DashPersEmpresa.vue": {
+    "file": "assets/DashPersEmpresa-D1gj8oTn.js",
+    "name": "DashPersEmpresa",
+    "src": "resources/js/Pages/SubPages/DashPersEmpresa.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_chartjs-plugin-autocolors.esm-D_RAVkx7.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DashPersPlanta.vue": {
+    "file": "assets/DashPersPlanta-P9zCXnUz.js",
+    "name": "DashPersPlanta",
+    "src": "resources/js/Pages/SubPages/DashPersPlanta.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_chartjs-plugin-autocolors.esm-D_RAVkx7.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DatosMedicos.vue": {
+    "file": "assets/DatosMedicos-CqslIzRW.js",
+    "name": "DatosMedicos",
+    "src": "resources/js/Pages/SubPages/DatosMedicos.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/SubPages/Enfermedad.vue",
+      "resources/js/Pages/SubPages/Alergia.vue",
+      "resources/js/Pages/SubPages/Cirugia.vue",
+      "resources/js/Pages/SubPages/FactorRiesgo.vue",
+      "resources/js/Pages/SubPages/Medicamento.vue",
+      "resources/js/Pages/SubPages/Vacuna.vue",
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DiatDiep.vue": {
+    "file": "assets/DiatDiep-IaSjx-jB.js",
+    "name": "DiatDiep",
+    "src": "resources/js/Pages/SubPages/DiatDiep.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/Pages/SubPages/DiatPage.vue",
+      "resources/js/Pages/SubPages/DiepPage.vue",
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DiatPage.vue": {
+    "file": "assets/DiatPage-DhPv2_yD.js",
+    "name": "DiatPage",
+    "src": "resources/js/Pages/SubPages/DiatPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/DiepPage.vue": {
+    "file": "assets/DiepPage-CfeYQD_m.js",
+    "name": "DiepPage",
+    "src": "resources/js/Pages/SubPages/DiepPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/Enfermedad.vue": {
+    "file": "assets/Enfermedad-DoKq6bEZ.js",
+    "name": "Enfermedad",
+    "src": "resources/js/Pages/SubPages/Enfermedad.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/FactorRiesgo.vue": {
+    "file": "assets/FactorRiesgo-pxD4kee0.js",
+    "name": "FactorRiesgo",
+    "src": "resources/js/Pages/SubPages/FactorRiesgo.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/FactorRiesgoPage.vue": {
+    "file": "assets/FactorRiesgoPage-C6wSpIia.js",
+    "name": "FactorRiesgoPage",
+    "src": "resources/js/Pages/SubPages/FactorRiesgoPage.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/FichaMedica.vue": {
+    "file": "assets/FichaMedica-DpXP-k_6.js",
+    "name": "FichaMedica",
+    "src": "resources/js/Pages/SubPages/FichaMedica.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "resources/js/Pages/SubPages/DatosMedicos.vue",
+      "resources/js/Pages/SubPages/AntecedenteFamiliar.vue",
+      "resources/js/Pages/SubPages/LicenciaMedica.vue",
+      "resources/js/Pages/SubPages/DiatDiep.vue",
+      "resources/js/Pages/Examenes/Examenes.vue",
+      "resources/js/Pages/SubPages/Certificaciones.vue",
+      "_store-yQyc7bVv.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "resources/js/Pages/SubPages/Enfermedad.vue",
+      "_helper-B6kLQ4yt.js",
+      "resources/js/Pages/SubPages/Alergia.vue",
+      "resources/js/Pages/SubPages/Cirugia.vue",
+      "resources/js/Pages/SubPages/FactorRiesgo.vue",
+      "resources/js/Pages/SubPages/Medicamento.vue",
+      "resources/js/Pages/SubPages/Vacuna.vue",
+      "resources/js/Pages/SubPages/DiatPage.vue",
+      "resources/js/Pages/SubPages/DiepPage.vue",
+      "resources/js/Pages/Examenes/ExamenAlcohol.vue",
+      "resources/js/Pages/Examenes/ExamenAldehido.vue",
+      "resources/js/Pages/Examenes/ExamenAsma.vue",
+      "resources/js/Pages/Examenes/ExamenEPO.vue",
+      "resources/js/Pages/Examenes/ExamenEquilibrio.vue",
+      "resources/js/Pages/Examenes/ExamenHumoNegro.vue",
+      "resources/js/Pages/Examenes/ExamenMetales.vue",
+      "resources/js/Pages/Examenes/ExamenPsico.vue",
+      "resources/js/Pages/Examenes/ExamenPVTMERT.vue",
+      "resources/js/Pages/Examenes/ExamenRespirador.vue",
+      "resources/js/Pages/Examenes/ExamenRuido.vue",
+      "resources/js/Pages/Examenes/ExamenSalud.vue",
+      "resources/js/Pages/Examenes/ExamenSilice.vue",
+      "resources/js/Pages/Examenes/ExamenSolvente.vue",
+      "resources/js/Pages/Examenes/ExamenSomnolencia.vue"
+    ]
+  },
+  "resources/js/Pages/SubPages/LicenciaMedica.vue": {
+    "file": "assets/LicenciaMedica-DDn7uec5.js",
+    "name": "LicenciaMedica",
+    "src": "resources/js/Pages/SubPages/LicenciaMedica.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/Medicamento.vue": {
+    "file": "assets/Medicamento-BNqPSx1a.js",
+    "name": "Medicamento",
+    "src": "resources/js/Pages/SubPages/Medicamento.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/Notificacion.vue": {
+    "file": "assets/Notificacion-BNobR70J.js",
+    "name": "Notificacion",
+    "src": "resources/js/Pages/SubPages/Notificacion.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/SubPages/Vacuna.vue": {
+    "file": "assets/Vacuna-BA80majK.js",
+    "name": "Vacuna",
+    "src": "resources/js/Pages/SubPages/Vacuna.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_store-yQyc7bVv.js",
+      "_helper-B6kLQ4yt.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Teams/Create.vue": {
+    "file": "assets/Create-B59ZDkr6.js",
+    "name": "Create",
+    "src": "resources/js/Pages/Teams/Create.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "resources/js/Pages/Teams/Partials/CreateTeamForm.vue",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_FormSection-C1sTxDut.js",
+      "_SectionTitle-Cgh5GuIq.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js"
+    ]
+  },
+  "resources/js/Pages/Teams/Partials/CreateTeamForm.vue": {
+    "file": "assets/CreateTeamForm-B8TjHRSa.js",
+    "name": "CreateTeamForm",
+    "src": "resources/js/Pages/Teams/Partials/CreateTeamForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_FormSection-C1sTxDut.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_SectionTitle-Cgh5GuIq.js"
+    ]
+  },
+  "resources/js/Pages/Teams/Partials/DeleteTeamForm.vue": {
+    "file": "assets/DeleteTeamForm-B0zlb65C.js",
+    "name": "DeleteTeamForm",
+    "src": "resources/js/Pages/Teams/Partials/DeleteTeamForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_Modal-CyMZTasF.js",
+      "_ConfirmationModal-CtNhwdEe.js",
+      "_DangerButton-C7wcVenz.js",
+      "_SecondaryButton-OfwBh4Ze.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_SectionTitle-Cgh5GuIq.js"
+    ]
+  },
+  "resources/js/Pages/Teams/Partials/TeamMemberManager.vue": {
+    "file": "assets/TeamMemberManager-DLMMiiJ8.js",
+    "name": "TeamMemberManager",
+    "src": "resources/js/Pages/Teams/Partials/TeamMemberManager.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_ActionMessage-CI7d3rV5.js",
+      "_Modal-CyMZTasF.js",
+      "_ConfirmationModal-CtNhwdEe.js",
+      "_DangerButton-C7wcVenz.js",
+      "_DialogModal-BfCKBKnl.js",
+      "_FormSection-C1sTxDut.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "_SecondaryButton-OfwBh4Ze.js",
+      "_SectionBorder-B7LSDTsu.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_SectionTitle-Cgh5GuIq.js"
+    ]
+  },
+  "resources/js/Pages/Teams/Partials/UpdateTeamNameForm.vue": {
+    "file": "assets/UpdateTeamNameForm-C2ynU_c_.js",
+    "name": "UpdateTeamNameForm",
+    "src": "resources/js/Pages/Teams/Partials/UpdateTeamNameForm.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_ActionMessage-CI7d3rV5.js",
+      "_FormSection-C1sTxDut.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_SectionTitle-Cgh5GuIq.js"
+    ]
+  },
+  "resources/js/Pages/Teams/Show.vue": {
+    "file": "assets/Show-C82oIAPu.js",
+    "name": "Show",
+    "src": "resources/js/Pages/Teams/Show.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-BMxtgnBU.js",
+      "resources/js/Pages/Teams/Partials/DeleteTeamForm.vue",
+      "_SectionBorder-B7LSDTsu.js",
+      "resources/js/Pages/Teams/Partials/TeamMemberManager.vue",
+      "resources/js/Pages/Teams/Partials/UpdateTeamNameForm.vue",
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "_logo-DIp7Rf8v.js",
+      "_Modal-CyMZTasF.js",
+      "_SectionTitle-Cgh5GuIq.js",
+      "_ConfirmationModal-CtNhwdEe.js",
+      "_DangerButton-C7wcVenz.js",
+      "_SecondaryButton-OfwBh4Ze.js",
+      "_ActionMessage-CI7d3rV5.js",
+      "_DialogModal-BfCKBKnl.js",
+      "_FormSection-C1sTxDut.js",
+      "_TextInput-CupZMmWl.js",
+      "_InputLabel-BZNiD9n8.js",
+      "_PrimaryButton-DMwAUzG6.js"
+    ]
+  },
+  "resources/js/Pages/TermsOfService.vue": {
+    "file": "assets/TermsOfService-DA32TLLr.js",
+    "name": "TermsOfService",
+    "src": "resources/js/Pages/TermsOfService.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AuthenticationCardLogo-C3-NVAFl.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Welcome.vue": {
+    "file": "assets/Welcome-BbgPT6Pq.js",
+    "name": "Welcome",
+    "src": "resources/js/Pages/Welcome.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/Welcome-BGwtcaZi.css",
+      "assets/app-B3SRh887.css"
+    ],
+    "assets": [
+      "assets/vitamhc-C8RI-1Kv.png"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-Cujsp-Fi.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/API/Index.vue",
+      "resources/js/Pages/API/Partials/ApiTokenManager.vue",
+      "resources/js/Pages/Admin/AdminPage.vue",
+      "resources/js/Pages/Admin/LoginAdmin.vue",
+      "resources/js/Pages/Auth/ConfirmPassword.vue",
+      "resources/js/Pages/Auth/ForgotPassword.vue",
+      "resources/js/Pages/Auth/Login.vue",
+      "resources/js/Pages/Auth/Register.vue",
+      "resources/js/Pages/Auth/ResetPassword.vue",
+      "resources/js/Pages/Auth/TwoFactorChallenge.vue",
+      "resources/js/Pages/Auth/VerifyEmail.vue",
+      "resources/js/Pages/Consultas/ConsultaAtencionDiaria.vue",
+      "resources/js/Pages/Consultas/ConsultaCertificacion.vue",
+      "resources/js/Pages/Consultas/ConsultaDiat.vue",
+      "resources/js/Pages/Consultas/ConsultaDiep.vue",
+      "resources/js/Pages/Consultas/ConsultaExAlcohol.vue",
+      "resources/js/Pages/Consultas/ConsultaExAldehido.vue",
+      "resources/js/Pages/Consultas/ConsultaExEpo.vue",
+      "resources/js/Pages/Consultas/ConsultaExEquilibrio.vue",
+      "resources/js/Pages/Consultas/ConsultaExHumoNegro.vue",
+      "resources/js/Pages/Consultas/ConsultaExMetales.vue",
+      "resources/js/Pages/Consultas/ConsultaExPVTMERT.vue",
+      "resources/js/Pages/Consultas/ConsultaExPsico.vue",
+      "resources/js/Pages/Consultas/ConsultaExRespirador.vue",
+      "resources/js/Pages/Consultas/ConsultaExRuido.vue",
+      "resources/js/Pages/Consultas/ConsultaExSalud.vue",
+      "resources/js/Pages/Consultas/ConsultaExSomnolencia.vue",
+      "resources/js/Pages/Consultas/ConsultaLicenciaMedica.vue",
+      "resources/js/Pages/Consultas/ConsultaVacuna.vue",
+      "resources/js/Pages/Dashboard.vue",
+      "resources/js/Pages/Examenes/ExamenAlcohol.vue",
+      "resources/js/Pages/Examenes/ExamenAldehido.vue",
+      "resources/js/Pages/Examenes/ExamenAsma.vue",
+      "resources/js/Pages/Examenes/ExamenEPO.vue",
+      "resources/js/Pages/Examenes/ExamenEquilibrio.vue",
+      "resources/js/Pages/Examenes/ExamenHumoNegro.vue",
+      "resources/js/Pages/Examenes/ExamenMetales.vue",
+      "resources/js/Pages/Examenes/ExamenPVTMERT.vue",
+      "resources/js/Pages/Examenes/ExamenPsico.vue",
+      "resources/js/Pages/Examenes/ExamenRespirador.vue",
+      "resources/js/Pages/Examenes/ExamenRuido.vue",
+      "resources/js/Pages/Examenes/ExamenSalud.vue",
+      "resources/js/Pages/Examenes/ExamenSilice.vue",
+      "resources/js/Pages/Examenes/ExamenSolvente.vue",
+      "resources/js/Pages/Examenes/ExamenSomnolencia.vue",
+      "resources/js/Pages/Examenes/Examenes.vue",
+      "resources/js/Pages/PacientePage.vue",
+      "resources/js/Pages/PrivacyPolicy.vue",
+      "resources/js/Pages/Profile/Partials/DeleteUserForm.vue",
+      "resources/js/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue",
+      "resources/js/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue",
+      "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue",
+      "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue",
+      "resources/js/Pages/Profile/Show.vue",
+      "resources/js/Pages/SubPages/Alergia.vue",
+      "resources/js/Pages/SubPages/AntecedenteFamiliar.vue",
+      "resources/js/Pages/SubPages/AtencionDiaria.vue",
+      "resources/js/Pages/SubPages/Certificaciones.vue",
+      "resources/js/Pages/SubPages/Cirugia.vue",
+      "resources/js/Pages/SubPages/DashCecos.vue",
+      "resources/js/Pages/SubPages/DashEnfermedadEmpresa.vue",
+      "resources/js/Pages/SubPages/DashEnfermedadPlanta.vue",
+      "resources/js/Pages/SubPages/DashExpoEmpresa.vue",
+      "resources/js/Pages/SubPages/DashExpoPlanta.vue",
+      "resources/js/Pages/SubPages/DashExpoTotal.vue",
+      "resources/js/Pages/SubPages/DashPersEmpresa.vue",
+      "resources/js/Pages/SubPages/DashPersPlanta.vue",
+      "resources/js/Pages/SubPages/DatosMedicos.vue",
+      "resources/js/Pages/SubPages/DiatDiep.vue",
+      "resources/js/Pages/SubPages/DiatPage.vue",
+      "resources/js/Pages/SubPages/DiepPage.vue",
+      "resources/js/Pages/SubPages/Enfermedad.vue",
+      "resources/js/Pages/SubPages/FactorRiesgo.vue",
+      "resources/js/Pages/SubPages/FactorRiesgoPage.vue",
+      "resources/js/Pages/SubPages/FichaMedica.vue",
+      "resources/js/Pages/SubPages/LicenciaMedica.vue",
+      "resources/js/Pages/SubPages/Medicamento.vue",
+      "resources/js/Pages/SubPages/Notificacion.vue",
+      "resources/js/Pages/SubPages/Vacuna.vue",
+      "resources/js/Pages/Teams/Create.vue",
+      "resources/js/Pages/Teams/Partials/CreateTeamForm.vue",
+      "resources/js/Pages/Teams/Partials/DeleteTeamForm.vue",
+      "resources/js/Pages/Teams/Partials/TeamMemberManager.vue",
+      "resources/js/Pages/Teams/Partials/UpdateTeamNameForm.vue",
+      "resources/js/Pages/Teams/Show.vue",
+      "resources/js/Pages/TermsOfService.vue",
+      "resources/js/Pages/Welcome.vue"
+    ],
+    "css": [
+      "assets/app-Dpf89WbP.css"
+    ],
+    "assets": [
+      "assets/materialdesignicons-webfont-CSr8KVlo.eot",
+      "assets/materialdesignicons-webfont-Dp5v-WZN.woff2",
+      "assets/materialdesignicons-webfont-PXm3-2wK.woff",
+      "assets/materialdesignicons-webfont-B7mPwVP_.ttf"
+    ]
+  }
+}

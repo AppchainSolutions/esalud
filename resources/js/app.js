@@ -1,6 +1,8 @@
 import "./bootstrap";
 import { createApp, h } from "vue";
 import { VueSpinnersPlugin } from 'vue3-spinners';
+import { LoadingPlugin } from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 import { createPinia } from "pinia";
 import { createInertiaApp } from "@inertiajs/vue3";
 import Notifications from "@kyvg/vue3-notification";
@@ -60,6 +62,7 @@ createInertiaApp({
             .use(plugin)
             .use(pinia)
             .use(vuetify)
+            .use(LoadingPlugin)
             .use(VueSweetalert2)
             .mount(el);
     },

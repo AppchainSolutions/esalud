@@ -1,7 +1,17 @@
 <script>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { usePage, router } from "@inertiajs/vue3";
 import logo from "../../img/logo.jpg";
+import { useLoading } from "vue-loading-overlay";
+
+const $loading = useLoading({
+    color: "#662d91",
+    loader: "dots",
+    backgroundColor: "#662d91",
+    opacity: 0.2,
+});
+const visible = ref(false);
+const loading = ref(false);
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
@@ -31,68 +41,196 @@ const user = computed(() => page.props.auth.user);
             this.rail = !this.rail;
         },
         inicio() {
-            router.get("/dashboard");
+            const loader = $loading.show();
+            router.visit("/dashboard", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
+            
         },
         paciente() {
-            router.get("/paciente");
+            const loader = $loading.show();
+            router.visit("/paciente", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         atenciones() {
-            router.get("/consulta/atencion_diaria");
+            const loader = $loading.show();
+
+            router.visit("/consulta/atencion_diaria", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         licencia() {
-            router.get("/consulta/licencia");
+            const loader = $loading.show();
+            router.visit("/consulta/licencia", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         certificacion() {
-            router.get("/consulta/certificacion");
+            const loader = $loading.show();
+            router.visit("/consulta/certificacion", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         diatConsulta() {
-            router.get("/consulta/diat");
+            const loader = $loading.show();
+            router.visit("/consulta/diat", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         diepConsulta() {
-            router.get("/consulta/diep");
+            const loader = $loading.show();
+            router.visit("/consulta/diep", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
+
         },
         vacunaConsulta() {
-            router.get("/consulta/vacuna");
+            const loader = $loading.show();
+            router.visit("/consulta/vacuna", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
+
         },
         exsalud() {
-            router.get("/consulta/exsalud");
+            const loader = $loading.show();
+            router.visit("/consulta/exsalud", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
+
         },
         exepo() {
-            router.get("/consulta/exepo");
+            const loader = $loading.show();
+            router.visit("/consulta/exepo", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
+
         },
         expsico() {
-            router.get("/consulta/expsico");
+            const loader = $loading.show();
+            router.visit("/consulta/expsico", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
+
         },
         exrespirador() {
-            router.get("/consulta/exrespirador");
+            const loader = $loading.show();
+            router.visit("/consulta/exrespirador", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         exequilibrio() {
-            router.get("/consulta/exequilibrio");
+            const loader = $loading.show();
+            router.visit("/consulta/exequilibrio", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         exsomnolencia() {
-            router.get("/consulta/exsomnolencia");
+            const loader = $loading.show();
+            router.visit("/consulta/exsomnolencia", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         expvt() {
-            router.get("/consulta/expvtmert");
+            const loader = $loading.show();
+            router.visit("/consulta/expvtmert", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         exruido() {
-            router.get("/consulta/exruido");
+            const loader = $loading.show();
+            router.visit("/consulta/exruido", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         exmetal() {
-            router.get("/consulta/exmetal");
+            const loader = $loading.show();
+            router.visit("/consulta/exmetal", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         exhumos() {
-            router.get("/consulta/exhumonegro");
+            const loader = $loading.show();
+            router.visit("/consulta/exhumonegro", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
         exaldehido() {
-            router.get("/consulta/exaldehido");
+            const loader = $loading.show();
+            router.visit("/consulta/exaldehido", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
 
-        exalcohol() {
-            router.get("/consulta/exalcohol");
+        exalcohol() { 
+            const loader = $loading.show();
+            router.visit("/consulta/exalcohol", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
         },
 
         salir() {
+            const loader = $loading.show();
             localStorage.removeItem("auth_token");
             router.post("/logout");
         },

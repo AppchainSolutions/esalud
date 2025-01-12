@@ -21,6 +21,7 @@ Route::middleware([
 ])->group(function () {
 
     Route::inertia('/', 'Dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get(
         'personasPorEmpresa',

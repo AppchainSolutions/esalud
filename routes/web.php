@@ -46,7 +46,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-
     Route::prefix('consulta')->group(__DIR__ . '/consulta.php');
     Route::prefix('examen')->group(__DIR__ . '/examen.php');
     Route::prefix('secundaria')->group(__DIR__ . '/secundaria.php');

@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\ExEpo;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
 
 class EnviarNotificacionesVencimiento extends Command
 {
@@ -23,7 +22,7 @@ class EnviarNotificacionesVencimiento extends Command
             ->get();
 
 
-        Log::info($examenes);
+        echo($examenes);
 
 
         $data = $examenes->map(function ($examen) {
@@ -40,17 +39,17 @@ class EnviarNotificacionesVencimiento extends Command
                 'activo' => $examen->paciente->activo
             ];
         });
-        Log::info($data);
+       // Log::info($data);
         
-        if ($data->isEmpty()) {
+         if ($data->isEmpty()) {
             $this->info('No hay exámenes para notificar.');
         } else {
 //            $destinatarios = $data->pluck('email')->unique()->toArray();
             $destinatarios = ['omar.ahumadag@gmail.com']; // Lista predefinida
             foreach ($destinatarios as $correo) {
-                Mail::to($correo)->send(new \App\Mail\NotificacionExamenes($data->toArray()));
+                Mail::to($correo)->send(new \App\Mail\NotificacionExamenesEPO($data->toArray()));
             }
             $this->info('Notificaciones enviadas correctamente.');
-        }
+        } 
     }
 }

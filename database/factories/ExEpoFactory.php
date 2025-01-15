@@ -52,7 +52,7 @@ class ExEpoFactory extends Factory
             'tipo_examen' => TipoExamen::inRandomOrder()->first()->id,
             'semaforo' => Semaforo::inRandomOrder()->first()->id,
             'estado_epo' => EstadoEPO::inRandomOrder()->first()->id,
-            'bateria' => Bateria::inRandomOrder()->first()->id,
+            'bateria_id' => Bateria::inRandomOrder()->first()->id,
             'codigo_verificacion' => $this->faker->numberBetween(1000, 9999),
         ];
     }

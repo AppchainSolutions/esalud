@@ -24,7 +24,6 @@
                     <th>Nombre</th>
                     <th>Apellidos</th>
                     <th>Batería</th>
-                    <th>Email</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,7 +35,6 @@
                         <td>{{ $item['nombre'] }}</td>
                         <td>{{ $item['apellidos'] }}</td>
                         <td>{{ $item['bateria'] }}</td>
-                        <td>{{ $item['email'] }}</td>
                     </tr>
                 @endforeach
             </tbody>

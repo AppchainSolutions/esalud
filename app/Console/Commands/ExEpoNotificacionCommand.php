@@ -69,19 +69,35 @@ class ExEpoNotificacionCommand extends Command
         }
     } */
     public function handle()
-    {
-        // Manually dump all mail configuration
-        Log::info('Mail Configuration Dump:', [
-            'MAIL_DRIVER' => env('MAIL_DRIVER'),
-            'MAIL_HOST' => env('MAIL_HOST'),
-            'MAIL_PORT' => env('MAIL_PORT'),
-            'MAIL_USERNAME' => env('MAIL_USERNAME') ? '***' : 'NOT SET',
-            'MAIL_PASSWORD' => env('MAIL_PASSWORD') ? '***' : 'NOT SET',
-            'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION'),
-            'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
-        ]);
-    
-        // Force config reload
-        \Illuminate\Support\Facades\Config::reload();
+{
+    // Manually dump all mail configuration
+    Log::info('Mail Configuration Dump:', [
+        'MAIL_DRIVER' => env('MAIL_DRIVER'),
+        'MAIL_HOST' => env('MAIL_HOST'),
+        'MAIL_PORT' => env('MAIL_PORT'),
+        'MAIL_USERNAME' => env('MAIL_USERNAME') ? '***' : 'NOT SET',
+        'MAIL_PASSWORD' => env('MAIL_PASSWORD') ? '***' : 'NOT SET',
+        'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION'),
+        'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
+    ]);
+
+    // Clear and reload configuration
+    \Artisan::call('config:clear');
+
+    // Verify mail configuration
+    $this->info('MAIL_HOST from env: ' . env('MAIL_HOST'));
+    $this->info('MAIL_HOST from config: ' . config('mail.host'));
+
+    // Test mail sending
+    try {
+        Mail::raw('Debug Email', function ($message) {
+            $message->to('omar.ahumadag@gmail.com')
+                    ->subject('Debug Email');
+        });
+        $this->info('Email sent successfully');
+    } catch (\Exception $e) {
+        $this->error('Email sending failed: ' . $e->getMessage());
+        Log::error('Email sending error: ' . $e->getMessage());
     }
+}
 }

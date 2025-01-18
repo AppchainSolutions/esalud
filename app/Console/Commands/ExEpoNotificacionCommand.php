@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\ExEpo;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use App\Mail\ExEpoMail;
 
 
@@ -13,7 +14,7 @@ class ExEpoNotificacionCommand extends Command
     protected $signature = 'exepo:notificacion';
     protected $description = 'Prueba el envío de notificaciones de exámenes';
 
-    public function handle()
+  /*   public function handle()
     {
         // Obtener algunos exámenes de prueba
         $examenes = ExEpo::get()->first();
@@ -66,5 +67,21 @@ class ExEpoNotificacionCommand extends Command
                      ->send(new ExEpoMail($data, $range, $title));
              }
         }
+    } */
+    public function handle()
+    {
+        // Manually dump all mail configuration
+        Log::info('Mail Configuration Dump:', [
+            'MAIL_DRIVER' => env('MAIL_DRIVER'),
+            'MAIL_HOST' => env('MAIL_HOST'),
+            'MAIL_PORT' => env('MAIL_PORT'),
+            'MAIL_USERNAME' => env('MAIL_USERNAME') ? '***' : 'NOT SET',
+            'MAIL_PASSWORD' => env('MAIL_PASSWORD') ? '***' : 'NOT SET',
+            'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION'),
+            'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
+        ]);
+    
+        // Force config reload
+        \Illuminate\Support\Facades\Config::reload();
     }
 }

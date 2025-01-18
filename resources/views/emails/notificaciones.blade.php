@@ -42,7 +42,7 @@
             </tbody>
         </table>
 
-        <p>Gracias,<br>
+        <p>Muchas Gracias,<br>
             {{ config('app.name') }}</p>
     </div>
 @endsection

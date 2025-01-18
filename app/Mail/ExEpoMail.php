@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 
-class TestMail extends Mailable
+class ExEpoMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,6 +31,6 @@ class TestMail extends Mailable
                         'range' => $this->range,
                         'title' => $this->title
                     ])
-                    ->view('emails.test');
+                    ->view('emails.notificaciones');
     }
 }

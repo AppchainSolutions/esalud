@@ -5,13 +5,12 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\ExEpo;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\TestMail;
-use App\Mail\MailNotExEpo;
+use App\Mail\ExEpoMail;
 
 
-class TestNotificacionCommand extends Command
+class ExEpoNotificacionCommand extends Command
 {
-    protected $signature = 'test:notificacion';
+    protected $signature = 'exepo:notificacion';
     protected $description = 'Prueba el envío de notificaciones de exámenes';
 
     public function handle()
@@ -50,20 +49,7 @@ class TestNotificacionCommand extends Command
                 ];
             });
             echo (config('app.notification_emails'));
-            //    $correos = explode(',', config('app.notification_emails'));
-            //     foreach ($correos as $correo) {
-            //         Mail::to(trim($correo))->send(new TestMail($data, $range, $title));
-            //     }
-            //     echo now(); 
-            // $correos = array_filter(explode(',', config('app.notification_emails')), function($correo) {
-            //     return filter_var(trim($correo), FILTER_VALIDATE_EMAIL);
-            // });
-
-            // if (!empty($correos)) {
-            //     Mail::to(array_shift($correos)) // First email as primary recipient
-            //         ->cc($correos) // Remaining emails as CC
-            //         ->send(new TestMail($data, $range, $title));
-            // }
+            
             $notificationEmails = env('NOTIFICATION_EMAILS', '');
             
             $correos = array_filter(explode(',', $notificationEmails), function($correo) {
@@ -77,7 +63,7 @@ class TestNotificacionCommand extends Command
              if (!empty($correos)) {
                  Mail::to(array_shift($correos))
                      ->cc($correos)
-                     ->send(new TestMail($data, $range, $title));
+                     ->send(new ExEpoMail($data, $range, $title));
              }
         }
     }

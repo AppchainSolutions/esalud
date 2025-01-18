@@ -4,9 +4,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\ExEpo;
-use App\Models\Paciente;
-use App\Notifications\ExamVencNotification;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
+use App\Mail\MailNotExEpo;
 
 
 class TestNotificacionCommand extends Command
@@ -17,19 +17,24 @@ class TestNotificacionCommand extends Command
     public function handle()
     {
         // Obtener algunos exámenes de prueba
-        //$examenes = ExEpo::get()->first();
+        $examenes = ExEpo::get()->first();
         $fechaObjetivoIni = now()->addMonth(); // Un mes en el futuro
         $fechaObjetivoTer = now()->addMonth()->addDays(14); // Un mes en el futuro
-        $this->info($fechaObjetivoIni->format('Y-m-d'));
-        $this->info($fechaObjetivoTer->format('Y-m-d'));
         $examenes = ExEpo::whereBetween('fecha_vencimiento', [$fechaObjetivoIni, $fechaObjetivoTer])
             ->with('paciente', 'bateria')
             ->get();
+        $range = 'Vencimiento de exámenes desde ' .
+            $fechaObjetivoIni->format('d-m-Y') .
+            ' hasta ' .
+            $fechaObjetivoTer->format('d-m-Y');
+        $title = 'Vencimiento de exámenes ocupacionales y preocupacionales';
+
+        echo ($range);
 
         if (!$examenes) {
             $this->error('No hay exámenes para probar.');
             return;
-        }else{
+        } else {
             $data = $examenes->map(function ($examen) {
                 return [
                     'nombre' => $examen->paciente->nombre,
@@ -44,14 +49,36 @@ class TestNotificacionCommand extends Command
                     'activo' => $examen->paciente->activo
                 ];
             });
-            echo($data);
-            $correo='omar.ahumadag@gmail.com';
-            Mail::to($correo)->send(new \App\Mail\NotificacionExamenesEPO($data->toArray()));
+            echo (config('app.notification_emails'));
+            //    $correos = explode(',', config('app.notification_emails'));
+            //     foreach ($correos as $correo) {
+            //         Mail::to(trim($correo))->send(new TestMail($data, $range, $title));
+            //     }
+            //     echo now(); 
+            // $correos = array_filter(explode(',', config('app.notification_emails')), function($correo) {
+            //     return filter_var(trim($correo), FILTER_VALIDATE_EMAIL);
+            // });
+
+            // if (!empty($correos)) {
+            //     Mail::to(array_shift($correos)) // First email as primary recipient
+            //         ->cc($correos) // Remaining emails as CC
+            //         ->send(new TestMail($data, $range, $title));
+            // }
+            $notificationEmails = env('NOTIFICATION_EMAILS', '');
+            
+            $correos = array_filter(explode(',', $notificationEmails), function($correo) {
+                return filter_var(trim($correo), FILTER_VALIDATE_EMAIL);
+            });
+            
+            echo('Correos: ' . implode(',', $correos));
+            
+                
+            
+             if (!empty($correos)) {
+                 Mail::to(array_shift($correos))
+                     ->cc($correos)
+                     ->send(new TestMail($data, $range, $title));
+             }
         }
-
-        // Enviar notificación directamente
-/*         $persona = Paciente::first();
-
-        $this->info('Notificación de prueba enviada correctamente.'); */
     }
 }

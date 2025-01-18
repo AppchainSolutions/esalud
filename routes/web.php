@@ -16,6 +16,8 @@ use App\Http\Controllers\VacunaController;
 use App\Http\Controllers\MailController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
 use Inertia\Inertia;
 
 /*
@@ -40,6 +42,15 @@ Route::get('/', function () {
 });
 
 Route::get('send-mail', [MailController::class, 'index']); */
+
+Route::get('/send-test-email', function () {
+    Mail::raw('This is a test email sent from Laravel using Brevo SMTP.', function ($message) {
+        $message->to('omar.ahumadag@gmail.com') // Replace with the recipient's email
+                ->subject('Test Email from Laravel');
+    });
+
+    return 'Test email sent successfully.';
+});
 
 Route::middleware([
     'auth:sanctum',

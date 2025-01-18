@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e36d7d32b2c74f16f5ca82980003d8c",
+    "content-hash": "ca061fd8db61b933dd4793b1b2f34ded",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -188,6 +188,54 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "cran208-laravel/mail-preview",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cran208/mail-preview-for-laravel5.3.git",
+                "reference": "162ad9b6474615956bab4d03ca3351715a23f556"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cran208/mail-preview-for-laravel5.3/zipball/162ad9b6474615956bab4d03ca3351715a23f556",
+                "reference": "162ad9b6474615956bab4d03ca3351715a23f556",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": ">=5.3.0",
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CRanLaravel\\MailPreview\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CRanLaravel\\MailPreview\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CRan",
+                    "email": "cran208@gmail.com"
+                }
+            ],
+            "description": "mail preview driver for laravel5.3",
+            "support": {
+                "issues": "https://github.com/cran208/mail-preview-for-laravel5.3/issues",
+                "source": "https://github.com/cran208/mail-preview-for-laravel5.3/tree/v1.0.1"
+            },
+            "time": "2019-12-31T08:08:18+00:00"
         },
         {
             "name": "dasprid/enum",

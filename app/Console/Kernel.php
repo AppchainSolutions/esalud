@@ -4,10 +4,6 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-//use Carbon\Carbon;
-//use App\Models\ExEpo;
-use App\Jobs\SendExamVencNotification;
-//use Illuminate\Support\Facades\Schedule;
 
 
 class Kernel extends ConsoleKernel
@@ -15,10 +11,9 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        /*   $schedule->job(new SendExamVencNotification(ExEpo::where('fecha_vencimiento', '<=', now())->get()))
-            ->dailyAt('08:00'); */
-       // $schedule->job(new SendExamVencNotification)->everyFiveMinutes();
-       $schedule->command('notificaciones:enviar')->weeklyOn(1, '09:00'); // Lunes a las 8:00 am
+        $schedule->command('test:notificacion')
+             ->mondays()
+             ->at('09:00');
     }
     
 

@@ -11,6 +11,8 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         // Other commands...
+        \App\Console\Commands\NextScheduleCheckCommand::class,
+        \App\Console\Commands\ScheduleMonitorCommand::class,
         \App\Console\Commands\TimezoneCheckCommand::class,
     ];
 

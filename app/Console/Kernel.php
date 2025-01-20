@@ -34,22 +34,12 @@ class Kernel extends ConsoleKernel
                     'timezone' => config('app.timezone'),
                     'next_run' => now()->next(Carbon::MONDAY)->setTime(9, 0)
                 ]);
-               /*  // Send Telegram notification before job
-                Artisan::call('telegram:notify', [
-                    'message' => 'Starting Production ExEpo Notification Job',
-                    '--type' => 'info'
-                ]); */
             })
             ->after(function () {
                 Log::channel('daily')->info('Weekly Notification Job Completed', [
                     'timestamp' => now()->toDateTimeString(),
                     'timezone' => config('app.timezone')
                 ]);
-                /* // Send Telegram notification after job
-                Artisan::call('telegram:notify', [
-                    'message' => 'Production ExEpo Notification Job Completed',
-                    '--type' => 'info'
-                ]); */
             })
             ->onFailure(function () {
                 Artisan::call('telegram:notify', [

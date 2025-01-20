@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('exepo:notificacion')
+        $schedule->command('notification:exepo')
             ->mondays()
             ->at('09:00')
             ->timezone('America/Santiago')
@@ -56,6 +56,31 @@ class Kernel extends ConsoleKernel
                     'message' => 'CRITICAL: ExEpo Notification Job Failed in Production',
                     '--type' => 'alert'
                 ]);
+            });
+
+        /**
+         * Schedule Test Email
+         * # Send email now to default recipients
+         *  php artisan test:email
+         *
+         *# Send email now to specific recipients
+         *   php artisan test:email --recipients="test1@example.com,test2@example.com"
+         *
+         *   # Simulate scheduling (for manual testing)
+         *   php artisan test:email --interval=5m
+         *   php artisan test:email --interval=1h
+         *   php artisan test:email --interval=daily
+         */
+        // Optional: Add test email schedule
+        $schedule->command('test:email --interval=daily')
+            ->dailyAt('23:21')
+            ->timezone('America/Santiago')
+            ->runInBackground()
+            ->before(function () {
+                Log::channel('daily')->info('Daily Test Email Scheduled');
+            })
+            ->after(function () {
+                Log::channel('daily')->info('Daily Test Email Completed');
             });
     }
 

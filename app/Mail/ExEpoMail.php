@@ -31,6 +31,6 @@ class ExEpoMail extends Mailable
                         'range' => $this->range,
                         'title' => $this->title
                     ])
-                    ->view('emails.notificaciones');
+                    ->view('emails.notificaciones_exepo');
     }
 }

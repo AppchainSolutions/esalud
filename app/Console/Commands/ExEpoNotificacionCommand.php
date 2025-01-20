@@ -4,13 +4,15 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Artisan;
 use Carbon\Carbon;
 use App\Models\ExEpo;
+use App\Mail\ExEpoMail;
 
 class ExEpoNotificacionCommand extends Command
 {
-    protected $signature = 'exepo:notificacion';
+    protected $signature = 'notification:exepo';
     protected $description = 'Envío de notificaciones de vencimiento de exámenes ocupacionales y preocupacionales';
 
     public function handle()
@@ -41,13 +43,23 @@ class ExEpoNotificacionCommand extends Command
                 'is_monday' => $now->isMonday(),
             ]);
 
-            // Obtener algunos exámenes de prueba
+            // Obtener los exámenes a vencer
             $fechaObjetivoIni = $now->copy()->addMonth();
             $fechaObjetivoTer = $fechaObjetivoIni->copy()->addDays(14);
 
             $examenes = ExEpo::whereBetween('fecha_vencimiento', [$fechaObjetivoIni, $fechaObjetivoTer])
+                ->whereHas('paciente', function ($query) {
+                    $query->where('activo', 1);
+                })
                 ->with('paciente', 'bateria')
                 ->get();
+
+            $range = 'Vencimiento de exámenes desde ' .
+                $fechaObjetivoIni->format('d-m-Y') .
+                ' hasta ' .
+                $fechaObjetivoTer->format('d-m-Y');
+
+            $title = 'Vencimiento de exámenes ocupacionales y preocupacionales';
 
             // Check if there are any exams
             if ($examenes->isEmpty()) {
@@ -68,7 +80,6 @@ class ExEpoNotificacionCommand extends Command
                 'bateria' => $examen->bateria->descripcion,
                 'numero_solicitud' => $examen->numero_solicitud,
                 'protocolo_minsal' => $examen->paciente->protocolo_minsal,
-                'activo' => $examen->paciente->activo
             ]);
 
             // Notification emails
@@ -78,29 +89,52 @@ class ExEpoNotificacionCommand extends Command
                 fn($correo) => filter_var(trim($correo), FILTER_VALIDATE_EMAIL)
             );
 
-            // Send Telegram notification with exam summary
-            $this->sendTelegramNotification('exam_summary', [
-                'total_exams' => $examenes->count(),
-                'date_range' => sprintf(
-                    'From %s to %s',
-                    $fechaObjetivoIni->toDateString(),
-                    $fechaObjetivoTer->toDateString()
-                )
-            ]);
+            // Send email notifications
+            // Logging for debugging
+            Log::info('Notification Emails:', ['emails' => $correos]);
+
+
+
+            if (!empty($correos)) {
+                try {
+                    // Send Telegram notification with exam summary
+                    $this->sendTelegramNotification('exam_summary', [
+                        'total_exams' => $examenes->count(),
+                        'date_range' => sprintf(
+                            'From %s to %s',
+                            $fechaObjetivoIni->toDateString(),
+                            $fechaObjetivoTer->toDateString()
+                        )
+                    ]);
+                    Mail::to(array_shift($correos))
+                        ->cc($correos)
+                        ->send(new ExEpoMail($data, $range, $title));
+
+                    $this->info('Emails sent successfully');
+                    Log::info('Emails sent successfully');
+                    // Final logging and Telegram notification
+                    Log::channel('daily')->info('ExEpo Notification Job Completed', [
+                        'total_exams' => $examenes->count(),
+                        'email_recipients' => count($correos)
+                    ]);
+
+                    $this->sendTelegramNotification('completed', [
+                        'total_exams' => $examenes->count(),
+                        'email_recipients' => count($correos)
+                    ]);
+                } catch (\Exception $e) {
+                    $this->error('Email sending failed: ' . $e->getMessage());
+                    Log::error('Email sending error: ' . $e->getMessage());
+                }
+            } else {
+                $this->error('No valid email addresses found');
+                Log::error('No valid email addresses found');
+            }
 
             // Existing email sending logic...
             // (Keep your current email sending code)
 
-            // Final logging and Telegram notification
-            Log::channel('daily')->info('ExEpo Notification Job Completed', [
-                'total_exams' => $examenes->count(),
-                'email_recipients' => count($correos)
-            ]);
 
-            $this->sendTelegramNotification('completed', [
-                'total_exams' => $examenes->count(),
-                'email_recipients' => count($correos)
-            ]);
         } catch (\Exception $e) {
             // Error handling with Telegram notification
             $this->sendTelegramNotification('error', [

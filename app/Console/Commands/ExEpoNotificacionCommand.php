@@ -84,6 +84,74 @@ class ExEpoNotificacionCommand extends Command
 
             // Notification emails
             $notificationEmails = env('NOTIFICATION_EMAILS', '');
+            // Log EVERYTHING about the email configuration
+            Log::channel('daily')->emergency('ULTRA VERBOSE EMAIL VALIDATION', [
+                'raw_env_value' => $notificationEmails,
+                'env_exists' => env('NOTIFICATION_EMAILS') !== null,
+                'is_string' => is_string($notificationEmails),
+                'strlen' => strlen($notificationEmails),
+                'php_env_value' => getenv('NOTIFICATION_EMAILS')
+            ]);
+
+
+// Detailed email parsing and validation with EXTREME logging
+            $emailArray = array_map('trim', explode(',', $notificationEmails));
+            $validatedEmails = [];
+            $invalidEmails = [];
+
+            foreach ($emailArray as $index => $email) {
+                $trimmedEmail = trim($email);
+                $validationDetails = [
+                    'original' => $email,
+                    'trimmed' => $trimmedEmail,
+                    'index' => $index,
+                    'is_empty' => empty($trimmedEmail),
+                    'filter_var_result' => filter_var($trimmedEmail, FILTER_VALIDATE_EMAIL)
+                ];
+
+                Log::channel('daily')->emergency("Email Validation Detailed Check - Index {$index}", $validationDetails);
+
+                if ($trimmedEmail && filter_var($trimmedEmail, FILTER_VALIDATE_EMAIL)) {
+                    $validatedEmails[] = $trimmedEmail;
+                } else {
+                    $invalidEmails[] = $email;
+                }
+            }
+
+            Log::channel('daily')->emergency('Email Validation Final Results', [
+                'total_emails' => count($emailArray),
+                'valid_emails' => $validatedEmails,
+                'invalid_emails' => $invalidEmails
+            ]);
+
+            $correos = $validatedEmails;
+
+            // Enhanced error handling with ULTRA VERBOSE logging
+            if (empty($correos)) {
+                $errorMessage = 'No valid email addresses found. ';
+                $errorMessage .= $notificationEmails ? 
+                    'All provided emails are invalid.' : 
+                    'NOTIFICATION_EMAILS is empty or not set.';
+                
+                Log::channel('daily')->emergency($errorMessage, [
+                    'raw_input' => $notificationEmails,
+                    'email_array' => $emailArray,
+                    'php_version' => PHP_VERSION,
+                    'laravel_version' => app()->version()
+                ]);
+
+                $this->error($errorMessage);
+                
+                // Send Telegram notification about email configuration issue
+                $this->sendTelegramNotification('error', [
+                    'error_message' => $errorMessage
+                ]);
+
+                return false;
+            }
+
+
+            /*************************** */
             $correos = array_filter(
                 explode(',', $notificationEmails),
                 fn($correo) => filter_var(trim($correo), FILTER_VALIDATE_EMAIL)
@@ -117,6 +185,8 @@ class ExEpoNotificacionCommand extends Command
                         'total_exams' => $examenes->count(),
                         'email_recipients' => count($correos)
                     ]);
+
+                    
 
                     $this->sendTelegramNotification('completed', [
                         'total_exams' => $examenes->count(),

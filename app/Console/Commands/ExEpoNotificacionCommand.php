@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 use Carbon\Carbon;
 use App\Models\ExEpo;
 use App\Mail\ExEpoMail;
+use App\Models\User;
 
 class ExEpoNotificacionCommand extends Command
 {
@@ -82,67 +83,43 @@ class ExEpoNotificacionCommand extends Command
                 'protocolo_minsal' => $examen->paciente->protocolo_minsal,
             ]);
 
-            // Notification emails
-            $notificationEmails = env('NOTIFICATION_EMAILS', '');
-            // Log EVERYTHING about the email configuration
-            Log::channel('daily')->emergency('ULTRA VERBOSE EMAIL VALIDATION', [
-                'raw_env_value' => $notificationEmails,
-                'env_exists' => env('NOTIFICATION_EMAILS') !== null,
-                'is_string' => is_string($notificationEmails),
-                'strlen' => strlen($notificationEmails),
-                'php_env_value' => getenv('NOTIFICATION_EMAILS')
-            ]);
+            // Determine primary recipient and CC recipients
+            $primaryRecipient = null;
+            $ccRecipients = [];
 
+            // Strategy: Use the first admin user's email as primary, others as CC
+            $adminUsers = User::where('notification_exepo', true)
+                ->whereNotNull('email')
+                ->orderBy('isAdmin', 'desc') // Admins first
+                ->get();
 
-// Detailed email parsing and validation with EXTREME logging
-            $emailArray = array_map('trim', explode(',', $notificationEmails));
-            $validatedEmails = [];
-            $invalidEmails = [];
-
-            foreach ($emailArray as $index => $email) {
-                $trimmedEmail = trim($email);
-                $validationDetails = [
-                    'original' => $email,
-                    'trimmed' => $trimmedEmail,
-                    'index' => $index,
-                    'is_empty' => empty($trimmedEmail),
-                    'filter_var_result' => filter_var($trimmedEmail, FILTER_VALIDATE_EMAIL)
-                ];
-
-                Log::channel('daily')->emergency("Email Validation Detailed Check - Index {$index}", $validationDetails);
-
-                if ($trimmedEmail && filter_var($trimmedEmail, FILTER_VALIDATE_EMAIL)) {
-                    $validatedEmails[] = $trimmedEmail;
-                } else {
-                    $invalidEmails[] = $email;
+            foreach ($adminUsers as $user) {
+                if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+                    if ($primaryRecipient === null) {
+                        $primaryRecipient = $user->email;
+                    } else {
+                        $ccRecipients[] = $user->email;
+                    }
                 }
             }
 
-            Log::channel('daily')->emergency('Email Validation Final Results', [
-                'total_emails' => count($emailArray),
-                'valid_emails' => $validatedEmails,
-                'invalid_emails' => $invalidEmails
+            // Logging recipient details
+            Log::channel('daily')->info('Email Recipient Details', [
+                'primary_recipient' => $primaryRecipient,
+                'cc_recipients' => $ccRecipients,
+                'total_notification_users' => $adminUsers->count()
             ]);
 
-            $correos = $validatedEmails;
-
-            // Enhanced error handling with ULTRA VERBOSE logging
-            if (empty($correos)) {
-                $errorMessage = 'No valid email addresses found. ';
-                $errorMessage .= $notificationEmails ? 
-                    'All provided emails are invalid.' : 
-                    'NOTIFICATION_EMAILS is empty or not set.';
+            // Validate recipient configuration
+            if (!$primaryRecipient) {
+                $errorMessage = 'No valid primary email recipient found for ExEpo notifications.';
                 
                 Log::channel('daily')->emergency($errorMessage, [
-                    'raw_input' => $notificationEmails,
-                    'email_array' => $emailArray,
-                    'php_version' => PHP_VERSION,
-                    'laravel_version' => app()->version()
+                    'total_users' => User::count(),
+                    'users_with_notification_enabled' => User::where('notification_exepo', true)->count()
                 ]);
 
                 $this->error($errorMessage);
-                
-                // Send Telegram notification about email configuration issue
                 $this->sendTelegramNotification('error', [
                     'error_message' => $errorMessage
                 ]);
@@ -150,61 +127,23 @@ class ExEpoNotificacionCommand extends Command
                 return false;
             }
 
-
-            /*************************** */
-            $correos = array_filter(
-                explode(',', $notificationEmails),
-                fn($correo) => filter_var(trim($correo), FILTER_VALIDATE_EMAIL)
-            );
-
             // Send email notifications
-            // Logging for debugging
-            Log::info('Notification Emails:', ['emails' => $correos]);
+            Mail::to($primaryRecipient)
+                ->cc($ccRecipients)
+                ->send(new ExEpoMail($data, $range, $title));
 
+            $this->info('Emails sent successfully');
+            Log::info('Emails sent successfully');
+            // Final logging and Telegram notification
+            Log::channel('daily')->info('ExEpo Notification Job Completed', [
+                'total_exams' => $examenes->count(),
+                'email_recipients' => count($ccRecipients) + 1
+            ]);
 
-
-            if (!empty($correos)) {
-                try {
-                    // Send Telegram notification with exam summary
-                    $this->sendTelegramNotification('exam_summary', [
-                        'total_exams' => $examenes->count(),
-                        'date_range' => sprintf(
-                            'From %s to %s',
-                            $fechaObjetivoIni->toDateString(),
-                            $fechaObjetivoTer->toDateString()
-                        )
-                    ]);
-                    Mail::to(array_shift($correos))
-                        ->cc($correos)
-                        ->send(new ExEpoMail($data, $range, $title));
-
-                    $this->info('Emails sent successfully');
-                    Log::info('Emails sent successfully');
-                    // Final logging and Telegram notification
-                    Log::channel('daily')->info('ExEpo Notification Job Completed', [
-                        'total_exams' => $examenes->count(),
-                        'email_recipients' => count($correos)
-                    ]);
-
-                    
-
-                    $this->sendTelegramNotification('completed', [
-                        'total_exams' => $examenes->count(),
-                        'email_recipients' => count($correos)
-                    ]);
-                } catch (\Exception $e) {
-                    $this->error('Email sending failed: ' . $e->getMessage());
-                    Log::error('Email sending error: ' . $e->getMessage());
-                }
-            } else {
-                $this->error('No valid email addresses found');
-                Log::error('No valid email addresses found');
-            }
-
-            // Existing email sending logic...
-            // (Keep your current email sending code)
-
-
+            $this->sendTelegramNotification('completed', [
+                'total_exams' => $examenes->count(),
+                'email_recipients' => count($ccRecipients) + 1
+            ]);
         } catch (\Exception $e) {
             // Error handling with Telegram notification
             $this->sendTelegramNotification('error', [

@@ -77,7 +77,7 @@ class ExEpoNotificacionCommand extends Command
                 'nombre' => $examen->paciente->nombre,
                 'apellidos' => $examen->paciente->apellidos,
                 'rut' => $examen->paciente->rut,
-                'fecha_vencimiento' => $examen->fecha_vencimiento,
+                'fecha_vencimiento' => Carbon::parse($examen->fecha_vencimiento)->format('d-m-Y'),
                 'bateria' => $examen->bateria->descripcion,
                 'numero_solicitud' => $examen->numero_solicitud,
                 'protocolo_minsal' => $examen->paciente->protocolo_minsal,

@@ -1,0 +1,2 @@
+import{o as r,d as s,a as o}from"./app-DGHO5O1D.js";import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";const c={},n={class:"hidden sm:block"};function a(d,e){return r(),s("div",n,e[0]||(e[0]=[o("div",{class:"py-8"},[o("div",{class:"border-t border-gray-200"})],-1)]))}const m=t(c,[["render",a],["__file","/home/omar/www/esalud/resources/js/Components/SectionBorder.vue"]]);export{m as S};
+//# sourceMappingURL=SectionBorder-DexwIbCl.js.map

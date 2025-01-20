@@ -39,14 +39,16 @@ class ExEpoNotificacionCommand extends Command
             // Logging
             Log::channel('daily')->info('ExEpo Notification Job Started', [
                 'timestamp' => $timestamp,
+                'timezone' => $timezone,
                 'environment' => $environment,
                 'day_of_week' => $dayName,
+                'server_time' => $serverTime,
                 'is_monday' => $now->isMonday(),
             ]);
 
             // Obtener los exámenes a vencer
             $fechaObjetivoIni = $now->copy()->addMonth();
-            $fechaObjetivoTer = $fechaObjetivoIni->copy()->addDays(14);
+            $fechaObjetivoTer = $fechaObjetivoIni->copy()->addDays(7);
 
             $examenes = ExEpo::whereBetween('fecha_vencimiento', [$fechaObjetivoIni, $fechaObjetivoTer])
                 ->whereHas('paciente', function ($query) {

@@ -19,7 +19,7 @@ class ScheduleNotificacionCommand extends Command
     /**
      * php artisan notificacion:test-schedule for notification-specific testing
      */
-    protected $signature = 'notificacion:test-schedule';
+    protected $signature = 'notification:test-schedule';
     protected $description = 'Test and verify notification scheduling';
 
     /**

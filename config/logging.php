@@ -4,6 +4,8 @@ use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
+use App\Logging\TelegramNotificationHandler;
+use Monolog\Level;
 
 return [
 
@@ -52,6 +54,20 @@ return [
     */
 
     'channels' => [
+        'daily' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/laravel.log'),
+            'level' => 'error',
+            'days' => 14,
+            'permission' => 0664,
+        ],
+
+        'telegram' => [
+            'driver' => 'monolog',
+            'handler' => TelegramNotificationHandler::class,
+            'level' => Level::Critical,
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
@@ -89,7 +105,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],

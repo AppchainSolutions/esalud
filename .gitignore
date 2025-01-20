@@ -10,3 +10,7 @@ Data.session.sql
 DataBase.session.sql
 Local.session.sql
 database/database.db
+
+.env
+
+

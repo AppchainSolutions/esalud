@@ -1,7 +1,7 @@
 #!/bin/bash
 # /usr/local/bin/schedule-monitor.sh
 
-LOG_FILE="/var/www/vulco/storage/logs/schedule-monitor.log"
+LOG_FILE="../storage/logs/schedule-monitor.log"
 
 # Log start of monitoring
 echo "Schedule Monitoring Started: $(date)" >> "$LOG_FILE"

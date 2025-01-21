@@ -269,6 +269,8 @@ export const openToCreate = (state) => {
     state.editedItem = { ...state.defaultItem };
     state.editedIndex = -1;
     state.dialog = true;
+    console.log(state);
+
 };
 
 export const openToEdit = (state, item) => {

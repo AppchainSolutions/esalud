@@ -101,8 +101,8 @@ const state = reactive({
         unidad: null,
         planta: null,
         ceco: null,
-        activo: true,
-        protocolo_minsal: false,
+       // activo: true,
+       // protocolo_minsal: false,
         exposicion: [],
     },
     editedItem: {
@@ -252,6 +252,7 @@ const handleInputChange = () => {
 
 //**********\\\\  CRUD ////*************/
 const show = async () => {
+    console.log(state);
     await handleShowItem(state);
 };
 
@@ -506,6 +507,9 @@ const remove = async (item) => {
                                                         state.editedItem.activo
                                                     "
                                                     hide-details
+                                                    :value="state.editedItem.activo"
+                                                    false-value=true
+                                                    true-value=false
                                                     class="ml-2"
                                                     color="green-darken-3"
                                                     inset
@@ -517,6 +521,8 @@ const remove = async (item) => {
                                                             .protocolo_minsal
                                                     "
                                                     hide-details
+                                                    false-value=true
+                                                    true-value=false
                                                     class="ml-2"
                                                     color="green-darken-3"
                                                     inset

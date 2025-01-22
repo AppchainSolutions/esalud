@@ -4,6 +4,9 @@
 .vscode
 .vite
 .lapce
+.devdbrc
+docker
+tasks.md
 /public/hot
 
 Data.session.sql

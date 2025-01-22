@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { router } from "@inertiajs/vue3";
-import { reactive, ref, onMounted, computed, inject } from "vue";
+import { reactive, ref, onMounted, computed } from "vue";
 import { useDataStore } from "@/store.js";
 import moment from "moment";
 import { useDate } from "vuetify";
@@ -101,8 +101,8 @@ const state = reactive({
         unidad: null,
         planta: null,
         ceco: null,
-       // activo: true,
-       // protocolo_minsal: false,
+        activo: true,
+        protocolo_minsal: false,
         exposicion: [],
     },
     editedItem: {
@@ -317,6 +317,8 @@ const remove = async (item) => {
                                     <v-switch
                                         v-model="state.searchQuery.activo"
                                         hide-details
+                                        true-value=true
+                                        false-value=false
                                         variant="underlined"
                                         color="green-darken-3"
                                         inset

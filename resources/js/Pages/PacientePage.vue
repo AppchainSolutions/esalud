@@ -190,8 +190,8 @@ const state = reactive({
     tableItems: [],
     urlDelete: "paciente/delete",
     urlShow: "paciente/show",
-    urlStore: "paciente",
     urlUpdate: "paciente/update",
+    urlStore: "paciente",
 });
 const date = useDate();
 

@@ -179,12 +179,12 @@ function storeItems() {
 }
 
 const create = async () => {
-    await handleStoreItem(state);
+    await handleStoreItem(state, "create");
     closeForm(state);
 };
 
 function openFormEdit(item) {
-    openToEdit(state, item);
+    openToEdit(state, item, "edit");
 }
 
 const update = async () => {

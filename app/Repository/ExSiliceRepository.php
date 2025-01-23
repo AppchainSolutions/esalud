@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Models\ExSilice;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 
 class ExSiliceRepository extends Repository
 {
@@ -25,7 +25,7 @@ class ExSiliceRepository extends Repository
                 ->get();
         }
 
-        return Tools::responseHandler($result);
+        return FilterTool::filterData($filters, $result);
     }
 
     // Add any necessary methods to the repository here

@@ -2,7 +2,7 @@ import { reactive, onMounted, computed, resolveComponent, withCtx, unref, create
 import { ssrRenderComponent, ssrInterpolate } from "vue/server-renderer";
 import { A as AppLayout } from "./AppLayout-DV0u10gY.js";
 import { u as useDataStore } from "./store-BqtSnK9e.js";
-import { f as fetchData, c as closeForm, a as handleShowItem, o as openToCreate, b as handleStoreItem, d as openToEdit, g as handleEditItem, e as handleRemoveItem } from "./helper-BkHfu3mP.js";
+import { f as fetchData, c as closeForm, a as searchItem, o as openToCreate, b as handleStoreItem, d as openToEdit, g as handleEditItem, e as handleRemoveItem } from "./helper-BkHfu3mP.js";
 import { _ as _export_sfc } from "./_plugin-vue_export-helper-1tPrXgE0.js";
 import "@inertiajs/vue3";
 import "./logo-DLUxz0ei.js";
@@ -158,7 +158,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({ layout: AppLayout }, {
     }
     const handleShow = async () => {
       state.searchQuery.paciente_id = store.getSelected.id;
-      await handleShowItem(state);
+      await searchItem(state);
     };
     function openFormCreate() {
       openToCreate(state);

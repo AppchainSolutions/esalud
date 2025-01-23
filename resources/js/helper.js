@@ -1,13 +1,15 @@
-import Swal from "sweetalert2/dist/sweetalert2.js";
+import Swal from "sweetalert2";
 import { searchItem, storeItem, deleteItem, editItem, showItem } from "@/crud";
 import { useNotification } from "@kyvg/vue3-notification";
 import { useDataStore } from "@/store.js";
 import { nextTick } from "vue";
+import axios from "axios";
+import { debugHelpers as debug } from '@/utils/debug';
 
 const store = useDataStore();
 const { notify } = useNotification();
 
-//**********\\\\ METHODS ////*************/
+//**********\\\\ METHODS ////*************//
 
 export const fetchData = async (endpoints) => {
     const fetches = endpoints.map(async (endpoint) => {
@@ -20,6 +22,7 @@ export const fetchData = async (endpoints) => {
                 endpoint,
             };
         } catch (error) {
+            debug('Error al obtener datos %O', { error: error.message, stack: error.stack });
             return { endpoint, data: null };
         }
     });
@@ -40,44 +43,51 @@ export const handleStoreItem = async (state, mode) => {
     if (mode === "create") {
         try {
             const item = { ...state.editedItem };
-            item.paciente_id = store.selected.id;
+            debug('Creando nuevo item %O', item);
+            const response = await storeItem(state.urlStore, item);
+            
+            debug('Item creado exitosamente %O', response);
             notify({
                 text: "Datos almacenados exitosamente.",
                 type: "success",
             });
 
-            return await storeItem(state.urlStore, item);
+            return response;
         } catch (error) {
-            console.error(error);
-            notify({
-                text: "Se produjo un error, por favor revise que los datos sean correctos.",
-                type: "error",
-            });
+            debug('Error al crear item %O', error);
+            throw error;
         }
     } else if (mode === "edit") {
         try {
             const item = state.editedItem;
             const url = state.urlUpdate;
+            debug('Actualizando item %O', { item, url });
+            
+            if (state.endpoints) {
+                state.endpoints.forEach((campo) => {
+                    if (item?.[campo]?.id) {
+                        item[campo] = item[campo].id;
+                    }
+                });
+            }
+            
+            const result = await editItem(url, item);
+            debug('Item actualizado exitosamente %O', result);
+            
             notify({
                 title: "Información importante.",
                 text: "El registro, ha sido correctamente actualizado.",
                 type: "success",
             });
             
-            if (state.endpoints){
-            state.endpoints.forEach((campo) => {
-                if (item?.[campo]?.id) {
-                    item[campo] = item[campo].id;
-                }
-            });}
-            return editItem(url, item);
+            return result;
         } catch (error) {
+            debug('Error al actualizar item %O', error);
             notify({
                 title: "Error.",
                 text: "Error al actualizar el registro: ",
                 type: "error",
             });
-            console.error(error);
         }
     }
 };
@@ -94,6 +104,8 @@ export const handleEditItem = (state, item) => {};
  */
 export const handleRemoveItem = async (state, item) => {
     try {
+        debug('Iniciando proceso de eliminación %O', { itemId: item.id });
+        
         Swal.fire({
             title: "Eliminación de registro",
             text: "Procederá a eliminar un registro permanentemente.",
@@ -105,20 +117,26 @@ export const handleRemoveItem = async (state, item) => {
             if (result.isConfirmed) {
                 const id = item.id;
                 const url = state.urlDelete;
+                debug('Ejecutando eliminación %O', { id, url });
+                
                 const result = await deleteItem(url, id);
                 if (result.status === 200) {
                     state.editedIndex = state.tableItems.indexOf(item);
                     state.editedItem = { ...item };
                     state.tableItems.splice(state.editedIndex, 1);
+                    
+                    debug('Item eliminado exitosamente %O', { id });
                     notify({
                         text: "El registro ha sido eliminado.",
                         type: "success",
                     });
+                    
                     nextTick(() => {
                         state.editedItem = { ...state.defaultItem };
                         state.editedIndex = -1;
                     });
                 } else {
+                    debug('Error en la respuesta del servidor %O', { result });
                     Swal.fire({
                         title: "Error.",
                         text: result.response.data.message,
@@ -130,6 +148,7 @@ export const handleRemoveItem = async (state, item) => {
             }
         });
     } catch (error) {
+        debug('Error al eliminar item %O', { error: error.message, stack: error.stack });
         console.error(error);
     }
 };
@@ -140,21 +159,20 @@ export const handleRemoveItem = async (state, item) => {
  * @returns {Promise<any>} - A promise that resolves to the retrieved item.
  * @param state
  */
-export const handleShowItem = async (state) => {
-    const url = state.urlShow;
-    const filter = state.searchQuery;
-    state.loadingSearch = true;
-    try {
-        const result = await showItem(url, filter);
-        setResponse(state, result.data);
+export const searchItems = async (url, searchFilters, endpoints) => {
+    debug('Iniciando búsqueda %O', { url, searchFilters, endpoints });
+    /* try {
+        const result = await axios.get(url, { params: { searchFilters } });
+        debug('Resultado de búsqueda obtenido %O', { result });
+        //setResponse(result.data, endpoints);
     } catch (error) {
+        debug('Error en búsqueda %O', { error: error.message });
         notify({
             title: "Error.",
             text: error,
             type: "error",
         });
-    }
-    state.loadingSearch = false;
+    } */
 };
 
 /**
@@ -173,6 +191,7 @@ export const handleSearchItem = async (state) => {
         const result = await searchItem(url, filter);
         setResponse(state, result);
     } catch (error) {
+        debug('Error al buscar item %O', { error: error.message, stack: error.stack });
         notify({
             title: "Error.",
             text: "Se produjo un error.",
@@ -184,11 +203,20 @@ export const handleSearchItem = async (state) => {
     state.loadingSearch = false;
 };
 
-function setResponse(state, result) {
+/**
+ * Updates the application state based on the provided result and endpoints.
+ *
+ * If the result contains items, it triggers a success notification and updates
+ * the state with the result data. If endpoints are provided, it processes the
+ * result using the `addValue` function to enrich the data before updating the
+ * state. If no items are found in the result, it triggers a warning notification
+ * and clears the state table items.
+ *
+ * @param {Array} result - The array of result items to be processed.
+ * @param {Object} endpoints - Optional endpoints object used to enrich the result data.
+ */
+function setResponse(result, endpoints) {
     const count = result.length;
-    console.log(state.endpoints);
-    console.log(result);
-
     if (count > 0) {
         notify({
             title: "Aviso.",
@@ -196,7 +224,7 @@ function setResponse(state, result) {
             type: "success",
         });
         state.formItems = { ...result };
-        state.tableItems = state.endpoints ? addValue(state, result) : result;
+        state.tableItems = endpoints ? addValue(endpoints, result) : result;
     } else {
         notify({
             title: "Aviso.",
@@ -214,7 +242,7 @@ function setResponse(state, result) {
  * @param {Object} result - The result object containing a `data` property with an array of items.
  * @returns {Array|null} - The final result with matching item descriptions added, or null if the result data is empty.
  */
-export const addValue = (state, result) => {
+export const addValue = (endpoints, result) => {
     // Check if the result data is empty
     if (!result.length) {
         return null;
@@ -222,7 +250,7 @@ export const addValue = (state, result) => {
 
     // Helper function to get matching item description
     const getMatchingItem = (campo, id) => {
-        const matchingItem = state.list[campo].find((col) => col.id === id);
+        const matchingItem = endpoints[campo].find((col) => col.id === id);
         if (!matchingItem) return null;
         return { id: matchingItem.id, descripcion: matchingItem.descripcion };
     };
@@ -232,9 +260,9 @@ export const addValue = (state, result) => {
         // Create a copy of the item using the spread operator
         const updatedItem = { ...item };
         // Iterate over each endpoint in the state object
-        state.endpoints.forEach((campo) => {
+        endpoints.forEach((campo) => {
             // Check if the endpoint exists in the state object and if the item has a value for that endpoint
-            if (state.list[campo] && updatedItem[campo]) {
+            if (endpoints[campo] && updatedItem[campo]) {
                 // Get the matching item's description
                 const matchingItemDescription = getMatchingItem(
                     campo,

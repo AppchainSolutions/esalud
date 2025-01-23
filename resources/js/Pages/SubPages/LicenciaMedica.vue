@@ -3,7 +3,7 @@ import { reactive, computed } from "vue";
 import { useDataStore } from "@/store.js";
 import {
     handleRemoveItem,
-    handleShowItem,
+    searchItem,
     handleStoreItem,
     closeForm,
     openToCreate,
@@ -127,7 +127,7 @@ function close() {
 
 const handleShow = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
-    await handleShowItem(state);
+    await searchItem(state);
 };
 
 function openFormCreate() {
@@ -190,36 +190,38 @@ const remove = async (item) => {
                                 <v-card-text>
                                     <v-container>
                                         <v-sheet
-                                        elevation="4"
-                                        class="ma-4 pa-4"
+                                            elevation="4"
+                                            class="ma-4 pa-4"
                                         >
-                                        <v-row align="center">
-                                            <v-col>
-                                                <v-card-title>
-                                                    <span class="text-h5"
-                                                        >{{ editedItemTitle }}
-                                                    </span>
-                                                </v-card-title>
-                                            </v-col>
-                                            <v-col>
-                                                <v-card-actions>
-                                                    <v-btn
-                                                        color="#009AA4"
-                                                        variant="tonal"
-                                                        @click="close"
-                                                    >
-                                                        Cancelar
-                                                    </v-btn>
-                                                    <v-btn
-                                                        color="#009AA4"
-                                                        variant="tonal"
-                                                        @click="storeItems"
-                                                    >
-                                                        Guardar
-                                                    </v-btn>
-                                                </v-card-actions>
-                                            </v-col>
-                                        </v-row>
+                                            <v-row align="center">
+                                                <v-col>
+                                                    <v-card-title>
+                                                        <span class="text-h5"
+                                                            >{{
+                                                                editedItemTitle
+                                                            }}
+                                                        </span>
+                                                    </v-card-title>
+                                                </v-col>
+                                                <v-col>
+                                                    <v-card-actions>
+                                                        <v-btn
+                                                            color="#009AA4"
+                                                            variant="tonal"
+                                                            @click="close"
+                                                        >
+                                                            Cancelar
+                                                        </v-btn>
+                                                        <v-btn
+                                                            color="#009AA4"
+                                                            variant="tonal"
+                                                            @click="storeItems"
+                                                        >
+                                                            Guardar
+                                                        </v-btn>
+                                                    </v-card-actions>
+                                                </v-col>
+                                            </v-row>
                                         </v-sheet>
                                         <v-sheet
                                             elevation="4"

@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Models\ExSolvente;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 
 class ExSolventeRepository extends Repository
 {
@@ -25,7 +25,7 @@ class ExSolventeRepository extends Repository
                 ->get();
         }
 
-        return Tools::responseHandler($result);
+        return FilterTool::filterData(  $filters, $result);
     }
 
     // Add any necessary methods to the repository here

@@ -114,7 +114,7 @@ return [
      | The Debugbar can capture Ajax requests and display them. If you don't want this (ie. because of errors),
      | you can use this option to disable sending the data through the headers.
      |
-     | Optionally, you can also send ServerTiming headers on ajax requests for the Chrome DevTools.
+     | Optionally, you can also send ServerTiming headers on ajax requests for the Chrome DevFilterTool.
      |
      | Note for your request to be identified as ajax requests they must either send the header
      | X-Requested-With with the value XMLHttpRequest (most JS libraries send this), or have application/json as a Accept header.
@@ -215,7 +215,7 @@ return [
         'db' => [
             'with_params'       => true,   // Render SQL with the parameters substituted
             'exclude_paths'     => [       // Paths to exclude entirely from the collector
-//                'vendor/laravel/framework/src/Illuminate/Session', // Exclude sessions queries
+                //                'vendor/laravel/framework/src/Illuminate/Session', // Exclude sessions queries
             ],
             'backtrace'         => true,   // Use a backtrace to find the origin of the query in your files.
             'backtrace_exclude_paths' => [],   // Paths to exclude from backtrace. (in addition to defaults)

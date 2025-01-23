@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 use App\Models\Vacuna;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class VacunaRepository extends Repository
     {
         $filters = $request->get('filters');
         $query = Paciente::join('vacuna as sec', 'sec.paciente_id', '=', 'paciente.id');
-        $results = Tools::filterData($filters, $query);
+        $results = FilterTool::filterData($filters, $query);
         return Response::json($results);
     }
 

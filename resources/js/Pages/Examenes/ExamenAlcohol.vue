@@ -6,12 +6,12 @@ import {
     closeForm,
     handleEditItem,
     handleRemoveItem,
-    handleShowItem,
+    searchItem,
     handleStoreItem,
     openToCreate,
     openToEdit,
 } from "@/helper.js";
-import { get, put, search, post } from '@/api';
+import { get, put, search, post } from "@/api";
 
 const store = useDataStore();
 const state = reactive({
@@ -21,39 +21,39 @@ const state = reactive({
             title: "IDPGP",
             align: "start",
             sortable: true,
-            key: "idpgp"
+            key: "idpgp",
         },
         {
             title: "Test",
             align: "start",
             sortable: true,
-            key: "test_drogas.descripcion"
+            key: "test_drogas.descripcion",
         },
         {
             title: "Fecha Control",
             align: "start",
             sortable: true,
-            key: "fecha_control"
+            key: "fecha_control",
         },
         { title: "Comentario", key: "comentario", sortable: false },
-        { title: "Acciones", align: "center", key: "actions" }
+        { title: "Acciones", align: "center", key: "actions" },
     ],
     editedItem: {
         paciente_id: null,
         idpgp: null,
         test_drogas: null,
         fecha_control: null,
-        comentario: null
+        comentario: null,
     },
     defaultItem: {
         paciente_id: null,
         idpgp: null,
         test_drogas: null,
         fecha_control: null,
-        comentario: null
+        comentario: null,
     },
     searchQuery: {
-        paciente_id: null
+        paciente_id: null,
     },
     dialog: false,
     tableItems: [],
@@ -67,7 +67,7 @@ const state = reactive({
     urlShow: "/examen/alcohol/show",
     urlUpdate: "/examen/alcohol/update",
     urlDelete: "/examen/alcohol/delete",
-    urlStore: "/examen/alcohol/"
+    urlStore: "/examen/alcohol/",
 });
 
 //**********\\\\  LIFE CYCLE HOOKS ////*************/
@@ -86,7 +86,7 @@ function close() {
 //**********\\\\  CRUD ////*************/
 const showItem = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
-    await handleShowItem(state);
+    await searchItem(state);
 };
 
 function openFormCreate() {
@@ -108,9 +108,8 @@ const update = async () => {
 };
 
 function openFormEdit(item) {
-   openToEdit(state, item);
+    openToEdit(state, item);
 }
-
 
 const remove = async (item) => {
     await handleRemoveItem(state, item);

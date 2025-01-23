@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Models\ExPsico;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 
 
 class ExPsicoRepository extends Repository
@@ -18,6 +18,6 @@ class ExPsicoRepository extends Repository
     {
         $filters = $request->get('filters');
         $query = Paciente::join('examen_psm as psm', 'psm.paciente_id', '=', 'paciente.id');
-        return Tools::filterData($filters, $query);
+        return FilterTool::filterData($filters, $query);
     }
 }

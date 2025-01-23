@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Response;
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 
 abstract class Repository implements RepositoryInterface
 {
@@ -59,55 +59,38 @@ abstract class Repository implements RepositoryInterface
     }
 
     public function update(Request $request)
-{
-    // Extract the 'id' from the incoming request data
-    $id = $request->input('data.id');
-    Log::info('Attempting to update model with ID: ' . $id);
-
-    // Retrieve the data to update and log it
-    $dataToUpdate = $request->input('data');
-    Log::info('Incoming data for update: ', $dataToUpdate);
-
-    // Remove the 'id' key to prepare for updating the model
-    unset($dataToUpdate['id']);
-    
-    // Log the data that will be used for the update
-    Log::info('Data prepared for update: ', $dataToUpdate);
-
-    try {
-        // Retrieve the model instance or fail if not found
-        $model = $this->model->findOrFail($id);
-        
-        // Update the model instance with the new data
-        $model->fill($dataToUpdate);
-        $model->save();
-
-        Log::info('Model updated successfully with ID: ' . $id);
-        
-        return response()->json(['message' => 'Model updated successfully.'], 200);
-    } catch (ModelNotFoundException $e) {
-        Log::error('Model not found for ID: ' . $id);
-        return response()->json(['error' => 'Model not found.'], 404);
-    } catch (\Exception $e) {
-        Log::error('Error updating model with ID: ' . $id . '. Error: ' . $e->getMessage());
-        return response()->json(['error' => 'An error occurred while updating the model.'], 500);
-    }
-}
-
-    public function show(Request $request)
     {
+        // Extract the 'id' from the incoming request data
+        $id = $request->input('data.id');
+        Log::info('Attempting to update model with ID: ' . $id);
+
+        // Retrieve the data to update and log it
+        $dataToUpdate = $request->input('data');
+        Log::info('Incoming data for update: ', $dataToUpdate);
+
+        // Remove the 'id' key to prepare for updating the model
+        unset($dataToUpdate['id']);
+
+        // Log the data that will be used for the update
+        Log::info('Data prepared for update: ', $dataToUpdate);
+
         try {
-            $filters = $request->input('data');
-            Log::info($request);
-            $query = $this->model->query()
-            ->select("*");
-            return Tools::filterData($filters, $query);
-        } catch (QueryException $e) {
-            return response()->json([
-                'result' => 'error',
-                'message' => 'An error occurred while processing your request.',
-                'error' => $e->getMessage(),
-            ], 500);
+            // Retrieve the model instance or fail if not found
+            $model = $this->model->findOrFail($id);
+
+            // Update the model instance with the new data
+            $model->fill($dataToUpdate);
+            $model->save();
+
+            Log::info('Model updated successfully with ID: ' . $id);
+
+            return response()->json(['message' => 'Model updated successfully.'], 200);
+        } catch (ModelNotFoundException $e) {
+            Log::error('Model not found for ID: ' . $id);
+            return response()->json(['error' => 'Model not found.'], 404);
+        } catch (\Exception $e) {
+            Log::error('Error updating model with ID: ' . $id . '. Error: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred while updating the model.'], 500);
         }
     }
 
@@ -126,5 +109,58 @@ abstract class Repository implements RepositoryInterface
                 'error' => $e,
             ], 500);
         }
+    }
+
+    public function search(Request $request)
+    {
+        try {
+            $filters = $request->input('data');
+            Log::info($request);
+            $query = $this->model->query()
+                ->select("*");
+            return FilterTool::filterData($filters, $query);
+        } catch (QueryException $e) {
+            return response()->json([
+                'result' => 'error',
+                'message' => 'An error occurred while processing your request.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Crear un nuevo registro
+     *
+     * @param array $data
+     * @return Model
+     */
+    public function create(array $data)
+    {
+        return $this->model->create($data);
+    }
+
+
+    /**
+     * Encontrar un registro por su ID
+     *
+     * @param int $id
+     * @param array $relations
+     * @return Model
+     */
+    public function find($id, array $relations = [])
+    {
+        return $this->model->with($relations)->findOrFail($id);
+    }
+
+    /**
+     * Obtener registros con paginación
+     *
+     * @param int $perPage
+     * @param array $relations
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function paginate($perPage = 15, array $relations = [])
+    {
+        return $this->model->with($relations)->paginate($perPage);
     }
 }

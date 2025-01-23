@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 use App\Models\Paciente;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class AtencionDiariaRepository extends Repository
         try {
             $filters = $request->input('filters');
             $query = Paciente::join('atencion_diaria as sec', 'sec.paciente_id', '=', 'paciente.id');
-            return Tools::filterData($filters, $query);
+            return FilterTool::filterData($filters, $query);
         } catch (QueryException $e) {
             return Response::json([
                 'result' => 'error',

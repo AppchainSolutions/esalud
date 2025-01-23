@@ -3,7 +3,7 @@ import { reactive, computed } from "vue";
 import { useDataStore } from "@/store.js";
 import {
     handleRemoveItem,
-    handleShowItem,
+    searchItem,
     handleStoreItem,
     closeForm,
     openToCreate,
@@ -67,7 +67,7 @@ function close() {
 
 const handleShow = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
-    await handleShowItem(state);
+    await searchItem(state);
 };
 
 function openFormCreate() {
@@ -99,7 +99,11 @@ const remove = async (item) => {
 
 <template>
     <v-container>
-        <v-data-table :headers="state.headers" :items="state.tableItems" style="min-width: 850px"       >
+        <v-data-table
+            :headers="state.headers"
+            :items="state.tableItems"
+            style="min-width: 850px"
+        >
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>{{ state.formTitle }}</v-toolbar-title>
@@ -140,7 +144,8 @@ const remove = async (item) => {
                                             <v-col>
                                                 <v-text-field
                                                     v-model="
-                                                        state.editedItem.parentesco
+                                                        state.editedItem
+                                                            .parentesco
                                                     "
                                                     label="Parentesco"
                                                     type="text"

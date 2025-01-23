@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "lib": [],
+    "types": ["node", "jsdom"]
+  },
+  "include": ["tests/JavaScript/**/*.ts", "tests/JavaScript/**/*.vue"]
+}

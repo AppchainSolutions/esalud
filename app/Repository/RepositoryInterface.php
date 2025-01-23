@@ -14,5 +14,5 @@ interface RepositoryInterface
     public function store(Request $request);
     public function update(Request $request);
     public function delete(Request $request);
-    public function show(Request $request);
+    public function search(Request $request);
 }

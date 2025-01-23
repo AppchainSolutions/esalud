@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Models\ExSomnolencia;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 use Log;
 
 class ExSomnolenciaRepository extends Repository
@@ -18,8 +18,7 @@ class ExSomnolenciaRepository extends Repository
     {
         $filters = $request->get('filters');
         $query = Paciente::join('examen_somnolencia as som', 'som.paciente_id', '=', 'paciente.id');
-        return Tools::filterData($filters, $query);
-
+        return FilterTool::filterData($filters, $query);
     }
 
 

@@ -5,7 +5,7 @@ import {
     closeForm,
     fetchData,
     handleRemoveItem,
-    handleShowItem,
+    searchItem,
     handleStoreItem,
     openToCreate,
     openToEdit,
@@ -56,7 +56,7 @@ const state = reactive({
 
     editedItem: {
         paciente_id: null,
-        estado_examen:null, 
+        estado_examen: null,
         idpgp: null,
         fecha_ingreso: null,
         fecha_control: null,
@@ -97,7 +97,7 @@ onMounted(async () => {
 });
 //**********\\\\  COMPUTE PROPERTIES ////*************/
 const editedItemTitle = computed(() =>
-    state.editedIndex === -1 ? state.formCrear : state.formEdit,
+    state.editedIndex === -1 ? state.formCrear : state.formEdit
 );
 
 function close() {
@@ -106,7 +106,7 @@ function close() {
 //**********\\\\  CRUD ////*************/
 const showItem = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
-    await handleShowItem(state);
+    await searchItem(state);
 };
 
 function openFormCreate() {
@@ -191,7 +191,8 @@ const remove = async (item) => {
                                                     "
                                                     v-model="
                                                         state.editedItem
-                                                            .estado_examen                                      "
+                                                            .estado_examen
+                                                    "
                                                     item-title="descripcion"
                                                     item-value="id"
                                                     label="Estado"

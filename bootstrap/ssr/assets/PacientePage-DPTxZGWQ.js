@@ -5,7 +5,7 @@ import { router } from "@inertiajs/vue3";
 import { u as useDataStore } from "./store-BqtSnK9e.js";
 import moment from "moment";
 import { useDate } from "vuetify";
-import { f as fetchData, c as closeForm, a as handleShowItem, o as openToCreate, b as handleStoreItem, d as openToEdit, e as handleRemoveItem } from "./helper-BkHfu3mP.js";
+import { f as fetchData, c as closeForm, a as searchItem, o as openToCreate, b as handleStoreItem, d as openToEdit, e as handleRemoveItem } from "./helper-BkHfu3mP.js";
 import { _ as _export_sfc } from "./_plugin-vue_export-helper-1tPrXgE0.js";
 import "./logo-DLUxz0ei.js";
 import "vue-loading-overlay";
@@ -232,7 +232,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({ layout: AppLayout }, {
     };
     const show = async () => {
       console.log(state);
-      await handleShowItem(state);
+      await searchItem(state);
     };
     function openFormCreate() {
       openToCreate(state);

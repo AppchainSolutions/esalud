@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Models\ExAldehido;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 
 class ExAldehidoRepository extends Repository
 {
@@ -19,8 +19,7 @@ class ExAldehidoRepository extends Repository
     {
         $filters = $request->get('filters');
         $query = Paciente::join('examen_pvmoal as al', 'al.paciente_id', '=', 'paciente.id');
-        return Tools::filterData($filters, $query);
-
+        return FilterTool::filterData($filters, $query);
     }
 
     // Add any necessary methods to the repository here

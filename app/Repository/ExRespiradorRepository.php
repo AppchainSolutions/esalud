@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Models\ExRespirador;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 
 class ExRespiradorRepository extends Repository
 {
@@ -17,7 +17,6 @@ class ExRespiradorRepository extends Repository
     {
         $filters = $request->get('filters');
         $query = Paciente::join('examen_epo as epo', 'epo.paciente_id', '=', 'paciente.id');
-        return Tools::filterData($filters, $query);
+        return FilterTool::filterData($filters, $query);
     }
-
 }

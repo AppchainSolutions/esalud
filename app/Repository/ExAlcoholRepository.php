@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Models\ExAlcohol;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 
 class ExAlcoholRepository extends Repository
 {
@@ -19,7 +19,7 @@ class ExAlcoholRepository extends Repository
     {
         $filters = $request->get('filters');
         $query = Paciente::join('examen_ayd as r', 'r.paciente_id', '=', 'paciente.id');
-        return Tools::filterData($filters, $query);
+        return FilterTool::filterData($filters, $query);
     }
 
     // Add any necessary methods to the repository here

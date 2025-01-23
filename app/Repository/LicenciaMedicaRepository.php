@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use App\Models\LicenciaMedica;
@@ -19,6 +19,6 @@ class LicenciaMedicaRepository extends Repository
     {
         $filters = $request->get('filters');
         $query = Paciente::join('licencia_medica as sec', 'sec.paciente_id', '=', 'paciente.id');
-        return Tools::filterData($filters, $query);
+        return FilterTool::filterData($filters, $query);
     }
 }

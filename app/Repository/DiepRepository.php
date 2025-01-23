@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Diep;
-use App\Helpers\Tools;
+use App\Helpers\FilterTool;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -18,7 +18,7 @@ class DiepRepository extends Repository
     {
         $filters = $request->get('filters');
         $query = Paciente::join('diep as sec', 'sec.paciente_id', '=', 'paciente.id');
-        $results = Tools::filterData($filters, $query);
+        $results = FilterTool::filterData($filters, $query);
         return Response::json($results);
     }
 

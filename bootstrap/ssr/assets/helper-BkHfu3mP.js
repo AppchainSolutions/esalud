@@ -194,7 +194,7 @@ const handleRemoveItem = async (state, item) => {
     console.error(error);
   }
 };
-const handleShowItem = async (state) => {
+const searchItem = async (state) => {
   const url = state.urlShow;
   const filter = state.searchQuery;
   state.loadingSearch = true;
@@ -293,7 +293,7 @@ const openToEdit = (state, item) => {
   state.dialog = true;
 };
 export {
-  handleShowItem as a,
+  searchItem as a,
   handleStoreItem as b,
   closeForm as c,
   openToEdit as d,

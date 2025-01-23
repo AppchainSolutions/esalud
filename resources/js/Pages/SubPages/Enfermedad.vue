@@ -3,12 +3,12 @@ import { reactive, computed, onMounted } from "vue";
 import { useDataStore } from "@/store.js";
 import {
     handleRemoveItem,
-    handleShowItem,
+    searchItem,
     handleStoreItem,
     closeForm,
     openToCreate,
     openToEdit,
-    fetchData
+    fetchData,
 } from "@/helper.js";
 
 const store = useDataStore();
@@ -72,7 +72,7 @@ function close() {
 
 const handleShow = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
-    await handleShowItem(state);
+    await searchItem(state);
 };
 
 function openFormCreate() {
@@ -145,7 +145,8 @@ const remove = async (item) => {
                                             <v-col>
                                                 <v-text-field
                                                     v-model="
-                                                        state.editedItem.enfermedad
+                                                        state.editedItem
+                                                            .enfermedad
                                                     "
                                                     label="enfermedad"
                                                     type="text"
@@ -154,9 +155,13 @@ const remove = async (item) => {
 
                                                 <v-select
                                                     v-model="
-                                                        state.editedItem.trastorno_cronico
+                                                        state.editedItem
+                                                            .trastorno_cronico
                                                     "
-                                                    :items="state.list.trastorno_cronico"
+                                                    :items="
+                                                        state.list
+                                                            .trastorno_cronico
+                                                    "
                                                     item-title="descripcion"
                                                     item-value="id"
                                                     label="Trastorno Crónico"

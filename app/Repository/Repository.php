@@ -9,6 +9,7 @@ use illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Response;
 use App\Helpers\FilterTool;
+use Illuminate\Support\Facades\Cache;
 
 abstract class Repository implements RepositoryInterface
 {
@@ -22,18 +23,35 @@ abstract class Repository implements RepositoryInterface
 
     public function all()
     {
+        $class = get_class($this->model);
+        $cacheKey = $this->getCacheKey('all');
+
         try {
-            $query = $this->model->all();
+            $data = Cache::tags($class)->remember($cacheKey, 3600, function () {
+                return $this->model->all();
+            });
+
             return Response::json([
-                'result' => $query
+                'result' => $data,
             ]);
         } catch (QueryException $e) {
             return response()->json([
-                'result' => "500",
-                'message' => 'Se produjo un error.',
-                'error' => $e,
+                'result' => 'error',
+                'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    protected function getCacheKey($method, $params = null)
+    {
+        $class = get_class($this->model);
+        return $class . '_' . $method . ($params ? '_' . md5(json_encode($params)) : '');
+    }
+
+    protected function clearModelCache()
+    {
+        $class = get_class($this->model);
+        Cache::tags($class)->flush();
     }
 
     public function store(Request $request)
@@ -46,6 +64,7 @@ abstract class Repository implements RepositoryInterface
             }, $query);
 
             $request = $this->model->create($query);
+            $this->clearModelCache();
             return response()->json([
                 'message' => 'Registro creado con éxito',
             ], 200);
@@ -83,7 +102,7 @@ abstract class Repository implements RepositoryInterface
             $model->save();
 
             Log::info('Model updated successfully with ID: ' . $id);
-
+            $this->clearModelCache();
             return response()->json(['message' => 'Model updated successfully.'], 200);
         } catch (ModelNotFoundException $e) {
             Log::error('Model not found for ID: ' . $id);
@@ -99,6 +118,7 @@ abstract class Repository implements RepositoryInterface
         $id = $request->get('id');
         try {
             $this->model->destroy($id);
+            $this->clearModelCache();
             return Response::json([
                 'message' => 'Registro borrado con exito',
             ], 200);
@@ -114,16 +134,20 @@ abstract class Repository implements RepositoryInterface
     public function search(Request $request)
     {
         try {
-            $filters = $request->input('data');
             Log::info($request);
-            $query = $this->model->query()
-                ->select("*");
-            return FilterTool::filterData($filters, $query);
+            $class = get_class($this->model);
+            $cacheKey = $this->getCacheKey('search', $request->all());
+            
+            return Cache::tags($class)->remember($cacheKey, 3600, function () use ($request) {
+                $filters = $request->input('data');
+                $query = $this->model->query()
+                    ->select("*");
+                return FilterTool::filterData($filters, $query);
+            });
         } catch (QueryException $e) {
             return response()->json([
                 'result' => 'error',
-                'message' => 'An error occurred while processing your request.',
-                'error' => $e->getMessage(),
+                'message' => $e->getMessage()
             ], 500);
         }
     }

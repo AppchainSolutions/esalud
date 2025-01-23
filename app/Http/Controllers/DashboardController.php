@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Paciente;
 use App\Models\Enfermedad;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,51 +13,82 @@ class DashboardController extends Controller
 
     public function personasPorEmpresa()
     {
-        $companyIds = [22, 6, 8];
+        $cacheKey = self::class . '_personasPorEmpresa_cache';
+        $cacheDuration = 3600; // Cache duration in seconds (e.g., 1 hour)
+        $data = Cache::remember($cacheKey, $cacheDuration, function () {
+            $companyIds = [22, 6, 8];
 
-        return Paciente::join('empresa', 'paciente.empresa', '=', 'empresa.id')
-            ->groupBy('empresa.descripcion')
-            ->orderBy('empresa.descripcion', 'ASC')
-            ->where(function ($query) use ($companyIds) {
-                $query->where('paciente.activo', '=', 'true')
-                    ->whereIn('paciente.empresa', $companyIds);
-            })
-            ->select('empresa.descripcion', DB::raw('count(*) as total'))
-            ->get();
+            return Paciente::join('empresa', 'paciente.empresa', '=', 'empresa.id')
+                ->groupBy('empresa.descripcion')
+                ->orderBy('empresa.descripcion', 'ASC')
+                ->where(function ($query) use ($companyIds) {
+                    $query->where('paciente.activo', '=', 'true')
+                        ->whereIn('paciente.empresa', $companyIds);
+                })
+                ->select('empresa.descripcion', DB::raw('count(*) as total'))
+                ->get();
+        });
+
+        return $data;
     }
 
     public function personasPorUnidad()
     {
-        return Paciente::join('unidad', 'paciente.unidad', '=', 'unidad.id')
-            ->groupBy(['unidad.descripcion'])
-            ->orderBy('unidad.descripcion', 'ASC')
-            ->where('paciente.activo', '=', 'true')
-            ->select('unidad.descripcion', DB::raw('count(*) as total'))
-            ->get();
+
+        $cacheKey = self::class . '_personasPorUnidad_cache';
+        $cacheDuration = 36000; // Cache duration in seconds (e.g., 1 hour)
+        $data = Cache::remember($cacheKey, $cacheDuration, function () {
+
+            return Paciente::join('unidad', 'paciente.unidad', '=', 'unidad.id')
+                ->groupBy(['unidad.descripcion'])
+                ->orderBy('unidad.descripcion', 'ASC')
+                ->where('paciente.activo', '=', 'true')
+                ->select('unidad.descripcion', DB::raw('count(*) as total'))
+                ->get();
+        });
+
+        return $data;
     }
 
     public function personasPorPlanta()
     {
-        return Paciente::join('planta', 'paciente.planta', '=', 'planta.id')
-            ->groupBy(['planta.descripcion'])
-            ->orderBy('planta.descripcion', 'ASC')
-            ->where('paciente.activo', '=', 'true')
-            ->select('planta.descripcion', DB::raw('count(*) as total'))
-            ->get();
+
+        $cacheKey = self::class . '_personasPorPlanta_cache';
+        $cacheDuration = 36000; // Cache duration in seconds (e.g., 1 hour)
+        $data = Cache::remember($cacheKey, $cacheDuration, function () {
+
+            return Paciente::join('planta', 'paciente.planta', '=', 'planta.id')
+                ->groupBy(['planta.descripcion'])
+                ->orderBy('planta.descripcion', 'ASC')
+                ->where('paciente.activo', '=', 'true')
+                ->select('planta.descripcion', DB::raw('count(*) as total'))
+                ->get();
+        });
+
+        return $data;
     }
 
     public function personasPorCeco()
     {
-        return Paciente::join('ceco', 'paciente.ceco', '=', 'ceco.id')
-            ->groupBy(['ceco.descripcion'])
-            ->orderBy('ceco.descripcion', 'ASC')
-            ->where('paciente.activo', '=', 'true')
-            ->select('ceco.descripcion', DB::raw('count(*) as total'))
-            ->get();
+
+        $cacheKey = self::class . '_personasPorCeco_cache';
+        $cacheDuration = 36000; // Cache duration in seconds (e.g., 1 hour)
+        $data = Cache::remember($cacheKey, $cacheDuration, function () {
+
+            return Paciente::join('ceco', 'paciente.ceco', '=', 'ceco.id')
+                ->groupBy(['ceco.descripcion'])
+                ->orderBy('ceco.descripcion', 'ASC')
+                ->where('paciente.activo', '=', 'true')
+                ->select('ceco.descripcion', DB::raw('count(*) as total'))
+                ->get();
+        });
+
+        return $data;
     }
 
     public function personasPorExpo()
     {
+        
         $personas = Paciente::where('activo', 'true')
             ->select('exposicion')
             ->get()
@@ -112,11 +144,11 @@ class DashboardController extends Controller
 
         // Utilizar Eloquent para realizar la consulta
         $enfermedades = Enfermedad::join('paciente', 'enfermedad.paciente_id', '=', 'paciente.id')
-        ->join('trastorno_cronico', 'enfermedad.trastorno_cronico', '=', 'trastorno_cronico.id')
-        ->where('paciente.empresa', $empresaId)
+            ->join('trastorno_cronico', 'enfermedad.trastorno_cronico', '=', 'trastorno_cronico.id')
+            ->where('paciente.empresa', $empresaId)
             ->groupBy('trastorno_cronico.descripcion')
             ->select('trastorno_cronico.descripcion', DB::raw('count(*) as total'))
-        ->get();
+            ->get();
 
         // Transformar el resultado en un array asociativo
         $result = $enfermedades->mapWithKeys(function ($item) {
@@ -139,11 +171,11 @@ class DashboardController extends Controller
 
         // Utilizar Eloquent para realizar la consulta
         $enfermedades = Enfermedad::join('paciente', 'enfermedad.paciente_id', '=', 'paciente.id')
-        ->join('trastorno_cronico', 'enfermedad.trastorno_cronico_id', '=', 'trastorno_cronico.id')
-        ->where('paciente.planta', $plantaId)
-        ->groupBy('trastorno_cronico.descripcion')
-        ->select('trastorno_cronico.descripcion', DB::raw('count(*) as total'))
-        ->get();
+            ->join('trastorno_cronico', 'enfermedad.trastorno_cronico_id', '=', 'trastorno_cronico.id')
+            ->where('paciente.planta', $plantaId)
+            ->groupBy('trastorno_cronico.descripcion')
+            ->select('trastorno_cronico.descripcion', DB::raw('count(*) as total'))
+            ->get();
 
         // Transformar el resultado en un array asociativo
         $result = $enfermedades->mapWithKeys(function ($item) {
@@ -155,7 +187,7 @@ class DashboardController extends Controller
             'total' => $result->values(),
         ]);
     }
- 
+
     /**
      * Prepares the data for the personasPorExpo function.
      *

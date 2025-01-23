@@ -4,8 +4,8 @@ namespace App\Repository;
 
 use App\Models\Paciente;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use App\Repository\Repository;
 
 class PacienteRepository extends Repository
 {
@@ -20,7 +20,7 @@ class PacienteRepository extends Repository
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function search(Request $request)
+    /*  public function search(Request $request)
     {
         try {
             $criteria = $request->input('data', []);
@@ -54,7 +54,7 @@ class PacienteRepository extends Repository
                 'error' => $e->getMessage()
             ], 500);
         }
-    }
+    } */
 
     /**
      * Paginar y filtrar pacientes
@@ -64,7 +64,7 @@ class PacienteRepository extends Repository
      * @param array $relations
      * @return LengthAwarePaginator
      */
-    public function paginateWithFilters(array $filters = [], int $perPage = 15, array $relations = []): LengthAwarePaginator
+    /* public function paginateWithFilters(array $filters = [], int $perPage = 15, array $relations = []): LengthAwarePaginator
     {
         $query = $this->model->query();
 
@@ -91,7 +91,7 @@ class PacienteRepository extends Repository
         }
 
         return $query->orderBy('created_at', 'desc')->paginate($perPage);
-    }
+    } */
 
     /**
      * Encuentra un paciente por ID o lanza una excepción
@@ -101,8 +101,8 @@ class PacienteRepository extends Repository
      * @return \App\Models\Paciente
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function findById($id, array $relations = [])
+    /*     public function findById($id, array $relations = [])
     {
         return $this->model->with($relations)->findOrFail($id);
-    }
+    } */
 }

@@ -159,12 +159,12 @@ export const handleRemoveItem = async (state, item) => {
  * @returns {Promise<any>} - A promise that resolves to the retrieved item.
  * @param state
  */
-export const searchItemsss = async (url, searchFilters, endpoints) => {
+export const searchItems = async (url, searchFilters, endpoints) => {
     debug('Iniciando búsqueda %O', { url, searchFilters, endpoints });
-    /* try {
+    try {
         const result = await axios.get(url, { params: { searchFilters } });
         debug('Resultado de búsqueda obtenido %O', { result });
-        //setResponse(result.data, endpoints);
+        setResponse(result.data, endpoints);
     } catch (error) {
         debug('Error en búsqueda %O', { error: error.message });
         notify({
@@ -172,7 +172,7 @@ export const searchItemsss = async (url, searchFilters, endpoints) => {
             text: error,
             type: "error",
         });
-    } */
+    } 
 };
 
 /**
@@ -183,12 +183,12 @@ export const searchItemsss = async (url, searchFilters, endpoints) => {
  * @returns {Promise} - A promise that resolves with the search response.
  * @throws {Error} - If an error occurs during the search.
  */
-export const handlesearchItemss = async (state) => {
+export const handlesearchItems = async (state) => {
     const filter = state.searchQuery;
     const url = state.urlSearch;
     state.loadingSearch = true;
     try {
-        const result = await searchItemss(url, filter);
+        const result = await searchItems(url, filter);
         setResponse(state, result);
     } catch (error) {
         debug('Error al buscar item %O', { error: error.message, stack: error.stack });

@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Services\PacienteService;
 use App\Repository\PacienteRepository;
+use Illuminate\Support\Facades\Log;
 
 class PacienteController extends Controller
 {
@@ -48,11 +49,12 @@ class PacienteController extends Controller
      */
     public function show(Request $request)
     {
-        $paciente = $this->pacienteService->show($request);
+        Log::info($request->all());
+/*         $paciente = $this->pacienteService->show($request);
         return Inertia::render('Pacientes/Show', [
             'paciente' => $paciente
         ]);
-    }
+ */    }
 
     /**
      * Show the form for editing the specified resource.

@@ -33,7 +33,8 @@ class PacienteService
      */
     public function show(Request $request)
     {
-        try {
+        Log::info($request->all());
+        /* try {
             $request->validate([
                 'id' => 'required|exists:$request->id'
             ]);
@@ -47,7 +48,7 @@ class PacienteService
         } catch (Throwable $e) {
             Log::error('Error al mostrar paciente: ' . $e->getMessage());
             throw $e;
-        }
+        } */
     }
 
     /**

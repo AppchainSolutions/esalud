@@ -25,7 +25,7 @@ class NivelRiesgoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->nivelriesgoRepository->store($request);
     }
@@ -37,7 +37,6 @@ class NivelRiesgoController extends Controller
     public function update(Request $request)
     {
         return $this->nivelriesgoRepository->update($request);
-
     }
 
     /**
@@ -50,6 +49,6 @@ class NivelRiesgoController extends Controller
 
     public function show(Request $request)
     {
-        return $this->nivelriesgoRepository->show($request);
+        return $this->nivelriesgoRepository->search($request);
     }
 }

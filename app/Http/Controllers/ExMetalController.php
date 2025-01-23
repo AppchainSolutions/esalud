@@ -51,12 +51,11 @@ class ExMetalController extends Controller
 
     public function show(Request $request)
     {
-        return $this->exmetalRepository->show($request);
+        return $this->exmetalRepository->search($request);
     }
 
     public function search(Request $request)
     {
         return $this->exmetalRepository->search($request);
     }
-
 }

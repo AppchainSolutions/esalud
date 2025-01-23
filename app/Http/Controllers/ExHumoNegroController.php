@@ -55,12 +55,11 @@ class ExHumoNegroController extends Controller
 
     public function show(Request $request)
     {
-        return $this->exhumonegroRepository->show($request);
+        return $this->exhumonegroRepository->search($request);
     }
 
     public function search(Request $request)
     {
         return $this->exhumonegroRepository->search($request);
     }
-
 }

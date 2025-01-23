@@ -35,7 +35,7 @@ class ExEquilibrioController extends Controller
         return $this->exequilibrioRepository->store($request);
     }
 
-    
+
     /**
      * Update the specified resource in storage.
      */
@@ -62,8 +62,6 @@ class ExEquilibrioController extends Controller
 
     public function show(Request $request)
     {
-        return $this->exequilibrioRepository->show($request);
+        return $this->exequilibrioRepository->search($request);
     }
-
 }
-

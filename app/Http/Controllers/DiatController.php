@@ -35,7 +35,7 @@ class DiatController extends Controller
     {
         return $this->diatRepository->store($request);
     }
-    
+
     public function update(Request $request)
     {
         return $this->diatRepository->update($request);
@@ -48,7 +48,7 @@ class DiatController extends Controller
 
     public function show(Request $request)
     {
-        return $this->diatRepository->show($request);
+        return $this->diatRepository->search($request);
     }
 
     public function search(Request $request)

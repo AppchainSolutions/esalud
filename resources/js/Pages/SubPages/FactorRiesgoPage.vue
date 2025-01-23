@@ -3,7 +3,7 @@ import { reactive, computed } from "vue";
 import { useDataStore } from "@/store.js";
 import {
     handleRemoveItem,
-    handleSearchItem,
+    handlesearchItemss,
     handleStoreItem,
     handleEditItem,
     closeForm,
@@ -63,7 +63,7 @@ function close() {
 //**********\\\\  CRUD ////*************/
 const handleShow = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
-    await handleSearchItem(state);
+    await handlesearchItemss(state);
 };
 
 function openFormCreate() {

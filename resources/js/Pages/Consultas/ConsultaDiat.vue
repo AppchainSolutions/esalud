@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { reactive, onMounted } from "vue";
-import { fetchData, handleSearchItem } from "@/helper.js";
+import { fetchData, handlesearchItemss } from "@/helper.js";
 
 defineOptions({ layout: AppLayout });
 
@@ -19,7 +19,7 @@ const state = reactive({
 
     headers: [
         { title: "RUT", align: "center", sortable: true, key: "rut" },
-         {
+        {
             title: "Nombre",
             align: "center",
             sortable: true,
@@ -69,7 +69,7 @@ const state = reactive({
             key: "aprobado",
         },
 
-        { title: "Acciones", align: "center", key: "actions" }, 
+        { title: "Acciones", align: "center", key: "actions" },
     ],
 
     searchQuery: {
@@ -164,7 +164,7 @@ function close() {
 //**********\\\\  CRUD ////*************/
 
 const handleSearch = async () => {
-    await handleSearchItem(state);
+    await handlesearchItemss(state);
 };
 </script>
 
@@ -189,7 +189,6 @@ const handleSearch = async () => {
                         <v-container fluid>
                             <v-card-text>
                                 <v-row>
-                                  
                                     <v-col>
                                         <v-text-field
                                             label="Rut"
@@ -268,12 +267,9 @@ const handleSearch = async () => {
                                             color="green-darken-3"
                                             inset
                                             label="Activo"
-
                                         ></v-switch>
                                         <v-switch
-                                            v-model="
-                                                state.searchQuery.aprobado
-                                            "
+                                            v-model="state.searchQuery.aprobado"
                                             hide-details
                                             true-value="1"
                                             false-value="0"
@@ -282,9 +278,9 @@ const handleSearch = async () => {
                                             color="green-darken-3"
                                             value="0"
                                             inset
-                                             label="Aprobado"
-                                        ></v-switch> 
-                                    </v-col> 
+                                            label="Aprobado"
+                                        ></v-switch>
+                                    </v-col>
                                 </v-row>
                             </v-card-text>
                             <v-card-actions>
@@ -311,11 +307,10 @@ const handleSearch = async () => {
                                     </download-excel>
                                 </v-btn>
                             </v-card-actions>
-                        </v-container> 
+                        </v-container>
                     </v-form>
 
-                    
-                   <v-container fluid>
+                    <v-container fluid>
                         <v-data-table
                             :headers="state.headers"
                             :items="state.tableItems"
@@ -336,13 +331,13 @@ const handleSearch = async () => {
                                 </v-tooltip>
                             </template>
                         </v-data-table>
-                    </v-container> 
+                    </v-container>
                 </v-sheet>
             </v-card-text>
         </v-card>
 
         <!-- FORM -->
-         <v-form readonly>
+        <v-form readonly>
             <v-container>
                 <v-dialog v-model="state.dialog">
                     <v-sheet elevation="4" class="ma-4 pa-4">
@@ -391,9 +386,7 @@ const handleSearch = async () => {
                                     </v-col>
                                     <v-col>
                                         <v-switch
-                                            v-model="
-                                                state.itemsView.aprobado
-                                            "
+                                            v-model="state.itemsView.aprobado"
                                             hide-details
                                             true-value="true"
                                             false-value="false"
@@ -480,6 +473,5 @@ const handleSearch = async () => {
                 </v-dialog>
             </v-container>
         </v-form>
-
     </v-container>
 </template>

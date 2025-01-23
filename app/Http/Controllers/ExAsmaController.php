@@ -51,7 +51,7 @@ class ExAsmaController extends Controller
      */
     public function show(Request $request)
     {
-        return $this->exasmaRepository->show($request);
+        return $this->exasmaRepository->search($request);
     }
 
     /**
@@ -68,7 +68,6 @@ class ExAsmaController extends Controller
     public function update(Request $request, string $id)
     {
         return $this->exasmaRepository->update($request);
-        
     }
 
     /**
@@ -77,7 +76,6 @@ class ExAsmaController extends Controller
     public function destroy(Request $request)
     {
         return $this->exasmaRepository->delete($request);
-        
     }
 
     public function search(Request $request)

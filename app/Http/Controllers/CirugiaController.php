@@ -26,7 +26,7 @@ class CirugiaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->cirugiaRepository->store($request);
     }
@@ -44,7 +44,6 @@ class CirugiaController extends Controller
     public function update(Request $request)
     {
         return $this->cirugiaRepository->update($request);
-
     }
 
     /**
@@ -58,6 +57,6 @@ class CirugiaController extends Controller
 
     public function show(Request $request)
     {
-        return $this->cirugiaRepository->show($request);
+        return $this->cirugiaRepository->search($request);
     }
 }

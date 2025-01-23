@@ -55,12 +55,11 @@ class ExAldehidoController extends Controller
 
     public function show(Request $request)
     {
-        return $this->exaldehidoRepository->show($request);
+        return $this->exaldehidoRepository->search($request);
     }
 
     public function search(Request $request)
     {
         return $this->exaldehidoRepository->search($request);
     }
-
 }

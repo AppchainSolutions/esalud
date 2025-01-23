@@ -56,12 +56,11 @@ class ExEpoController extends Controller
 
     public function show(Request $request)
     {
-        return $this->exepoRepository->show($request);
+        return $this->exepoRepository->search($request);
     }
 
     public function search(Request $request)
     {
         return $this->exepoRepository->search($request);
     }
-
 }

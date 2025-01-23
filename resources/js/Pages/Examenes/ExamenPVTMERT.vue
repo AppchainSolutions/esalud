@@ -5,7 +5,7 @@ import {
     closeForm,
     handleEditItem,
     handleRemoveItem,
-    searchItem,
+    searchItemss,
     handleStoreItem,
     openToCreate,
     openToEdit,
@@ -89,7 +89,7 @@ function close() {
 //**********\\\\  CRUD ////*************/
 const showItem = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
-    await searchItem(state);
+    await searchItemss(state);
 };
 
 function openFormCreate() {

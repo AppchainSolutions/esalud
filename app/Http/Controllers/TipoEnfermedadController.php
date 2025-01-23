@@ -32,18 +32,7 @@ class TipoEnfermedadController extends Controller
      */
     public function show()
     {
-        try {
-            $query = TipoEnfermedad::all();
-            
-            
-            return response()->json([
-                'result' => $query
-            ]);
-        } catch (QueryException $error) {
-            Session::flash('message', 'No se encuentran registros.');
-            Log::error($error);
-
-        }
+        //
     }
 
     /**

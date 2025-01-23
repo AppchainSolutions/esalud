@@ -11,7 +11,7 @@ import JsonExcel from "vue-json-excel3";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 //* SweetAlert2
 import VueSweetalert2 from "vue-sweetalert2";
-import "@sweetalert2/theme-material-ui/material-ui.scss";
+//import "@sweetalert2/theme-material-ui/material-ui.scss";
 //* Vuetify
 import "vuetify/styles";
 import { createVuetify } from "vuetify";

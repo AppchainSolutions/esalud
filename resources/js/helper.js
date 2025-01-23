@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { searchItem, storeItem, deleteItem, editItem, showItem } from "@/crud";
+import { searchItemss, storeItem, deleteItem, editItem, showItem } from "@/crud";
 import { useNotification } from "@kyvg/vue3-notification";
 import { useDataStore } from "@/store.js";
 import { nextTick } from "vue";
@@ -159,7 +159,7 @@ export const handleRemoveItem = async (state, item) => {
  * @returns {Promise<any>} - A promise that resolves to the retrieved item.
  * @param state
  */
-export const searchItems = async (url, searchFilters, endpoints) => {
+export const searchItemsss = async (url, searchFilters, endpoints) => {
     debug('Iniciando búsqueda %O', { url, searchFilters, endpoints });
     /* try {
         const result = await axios.get(url, { params: { searchFilters } });
@@ -183,12 +183,12 @@ export const searchItems = async (url, searchFilters, endpoints) => {
  * @returns {Promise} - A promise that resolves with the search response.
  * @throws {Error} - If an error occurs during the search.
  */
-export const handleSearchItem = async (state) => {
+export const handlesearchItemss = async (state) => {
     const filter = state.searchQuery;
     const url = state.urlSearch;
     state.loadingSearch = true;
     try {
-        const result = await searchItem(url, filter);
+        const result = await searchItemss(url, filter);
         setResponse(state, result);
     } catch (error) {
         debug('Error al buscar item %O', { error: error.message, stack: error.stack });

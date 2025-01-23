@@ -49,6 +49,6 @@ class AlergiaController extends Controller
 
     public function show(Request $request)
     {
-        return $this->alergiaRepository->show($request);
+        return $this->alergiaRepository->search($request);
     }
 }

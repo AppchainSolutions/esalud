@@ -55,7 +55,7 @@ class ExRespiradorController extends Controller
 
     public function show(Request $request)
     {
-        return $this->exrespiradorRepository->show($request);
+        return $this->exrespiradorRepository->search($request);
     }
 
     public function search(Request $request)

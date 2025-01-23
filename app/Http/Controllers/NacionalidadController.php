@@ -48,6 +48,6 @@ class NacionalidadController extends Controller
 
     public function show(Request $request)
     {
-        return $this->nacionalidadRepository->show($request);
+        return $this->nacionalidadRepository->search($request);
     }
 }

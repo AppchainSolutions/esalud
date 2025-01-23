@@ -1,7 +1,7 @@
 import { reactive, onMounted, resolveComponent, mergeProps, withCtx, createTextVNode, toDisplayString, createVNode, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrInterpolate } from "vue/server-renderer";
 import { A as AppLayout } from "./AppLayout-DV0u10gY.js";
-import { f as fetchData, h as handleSearchItem } from "./helper-BkHfu3mP.js";
+import { f as fetchData, h as handlesearchItemss } from "./helper-BkHfu3mP.js";
 import { _ as _export_sfc } from "./_plugin-vue_export-helper-1tPrXgE0.js";
 import "@inertiajs/vue3";
 import "./logo-DLUxz0ei.js";
@@ -108,7 +108,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({ layout: AppLayout }, {
       state.dialog = false;
     }
     const handleSearch = async () => {
-      var res = await handleSearchItem(state);
+      var res = await handlesearchItemss(state);
       console.log(res);
     };
     return (_ctx, _push, _parent, _attrs) => {

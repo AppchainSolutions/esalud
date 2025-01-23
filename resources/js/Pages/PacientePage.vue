@@ -8,7 +8,7 @@ import { useDate } from "vuetify";
 import {
     fetchData,
     handleRemoveItem,
-    searchItems,
+    searchItemsss,
     handleStoreItem,
     closeForm,
     openToCreate,
@@ -253,7 +253,7 @@ const handleInputChange = () => {
 //**********\\\\  CRUD ////*************/
 const searchPacientes = async () => {
     state.loadingSearch = true;
-    await searchItems(state.urlShow, state.searchQuery, state.list);
+    await searchItemsss(state.urlShow, state.searchQuery, state.list);
     state.loadingSearch = false;
 };
 

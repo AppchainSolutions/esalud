@@ -54,12 +54,11 @@ class ExSolventeController extends Controller
     }
     public function show(Request $request)
     {
-        return $this->exsolventeRepository->show($request);
+        return $this->exsolventeRepository->search($request);
     }
 
     public function search(Request $request)
     {
         return $this->exsolventeRepository->search($request);
     }
-
 }

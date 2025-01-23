@@ -38,7 +38,6 @@ class LicenciaMedicaController extends Controller
     public function update(Request $request)
     {
         return $this->licenciaMedicaRepository->update($request);
-
     }
 
     /**
@@ -51,7 +50,7 @@ class LicenciaMedicaController extends Controller
 
     public function show(Request $request)
     {
-        return $this->licenciaMedicaRepository->show($request);
+        return $this->licenciaMedicaRepository->search($request);
     }
 
     public function search(Request $request)

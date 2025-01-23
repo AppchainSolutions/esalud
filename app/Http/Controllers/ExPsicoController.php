@@ -61,8 +61,6 @@ class ExPsicoController extends Controller
 
     public function show(Request $request)
     {
-        return $this->expsicoRepository->show($request);
+        return $this->expsicoRepository->search($request);
     }
-
 }
-

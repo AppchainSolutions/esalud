@@ -57,12 +57,11 @@ class ExPVTMERTController extends Controller
 
     public function show(Request $request)
     {
-        return $this->expvtmertRepository->show($request);
+        return $this->expvtmertRepository->search($request);
     }
 
     public function search(Request $request)
     {
         return $this->expvtmertRepository->search($request);
     }
-
 }

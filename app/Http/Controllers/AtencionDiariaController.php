@@ -58,7 +58,6 @@ class AtencionDiariaController extends Controller
 
     public function show(Request $request)
     {
-        return $this->atencionDiariaRepository->show($request);
+        return $this->atencionDiariaRepository->search($request);
     }
-
 }

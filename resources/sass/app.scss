@@ -1,0 +1,15 @@
+// Importar SweetAlert2 usando la nueva sintaxis
+@use '@sweetalert2/theme-material-ui/material-ui' as swal;
+
+// Reemplazar las funciones deprecadas de color
+@use 'sass:color';
+
+// Definir variables de color
+$material-ui-blue: #2196f3;
+
+// Función de ayuda para el slider
+@mixin slider-track {
+    background: color.adjust($material-ui-blue, $lightness: 30%);
+}
+
+// Resto de tus estilos aquí...

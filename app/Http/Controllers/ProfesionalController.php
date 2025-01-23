@@ -28,7 +28,7 @@ class ProfesionalController extends Controller
      */
     public function show(Request $request)
     {
-        return $this->profesionalRepository->show($request);
+        return $this->profesionalRepository->search($request);
     }
 
     /**

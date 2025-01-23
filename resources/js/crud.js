@@ -20,7 +20,7 @@ export const editItem = async (updateUrl, item) => {
     return await updateItem(updateUrl, item)
 }
 
-export const searchItem = async (updateUrl, item) => {
+export const searchItemss = async (updateUrl, item) => {
     return await search(updateUrl, item)
 }
 

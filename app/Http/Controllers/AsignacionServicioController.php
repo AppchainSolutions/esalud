@@ -33,7 +33,7 @@ class AsignacionServicioController extends Controller
      */
     public function show()
     {
-        //        return $this->asignacionServicioRepository->show();
+        //        return $this->asignacionServicioRepository->search();
         Log::info('Show');
     }
 

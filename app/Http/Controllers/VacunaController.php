@@ -63,6 +63,6 @@ class VacunaController extends Controller
 
     public function show(Request $request)
     {
-        return $this->vacunaRepository->show($request);
+        return $this->vacunaRepository->search($request);
     }
 }

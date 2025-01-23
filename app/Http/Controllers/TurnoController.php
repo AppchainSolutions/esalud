@@ -31,7 +31,7 @@ class TurnoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->turnoRepository->store($request);
     }
@@ -54,6 +54,6 @@ class TurnoController extends Controller
 
     public function show(Request $request)
     {
-        return $this->turnoRepository->show($request);
+        return $this->turnoRepository->search($request);
     }
 }

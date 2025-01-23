@@ -7,11 +7,21 @@ export default defineConfig({
         sourcemap: true
     },
     css: {
-        devSourcemap: true
+        devSourcemap: true,
+        preprocessorOptions: {
+            scss: {
+                // Configuración de Sass
+                sassOptions: {
+                    outputStyle: 'compressed',
+                    sourceMap: true,
+                    includePaths: ['node_modules']
+                }
+            }
+        }
     },
     plugins: [
         laravel({
-            input: 'resources/js/app.js',
+            input: ['resources/js/app.js', 'resources/sass/app.scss'],
             ssr: 'resources/js/ssr.js',
             refresh: true
         }),

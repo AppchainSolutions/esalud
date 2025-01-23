@@ -54,12 +54,11 @@ class ExSiliceController extends Controller
 
     public function show(Request $request)
     {
-        return $this->exsiliceRepository->show($request);
+        return $this->exsiliceRepository->search($request);
     }
 
     public function search(Request $request)
     {
         return $this->exsiliceRepository->search($request);
     }
-
 }

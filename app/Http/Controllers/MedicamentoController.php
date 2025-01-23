@@ -25,7 +25,7 @@ class MedicamentoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->medicamentoRepository->store($request);
     }
@@ -36,7 +36,6 @@ class MedicamentoController extends Controller
     public function update(Request $request)
     {
         return $this->medicamentoRepository->update($request);
-
     }
 
     /**
@@ -49,6 +48,6 @@ class MedicamentoController extends Controller
 
     public function show(Request $request)
     {
-        return $this->medicamentoRepository->show($request);
+        return $this->medicamentoRepository->search($request);
     }
 }

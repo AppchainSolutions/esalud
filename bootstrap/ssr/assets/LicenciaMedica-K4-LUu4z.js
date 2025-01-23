@@ -1,7 +1,7 @@
 import { reactive, computed, resolveComponent, withCtx, createTextVNode, toDisplayString, createVNode, mergeProps, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrInterpolate } from "vue/server-renderer";
 import { u as useDataStore } from "./store-BqtSnK9e.js";
-import { c as closeForm, a as searchItem, o as openToCreate, b as handleStoreItem, d as openToEdit, e as handleRemoveItem } from "./helper-BkHfu3mP.js";
+import { c as closeForm, a as searchItemss, o as openToCreate, b as handleStoreItem, d as openToEdit, e as handleRemoveItem } from "./helper-BkHfu3mP.js";
 import { _ as _export_sfc } from "./_plugin-vue_export-helper-1tPrXgE0.js";
 import "pinia";
 import "sweetalert2/dist/sweetalert2.js";
@@ -121,7 +121,7 @@ const _sfc_main = {
     }
     const handleShow = async () => {
       state.searchQuery.paciente_id = store.getSelected.id;
-      await searchItem(state);
+      await searchItemss(state);
     };
     function openFormCreate() {
       openToCreate(state);

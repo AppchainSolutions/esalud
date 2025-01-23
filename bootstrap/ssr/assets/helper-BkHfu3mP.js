@@ -77,7 +77,7 @@ const deleteItem = async (endpoint, id) => {
 const editItem = async (updateUrl, item) => {
   return await updateItem(updateUrl, item);
 };
-const searchItem = async (updateUrl, item) => {
+const searchItemss = async (updateUrl, item) => {
   return await search(updateUrl, item);
 };
 const store = useDataStore();
@@ -194,7 +194,7 @@ const handleRemoveItem = async (state, item) => {
     console.error(error);
   }
 };
-const searchItem = async (state) => {
+const searchItemss = async (state) => {
   const url = state.urlShow;
   const filter = state.searchQuery;
   state.loadingSearch = true;
@@ -210,12 +210,12 @@ const searchItem = async (state) => {
   }
   state.loadingSearch = false;
 };
-const handleSearchItem = async (state) => {
+const handlesearchItemss = async (state) => {
   const filter = state.searchQuery;
   const url = state.urlSearch;
   state.loadingSearch = true;
   try {
-    const result = await searchItem(url, filter);
+    const result = await searchItemss(url, filter);
     setResponse(state, result);
   } catch (error) {
     notify({
@@ -293,14 +293,14 @@ const openToEdit = (state, item) => {
   state.dialog = true;
 };
 export {
-  searchItem as a,
+  searchItemss as a,
   handleStoreItem as b,
   closeForm as c,
   openToEdit as d,
   handleRemoveItem as e,
   fetchData as f,
   handleEditItem as g,
-  handleSearchItem as h,
+  handlesearchItemss as h,
   openToCreate as o
 };
 //# sourceMappingURL=helper-BkHfu3mP.js.map

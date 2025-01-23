@@ -26,7 +26,7 @@ class AntecedenteFamiliarController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->antecedentefamiliarRepository->store($request);
     }
@@ -44,7 +44,6 @@ class AntecedenteFamiliarController extends Controller
     public function update(Request $request)
     {
         return $this->antecedentefamiliarRepository->update($request);
-
     }
 
     /**
@@ -65,6 +64,6 @@ class AntecedenteFamiliarController extends Controller
 
     public function show(Request $request)
     {
-        return $this->antecedentefamiliarRepository->show($request);
+        return $this->antecedentefamiliarRepository->search($request);
     }
 }

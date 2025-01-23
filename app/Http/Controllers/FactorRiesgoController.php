@@ -26,7 +26,7 @@ class FactorRiesgoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         return $this->factorriesgoRepository->store($request);
     }
@@ -37,7 +37,6 @@ class FactorRiesgoController extends Controller
     public function update(Request $request)
     {
         return $this->factorriesgoRepository->update($request);
-
     }
 
     /**
@@ -58,6 +57,6 @@ class FactorRiesgoController extends Controller
 
     public function show(Request $request)
     {
-        return $this->factorriesgoRepository->show($request);
+        return $this->factorriesgoRepository->search($request);
     }
 }

@@ -41,7 +41,6 @@ class CertificacionController extends Controller
     public function update(Request $request)
     {
         return $this->certificacionRepository->update($request);
-
     }
 
     /**
@@ -62,6 +61,6 @@ class CertificacionController extends Controller
 
     public function show(Request $request)
     {
-        return $this->certificacionRepository->show($request);
+        return $this->certificacionRepository->search($request);
     }
 }

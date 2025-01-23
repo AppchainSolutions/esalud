@@ -36,7 +36,7 @@ class DiepController extends Controller
         return $this->diepRepository->store($request);
     }
 
-    
+
     /**
      * Update the specified resource in storage.
      */
@@ -55,7 +55,7 @@ class DiepController extends Controller
 
     public function show(Request $request)
     {
-        return $this->diepRepository->show($request);
+        return $this->diepRepository->search($request);
     }
 
     public function search(Request $request)

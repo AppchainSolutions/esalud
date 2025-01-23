@@ -48,6 +48,6 @@ class GeneroController extends Controller
 
     public function show(Request $request)
     {
-        return $this->generoRepository->show($request);
+        return $this->generoRepository->search($request);
     }
 }

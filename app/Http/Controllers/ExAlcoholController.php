@@ -54,7 +54,7 @@ class ExAlcoholController extends Controller
 
     public function show(Request $request)
     {
-        return $this->exalcoholRepository->show($request);
+        return $this->exalcoholRepository->search($request);
     }
 
     public function search(Request $request)

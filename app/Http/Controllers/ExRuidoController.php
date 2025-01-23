@@ -57,12 +57,11 @@ class ExRuidoController extends Controller
 
     public function show(Request $request)
     {
-        return $this->exruidoRepository->show($request);
+        return $this->exruidoRepository->search($request);
     }
 
     public function search(Request $request)
     {
         return $this->exruidoRepository->search($request);
     }
-
 }

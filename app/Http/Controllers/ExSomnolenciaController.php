@@ -55,12 +55,11 @@ class ExSomnolenciaController extends Controller
 
     public function show(Request $request)
     {
-        return $this->exsomnolenciaRepository->show($request);
+        return $this->exsomnolenciaRepository->search($request);
     }
 
     public function search(Request $request)
     {
         return $this->exsomnolenciaRepository->search($request);
     }
-
 }

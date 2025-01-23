@@ -35,7 +35,7 @@ class ExSaludController extends Controller
         return $this->exsaludRepository->store($request);
     }
 
-    
+
     /**
      * Update the specified resource in storage.
      */
@@ -51,10 +51,10 @@ class ExSaludController extends Controller
     {
         return $this->exsaludRepository->delete($request);
     }
-    
+
     public function show(Request $request)
     {
-        return $this->exsaludRepository->show($request);
+        return $this->exsaludRepository->search($request);
     }
 
     public function search(Request $request)

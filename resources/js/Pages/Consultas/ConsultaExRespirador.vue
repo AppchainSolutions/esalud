@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { reactive, onMounted } from "vue";
-import { fetchData, handleSearchItem } from "@/helper.js";
+import { fetchData, handlesearchItemss } from "@/helper.js";
 
 defineOptions({ layout: AppLayout });
 const state = reactive({
@@ -126,7 +126,7 @@ function close() {
 //**********\\\\  CRUD ////*************/
 
 const handleSearch = async () => {
-    await handleSearchItem(state);
+    await handlesearchItemss(state);
 };
 </script>
 

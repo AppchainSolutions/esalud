@@ -25,7 +25,7 @@ class ExSiliceRepository extends Repository
                 ->get();
         }
 
-        return Tools::responseHandler($result);
+        return Tools::filterData($filters, $query);
     }
 
     // Add any necessary methods to the repository here

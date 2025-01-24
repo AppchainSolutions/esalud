@@ -12,6 +12,7 @@ import {
     CategoryScale,
     LinearScale,
 } from "chart.js";
+import { logDebug } from "@/utils/helper";
 
 ChartJS.register(
     Title,
@@ -48,7 +49,7 @@ let loaded = ref(false);
 const getData = async () => {
     try {
         const { data } = await axios.get("/dashboard/personasPorEmpresa");
-        debug.info(data);
+        debug.info("Info", { data });
         const { descripcion, total } = data.reduce(
             (acc, { descripcion, total }) => {
                 acc.descripcion.push(descripcion);

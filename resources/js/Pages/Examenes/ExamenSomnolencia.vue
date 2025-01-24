@@ -10,7 +10,7 @@ import {
     openToCreate,
     openToEdit,
     fetchData,
-} from "@/helper.js";
+} from "@/utils/helper.js";
 
 const store = useDataStore();
 const state = reactive({

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Doughnut } from "vue-chartjs";
 import { onMounted, reactive } from "vue";
 import autocolors from "chartjs-plugin-autocolors";
-import { fetchData } from "@/utils/helper.js";
+import { fetchData } from "@/helper.js";
 import {
     Chart as ChartJS,
     Title,

@@ -10,7 +10,7 @@ import {
     handleStoreItem,
     openToCreate,
     openToEdit,
-} from "@/utils/helper.js";
+} from "@/helper.js";
 import { get, put, search, post } from "@/api";
 
 const store = useDataStore();

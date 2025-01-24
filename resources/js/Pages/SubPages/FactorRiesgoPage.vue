@@ -9,7 +9,7 @@ import {
     closeForm,
     openToCreate,
     openToEdit,
-} from "@/utils/helper.js";
+} from "@/helper.js";
 
 const store = useDataStore();
 const state = reactive({

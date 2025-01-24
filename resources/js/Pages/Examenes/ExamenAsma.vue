@@ -9,7 +9,7 @@ import {
     handleStoreItem,
     openToCreate,
     openToEdit,
-} from "@/utils/helper.js";
+} from "@/helper.js";
 const store = useDataStore();
 const state = reactive({
     endpoints: ["estado_examen"],

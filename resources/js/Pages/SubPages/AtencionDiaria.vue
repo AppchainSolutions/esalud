@@ -11,7 +11,7 @@ import {
     handleStoreItem,
     openToCreate,
     openToEdit,
-} from "@/utils/helper.js";
+} from "@/helper.js";
 
 defineOptions({ layout: AppLayout });
 

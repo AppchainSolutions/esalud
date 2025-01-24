@@ -1,13 +1,16 @@
 import Swal from "sweetalert2";
-import { storeItem, deleteItem, editItem } from "@/crud";
+import { searchItems, storeItem, deleteItem, editItem, showItem } from "@/crud";
 import { useNotification } from "@kyvg/vue3-notification";
+import { useDataStore } from "@/store.js";
 import { nextTick } from "vue";
 import axios from "axios";
 import { debugHelpers as debug } from '@/utils/debug';
 
+const store = useDataStore();
 const { notify } = useNotification();
 
 //**********\\\\ METHODS ////*************//
+
 export const fetchData = async (endpoints) => {
     const fetches = endpoints.map(async (endpoint) => {
         const endpointUrl = "/secundaria/" + endpoint;
@@ -180,7 +183,7 @@ export const searchItems = async (url, searchFilters, endpoints) => {
  * @returns {Promise} - A promise that resolves with the search response.
  * @throws {Error} - If an error occurs during the search.
  */
-/* export const handlesearchItems = async (state) => {
+export const handlesearchItems = async (state) => {
     const filter = state.searchQuery;
     const url = state.urlSearch;
     state.loadingSearch = true;
@@ -198,7 +201,7 @@ export const searchItems = async (url, searchFilters, endpoints) => {
         state.tableItems = [];
     }
     state.loadingSearch = false;
-}; */
+};
 
 /**
  * Updates the application state based on the provided result and endpoints.
@@ -339,63 +342,4 @@ export const validationRules = (value) => {
     ];
 
     return { rutRules };
-};
-
-/**
- * Obtiene información sobre el caller actual
- * @returns {string} Información del caller en formato "archivo:función:línea"
- */
-const getCallerInfo = () => {
-    const error = new Error();
-    const stack = error.stack
-        .split('\n')
-        .map(line => line.trim())
-        .filter(line => line.startsWith('at '));
-
-    // Buscar la primera línea que no sea de este archivo
-    const callerLine = stack.find(line => 
-        !line.includes('helper.js') && 
-        !line.includes('debug.js') &&
-        (line.includes('.vue') || line.includes('/js/'))
-    );
-
-    if (callerLine) {
-        try {
-            // Extraer el nombre del archivo
-            const fileMatch = callerLine.match(/([^/]+\.vue|\w+\.js):/);
-            const fileName = fileMatch ? fileMatch[1] : '?';
-
-            // Extraer el número de línea
-            const lineMatch = callerLine.match(/:(\d+):/);
-            const lineNumber = lineMatch ? lineMatch[1] : '?';
-
-            // Extraer el nombre de la función
-            const funcMatch = callerLine.match(/at\s+([^(]+)\s*\(/);
-            let funcName = funcMatch ? funcMatch[1].trim() : '';
-            
-            // Limpiar el nombre de la función
-            funcName = funcName.split('.').pop() || 'anonymous';
-            
-            return `${fileName}:${funcName}:${lineNumber}`;
-        } catch (e) {
-            console.warn('Error parsing stack trace:', e);
-        }
-    }
-    
-    return '?:?:?';
-};
-
-/**
- * Helper para debug con información automática del caller
- * @param {string} type - Tipo de mensaje (info, error, warning, etc)
- * @param {string} message - Mensaje a mostrar
- * @param {any} data - Datos adicionales
- */
-export const logDebug = (type = 'info', message, data = null) => {
-    const caller = getCallerInfo();
-    if (typeof debug[type] === 'function') {
-        debug[type](message, data, caller);
-    } else {
-        debug.info(`[${type}] ${message}`, data, caller);
-    }
 };

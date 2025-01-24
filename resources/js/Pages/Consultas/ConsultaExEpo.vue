@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { reactive, onMounted } from "vue";
-import { fetchData, handlesearchItemss } from "@/utils/helper.js";
+import { fetchData, handlesearchItemss } from "@/helper.js";
 
 defineOptions({ layout: AppLayout });
 
@@ -397,7 +397,9 @@ const handleSearch = async () => {
                                     <v-select
                                         label="Riesgo Semáforo"
                                         variant="underlined"
-                                        v-model="state.searchQuery.semaforo"
+                                        v-model="
+                                            state.searchQuery.semaforo
+                                        "
                                         :items="state.list.semaforo"
                                         item-title="descripcion"
                                         item-value="id"
@@ -535,11 +537,14 @@ const handleSearch = async () => {
                                             ></v-select>
 
                                             <v-select
-                                                :items="state.list.semaforo"
+                                                :items="
+                                                    state.list.semaforo
+                                                "
                                                 item-title="descripcion"
                                                 item-value="id"
                                                 v-model="
-                                                    state.itemsView.semaforo
+                                                    state.itemsView
+                                                        .semaforo
                                                 "
                                                 label="Semáforo"
                                                 type="text"

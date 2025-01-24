@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { reactive, onMounted } from "vue";
-import { fetchData, handlesearchItemss } from "@/utils/helper.js";
+import { fetchData, handlesearchItemss } from "@/helper.js";
 
 defineOptions({ layout: AppLayout });
 

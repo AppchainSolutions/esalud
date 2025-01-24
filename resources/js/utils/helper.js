@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 import { storeItem, deleteItem, editItem } from "@/crud";
 import { useNotification } from "@kyvg/vue3-notification";
 import { nextTick } from "vue";
-import axios from "axios";
+import axios from "@/utils/axiosInstance";
 import { debugHelpers as debug } from '@/utils/debug';
 
 const { notify } = useNotification();
@@ -156,12 +156,12 @@ export const handleRemoveItem = async (state, item) => {
  * @returns {Promise<any>} - A promise that resolves to the retrieved item.
  * @param state
  */
-export const searchItems = async (url, searchFilters, endpoints) => {
-    debug.info('Iniciando búsqueda', { url, searchFilters, endpoints });
+export const searchItems = async (route, searchFilters, endpoints) => {
     try {
-        const result = await axios.get(url, { params: { searchFilters } });
+        debug.info('Iniciando búsqueda', { route, searchFilters, endpoints });
+        const result = await axios.get(route, { params: { searchFilters } });
         debug.success('Búsqueda exitosa', { result });
-        setResponse(result.data, endpoints);
+        //setResponse(result.data, endpoints);
     } catch (error) {
         debug.error('Error en búsqueda', { error: error.message });
         notify({

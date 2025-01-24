@@ -49,12 +49,46 @@ class PacienteController extends Controller
      */
     public function show(Request $request)
     {
-        Log::info($request->all());
-/*         $paciente = $this->pacienteService->show($request);
+        Log::info("show");
+        /*         $paciente = $this->pacienteService->show($request);
         return Inertia::render('Pacientes/Show', [
             'paciente' => $paciente
         ]);
- */    }
+ */
+    }
+
+    public function search(Request $request)
+    {
+        Log::info('Iniciando búsqueda de pacientes', [
+            'filters' => $request->all(),
+            'timestamp' => now()->toDateTimeString()
+        ]);
+
+        try {
+            $data = $this->pacienteService->search($request);
+
+            Log::info('Búsqueda completada exitosamente', [
+                'results_count' => is_countable($data) ? count($data) : 0
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Error en búsqueda de pacientes', [
+                'error_message' => $e->getMessage(),
+                'error_code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -86,26 +120,4 @@ class PacienteController extends Controller
         return redirect()->route('pacientes.index')
             ->with('success', 'Paciente eliminado exitosamente.');
     }
-
-    /**
-     * Mostrar historial médico del paciente
-     */
- /*    public function historialMedico($id)
-    {
-        $paciente = $this->pacienteService->getHistorialMedico($id);
-        return Inertia::render('Pacientes/HistorialMedico', [
-            'paciente' => $paciente
-        ]);
-    } */
-
-    /**
-     * Mostrar certificaciones del paciente
-     */
-/*     public function certificaciones($id)
-    {
-        $paciente = $this->pacienteService->show(new Request(['id' => $id]));
-        return Inertia::render('Pacientes/Certificaciones', [
-            'paciente' => $paciente
-        ]);
-    } */
 }

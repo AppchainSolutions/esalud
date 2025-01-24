@@ -1,5 +1,6 @@
 import debug from 'debug';
 
+
 // Namespace principal para la aplicación
 const APP_NAMESPACE = 'esalud';
 
@@ -127,3 +128,6 @@ export const d = (namespace = 'app') => createStyledDebugger(namespace);
 
 // Exportar función creadora para casos personalizados
 export const createDebugger = createStyledDebugger;
+
+//Importar debugger personalizado en componentes
+//import { debugHelpers as debug } from '@/utils/debug';

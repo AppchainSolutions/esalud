@@ -13,7 +13,7 @@ import {
     closeForm,
     openToCreate,
     openToEdit,
-} from "@/helper.js";
+} from "@/utils/helper.js";
 
 //**********\\\\  INI STATE VARIABLES AND CONST ////*************/
 
@@ -312,7 +312,11 @@ const remove = async (item) => {
         <div class="py-12">
             <DebugExample />
             <v-container fluid>
-                <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-4 pa-4'">
+                <v-sheet
+                    color="white"
+                    :elevation="6"
+                    :class="'rounded-lg ma-4 pa-4'"
+                >
                     <div class="text-h6 ma-2">{{ state.formTitle }}</div>
                     <v-expansion-panels>
                         <v-expansion-panel>
@@ -325,7 +329,10 @@ const remove = async (item) => {
                                         <v-col>
                                             <v-text-field
                                                 v-model="state.searchQuery.rut"
-                                                :rules="state.validationSchema.rutRules"
+                                                :rules="
+                                                    state.validationSchema
+                                                        .rutRules
+                                                "
                                                 label="Rut* (12345678-9)"
                                                 type="text"
                                                 variant="underlined"
@@ -343,7 +350,9 @@ const remove = async (item) => {
                                                 single
                                             ></v-select>
                                             <v-switch
-                                                v-model="state.searchQuery.activo"
+                                                v-model="
+                                                    state.searchQuery.activo
+                                                "
                                                 hide-details
                                                 variant="underlined"
                                                 color="green-darken-3"
@@ -353,7 +362,8 @@ const remove = async (item) => {
 
                                             <v-switch
                                                 v-model="
-                                                    state.searchQuery.protocolo_minsal
+                                                    state.searchQuery
+                                                        .protocolo_minsal
                                                 "
                                                 hide-details
                                                 variant="underlined"
@@ -367,7 +377,9 @@ const remove = async (item) => {
                                                 :items="state.list.empresa"
                                                 item-title="descripcion"
                                                 item-value="id"
-                                                v-model="state.searchQuery.empresa"
+                                                v-model="
+                                                    state.searchQuery.empresa
+                                                "
                                                 label="Empresa"
                                                 clearable
                                                 variant="underlined"
@@ -377,7 +389,9 @@ const remove = async (item) => {
                                                 :items="state.list.planta"
                                                 item-title="descripcion"
                                                 item-value="id"
-                                                v-model="state.searchQuery.planta"
+                                                v-model="
+                                                    state.searchQuery.planta
+                                                "
                                                 label="Planta"
                                                 clearable
                                                 variant="underlined"
@@ -388,7 +402,9 @@ const remove = async (item) => {
                                                 :items="state.list.exposicion"
                                                 item-title="descripcion"
                                                 item-value="descripcion"
-                                                v-model="state.searchQuery.exposicion"
+                                                v-model="
+                                                    state.searchQuery.exposicion
+                                                "
                                                 label="Exposicion"
                                                 clearable
                                                 variant="underlined"
@@ -401,7 +417,9 @@ const remove = async (item) => {
                                                 :items="state.list.unidad"
                                                 item-title="descripcion"
                                                 item-value="id"
-                                                v-model="state.searchQuery.unidad"
+                                                v-model="
+                                                    state.searchQuery.unidad
+                                                "
                                                 clearable
                                                 label="Unidad"
                                                 variant="underlined"
@@ -452,9 +470,17 @@ const remove = async (item) => {
                         </v-expansion-panel>
                     </v-expansion-panels>
 
-                    <v-divider thickness="4px" color="#009AA4" class="ma-4"></v-divider>
+                    <v-divider
+                        thickness="4px"
+                        color="#009AA4"
+                        class="ma-4"
+                    ></v-divider>
 
-                    <v-sheet color="white" :elevation="4" :class="'rounded-lg pa-2'">
+                    <v-sheet
+                        color="white"
+                        :elevation="4"
+                        :class="'rounded-lg pa-2'"
+                    >
                         <v-data-table
                             :headers="state.headers"
                             :items="state.tableItems"
@@ -488,10 +514,16 @@ const remove = async (item) => {
                                                     </div>
                                                     <v-spacer></v-spacer>
                                                     <v-row>
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem.rut
+                                                                    state
+                                                                        .editedItem
+                                                                        .rut
                                                                 "
                                                                 label="Rut* (12345678-9)"
                                                                 type="text"
@@ -500,10 +532,15 @@ const remove = async (item) => {
                                                                 variant="underlined"
                                                             ></v-text-field>
                                                         </v-col>
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .nombre
                                                                 "
                                                                 label="Nombre*"
@@ -514,10 +551,15 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .apellidos
                                                                 "
                                                                 label="Apellidos*"
@@ -528,15 +570,21 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-switch
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .activo
                                                                 "
                                                                 hide-details
                                                                 :value="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .activo
                                                                 "
                                                                 false-value="true"
@@ -548,7 +596,8 @@ const remove = async (item) => {
                                                             ></v-switch>
                                                             <v-switch
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .protocolo_minsal
                                                                 "
                                                                 hide-details
@@ -561,10 +610,15 @@ const remove = async (item) => {
                                                             ></v-switch>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-switch
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .donante
                                                                 "
                                                                 class="ml-2"
@@ -577,10 +631,15 @@ const remove = async (item) => {
                                                             ></v-switch>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .email
                                                                 "
                                                                 :rules="
@@ -596,27 +655,39 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .fecha_nacimiento
                                                                 "
                                                                 label="Fecha de nacimiento"
                                                                 clearable
                                                                 variant="underlined"
                                                                 type="date"
-                                                                :format="formatDate"
+                                                                :format="
+                                                                    formatDate
+                                                                "
                                                                 @input="
                                                                     handleInputChange
                                                                 "
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .edad
                                                                 "
                                                                 label="Edad*"
@@ -626,10 +697,15 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .direccion
                                                                 "
                                                                 label="Dirección"
@@ -638,11 +714,16 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-text-field
                                                                 label="teléfono 1"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .telefono1
                                                                 "
                                                                 clearable
@@ -650,10 +731,15 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .telefono2
                                                                 "
                                                                 label="teléfono 2"
@@ -662,7 +748,11 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="
                                                                     state.list
@@ -671,7 +761,8 @@ const remove = async (item) => {
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .grupo_sanguineo
                                                                 "
                                                                 label="Grupo sanguíneo"
@@ -680,7 +771,11 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="
                                                                     state.list
@@ -689,7 +784,8 @@ const remove = async (item) => {
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .estado_civil
                                                                 "
                                                                 label="Estado civil"
@@ -698,7 +794,11 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="
                                                                     state.list
@@ -707,7 +807,8 @@ const remove = async (item) => {
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .nacionalidad
                                                                 "
                                                                 label="Nacionalidad"
@@ -716,16 +817,22 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="
-                                                                    state.list.religion
+                                                                    state.list
+                                                                        .religion
                                                                 "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 label="Religion / Culto"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .religion
                                                                 "
                                                                 clearable
@@ -733,16 +840,22 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="
-                                                                    state.list.genero
+                                                                    state.list
+                                                                        .genero
                                                                 "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 label="Género"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .genero
                                                                 "
                                                                 clearable
@@ -750,7 +863,11 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="[
                                                                     'Institucional (MAI)',
@@ -759,7 +876,8 @@ const remove = async (item) => {
                                                                 item-title="descripcion"
                                                                 item-value="descripcion"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .modalidad
                                                                 "
                                                                 label="Modalidad de atención"
@@ -768,11 +886,16 @@ const remove = async (item) => {
                                                             >
                                                             </v-select>
                                                         </v-col>
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-text-field
                                                                 label="Ciudad"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .ciudad
                                                                 "
                                                                 clearable
@@ -780,15 +903,21 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="
-                                                                    state.list.prevision
+                                                                    state.list
+                                                                        .prevision
                                                                 "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .prevision
                                                                 "
                                                                 label="Previsión de Salud"
@@ -797,13 +926,22 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
-                                                                :items="state.list.afp"
+                                                                :items="
+                                                                    state.list
+                                                                        .afp
+                                                                "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 v-model="
-                                                                    state.editedItem.afp
+                                                                    state
+                                                                        .editedItem
+                                                                        .afp
                                                                 "
                                                                 label="AFP"
                                                                 clearable
@@ -811,7 +949,11 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="
                                                                     state.list
@@ -820,7 +962,8 @@ const remove = async (item) => {
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .ley_social
                                                                 "
                                                                 label="Leyes Sociales"
@@ -829,15 +972,21 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="
-                                                                    state.list.seguro
+                                                                    state.list
+                                                                        .seguro
                                                                 "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .seguro
                                                                 "
                                                                 label="Administradores del Seguro Ley 16.744"
@@ -845,15 +994,21 @@ const remove = async (item) => {
                                                                 variant="underlined"
                                                             ></v-select>
                                                         </v-col>
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="
-                                                                    state.list.pueblo
+                                                                    state.list
+                                                                        .pueblo
                                                                 "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .pueblo
                                                                 "
                                                                 label="Pueblo originario"
@@ -861,7 +1016,11 @@ const remove = async (item) => {
                                                                 variant="underlined"
                                                             ></v-select>
                                                         </v-col>
-                                                        <v-col cols="6" sm="4" md="2">
+                                                        <v-col
+                                                            cols="6"
+                                                            sm="4"
+                                                            md="2"
+                                                        >
                                                             <v-select
                                                                 :items="
                                                                     state.list
@@ -870,7 +1029,8 @@ const remove = async (item) => {
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .instruccion
                                                                 "
                                                                 label="Nivel de Instruccion"
@@ -884,10 +1044,15 @@ const remove = async (item) => {
                                                     </div>
                                                     <v-spacer></v-spacer>
                                                     <v-row class="mt-2">
-                                                        <v-col cols="12" sm="6" md="3">
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="6"
+                                                            md="3"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .actividad_economica
                                                                 "
                                                                 label="Actividad económica"
@@ -897,16 +1062,22 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="6" md="3">
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="6"
+                                                            md="3"
+                                                        >
                                                             <v-select
                                                                 :items="
-                                                                    state.list.empresa
+                                                                    state.list
+                                                                        .empresa
                                                                 "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 clearable
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .empresa
                                                                 "
                                                                 label="Empresa*"
@@ -914,10 +1085,15 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="6" md="3">
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="6"
+                                                            md="3"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .cargo
                                                                 "
                                                                 label="Cargo"
@@ -926,14 +1102,22 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="6" md="3">
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="6"
+                                                            md="3"
+                                                        >
                                                             <v-select
-                                                                :items="state.list.area"
+                                                                :items="
+                                                                    state.list
+                                                                        .area
+                                                                "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 clearable
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .area
                                                                 "
                                                                 label="Área"
@@ -942,16 +1126,22 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="6" md="3">
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="6"
+                                                            md="3"
+                                                        >
                                                             <v-select
                                                                 :items="
-                                                                    state.list.unidad
+                                                                    state.list
+                                                                        .unidad
                                                                 "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 clearable
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .unidad
                                                                 "
                                                                 label="Unidad"
@@ -959,10 +1149,15 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="6" md="3">
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="6"
+                                                            md="3"
+                                                        >
                                                             <v-text-field
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .ocupacion
                                                                 "
                                                                 label="Ocupación"
@@ -971,7 +1166,11 @@ const remove = async (item) => {
                                                             ></v-text-field>
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="6" md="3">
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="6"
+                                                            md="3"
+                                                        >
                                                             <v-select
                                                                 :items="
                                                                     state.list
@@ -982,7 +1181,8 @@ const remove = async (item) => {
                                                                 clearable
                                                                 chips
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .exposicion
                                                                 "
                                                                 label="Exposicion"
@@ -991,14 +1191,22 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="6" md="3">
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="6"
+                                                            md="3"
+                                                        >
                                                             <v-select
-                                                                :items="state.list.ceco"
+                                                                :items="
+                                                                    state.list
+                                                                        .ceco
+                                                                "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 clearable
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .ceco
                                                                 "
                                                                 label="Área de Trabajo (Cencos)"
@@ -1007,16 +1215,22 @@ const remove = async (item) => {
                                                             ></v-select>
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="6" md="3">
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="6"
+                                                            md="3"
+                                                        >
                                                             <v-select
                                                                 :items="
-                                                                    state.list.planta
+                                                                    state.list
+                                                                        .planta
                                                                 "
                                                                 item-title="descripcion"
                                                                 item-value="id"
                                                                 clearable
                                                                 v-model="
-                                                                    state.editedItem
+                                                                    state
+                                                                        .editedItem
                                                                         .planta
                                                                 "
                                                                 label="Planta"
@@ -1050,7 +1264,10 @@ const remove = async (item) => {
                             </template>
 
                             <template v-slot:item.actions="{ item }">
-                                <v-tooltip text="Atenciones Diarias" location="top">
+                                <v-tooltip
+                                    text="Atenciones Diarias"
+                                    location="top"
+                                >
                                     <template v-slot:activator="{ props }">
                                         <v-btn
                                             v-bind="props"

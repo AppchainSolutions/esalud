@@ -15,21 +15,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Rutas protegidas que requieren autenticación
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+
     // Rutas de Pacientes
-    Route::prefix('pacientes')->group(function () {
-        Route::get('search', [PacienteController::class, 'search']);
-        // Aquí puedes agregar más rutas relacionadas con pacientes
-    });
+        Route::get('pacientes/search', [PacienteController::class, 'search']);
 
     // Aquí puedes agregar más grupos de rutas protegidas
 });
 
-// Rutas públicas (si las necesitas)
-Route::prefix('public')->group(function () {
-    // Aquí van las rutas públicas que no requieren autenticación
-});
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// // Rutas públicas (si las necesitas)
+// Route::prefix('public')->group(function () {
+//     // Aquí van las rutas públicas que no requieren autenticación
+// });
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });

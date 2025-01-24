@@ -1,4 +1,3 @@
-import "./bootstrap";
 import { createApp, h } from "vue";
 import { VueSpinnersPlugin } from 'vue3-spinners';
 import { LoadingPlugin } from "vue-loading-overlay";

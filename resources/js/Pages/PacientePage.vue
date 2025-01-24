@@ -15,6 +15,9 @@ import {
     openToEdit,
 } from "@/utils/helper.js";
 import { debugHelpers as debug } from "@/utils/debug.js";
+import Swal from 'sweetalert2';
+import { useNotification } from "@kyvg/vue3-notification";
+const { notify } = useNotification();
 
 //**********\\\\  INI STATE VARIABLES AND CONST ////*************/
 
@@ -260,12 +263,30 @@ const searchPacientes = async () => {
             state.searchQuery,
             state.list
         );
+        
         if (response.success) {
-            state.tableItems = response.data;
+            state.tableItems = response.data || [];
+            notify({
+                title: "Éxito",
+                text: "Búsqueda realizada correctamente",
+                type: "success"
+            });
+        } else {
+            state.tableItems = [];
+            notify({
+                title: "Advertencia",
+                text: response.message || "No se encontraron resultados",
+                type: "warn"
+            });
         }
     } catch (error) {
-        debug.error("Error en búsqueda:", error);
+        debug.error('Error en búsqueda:', error);
         state.tableItems = [];
+        notify({
+            title: "Error",
+            text: error.response?.data?.message || "Error al realizar la búsqueda",
+            type: "error"
+        });
     } finally {
         state.loadingSearch = false;
     }
@@ -283,18 +304,23 @@ const create = async () => {
     try {
         await handleStoreItem(state, "create");
         closeForm(state);
+        notify({
+            title: "Éxito",
+            text: "Paciente creado correctamente",
+            type: "success"
+        });
     } catch (error) {
         if (error.response?.status === 409) {
-            // Error de RUT duplicado
             notify({
-                text: error.response.data.message,
-                type: "error",
+                title: "Error",
+                text: error.response.data.message || "RUT duplicado",
+                type: "error"
             });
         } else {
-            // Otros errores
             notify({
+                title: "Error",
                 text: "Error al crear el paciente. Por favor, intente nuevamente.",
-                type: "error",
+                type: "error"
             });
         }
     }
@@ -303,6 +329,11 @@ const create = async () => {
 const update = async () => {
     await handleStoreItem(state, "edit");
     closeForm(state);
+    notify({
+        title: "Éxito",
+        text: "Paciente actualizado correctamente",
+        type: "success"
+    });
 };
 
 function openFormEdit(item) {
@@ -312,11 +343,17 @@ function openFormEdit(item) {
 
 const remove = async (item) => {
     handleRemoveItem(state, item);
+    notify({
+        title: "Éxito",
+        text: "Paciente eliminado correctamente",
+        type: "success"
+    });
 };
 </script>
 
 <template>
-    <div class="py-12">
+    <div>
+        <notifications position="top right" :duration="5000" />
         <DebugExample />
         <v-container fluid>
             <v-sheet

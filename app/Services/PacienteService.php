@@ -256,8 +256,12 @@ class PacienteService
     /**
      * Buscar pacientes por criterios
      */
-    public function search(Request $request): Object
+    public function search(Request $request)//: Object
     {
+        Log::info('Búsqueda de pacientes en Service', [
+            'filters' => $request->all(),
+            'timestamp' => now()->toDateTimeString()
+        ]);
         return $this->pacienteRepository->search($request);
     }
 

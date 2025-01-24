@@ -133,6 +133,10 @@ abstract class Repository implements RepositoryInterface
 
     public function search(Request $request)
     {
+        Log::info('Búsqueda en Repositorio', [
+            'filters' => $request->all(),
+            'timestamp' => now()->toDateTimeString()
+        ]);
         try {
             Log::info($request);
             $class = get_class($this->model);

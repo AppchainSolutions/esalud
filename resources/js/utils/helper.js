@@ -1,10 +1,12 @@
 import Swal from "sweetalert2";
-import { storeItem, deleteItem, editItem } from "@/crud";
+//import { storeItem, deleteItem, editItem } from "@/crud";
 import { useNotification } from "@kyvg/vue3-notification";
 import { nextTick } from "vue";
-import axios from "@/utils/axiosInstance";
+import  axios  from "@/utils/axiosInstance";
 import { debugHelpers as debug } from '@/utils/debug';
 
+
+// Crear instancia de notificación
 const { notify } = useNotification();
 
 //**********\\\\ METHODS ////*************//
@@ -159,16 +161,26 @@ export const handleRemoveItem = async (state, item) => {
 export const searchItems = async (route, searchFilters, endpoints) => {
     try {
         debug.info('Iniciando búsqueda', { route, searchFilters, endpoints });
-        const result = await axios.get(route, { params: { searchFilters } });
-        debug.success('Búsqueda exitosa', { result });
-        //setResponse(result.data, endpoints);
-    } catch (error) {
-        debug.error('Error en búsqueda', { error: error.message });
-        notify({
-            title: "Error.",
-            text: error,
-            type: "error",
+        const response = await axios.get(route, { 
+            params: { searchFilters }
         });
+        
+        debug.success('Búsqueda exitosa', response.data);
+        return response.data;
+    } catch (error) {
+        debug.error('Error en búsqueda', { 
+            error: error.message,
+            response: error.response?.data 
+        });
+        
+        // Usar Swal para mostrar errores
+        await Swal.fire({
+            title: 'Error',
+            text: error.response?.data?.message || 'Error al realizar la búsqueda',
+            icon: 'error'
+        });
+        
+        throw error;
     } 
 };
 

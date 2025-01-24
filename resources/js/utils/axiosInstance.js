@@ -1,5 +1,15 @@
 import axios from "axios";
 
+window.axios = axios;
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+//const baseURL = process.env.NODE_ENV === 'local' ? 'http://localhost:8000' : 'https://vulco.appchain.solutions';
+
+//const axiosInstance = axios.create({
+//  baseURL: baseURL,
+  // Otras configuraciones de Axios
+//});
 // Configurar axios para incluir el token CSRF
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

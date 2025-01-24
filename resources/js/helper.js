@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { searchItemss, storeItem, deleteItem, editItem, showItem } from "@/crud";
+import { searchItems, storeItem, deleteItem, editItem, showItem } from "@/crud";
 import { useNotification } from "@kyvg/vue3-notification";
 import { useDataStore } from "@/store.js";
 import { nextTick } from "vue";
@@ -22,7 +22,7 @@ export const fetchData = async (endpoints) => {
                 endpoint,
             };
         } catch (error) {
-            debug('Error al obtener datos %O', { error: error.message, stack: error.stack });
+            debug.error('Error al obtener datos', { error: error.message, stack: error.stack });
             return { endpoint, data: null };
         }
     });
@@ -43,10 +43,10 @@ export const handleStoreItem = async (state, mode) => {
     if (mode === "create") {
         try {
             const item = { ...state.editedItem };
-            debug('Creando nuevo item %O', item);
+            debug.info('Creando nuevo item', item);
             const response = await storeItem(state.urlStore, item);
             
-            debug('Item creado exitosamente %O', response);
+            debug.success('Item creado exitosamente', response);
             notify({
                 text: "Datos almacenados exitosamente.",
                 type: "success",
@@ -54,14 +54,14 @@ export const handleStoreItem = async (state, mode) => {
 
             return response;
         } catch (error) {
-            debug('Error al crear item %O', error);
+            debug.error('Error al crear item', error);
             throw error;
         }
     } else if (mode === "edit") {
         try {
             const item = state.editedItem;
             const url = state.urlUpdate;
-            debug('Actualizando item %O', { item, url });
+            debug.info('Actualizando item', { item, url });
             
             if (state.endpoints) {
                 state.endpoints.forEach((campo) => {
@@ -72,7 +72,7 @@ export const handleStoreItem = async (state, mode) => {
             }
             
             const result = await editItem(url, item);
-            debug('Item actualizado exitosamente %O', result);
+            debug.success('Item actualizado exitosamente', result);
             
             notify({
                 title: "Información importante.",
@@ -82,7 +82,7 @@ export const handleStoreItem = async (state, mode) => {
             
             return result;
         } catch (error) {
-            debug('Error al actualizar item %O', error);
+            debug.error('Error al actualizar item', error);
             notify({
                 title: "Error.",
                 text: "Error al actualizar el registro: ",
@@ -104,7 +104,7 @@ export const handleEditItem = (state, item) => {};
  */
 export const handleRemoveItem = async (state, item) => {
     try {
-        debug('Iniciando proceso de eliminación %O', { itemId: item.id });
+        debug.info('Iniciando proceso de eliminación', { itemId: item.id });
         
         Swal.fire({
             title: "Eliminación de registro",
@@ -117,7 +117,7 @@ export const handleRemoveItem = async (state, item) => {
             if (result.isConfirmed) {
                 const id = item.id;
                 const url = state.urlDelete;
-                debug('Ejecutando eliminación %O', { id, url });
+                debug.info('Ejecutando eliminación', { id, url });
                 
                 const result = await deleteItem(url, id);
                 if (result.status === 200) {
@@ -125,7 +125,7 @@ export const handleRemoveItem = async (state, item) => {
                     state.editedItem = { ...item };
                     state.tableItems.splice(state.editedIndex, 1);
                     
-                    debug('Item eliminado exitosamente %O', { id });
+                    debug.success('Item eliminado exitosamente', { id });
                     notify({
                         text: "El registro ha sido eliminado.",
                         type: "success",
@@ -136,7 +136,7 @@ export const handleRemoveItem = async (state, item) => {
                         state.editedIndex = -1;
                     });
                 } else {
-                    debug('Error en la respuesta del servidor %O', { result });
+                    debug.error('Error en la respuesta del servidor', { result });
                     Swal.fire({
                         title: "Error.",
                         text: result.response.data.message,
@@ -148,7 +148,7 @@ export const handleRemoveItem = async (state, item) => {
             }
         });
     } catch (error) {
-        debug('Error al eliminar item %O', { error: error.message, stack: error.stack });
+        debug.error('Error al eliminar item', { error: error.message, stack: error.stack });
         console.error(error);
     }
 };
@@ -160,13 +160,13 @@ export const handleRemoveItem = async (state, item) => {
  * @param state
  */
 export const searchItems = async (url, searchFilters, endpoints) => {
-    debug('Iniciando búsqueda %O', { url, searchFilters, endpoints });
+    debug.info('Iniciando búsqueda', { url, searchFilters, endpoints });
     try {
         const result = await axios.get(url, { params: { searchFilters } });
-        debug('Resultado de búsqueda obtenido %O', { result });
+        debug.success('Búsqueda exitosa', { result });
         setResponse(result.data, endpoints);
     } catch (error) {
-        debug('Error en búsqueda %O', { error: error.message });
+        debug.error('Error en búsqueda', { error: error.message });
         notify({
             title: "Error.",
             text: error,
@@ -191,7 +191,7 @@ export const handlesearchItems = async (state) => {
         const result = await searchItems(url, filter);
         setResponse(state, result);
     } catch (error) {
-        debug('Error al buscar item %O', { error: error.message, stack: error.stack });
+        debug.error('Error al buscar item', { error: error.message, stack: error.stack });
         notify({
             title: "Error.",
             text: "Se produjo un error.",

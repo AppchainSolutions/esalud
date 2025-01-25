@@ -49,9 +49,16 @@ esalud/
   - Liskov Substitution Principle
   - Interface Segregation Principle
   - Dependency Inversion Principle
-- Aplicar DRY (Don't Repeat Yourself)
-- Implementar patrones de diseño cuando sea apropiado
-- Usar TDD
+  - Aplicar DRY (Don't Repeat Yourself)
+  - Implementar patrones de diseño cuando sea apropiado
+  - Usar TDD
+  - Implementar inyección de dependencias
+  - Usar repositorios para abstracción de datos
+  - Usar layer service para manejo de logica de datos
+  - Escribir pruebas unitarias y de integración
+  - Mantener separación de responsabilidades
+  - Documentar código y APIs
+  - Usar TypeScript en Vue.js para tipado estático
 
 ### Caché y Optimización
 

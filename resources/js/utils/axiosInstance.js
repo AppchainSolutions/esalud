@@ -1,18 +1,9 @@
 import axios from "axios";
+import { router } from '@inertiajs/vue3';
 
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-//const baseURL = process.env.NODE_ENV === 'local' ? 'http://localhost:8000' : 'https://vulco.appchain.solutions';
-
-//const axiosInstance = axios.create({
-//  baseURL: baseURL,
-  // Otras configuraciones de Axios
-//});
-// Configurar axios para incluir el token CSRF
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 // Determinar la URL base desde las variables de entorno
 const baseURL = import.meta.env.VITE_APP_URL || 'http://localhost:8000';
@@ -21,19 +12,57 @@ const apiTimeout = parseInt(import.meta.env.VITE_API_TIMEOUT || '10000');
 const axiosInstance = axios.create({
     baseURL,
     timeout: apiTimeout,
+    withCredentials: true,
     headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
     }
 });
 
-// Interceptor para manejar errores globalmente
+// Función para limpiar datos de sesión
+function clearSessionData() {
+    // Eliminar cookies de Laravel
+    document.cookie.split(";").forEach(function(c) {
+        document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
+    // Limpiar localStorage
+    localStorage.clear();
+
+    // Limpiar sessionStorage
+    sessionStorage.clear();
+}
+
+// Interceptores
 axiosInstance.interceptors.response.use(
     response => response,
     error => {
-        if (error.response?.status === 401) {
-            // Manejar error de autenticación
-            console.error('Error de autenticación');
+        // Manejar errores de autenticación y sesión expirada
+        if (error.response) {
+            switch (error.response.status) {
+                case 401:
+                    console.error('Error de autenticación');
+                    break;
+                case 419: // Page Expired
+                    clearSessionData();
+                    
+                    // Redirigir al login usando Inertia
+                    router.visit('/login', {
+                        method: 'get',
+                        replace: true,
+                        preserveState: false,
+                        preserveScroll: false,
+                        onSuccess: () => {
+                            // Mostrar mensaje de sesión expirada
+                            window.flash = {
+                                type: 'error',
+                                message: 'Su sesión ha expirado. Por favor, inicie sesión nuevamente.'
+                            };
+                        }
+                    });
+                    break;
+            }
         }
         return Promise.reject(error);
     }

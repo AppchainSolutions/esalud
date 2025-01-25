@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Cache;
 abstract class Repository implements RepositoryInterface
 {
 
-    protected $model;
+    protected Model $model;
 
     public function __construct(Model $model)
     {
@@ -156,39 +156,28 @@ abstract class Repository implements RepositoryInterface
         }
     }
 
+    public function show(Request $request)
+    {
+        $id = $request->get('id');
+        try {
+            return $this->model->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'result' => 'error',
+                'message' => 'Model not found',
+            ], 404);
+        }
+    }
+
     /**
      * Crear un nuevo registro
      *
      * @param array $data
      * @return Model
      */
-    public function create(array $data)
+    public function create($request)
     {
-        return $this->model->create($data);
+        return $this->model->create($request->all());
     }
 
-
-    /**
-     * Encontrar un registro por su ID
-     *
-     * @param int $id
-     * @param array $relations
-     * @return Model
-     */
-    public function find($id, array $relations = [])
-    {
-        return $this->model->with($relations)->findOrFail($id);
-    }
-
-    /**
-     * Obtener registros con paginación
-     *
-     * @param int $perPage
-     * @param array $relations
-     * @return \Illuminate\Pagination\LengthAwarePaginator
-     */
-    public function paginate($perPage = 15, array $relations = [])
-    {
-        return $this->model->with($relations)->paginate($perPage);
-    }
 }

@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\NextScheduleCheckCommand::class,
         \App\Console\Commands\ScheduleMonitorCommand::class,
         \App\Console\Commands\TimezoneCheckCommand::class,
+        \App\Console\Commands\CleanStorageFiles::class,
     ];
 
     protected function schedule(Schedule $schedule)

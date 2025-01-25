@@ -51,6 +51,7 @@ esalud/
   - Dependency Inversion Principle
 - Aplicar DRY (Don't Repeat Yourself)
 - Implementar patrones de diseño cuando sea apropiado
+- Usar TDD
 
 ### Caché y Optimización
 

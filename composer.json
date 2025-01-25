@@ -23,9 +23,9 @@
     "tightenco/ziggy": "^2.0"
   },
   "require-dev": {
-    "itsgoingd/clockwork": "^5.2",
     "fakerphp/faker": "^1.9.1",
     "infection/infection": "^0.29.8",
+    "itsgoingd/clockwork": "^5.3",
     "kitloong/laravel-migrations-generator": "^7.0",
     "laravel/dusk": "^8.2",
     "laravel/pint": "^1.0",

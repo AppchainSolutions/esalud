@@ -353,8 +353,6 @@ const remove = async (item) => {
 
 <template>
     <div>
-        <notifications position="top right" :duration="5000" />
-        <DebugExample />
         <v-container fluid>
             <v-sheet
                 color="white"

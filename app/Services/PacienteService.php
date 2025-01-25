@@ -2,30 +2,80 @@
 
 namespace App\Services;
 
-use App\Exceptions\PacienteNotFoundException;
-use App\Exceptions\PacienteRutDuplicadoException;
-use App\Exceptions\ValidationException;
-use App\Models\Paciente;
-use App\Repository\PacienteRepository;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\UniqueConstraintViolationException;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Repository\PacienteRepository;
 use Illuminate\Support\Facades\Log;
-use Throwable;
+use Illuminate\Support\Collection;
+use Clockwork\Clockwork;
 
 class PacienteService
 {
-    protected $pacienteRepository;
+    private PacienteRepository $pacienteRepository;
+    protected $clockwork;
+
+    public function __construct(
+        PacienteRepository $pacienteRepository,
+        Clockwork $clockwork
+    ) {
+        $this->pacienteRepository = $pacienteRepository;
+        $this->clockwork = $clockwork;
+    }
 
     /**
-     * Create a new PacienteService instance.
+     * Buscar pacientes por criterios
+     * 
+     * @param Request $request
+     * @return Collection
      */
-    public function __construct(PacienteRepository $pacienteRepository)
+    public function search(Request $request): Collection
     {
-        $this->pacienteRepository = $pacienteRepository;
+        // Iniciar un evento personalizado en Clockwork
+        $this->clockwork->event('Búsqueda de Pacientes')
+            ->description('Realizando búsqueda con filtros')
+            ->data($request->all());
+
+        // Registrar un log de información
+        Log::info('Búsqueda de pacientes iniciada', $request->all());
+
+        // Medir el tiempo de ejecución
+        $inicio = microtime(true);
+
+        try {
+            $pacientes = $this->pacienteRepository->search($request);
+
+            $tiempoEjecucion = microtime(true) - $inicio;
+
+            // Agregar información de rendimiento a Clockwork
+            $this->clockwork->event('Búsqueda de Pacientes')
+                ->duration($tiempoEjecucion * 1000) // Convertir a milisegundos
+                ->data([
+                    'total_pacientes' => count($pacientes),
+                    'tiempo_ejecucion' => $tiempoEjecucion
+                ]);
+
+            // Log de éxito
+            Log::info('Búsqueda de pacientes completada', [
+                'total_resultados' => count($pacientes),
+                'tiempo_ejecucion' => $tiempoEjecucion
+            ]);
+
+            return $pacientes;
+        } catch (\Throwable $e) {
+            // Registrar errores en Clockwork y Log
+            $this->clockwork->event('Error en Búsqueda de Pacientes')
+                ->failed()
+                ->data([
+                    'mensaje_error' => $e->getMessage(),
+                    'filtros' => $request->all()
+                ]);
+
+            Log::error('Error en búsqueda de pacientes', [
+                'error' => $e->getMessage(),
+                'filtros' => $request->all()
+            ]);
+
+            throw $e;
+        }
     }
 
     /**
@@ -33,22 +83,40 @@ class PacienteService
      */
     public function show(Request $request)
     {
-        Log::info($request->all());
-        /* try {
-            $request->validate([
-                'id' => 'required|exists:$request->id'
+        // Ejemplo de tracking de creación de paciente
+        $this->clockwork->event('Mostrar Paciente')
+            ->description('Proceso de mostrar paciente')
+            ->data($request->all());
+
+        try {
+            $paciente = $this->pacienteRepository->show($request);
+
+            $this->clockwork->event('Mostrar Paciente')
+                ->data([
+                    'paciente_id' => $paciente->id,
+                    'datos_mostrados' => $paciente
+                ]);
+
+            Log::info('Paciente mostrado exitosamente', [
+                'paciente_id' => $paciente->id
             ]);
 
-            $paciente = $this->pacienteRepository->search($request);
-
             return $paciente;
-        } catch (ValidationException $e) {
-            Log::warning('Error de validación en show paciente: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            $this->clockwork->event('Error al Mostrar Paciente')
+                ->failed()
+                ->data([
+                    'mensaje_error' => $e->getMessage(),
+                    'datos_intento' => $request->all()
+                ]);
+
+            Log::error('Error al mostrar paciente', [
+                'error' => $e->getMessage(),
+                'datos' => $request->all()
+            ]);
+
             throw $e;
-        } catch (Throwable $e) {
-            Log::error('Error al mostrar paciente: ' . $e->getMessage());
-            throw $e;
-        } */
+        }
     }
 
     /**
@@ -56,30 +124,38 @@ class PacienteService
      */
     public function store(Request $request)
     {
+        // Ejemplo de tracking de creación de paciente
+        $this->clockwork->event('Crear Paciente')
+            ->description('Proceso de creación de nuevo paciente')
+            ->data($request->all());
+
         try {
-            DB::beginTransaction();
+            $paciente = $this->pacienteRepository->create($request);
 
-            $validated = $this->validatePacienteData($request);
-            
-            try {
-                $paciente = $this->pacienteRepository->create($validated);
-            } catch (UniqueConstraintViolationException $e) {
-                throw new PacienteRutDuplicadoException($validated['rut']);
-            }
+            $this->clockwork->event('Crear Paciente')
+                ->data([
+                    'paciente_id' => $paciente->id,
+                    'datos_creados' => $request->all()
+                ]);
 
-            // Crear registros relacionados si existen
-            if ($request->has('historial_medico')) {
-                $this->createHistorialMedico($paciente, $request->historial_medico);
-            }
+            Log::info('Paciente creado exitosamente', [
+                'paciente_id' => $paciente->id
+            ]);
 
-            DB::commit();
             return $paciente;
-        } catch (PacienteRutDuplicadoException $e) {
-            DB::rollBack();
-            throw $e;
-        } catch (Throwable $e) {
-            DB::rollBack();
-            Log::error('Error al crear paciente: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            $this->clockwork->event('Error al Crear Paciente')
+                ->failed()
+                ->data([
+                    'mensaje_error' => $e->getMessage(),
+                    'datos_intento' => $request->all()
+                ]);
+
+            Log::error('Error al crear paciente', [
+                'error' => $e->getMessage(),
+                'datos' => $request->all()
+            ]);
+
             throw $e;
         }
     }
@@ -89,180 +165,81 @@ class PacienteService
      */
     public function update(Request $request)
     {
-        // Validar el request
-        $validated = $request->validate([
-            'id' => 'required|exists:pacientes,id',
-            'nombre' => 'sometimes|string|max:255',
-            'apellido' => 'sometimes|string|max:255',
-            'rut' => 'sometimes|string|unique:pacientes,rut,' . $request->id,
-            'email' => 'sometimes|email|unique:pacientes,email,' . $request->id,
-            'empresa_id' => 'sometimes|exists:empresas,id',
-            'area_id' => 'sometimes|exists:areas,id',
-            // Agregar más validaciones según tus campos
-        ]);
+        // Ejemplo de tracking de actualización de paciente
+        $this->clockwork->event('Actualizar Paciente')
+            ->description('Proceso de actualización de paciente')
+            ->data($request->all());
 
-        return $this->pacienteRepository->update($request->id, $validated);
-    }
-
-    /**
-     * Actualizar estado de certificación del paciente
-     * @param Request $request
-     * @return mixed
-     * @throws PacienteNotFoundException
-     */
-   /*  public function updateEstadoCertificacion(Request $request)
-    {
         try {
-            $pacienteId = $request->input('paciente_id');
-            $estado = $request->input('estado');
-            
-            return DB::transaction(function () use ($pacienteId, $estado) {
-                $paciente = $this->pacienteRepository->findById($pacienteId);
-                if (!$paciente) {
-                    throw new PacienteNotFoundException("Paciente no encontrado con ID: {$pacienteId}");
-                }
+            $paciente = $this->pacienteRepository->update($request);
 
-                return $this->pacienteRepository->update($pacienteId, [
-                    'estado_certificacion' => $estado,
-                    'fecha_actualizacion_certificacion' => Carbon::now()
+            // $this->clockwork->event('Actualizar Paciente')
+            //     ->data([
+            //         'paciente_id' => $paciente->id,
+            //         'datos_actualizados' => $request->all()
+            //     ]);
+
+            // Log::info('Paciente actualizado exitosamente', [
+            //     'paciente_id' => $paciente->id
+            // ]);
+
+            return $paciente;
+        } catch (\Exception $e) {
+            $this->clockwork->event('Error al Actualizar Paciente')
+                ->failed()
+                ->data([
+                    'mensaje_error' => $e->getMessage(),
+                    'datos_intento' => $request->all()
                 ]);
-            });
-        } catch (Throwable $e) {
-            Log::error('Error al actualizar estado de certificación: ' . $e->getMessage());
+
+            Log::error('Error al actualizar paciente', [
+                'error' => $e->getMessage(),
+                'datos' => $request->all()
+            ]);
+
             throw $e;
         }
-    } */
+    }
 
     /**
      * Eliminar un paciente
      */
     public function destroy(Request $request)
     {
-        // Validar el request
-        $request->validate([
-            'id' => 'required|exists:pacientes,id'
-        ]);
+        // Ejemplo de tracking de eliminación de paciente
+        $this->clockwork->event('Eliminar Paciente')
+            ->description('Proceso de eliminación de paciente')
+            ->data($request->all());
 
-        return $this->pacienteRepository->delete($request->id);
-    }
-
-    /**
-     * Agregar documento médico al paciente
-     */
-   /*  public function addDocumentoMedico(int $pacienteId, array $documentoData): void
-    {
         try {
-            DB::transaction(function () use ($pacienteId, $documentoData) {
-                $paciente = $this->pacienteRepository->findById($pacienteId);
-                if (!$paciente) {
-                    throw new PacienteNotFoundException("Paciente no encontrado con ID: {$pacienteId}");
-                }
+            $paciente = $this->pacienteRepository->delete($request);
 
-                $paciente->documentos()->create($documentoData);
-            });
-        } catch (Throwable $e) {
-            Log::error('Error al agregar documento médico: ' . $e->getMessage());
-            throw $e;
-        }
-    } */
+            // $this->clockwork->event('Eliminar Paciente')
+            //     ->data([
+            //         'paciente_id' => $paciente->id,
+            //         'datos_eliminados' => $request->all()
+            //     ]);
 
-    /**
-     * Programar cita médica
-     */
+            // Log::info('Paciente eliminado exitosamente', [
+            //     'paciente_id' => $paciente->id
+            // ]);
 
-     /*  public function programarCita(int $pacienteId, array $citaData): void
-    {
-        try {
-            DB::transaction(function () use ($pacienteId, $citaData) {
-                $paciente = $this->pacienteRepository->findById($pacienteId);
-                if (!$paciente) {
-                    throw new PacienteNotFoundException("Paciente no encontrado con ID: {$pacienteId}");
-                }
+            return $paciente;
+        } catch (\Exception $e) {
+            $this->clockwork->event('Error al Eliminar Paciente')
+                ->failed()
+                ->data([
+                    'mensaje_error' => $e->getMessage(),
+                    'datos_intento' => $request->all()
+                ]);
 
-                // Validar disponibilidad de horario
-                $this->validarDisponibilidadCita($citaData);
-
-                $paciente->citas()->create($citaData);
-            });
-        } catch (Throwable $e) {
-            Log::error('Error al programar cita: ' . $e->getMessage());
-            throw $e;
-        }
-    } */
-
-    /**
-     * Obtener estadísticas del paciente
-     */
-    /* public function getEstadisticas(int $pacienteId): array
-    {
-        try {
-            $paciente = $this->pacienteRepository->findById($pacienteId, [
-                'citas',
-                'atenciones',
-                'certificaciones'
+            Log::error('Error al eliminar paciente', [
+                'error' => $e->getMessage(),
+                'datos' => $request->all()
             ]);
 
-            if (!$paciente) {
-                throw new PacienteNotFoundException("Paciente no encontrado con ID: {$pacienteId}");
-            }
-
-            return [
-                'total_citas' => $paciente->citas->count(),
-                'total_atenciones' => $paciente->atenciones->count(),
-                'certificaciones_vigentes' => $paciente->certificaciones->where('vigente', true)->count(),
-                'ultima_atencion' => $paciente->atenciones->sortByDesc('fecha')->first(),
-                'proxima_cita' => $paciente->citas->where('fecha', '>', Carbon::now())->first()
-            ];
-        } catch (Throwable $e) {
-            Log::error('Error al obtener estadísticas: ' . $e->getMessage());
             throw $e;
         }
-    } */
-
-    /**
-     * Obtener pacientes con sus certificaciones
-     */
-    /* public function getPacientesConCertificaciones(): Collection
-    {
-        return $this->pacienteRepository->with(['certificacion', 'estado_certificacion'])->get();
-    } */
-
-    /**
-     * Obtener pacientes con sus atenciones médicas
-     */
-    /* public function getPacientesConAtenciones(): Collection
-    {
-        return $this->pacienteRepository->with(['atenciones'])->get();
-    } */
-
-    /**
-     * Obtener historial médico completo del paciente
-     */
-    /* public function getHistorialMedico(int $id): ?Paciente
-    {
-        return $this->pacienteRepository->findById($id, [
-            'alergia',
-            'enfermedad',
-            'cirugia',
-            'medicamento',
-            'vacuna',
-            'familiar',
-            'exasma',
-            'exalcohol',
-            'exepo'
-        ]);
-    } */
-
-    /**
-     * Buscar pacientes por criterios
-     */
-    public function search(Request $request)//: Object
-    {
-        Log::info('Búsqueda de pacientes en Service', [
-            'filters' => $request->all(),
-            'timestamp' => now()->toDateTimeString()
-        ]);
-        return $this->pacienteRepository->search($request);
     }
 
     /**
@@ -288,29 +265,5 @@ class PacienteService
             'contacto_emergencia.telefono' => 'required|string|max:20',
             'contacto_emergencia.relacion' => 'required|string|max:50',
         ]);
-    }
-
-    /**
-     * Validar disponibilidad de horario para cita
-     */
-    private function validarDisponibilidadCita(array $citaData): void
-    {
-        $existeCita = DB::table('citas')
-            ->where('medico_id', $citaData['medico_id'])
-            ->where('fecha', $citaData['fecha'])
-            ->where('hora', $citaData['hora'])
-            ->exists();
-
-        if ($existeCita) {
-            throw new ValidationException('El horario seleccionado no está disponible');
-        }
-    }
-
-    /**
-     * Crear historial médico inicial
-     */
-    private function createHistorialMedico(Paciente $paciente, array $historialData): void
-    {
-        $paciente->historialMedico()->create($historialData);
     }
 }

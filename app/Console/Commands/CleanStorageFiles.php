@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redis;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -27,11 +28,15 @@ use Symfony\Component\Finder\Finder;
  * # Incluir todos los directorios
  * php artisan storage:clean --sessions --views --cache --clockwork
  * 
+ * # Limpiar registros de Redis
+ * php artisan storage:clean --redis
+ * 
  * Opciones:
  * - --sessions: Incluye archivos en el directorio de sesiones
  * - --views: Incluye archivos en el directorio de vistas
  * - --cache: Incluye archivos en el directorio de caché
  * - --clockwork: Incluye archivos de Clockwork
+ * - --redis: Limpiar registros de Redis
  * 
  * Precaución: Usar con cuidado, especialmente en entornos de producción
  */
@@ -46,14 +51,15 @@ class CleanStorageFiles extends Command
                             {--sessions : Incluir directorio de sesiones} 
                             {--views : Incluir directorio de vistas} 
                             {--cache : Incluir directorio de caché} 
-                            {--clockwork : Incluir directorio de Clockwork}';
+                            {--clockwork : Incluir directorio de Clockwork}
+                            {--redis : Limpiar registros de Redis}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Eliminar archivos log y json temporales en el directorio storage';
+    protected $description = 'Eliminar archivos temporales en storage y opcionalmente limpiar registros de Redis';
 
     /**
      * Execute the console command.
@@ -96,6 +102,23 @@ class CleanStorageFiles extends Command
                 $this->info("Eliminado: {$filePath}");
             } catch (\Exception $e) {
                 $this->warn("No se pudo eliminar {$filePath}: " . $e->getMessage());
+            }
+        }
+
+        // Limpiar registros de Redis si está habilitado
+        if ($this->option('redis')) {
+            try {
+                // Limpiar todas las claves de Redis
+                $redis = Redis::connection();
+                $keys = $redis->keys('*');
+                
+                foreach ($keys as $key) {
+                    $redis->del($key);
+                }
+
+                $this->info("Eliminados " . count($keys) . " registros de Redis");
+            } catch (\Exception $e) {
+                $this->error("Error al limpiar registros de Redis: " . $e->getMessage());
             }
         }
 

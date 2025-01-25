@@ -31,7 +31,9 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 120),
+    'lifetime' => env('SESSION_LIFETIME', 120), // 2 horas por defecto
+
+    'idle_timeout' => env('SESSION_IDLE_TIMEOUT', 30), // 30 minutos de inactividad
 
     'expire_on_close' => false,
 

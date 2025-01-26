@@ -52,18 +52,7 @@ class FilterTool
             $model = new $modelClass;
             $query = $modelClass::query();
             $fieldMap = $request->input('searchQuery.fieldMap');
-
-            Log::info('Filtros recibidos', [
-                'filters' => $filters
-            ]);
-
-            Log::info('Mapeo de campos', [
-                'fieldMap' => $fieldMap
-            ]);
-
-            Log::info('Query inicial', [
-                'query' => $query
-            ]);
+            $relations   = $request->input('endpoints');
 
             // Si no hay filtros, retornar todos los registros
             if (empty($filters)) {
@@ -103,25 +92,29 @@ class FilterTool
                     }
                 }
 
-                // Agregar relaciones necesarias
-                /*$relations = array_filter(array_keys($fieldMap), function($field) use ($fieldMap) {
-                return !empty($fieldMap[$field]['relation']);
-            });
-            
+                // Agregar relaciones necesarias desde searchQuery.endpoints
+                //$searchQuery = config('searchQuery');
+                //$modelName = class_basename($modelClass);
+                //$relations = [];
+
+                /*
+                 if (isset($relations)) {
+                    $relations = array_filter(
+                        array_keys($relations),
+                        function ($endpoint) use ($searchQuery, $modelName) {
+                            return !empty($relations[$endpoint]['relation']);
+                        }
+                    );
+                }*/
+            }
             if (!empty($relations)) {
                 $query->with($relations);
             }
-
-           
-            
-            */
-        }
-        Log::info('Consulta generada', [
-            'sql' => $query->toSql(),
-            'bindings' => $query->getBindings()
-        ]);
+            Log::info('Consulta generada', [
+                'sql' => $query->toSql(),
+                'bindings' => $query->getBindings()
+            ]);
             return $query->get();
-
         } catch (\Exception $e) {
             Log::error('Error en FilterTool::filterData', [
                 'message' => $e->getMessage(),

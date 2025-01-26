@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Services\PacienteService;
-use App\Repository\PacienteRepository;
 use Illuminate\Support\Facades\Log;
 
 class PacienteController extends Controller
 {
-    protected $pacienteService;
+    protected PacienteService $pacienteService;
 
     public function __construct(PacienteService $pacienteService)
     {
@@ -18,116 +17,76 @@ class PacienteController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Muestra la página principal de pacientes
+     * 
+     * Esta función es responsable únicamente de la renderización de la vista
+     * utilizando Inertia.js. La lógica de negocio y datos se manejan 
+     * a través de endpoints separados.
+     *
+     * @return \Inertia\Response
      */
     public function index()
     {
-        //$pacientes = $this->pacienteService->index();
         return Inertia::render('PacientePage');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Busca pacientes según los criterios especificados
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
-    {
-        return Inertia::render('Pacientes/Create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        try {
-            
-            $paciente = $this->pacienteService->store($request);
-            
-            return response()->json([
-                'data' => $paciente,
-                'message' => 'Paciente creado exitosamente'
-            ], 201);
-        } catch (\Exception $e) {
-            Log::error('Error al crear paciente: ' . $e->getMessage());
-            return response()->json([
-                'error' => 'Error al crear paciente',
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Request $request)
-    {
-        Log::info("show");
-        /*         $paciente = $this->pacienteService->show($request);
-        return Inertia::render('Pacientes/Show', [
-            'paciente' => $paciente
-        ]);
- */
-    }
-
     public function search(Request $request)
     {
-        Log::info('Iniciando búsqueda de pacientes - Controller');
-
         try {
             $data = $this->pacienteService->search($request);
-
-            Log::info('Búsqueda completada exitosamente, final', [
-                'results_count' => is_countable($data) ? count($data) : 0
-            ]);
 
             return response()->json([
                 'success' => true,
                 'data' => $data,
-                'message' => 'Búsqueda completada exitosamente'
-            ], 200);
+            ]);
+
         } catch (\Exception $e) {
             Log::error('Error en búsqueda de pacientes', [
-                'error_message' => $e->getMessage(),
-                'error_code' => $e->getCode(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
             ]);
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error al realizar la búsqueda: ' . $e->getMessage()
+                'message' => 'Error al buscar pacientes',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Obtiene un paciente específico
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function edit($id)
-    {
-        $paciente = $this->pacienteService->show(new Request(['id' => $id]));
-        return Inertia::render('Pacientes/Edit', [
-            'paciente' => $paciente
-        ]);
-    }
+    // public function show(Request $request)
+    // {
+    //     try {
+    //         $paciente = $this->pacienteService->show($request);
+            
+    //         return response()->json([
+    //             'success' => true,
+    //             'data' => $paciente
+    //         ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request)
-    {
-        $paciente = $this->pacienteService->update($request);
-        return redirect()->route('pacientes.index')
-            ->with('success', 'Paciente actualizado exitosamente.');
-    }
+    //     } catch (\Exception $e) {
+    //         Log::error('Error al obtener paciente', [
+    //             'message' => $e->getMessage(),
+    //             'trace' => $e->getTraceAsString()
+    //         ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Request $request)
-    {
-        $this->pacienteService->destroy($request);
-        return redirect()->route('pacientes.index')
-            ->with('success', 'Paciente eliminado exitosamente.');
-    }
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Error al obtener paciente',
+    //             'error' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
 }

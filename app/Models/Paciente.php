@@ -22,11 +22,13 @@ use App\Models\ExEpo;
 use App\Models\Exposicion;
 use App\Models\FactorRiesgo;
 use App\Models\GrupoSanguineo;
+use App\Models\Genero;
 use App\Models\Instruccion;
 use App\Models\LeySocial;
 use App\Models\LicenciaMedica;
 use App\Models\Medicamento;
 use App\Models\Modalidad;
+use App\Models\Nacionalidad;
 use App\Models\Planta;
 use App\Models\Prevision;
 use App\Models\Pueblo;
@@ -129,6 +131,10 @@ class Paciente extends Model
     {
         return $this->belongsTo(Ceco::class, 'ceco', 'id');
     }
+    public function genero(): BelongsTo
+    {
+        return $this->belongsTo(Genero::class, 'genero', 'id');
+    }
     public function seguro(): BelongsTo
     {
         return $this->belongsTo(Seguro::class, 'seguro', 'id');
@@ -172,6 +178,10 @@ class Paciente extends Model
     public function modalidad(): BelongsTo
     {
         return $this->belongsTo(Modalidad::class, 'modalidad', 'id');
+    }
+    public function nacionalidad(): BelongsTo
+    {
+        return $this->belongsTo(Nacionalidad::class, 'nacionalidad', 'id');
     }
     public function exposicion(): BelongsTo
     {

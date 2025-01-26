@@ -11,6 +11,19 @@ use Illuminate\Support\Facades\Response;
 use App\Helpers\FilterTool;
 use Illuminate\Support\Facades\Cache;
 
+    /**
+     * Clase abstracta que implementa los metodos basicos para operar con un modelo.
+     * 
+     * Los metodos que se implementan son:
+     * 
+     * - all(): Obtiene todos los registros de un modelo.
+     * - store(Request $request): Crea un nuevo registro con los datos de la solicitud.
+     * - update(Request $request): Actualiza un registro existente con los datos de la solicitud.
+     * - delete(Request $request): Borra un registro existente.
+     * - search(Request $request): Realiza una busqueda en el modelo.
+     * - show(Request $request): Obtiene un registro existente.
+     * - create(array $data): Crea un nuevo registro con los datos pasados como parametro.
+     */
 abstract class Repository implements RepositoryInterface
 {
 

@@ -149,6 +149,23 @@ Configuraciones específicas del workspace actual:
   - TypeScript
   - Diseño responsive
   - Documentación en español
+  - Separación de Responsabilidades:
+    - Controllers: Se encargan de:
+      - Manejar las peticiones HTTP
+      - Renderizar vistas
+      - Coordinar entre la capa de presentación y la lógica de negocio
+    - Services: Se encargan de:
+      - Lógica de negocio
+      - Validaciones de reglas de negocio
+      - Orquestar operaciones complejas
+      - Coordinar con repositorios
+  - Principios SOLID:
+    - Single Responsibility Principle: El Service no debería tener la responsabilidad de manejar la presentación
+  - Interface Segregation: Mantener las interfaces limpias y específicas a su propósito
+  - Patrones de Laravel:
+    - Los Controllers son el punto de entrada para las peticiones HTTP
+    - Inertia.js está diseñado para trabajar directamente con Controllers
+    - La renderización de vistas es una responsabilidad típica del Controller
 
 - Estructura y Convenciones:
   - Frontend en resources/js

@@ -59,35 +59,32 @@ class PacienteController extends Controller
 
     public function search(Request $request)
     {
-        Log::info('Iniciando búsqueda de pacientes', [
-            'filters' => $request->all(),
-            'timestamp' => now()->toDateTimeString()
-        ]);
+        Log::info('Iniciando búsqueda de pacientes - Controller');
 
          try {
              $data = $this->pacienteService->search($request);
 
-        //     Log::info('Búsqueda completada exitosamente', [
-        //         'results_count' => is_countable($data) ? count($data) : 0
-        //     ]);
+            Log::info('Búsqueda completada exitosamente, final', [
+                'results_count' => is_countable($data) ? count($data) : 0
+            ]);
 
-        //     return response()->json([
-        //         'success' => true,
-        //         'data' => $data,
-        //         'message' => 'Búsqueda completada exitosamente'
-        //     ], 200);
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+                'message' => 'Búsqueda completada exitosamente'
+            ], 200);
          } catch (\Exception $e) {
-        //     Log::error('Error en búsqueda de pacientes', [
-        //         'error_message' => $e->getMessage(),
-        //         'error_code' => $e->getCode(),
-        //         'file' => $e->getFile(),
-        //         'line' => $e->getLine()
-        //     ]);
+            Log::error('Error en búsqueda de pacientes', [
+                'error_message' => $e->getMessage(),
+                'error_code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
 
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'Error al realizar la búsqueda: ' . $e->getMessage()
-        //     ], 500);
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al realizar la búsqueda: ' . $e->getMessage()
+            ], 500);
         }
     }
 

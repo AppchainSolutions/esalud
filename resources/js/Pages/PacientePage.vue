@@ -15,7 +15,7 @@ import {
     openToEdit,
 } from "@/utils/helper.js";
 import { debugHelpers as debug } from "@/utils/debug.js";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { useNotification } from "@kyvg/vue3-notification";
 const { notify } = useNotification();
 
@@ -98,16 +98,29 @@ const state = reactive({
         ],
     },
     searchQuery: {
-        id: null,
-        rut: null,
-        empresa: null,
-        area: null,
-        unidad: null,
-        planta: null,
-        ceco: null,
-        activo: true,
-        protocolo_minsal: false,
-        exposicion: [],
+        filters: {
+            id: null,
+            rut: null,
+            empresa: null,
+            area: null,
+            unidad: null,
+            planta: null,
+            ceco: null,
+            activo: true,
+            protocolo_minsal: false,
+            exposicion: [],
+        },
+        fieldMap: {
+            rut: { type: 'text', operator: 'like' },
+            empresa: { type: 'numeric', relation: true },
+            area: { type: 'numeric', relation: true },
+            unidad: { type: 'numeric', relation: true },
+            planta: { type: 'numeric', relation: true },
+            ceco: { type: 'numeric', relation: true },
+            activo: { type: 'boolean' },
+            protocolo_minsal: { type: 'boolean' },
+            exposicion: { type: 'array', relation: true }
+        }
     },
     editedItem: {
         rut: null,
@@ -255,42 +268,27 @@ const handleInputChange = () => {
 };
 
 //**********\\\\  CRUD ////*************/
-const searchPacientes = async () => {
+async function searchPacientes() {
     try {
         state.loadingSearch = true;
-        const response = await searchItems(
-            state.urlSearch,
-            state.searchQuery,
-            state.list
-        );
-        
-        if (response.success) {
-            state.tableItems = response.data || [];
-            notify({
-                title: "Éxito",
-                text: "Búsqueda realizada correctamente",
-                type: "success"
-            });
-        } else {
-            state.tableItems = [];
-            notify({
-                title: "Advertencia",
-                text: response.message || "No se encontraron resultados",
-                type: "warn"
-            });
-        }
+        const response = await searchItems(state.urlSearch, state.searchQuery, state.endpoints);
+        state.tableItems = response.data;
+        notify({
+            title: "Búsqueda con resultado",
+            text: "Se encontraron " + response.data.length + " pacientes",
+            type: "success",
+        });
     } catch (error) {
-        debug.error('Error en búsqueda:', error);
-        state.tableItems = [];
         notify({
             title: "Error",
-            text: error.response?.data?.message || "Error al realizar la búsqueda",
-            type: "error"
+            text: "Error al buscar pacientes",
+            type: "error",
         });
+        debug.error("Error:", error);
     } finally {
         state.loadingSearch = false;
     }
-};
+}
 
 function openFormCreate() {
     openToCreate(state);
@@ -307,20 +305,20 @@ const create = async () => {
         notify({
             title: "Éxito",
             text: "Paciente creado correctamente",
-            type: "success"
+            type: "success",
         });
     } catch (error) {
         if (error.response?.status === 409) {
             notify({
                 title: "Error",
                 text: error.response.data.message || "RUT duplicado",
-                type: "error"
+                type: "error",
             });
         } else {
             notify({
                 title: "Error",
                 text: "Error al crear el paciente. Por favor, intente nuevamente.",
-                type: "error"
+                type: "error",
             });
         }
     }
@@ -332,7 +330,7 @@ const update = async () => {
     notify({
         title: "Éxito",
         text: "Paciente actualizado correctamente",
-        type: "success"
+        type: "success",
     });
 };
 
@@ -346,7 +344,7 @@ const remove = async (item) => {
     notify({
         title: "Éxito",
         text: "Paciente eliminado correctamente",
-        type: "success"
+        type: "success",
     });
 };
 </script>
@@ -370,7 +368,7 @@ const remove = async (item) => {
                                 <v-row>
                                     <v-col>
                                         <v-text-field
-                                            v-model="state.searchQuery.rut"
+                                            v-model="state.searchQuery.filters.rut"
                                             :rules="
                                                 state.validationSchema.rutRules
                                             "
@@ -384,14 +382,14 @@ const remove = async (item) => {
                                             :items="state.list.ceco"
                                             item-title="descripcion"
                                             item-value="id"
-                                            v-model="state.searchQuery.ceco"
+                                            v-model="state.searchQuery.filters.ceco"
                                             label="Area de Trabajo (Cencos)"
                                             clearable
                                             variant="underlined"
                                             single
                                         ></v-select>
                                         <v-switch
-                                            v-model="state.searchQuery.activo"
+                                            v-model="state.searchQuery.filters.activo"
                                             hide-details
                                             variant="underlined"
                                             color="green-darken-3"
@@ -401,7 +399,7 @@ const remove = async (item) => {
 
                                         <v-switch
                                             v-model="
-                                                state.searchQuery
+                                                state.searchQuery.filters
                                                     .protocolo_minsal
                                             "
                                             hide-details
@@ -416,7 +414,7 @@ const remove = async (item) => {
                                             :items="state.list.empresa"
                                             item-title="descripcion"
                                             item-value="id"
-                                            v-model="state.searchQuery.empresa"
+                                            v-model="state.searchQuery.filters.empresa"
                                             label="Empresa"
                                             clearable
                                             variant="underlined"
@@ -426,7 +424,7 @@ const remove = async (item) => {
                                             :items="state.list.planta"
                                             item-title="descripcion"
                                             item-value="id"
-                                            v-model="state.searchQuery.planta"
+                                            v-model="state.searchQuery.filters.planta"
                                             label="Planta"
                                             clearable
                                             variant="underlined"
@@ -438,7 +436,8 @@ const remove = async (item) => {
                                             item-title="descripcion"
                                             item-value="descripcion"
                                             v-model="
-                                                state.searchQuery.exposicion
+                                                state.searchQuery.filters
+                                                    .exposicion
                                             "
                                             label="Exposicion"
                                             clearable
@@ -452,7 +451,7 @@ const remove = async (item) => {
                                             :items="state.list.unidad"
                                             item-title="descripcion"
                                             item-value="id"
-                                            v-model="state.searchQuery.unidad"
+                                            v-model="state.searchQuery.filters.unidad"
                                             clearable
                                             label="Unidad"
                                             variant="underlined"
@@ -462,7 +461,7 @@ const remove = async (item) => {
                                             :items="state.list.area"
                                             item-title="descripcion"
                                             item-value="id"
-                                            v-model="state.searchQuery.area"
+                                            v-model="state.searchQuery.filters.area"
                                             clearable
                                             label="Area"
                                             variant="underlined"

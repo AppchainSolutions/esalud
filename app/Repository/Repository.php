@@ -133,24 +133,30 @@ abstract class Repository implements RepositoryInterface
 
     public function search(Request $request)
     {
-        Log::info('Búsqueda en Repositorio', [
-            'filters' => $request->all(),
-            'timestamp' => now()->toDateTimeString()
-        ]);
         try {
-            Log::info($request);
             $class = get_class($this->model);
-            $cacheKey = $this->getCacheKey('search', $request->all());
-            
-            return Cache::tags($class)->remember($cacheKey, 3600, function () use ($request) {
-                $filters = $request->input('data');
-                $query = $this->model->query()
-                    ->select("*");
-                return FilterTool::filterData($filters, $query);
-            });
-        } catch (QueryException $e) {
+            $results = FilterTool::filterData($request, $class);
+            Log::info('Búsqueda completada exitosamente (Repo)', [
+                'results_count' => is_countable($results) ? count($results) : 0,    
+            ]);
+
             return response()->json([
-                'result' => 'error',
+                'data' => $results,
+                'meta' => [
+                    'total' => is_countable($results) ? count($results) : 0,
+                    'page' => $request->input('page', 1),
+                    'per_page' => $request->input('per_page', 15)
+                ]
+            ], 200);
+        } catch (QueryException $e) {
+            Log::error('Error en búsqueda', [
+                'error_message' => $e->getMessage(),
+                'error_code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+            return response()->json([
+                'error' => true,
                 'message' => $e->getMessage()
             ], 500);
         }
@@ -179,5 +185,4 @@ abstract class Repository implements RepositoryInterface
     {
         return $this->model->create($request->all());
     }
-
 }

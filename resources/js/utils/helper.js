@@ -158,11 +158,11 @@ export const handleRemoveItem = async (state, item) => {
  * @returns {Promise<any>} - A promise that resolves to the retrieved item.
  * @param state
  */
-export const searchItems = async (route, searchFilters, endpoints) => {
+export const searchItems = async (route, searchQuery, endpoints) => {
     try {
-        debug.info('Iniciando búsqueda', { route, searchFilters, endpoints });
+        debug.info('Iniciando búsqueda', { route, searchQuery, endpoints });
         const response = await axios.get(route, { 
-            params: { searchFilters }
+             params: { searchQuery, endpoints }
         });
         
         debug.success('Búsqueda exitosa', response.data);

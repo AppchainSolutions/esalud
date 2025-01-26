@@ -27,37 +27,30 @@ class PacienteService
      * @param Request $request
      * @return Collection
      */
-    public function search(Request $request): Collection
+    public function search(Request $request) //: Collection
     {
         // Iniciar un evento personalizado en Clockwork
         $this->clockwork->event('Búsqueda de Pacientes')
             ->description('Realizando búsqueda con filtros')
             ->data($request->all());
 
-        // Registrar un log de información
-        Log::info('Búsqueda de pacientes iniciada', $request->all());
-
-        // Medir el tiempo de ejecución
         $inicio = microtime(true);
 
         try {
-            $pacientes = $this->pacienteRepository->search($request);
+            $pacientesResponse = $this->pacienteRepository->search($request);
+
+            // Extraer datos de la respuesta JSON
+            $pacientes = $pacientesResponse->getData(true)['data'];
+            $totalPacientes = $pacientesResponse->getData(true)['meta']['total'];
 
             $tiempoEjecucion = microtime(true) - $inicio;
 
-            // Agregar información de rendimiento a Clockwork
             $this->clockwork->event('Búsqueda de Pacientes')
                 ->duration($tiempoEjecucion * 1000) // Convertir a milisegundos
                 ->data([
-                    'total_pacientes' => count($pacientes),
+                    'total_pacientes' => $totalPacientes,
                     'tiempo_ejecucion' => $tiempoEjecucion
                 ]);
-
-            // Log de éxito
-            Log::info('Búsqueda de pacientes completada', [
-                'total_resultados' => count($pacientes),
-                'tiempo_ejecucion' => $tiempoEjecucion
-            ]);
 
             return $pacientes;
         } catch (\Throwable $e) {

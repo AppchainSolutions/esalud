@@ -3,96 +3,217 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\Log;
-use \Illuminate\Database\QueryException;
-use \Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class FilterTool
 {
     /**
-     * Filters data based on provided criteria.
-     *
-     * This function applies various filters to a database query based on the provided filter array.
-     * It handles special cases for date and full-text search, and applies default filtering for other fields.
-     *
-     * @param array $filters An associative array of filters where keys are field names and values are filter criteria.
-     * @param object $query The query object to apply the filters to.
-     *
-     * @return mixed Returns the filtered query results as a collection if successful,
-     *               or a string error message if an exception occurs during filtering.
+     * Mapeo de tipos de columnas de la base de datos a tipos genéricos
      */
-    public static function filterData(array $filters, object $query)
+    private static $typeMap = [
+        // Tipos numéricos
+        'integer' => 'numeric',
+        'bigint' => 'numeric',
+        'decimal' => 'numeric',
+        'float' => 'numeric',
+        'double' => 'numeric',
+
+        // Tipos de texto
+        'string' => 'text',
+        'char' => 'text',
+        'text' => 'text',
+        'varchar' => 'text',
+
+        // Tipos de fecha
+        'date' => 'date',
+        'datetime' => 'date',
+        'timestamp' => 'date',
+
+        // Tipos booleanos
+        'boolean' => 'boolean',
+        'bool' => 'boolean',
+    ];
+
+    /**
+     * Aplica filtros a una consulta de base de datos basándose en los tipos de datos
+     * 
+     * @param array $data Array con los valores de filtro y el mapeo de campos
+     * @param string $modelClass Nombre de la clase del modelo
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function filterData(Request $request, string $modelClass)
     {
-        if (empty($filters)) {
-            return $query->all()->get();
-        }
-
-
         try {
-            foreach ($filters as $field => $criteria) {
-                switch ($field) {
-                    case 'fecha':
-                        self::applyDateFilter($query, $field, $criteria);
-                        break;
-                    case 'exposicion':
-                        self::applyExposicionFilter($query, $field, $criteria);
-                        break;
-                    default:
-                        $query->where($field, $criteria);
-                        break;
+
+            $filters = $request->input('searchQuery.filters');
+            $model = new $modelClass;
+            $query = $modelClass::query();
+            $fieldMap = $request->input('searchQuery.fieldMap');
+
+            Log::info('Filtros recibidos', [
+                'filters' => $filters
+            ]);
+
+            Log::info('Mapeo de campos', [
+                'fieldMap' => $fieldMap
+            ]);
+
+            Log::info('Query inicial', [
+                'query' => $query
+            ]);
+
+            // Si no hay filtros, retornar todos los registros
+            if (empty($filters)) {
+                return $query->get();
+            }
+
+            foreach ($filters as $field => $value) {
+                if (empty($value)) continue;
+
+                // Convertir valores de cadena a booleano
+                if (is_string($value)) {
+                    $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
                 }
+
+                //Verificar si es un campo específico mapeado
+                // Priorizar mapeo si existe
+                if (isset($fieldMap[$field])) {
+                    // Si está mapeado, usar configuración personalizada
+                    self::applyMappedFilter($query, $field, $value, $fieldMap[$field]);
+                } else {
+                    // Si no está mapeado, intentar inferir tipo de columna
+                    try {
+                        $columnType = Schema::getColumnType($model->getTable(), $field);
+                        $genericType = self::$typeMap[$columnType] ?? 'text';
+
+                        // Aplicar filtro genérico basado en tipo de columna
+                        self::applyFilterByType($query, $field, $value, $genericType);
+                    } catch (\Exception $e) {
+                        // Fallback: filtro directo si no se puede inferir el tipo
+                        $query->where($field, $value);
+
+                        Log::warning('No se pudo inferir tipo de columna', [
+                            'field' => $field,
+                            'value' => $value,
+                            'error' => $e->getMessage()
+                        ]);
+                    }
+                }
+
+                // Agregar relaciones necesarias
+                /*$relations = array_filter(array_keys($fieldMap), function($field) use ($fieldMap) {
+                return !empty($fieldMap[$field]['relation']);
+            });
+            
+            if (!empty($relations)) {
+                $query->with($relations);
             }
+
+           
+            
+            */
+        }
+        Log::info('Consulta generada', [
+            'sql' => $query->toSql(),
+            'bindings' => $query->getBindings()
+        ]);
             return $query->get();
-        } catch (QueryException $exception) {
-            Log::error($exception);
-            return 'Error filtering data: ' . $exception->getMessage();
+
+        } catch (\Exception $e) {
+            Log::error('Error en FilterTool::filterData', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            throw $e;
         }
     }
+
     /**
-     * Applies a date filter to the given query.
-     *
-     * This function filters the query based on a date range specified in the $dates array.
-     * It expects 'desde' (from) and 'hasta' (to) keys in the $dates array to define the range.
-     *
-     * @param object $query The query object to apply the filter to.
-     * @param string $field The name of the date field in the database to filter on.
-     * @param array $dates An associative array containing 'desde' and 'hasta' keys with corresponding date values.
-     *
-     * @return mixed Returns the modified query object if successful, a string error message if dates are missing,
-     *               or an error message if there's an issue with the date format.
+     * Aplica filtros para campos específicamente mapeados
      */
-    private static function applyDateFilter(object $query, $field, $dates)
+    private static function applyMappedFilter($query, string $field, $value, array $config): void
     {
-        try {
-            if (isset($dates['desde']) && isset($dates['hasta'])) {
-                return $query->whereBetween($field, [$dates['desde'], $dates['hasta']]);
-            } else {
-                return "Falta una fecha";
-            }
-        } catch (QueryException $e) {
-            return 'Formato de fecha incorrecto ';
+
+        switch ($config['type']) {
+            case 'text':
+                if ($config['operator'] === 'like') {
+                    $query->where($field, 'like', "%{$value}%");
+                } else {
+                    $query->where($field, $value);
+                }
+                break;
+
+            case 'numeric':
+                if ($config['relation']) {
+                    if (is_array($value)) {
+                        $query->whereIn("{$field}_id", $value);
+                    } else {
+                        $query->where("{$field}_id", $value);
+                    }
+                } else {
+                    if (is_array($value)) {
+                        $query->whereIn($field, $value);
+                    } else {
+                        $query->where($field, $value);
+                    }
+                }
+                break;
+
+            case 'boolean':
+                $query->where($field, (bool)$value);
+                break;
+
+            case 'array':
+                if ($config['relation'] && !empty($value)) {
+                    $query->whereHas($field, function ($q) use ($value) {
+                        $q->whereIn('id', (array)$value);
+                    });
+                }
+                break;
         }
     }
+
     /**
-     * Applies a full-text search filter for the 'exposicion' field.
-     *
-     * This function performs a full-text search on the specified field using the provided criteria.
-     * It applies both exact phrase matching and individual term matching for each search term.
-     *
-     * @param object $query The query object to apply the filter to.
-     * @param string $field The name of the field in the database to apply the full-text search on.
-     * @param array $criteria An array of search terms to be used in the full-text search.
-     *
-     * @return mixed Returns the modified query object if successful, or a string error message if an exception occurs.
+     * Aplica filtros basados en el tipo de dato
      */
-    private static function applyExposicionFilter(object $query, $field, $criteria)
+    private static function applyFilterByType($query, string $field, $value, string $type): void
     {
-        try {
-            foreach ($criteria as $term) {
-                $query->whereFullText($field, '"' . $term . '\"');
-                return $query->orWhereFullText($field, $term);
-            }
-        } catch (QueryException $e) {
-            return 'Error al aplicar filtro de exposición';
+        switch ($type) {
+            case 'numeric':
+                if (is_array($value)) {
+                    $query->whereIn($field, $value);
+                } else {
+                    $query->where($field, $value);
+                }
+                break;
+
+            case 'text':
+                if (is_array($value)) {
+                    $query->where(function ($q) use ($field, $value) {
+                        foreach ($value as $term) {
+                            $q->orWhere($field, 'like', "%{$term}%");
+                        }
+                    });
+                } else {
+                    $query->where($field, 'like', "%{$value}%");
+                }
+                break;
+
+            case 'date':
+                if (is_array($value) && isset($value['start'], $value['end'])) {
+                    $query->whereBetween($field, [$value['start'], $value['end']]);
+                } else {
+                    $query->whereDate($field, $value);
+                }
+                break;
+
+            case 'boolean':
+                $query->where($field, (bool)$value);
+                break;
         }
     }
 }

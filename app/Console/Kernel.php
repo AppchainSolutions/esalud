@@ -63,15 +63,68 @@ class Kernel extends ConsoleKernel
          *   php artisan test:email --interval=daily
          */
         // Optional: Add test email schedule
-        $schedule->command('test:email --interval=daily')
-            ->dailyAt('23:21')
+        // $schedule->command('test:email --interval=daily')
+        //     ->dailyAt('23:21')
+        //     ->timezone('America/Santiago')
+        //     ->runInBackground()
+        //     ->before(function () {
+        //         Log::channel('daily')->info('Daily Test Email Scheduled');
+        //     })
+        //     ->after(function () {
+        //         Log::channel('daily')->info('Daily Test Email Completed');
+        //     });
+
+        // Limpieza diaria de storage y caché
+        $schedule->command('storage:clean')
+            ->daily()
+            ->at('01:00')
             ->timezone('America/Santiago')
             ->runInBackground()
+            ->withoutOverlapping()
             ->before(function () {
-                Log::channel('daily')->info('Daily Test Email Scheduled');
+                Log::channel('daily')->info('Storage Cleanup Job Started', [
+                    'timestamp' => now()->toDateTimeString(),
+                    'timezone' => config('app.timezone')
+                ]);
             })
             ->after(function () {
-                Log::channel('daily')->info('Daily Test Email Completed');
+                Log::channel('daily')->info('Storage Cleanup Job Completed', [
+                    'timestamp' => now()->toDateTimeString(),
+                    'timezone' => config('app.timezone')
+                ]);
+            })
+            ->onFailure(function () {
+                Artisan::call('telegram:notify', [
+                    'message' => 'CRITICAL: Storage Cleanup Job Failed in Production',
+                    '--type' => 'alert'
+                ]);
+            });
+
+        // Limpieza semanal profunda de caché
+        $schedule->command('storage:clean --cache --views')
+            ->weekly()
+            ->sundays()
+            ->at('03:00')
+            ->timezone('America/Santiago')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->before(function () {
+                Log::channel('weekly')->info('Deep Storage Cleanup Job Started', [
+                    'timestamp' => now()->toDateTimeString(),
+                    'timezone' => config('app.timezone')
+                ]);
+            })
+            ->after(function () {
+                Log::channel('weekly')->info('Deep Storage Cleanup Job Completed', [
+                    'timestamp' => now()->toDateTimeString(),
+                    'timezone' => config('app.timezone')
+                ]);
+            })
+            ->onFailure(function () {
+                Artisan::call('telegram:notify', [
+                    'message' => 'CRITICAL: Deep Storage Cleanup Job Failed in Production',
+                    '--type' => 'alert'
+                ]);
             });
     }
 

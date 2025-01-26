@@ -63,17 +63,12 @@ abstract class Repository implements RepositoryInterface
                 return is_array($value) ? implode(',', $value) : $value;
             }, $query);
 
-            $request = $this->model->create($query);
+            $model = $this->model->create($query);
             $this->clearModelCache();
-            return response()->json([
-                'message' => 'Registro creado con éxito',
-            ], 200);
+            return $model;
         } catch (QueryException $e) {
             Log::error('store', [$e]);
-            return response()->json([
-                'message' => 'Se produjo un error: ',
-                'error' => $e->getMessage(),
-            ], 500);
+            throw $e;
         }
     }
 

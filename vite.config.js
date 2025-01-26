@@ -44,6 +44,7 @@ export default defineConfig({
           'Pragma': 'no-cache',
           'Expires': '0',
         },
+        sourcemapDevtool: 'source-map',
         maxHttpHeaderSize: 8192// increase the maximum allowed size of HTTP headers
       },
 });

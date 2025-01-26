@@ -22,11 +22,12 @@ Route::middleware([
 ])->group(function () {
 
     // Rutas de Pacientes
-        Route::get('pacientes/search', [PacienteController::class, 'search']);
+    Route::get('pacientes/search', [PacienteController::class, 'search']);
+    Route::get('pacientes', [PacienteController::class, 'index']);
+    Route::post('pacientes', [PacienteController::class, 'store']);
 
     // Aquí puedes agregar más grupos de rutas protegidas
 });
-
 
 // // Rutas públicas (si las necesitas)
 // Route::prefix('public')->group(function () {

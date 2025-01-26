@@ -5,14 +5,23 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Comando para limpiar archivos temporales en el directorio storage
+ * Comando para limpiar archivos temporales y caché en el sistema
+ * 
+ * Características principales:
+ * - Elimina archivos log y json temporales
+ * - Limpia caché de Laravel (rutas, vistas, configuración)
+ * - Gestiona directorios críticos del sistema
+ * - Soporte para limpieza selectiva de directorios
+ * - Registro de eventos y errores
  * 
  * Ejemplos de uso:
  * 
- * # Comportamiento por defecto: elimina logs y json, excepto en directorios críticos
+ * # Comportamiento por defecto: elimina logs y json, limpia caché
  * php artisan storage:clean
  * 
  * # Incluir directorios específicos
@@ -59,7 +68,7 @@ class CleanStorageFiles extends Command
      *
      * @var string
      */
-    protected $description = 'Eliminar archivos temporales en storage y opcionalmente limpiar registros de Redis';
+    protected $description = 'Limpia archivos temporales, caché y registros de Redis en el sistema';
 
     /**
      * Execute the console command.
@@ -128,5 +137,51 @@ class CleanStorageFiles extends Command
         if (!empty($ignoreDirs)) {
             $this->warn("Directorios excluidos: " . implode(', ', $ignoreDirs));
         }
+
+        try {
+            // Mantén tu lógica existente de limpieza de archivos
+            $this->cleanFiles();
+
+            // Agrega nuevos métodos de limpieza
+            $this->clearLaravelCaches();
+
+            // Registro de log
+            Log::info('Limpieza de almacenamiento completada exitosamente.');
+            $this->info('Limpieza de almacenamiento completada.');
+        } catch (\Exception $e) {
+            // Mejora en el manejo de errores
+            Log::error('Error en limpieza de almacenamiento: ' . $e->getMessage());
+            $this->error('Error en limpieza: ' . $e->getMessage());
+        }
+    }
+
+    // Mantén tu método cleanFiles() existente
+    private function cleanFiles()
+    {
+        // Tu implementación actual
+    }
+
+    // Nuevo método para limpiar cachés de Laravel
+    private function clearLaravelCaches()
+    {
+        // Limpieza de caché
+        Artisan::call('cache:clear');
+        $this->info('Caché limpiada');
+
+        // Limpieza de rutas
+        Artisan::call('route:clear');
+        $this->info('Caché de rutas limpiada');
+
+        // Limpieza de configuración
+        Artisan::call('config:clear');
+        $this->info('Caché de configuración limpiada');
+
+        // Limpieza de vistas
+        Artisan::call('view:clear');
+        $this->info('Caché de vistas limpiada');
+
+        // Optimización (opcional)
+        Artisan::call('optimize:clear');
+        $this->info('Optimización limpiada');
     }
 }

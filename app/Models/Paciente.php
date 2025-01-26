@@ -216,5 +216,4 @@ class Paciente extends Model
         'telefono2',
         'unidad',
     ];
-
 }

@@ -39,9 +39,21 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
-        $paciente = $this->pacienteService->store($request);
-        return redirect()->route('pacientes.index')
-            ->with('success', 'Paciente creado exitosamente.');
+        try {
+            
+            $paciente = $this->pacienteService->store($request);
+            
+            return response()->json([
+                'data' => $paciente,
+                'message' => 'Paciente creado exitosamente'
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error('Error al crear paciente: ' . $e->getMessage());
+            return response()->json([
+                'error' => 'Error al crear paciente',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -61,8 +73,8 @@ class PacienteController extends Controller
     {
         Log::info('Iniciando búsqueda de pacientes - Controller');
 
-         try {
-             $data = $this->pacienteService->search($request);
+        try {
+            $data = $this->pacienteService->search($request);
 
             Log::info('Búsqueda completada exitosamente, final', [
                 'results_count' => is_countable($data) ? count($data) : 0
@@ -73,7 +85,7 @@ class PacienteController extends Controller
                 'data' => $data,
                 'message' => 'Búsqueda completada exitosamente'
             ], 200);
-         } catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('Error en búsqueda de pacientes', [
                 'error_message' => $e->getMessage(),
                 'error_code' => $e->getCode(),

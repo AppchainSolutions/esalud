@@ -1,6 +1,6 @@
-import './utils/axiosInstance';
+import "./utils/axiosInstance";
 import { createApp, h } from "vue";
-import { VueSpinnersPlugin } from 'vue3-spinners';
+import { VueSpinnersPlugin } from "vue3-spinners";
 import { LoadingPlugin } from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import { createPinia } from "pinia";
@@ -11,7 +11,6 @@ import JsonExcel from "vue-json-excel3";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 //* SweetAlert2
 import VueSweetalert2 from "vue-sweetalert2";
-//import "@sweetalert2/theme-material-ui/material-ui.scss";
 //* Vuetify
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
@@ -21,9 +20,8 @@ import * as labsComponents from "vuetify/labs/components";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
 import "@mdi/font/css/materialdesignicons.css";
 
-const pinia = createPinia()
-const appName = import.meta.env.VITE_APP_NAME || "Vulco"
-const isProduction = process.env.NODE_ENV === "production"
+const pinia = createPinia();
+const appName = import.meta.env.VITE_APP_NAME || "Vulco";
 
 const vuetify = createVuetify({
     ssr: true,
@@ -40,9 +38,6 @@ const vuetify = createVuetify({
         sets: {
             mdi,
         },
-    },
-    theme: {
-        defaultTheme: "light",
     },
 });
 
@@ -67,6 +62,6 @@ createInertiaApp({
             .mount(el);
     },
     progress: {
-        color: "cyan",
+        color: "red",
     },
 });

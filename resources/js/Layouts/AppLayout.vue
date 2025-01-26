@@ -426,34 +426,4 @@ const user = computed(() => page.props.auth.user);
     color: #8e44ad;
 }
 
-.vue-notification {
-    /* styling */
-    margin: 0 10px 10px;
-    padding: 20px;
-    font-size: 18px;
-    color: #ffffff;
-
-    background: linear-gradient(to bottom, #00b7ea 0%, #006e87 70%);
-    border-left: 5px solid #003f7d;
-
-    &.success {
-        border-left-color: #05fb4b;
-        background: linear-gradient(
-            to bottom,
-            #c9de96 0%,
-            #8ab66b 44%,
-            #398235 100%
-        );
-    }
-
-    &.warn {
-        background: #ffb648;
-        border-left-color: #f48a06;
-    }
-
-    &.error {
-        background: #e54d42;
-        border-left-color: #b82e24;
-    }
-}
 </style>

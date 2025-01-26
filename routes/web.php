@@ -59,6 +59,8 @@ Route::middleware([
 ])->group(function () {
     Route::inertia('/', 'login');
 
+    Route::get('/pacientes', [PacienteController::class, 'index'])
+        ->name('pacientes.index');
 
     Route::prefix('consulta')->group(__DIR__ . '/consulta.php');
     Route::prefix('examen')->group(__DIR__ . '/examen.php');
@@ -79,6 +81,4 @@ Route::middleware([
     Route::resource('medicamento', MedicamentoController::class);
     Route::resource('paciente', PacienteController::class);
     Route::resource('vacuna', VacunaController::class);
-
-
 });

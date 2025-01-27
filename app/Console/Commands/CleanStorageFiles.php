@@ -68,7 +68,36 @@ class CleanStorageFiles extends Command
      *
      * @var string
      */
-    protected $description = 'Limpia archivos temporales, caché y registros de Redis en el sistema';
+    protected $description = 'Limpia archivos temporales y caché del sistema
+
+Descripción Detallada:
+  Este comando ayuda a mantener limpio el sistema eliminando archivos temporales
+  y limpiando diferentes tipos de caché. Es útil para liberar espacio en disco
+  y resolver problemas de caché.
+
+Archivos que se limpian por defecto:
+  - Archivos .log en el directorio storage
+  - Archivos .json temporales
+  - Caché de Laravel (rutas, vistas, configuración)
+
+Opciones Disponibles:
+  --sessions    : Incluye la limpieza del directorio de sesiones
+  --views       : Incluye la limpieza del directorio de vistas compiladas
+  --cache       : Incluye la limpieza del directorio de caché
+  --clockwork   : Incluye la limpieza de archivos de Clockwork
+  --redis       : Limpia los registros almacenados en Redis
+
+Ejemplos de Uso:
+  # Limpieza básica (logs y json)
+  php artisan storage:clean
+
+  # Limpiar sesiones y vistas
+  php artisan storage:clean --sessions --views
+
+  # Limpiar todo incluyendo Redis
+  php artisan storage:clean --sessions --views --cache --clockwork --redis
+
+Nota: Usar con precaución en entornos de producción';
 
     /**
      * Execute the console command.

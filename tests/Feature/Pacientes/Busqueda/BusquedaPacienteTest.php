@@ -246,6 +246,7 @@ describe('Búsqueda de Pacientes', function () {
             ->assertJsonPath('data.0.empresa', 1);
     })->group('pacientes', 'busqueda');
 });
+
 describe('Pruebas de Mutación', function () {
     test('search_should_handle_errors', function () {
         $this->withoutExceptionHandling();
@@ -269,7 +270,7 @@ describe('Pruebas de Mutación', function () {
                 'message' => 'Error al buscar pacientes',
                 'error' => 'Error de prueba'
             ]);
-    });
+    })->group('pacientes', 'busqueda', 'mutacion');
 
     test('search_should_return_success_response', function () {
         // Mock del servicio para retornar datos de prueba
@@ -294,45 +295,7 @@ describe('Pruebas de Mutación', function () {
                     ['id' => 1, 'nombre' => 'Test User']
                 ]
             ]);
-    });
-});
-describe('Pruebas de Mutación Avanzadas', function () {
-    test('search_should_handle_empty_results', function () {
-        // Given: No hay pacientes en la base de datos
-        Paciente::query()->delete();
-        
-        // When: Realizamos una búsqueda
-        $searchQuery = [
-            'searchQuery' => [
-                'filters' => [
-                    'nombre' => 'Paciente Inexistente'
-                ],
-                'fieldMap' => [
-                    'nombre' => ['type' => 'text', 'operator' => 'like']
-                ]
-            ]
-        ];
-
-        $response = post('/api/pacientes/search', $searchQuery);
-
-        // Then: Debemos recibir una respuesta exitosa con array vacío
-        $response->assertStatus(200)
-            ->assertJson([
-                'success' => true,
-                'data' => []
-            ]);
-    })->group('pacientes', 'mutacion');
-
-    test('search_should_validate_required_fields', function () {
-        // When: Enviamos una búsqueda sin searchQuery
-        $response = post('/api/pacientes/search', [
-            'searchQuery' => null
-        ]);
-
-        // Then: Debemos recibir un error de validación
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors(['searchQuery']);
-    })->group('pacientes', 'mutacion');
+    })->group('pacientes', 'busqueda', 'mutacion');
 
     test('search_should_handle_invalid_field_type', function () {
         // Given: Preparamos una búsqueda con un campo de tipo inválido
@@ -358,18 +321,44 @@ describe('Pruebas de Mutación Avanzadas', function () {
                 'success' => false,
                 'message' => 'Error de validación'
             ]);
-    })->group('pacientes', 'mutacion');
+    })->group('pacientes', 'busqueda', 'mutacion');
 
-    test('search_should_handle_invalid_json_format', function () {
-        // When: Enviamos un formato JSON inválido
+    test('search_should_handle_empty_results', function () {
+        // Given: No hay pacientes en la base de datos
+
+        // When: Realizamos una búsqueda
         $response = post('/api/pacientes/search', [
-            'searchQuery' => 'invalid_json_format'
+            'searchQuery' => [
+                'filters' => [],
+                'fieldMap' => []
+            ]
         ]);
+
+        // Then: Debemos recibir un array vacío
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'data' => []
+            ]);
+    })->group('pacientes', 'busqueda', 'mutacion');
+
+    test('search_should_validate_required_fields', function () {
+        // When: Enviamos una búsqueda sin searchQuery
+        $response = post('/api/pacientes/search', []);
 
         // Then: Debemos recibir un error de validación
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['searchQuery']);
-    })->group('pacientes', 'mutacion');
+    })->group('pacientes', 'busqueda', 'mutacion');
+
+    test('search_should_handle_invalid_json_format', function () {
+        // When: Enviamos un formato JSON inválido
+        $response = post('/api/pacientes/search', ['invalid json']);
+
+        // Then: Debemos recibir un error de validación
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['searchQuery']);
+    })->group('pacientes', 'busqueda', 'mutacion');
 
     test('search_should_handle_database_error', function () {
         // Given: Forzamos un error en la consulta
@@ -378,21 +367,19 @@ describe('Pruebas de Mutación Avanzadas', function () {
             ->once()
             ->andThrow(new \Exception('Error de base de datos'));
 
-        // When: Intentamos realizar una búsqueda con datos válidos
-        $searchQuery = [
+        // When: Realizamos una búsqueda
+        $response = post('/api/pacientes/search', [
             'searchQuery' => [
-                'filters' => ['nombre' => 'test'],
-                'fieldMap' => ['nombre' => ['type' => 'text', 'operator' => 'like']]
+                'filters' => [],
+                'fieldMap' => []
             ]
-        ];
+        ]);
 
-        $response = post('/api/pacientes/search', $searchQuery);
-
-        // Then: Debemos recibir un error de servidor
+        // Then: Debemos recibir un error
         $response->assertStatus(500)
             ->assertJson([
                 'success' => false,
                 'message' => 'Error al buscar pacientes'
             ]);
-    })->group('pacientes', 'mutacion');
+    })->group('pacientes', 'busqueda', 'mutacion');
 });

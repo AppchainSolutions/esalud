@@ -42,8 +42,8 @@ class PacienteController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'searchQuery' => 'required|array',
-                'searchQuery.filters' => 'required|array',
-                'searchQuery.fieldMap' => 'required|array',
+                'searchQuery.filters' => 'present|array',
+                'searchQuery.fieldMap' => 'present|array',
             ]);
 
             if ($validator->fails()) {
@@ -54,14 +54,14 @@ class PacienteController extends Controller
                 ], 422);
             }
 
-            // Validación adicional para tipos de campos
-            $fieldMap = $request->input('searchQuery.fieldMap');
-            $filters = $request->input('searchQuery.filters');
+            // Validación de tipos de campos
+            $fieldMap = $request->input('searchQuery.fieldMap', []);
+            $filters = $request->input('searchQuery.filters', []);
 
             foreach ($fieldMap as $field => $config) {
-                if (isset($filters[$field])) {
+                if (isset($filters[$field]) && isset($config['type'])) {
                     $value = $filters[$field];
-                    $type = $config['type'] ?? null;
+                    $type = $config['type'];
 
                     if ($type === 'boolean' && !is_bool($value) && $value !== null) {
                         return response()->json([

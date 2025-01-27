@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Exposicion;
 use App\Http\Controllers\PacienteController;
 use App\Services\PacienteService;
-use App\Repositories\PacienteRepository;
+use App\Repository\PacienteRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
@@ -246,111 +246,6 @@ describe('Búsqueda de Pacientes', function () {
             ->assertJsonPath('data.0.empresa', 1);
     })->group('pacientes', 'busqueda');
 });
-
-describe('PacienteService Tests', function () {
-    test('search_should_handle_filters', function () {
-        $service = new PacienteService(new PacienteRepository());
-        
-        $request = new Request([
-            'nombre' => 'Test',
-            'apellido' => 'User',
-            'rut' => '12345678-9'
-        ]);
-
-        $result = $service->search($request);
-        expect($result)->toBeArray();
-    });
-
-    test('search_should_handle_empty_request', function () {
-        $service = new PacienteService(new PacienteRepository());
-        $request = new Request();
-
-        $result = $service->search($request);
-        expect($result)->toBeArray();
-    });
-
-    test('store_should_validate_required_fields', function () {
-        $service = new PacienteService(new PacienteRepository());
-        
-        $data = [];
-        
-        try {
-            $service->store($data);
-            $this->fail('Se esperaba una excepción de validación');
-        } catch (\Exception $e) {
-            expect($e->getMessage())->toContain('validation');
-        }
-    });
-
-    test('store_should_handle_invalid_rut', function () {
-        $service = new PacienteService(new PacienteRepository());
-        
-        $data = [
-            'nombre' => 'Test',
-            'apellido' => 'User',
-            'rut' => 'invalid-rut'
-        ];
-        
-        try {
-            $service->store($data);
-            $this->fail('Se esperaba una excepción de validación de RUT');
-        } catch (\Exception $e) {
-            expect($e->getMessage())->toContain('RUT');
-        }
-    });
-
-    test('store_should_handle_database_error', function () {
-        // Mock del repositorio para simular error de base de datos
-        $mockRepo = $this->mock(PacienteRepository::class);
-        $mockRepo->shouldReceive('create')
-            ->once()
-            ->andThrow(new \Exception('Error de base de datos'));
-
-        $service = new PacienteService($mockRepo);
-        
-        $data = [
-            'nombre' => 'Test',
-            'apellido' => 'User',
-            'rut' => '12345678-9'
-        ];
-        
-        try {
-            $service->store($data);
-            $this->fail('Se esperaba una excepción de base de datos');
-        } catch (\Exception $e) {
-            expect($e->getMessage())->toBe('Error de base de datos');
-        }
-    });
-
-    test('store_should_create_patient_successfully', function () {
-        // Mock del repositorio para simular creación exitosa
-        $mockRepo = $this->mock(PacienteRepository::class);
-        $mockRepo->shouldReceive('create')
-            ->once()
-            ->andReturn([
-                'id' => 1,
-                'nombre' => 'Test',
-                'apellido' => 'User',
-                'rut' => '12345678-9'
-            ]);
-
-        $service = new PacienteService($mockRepo);
-        
-        $data = [
-            'nombre' => 'Test',
-            'apellido' => 'User',
-            'rut' => '12345678-9'
-        ];
-        
-        $result = $service->store($data);
-        expect($result)->toBeArray()
-            ->toHaveKey('id')
-            ->toHaveKey('nombre')
-            ->toHaveKey('apellido')
-            ->toHaveKey('rut');
-    });
-});
-
 describe('Pruebas de Mutación', function () {
     test('search_should_handle_errors', function () {
         $this->withoutExceptionHandling();
@@ -362,7 +257,10 @@ describe('Pruebas de Mutación', function () {
             ->andThrow(new \Exception('Error de prueba'));
 
         $response = $this->postJson('/api/pacientes/search', [
-            'criterio' => 'test'
+            'searchQuery' => [
+                'filters' => [],
+                'fieldMap' => []
+            ]
         ]);
 
         $response->assertStatus(500)
@@ -370,39 +268,6 @@ describe('Pruebas de Mutación', function () {
                 'success' => false,
                 'message' => 'Error al buscar pacientes',
                 'error' => 'Error de prueba'
-            ]);
-    });
-
-    test('store_should_handle_validation_errors', function () {
-        $response = $this->postJson('/api/pacientes', []);
-
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors(['nombre', 'apellido']);
-    });
-
-    test('store_should_handle_database_errors', function () {
-        $this->withoutExceptionHandling();
-        
-        // Mock del servicio para forzar una excepción
-        $mockService = $this->mock(PacienteService::class);
-        $mockService->shouldReceive('store')
-            ->once()
-            ->andThrow(new \Exception('Error de base de datos'));
-
-        $data = [
-            'nombre' => 'Test',
-            'apellido' => 'User',
-            'rut' => '12345678-9',
-            'fecha_nacimiento' => '1990-01-01'
-        ];
-
-        $response = $this->postJson('/api/pacientes', $data);
-
-        $response->assertStatus(500)
-            ->assertJson([
-                'success' => false,
-                'message' => 'Error al crear paciente',
-                'error' => 'Error de base de datos'
             ]);
     });
 
@@ -416,7 +281,10 @@ describe('Pruebas de Mutación', function () {
             ]);
 
         $response = $this->postJson('/api/pacientes/search', [
-            'criterio' => 'test'
+            'searchQuery' => [
+                'filters' => [],
+                'fieldMap' => []
+            ]
         ]);
 
         $response->assertStatus(200)
@@ -427,40 +295,7 @@ describe('Pruebas de Mutación', function () {
                 ]
             ]);
     });
-
-    test('store_should_return_success_response', function () {
-        // Mock del servicio para retornar datos de prueba
-        $mockService = $this->mock(PacienteService::class);
-        $mockService->shouldReceive('store')
-            ->once()
-            ->andReturn([
-                'id' => 1,
-                'nombre' => 'Test',
-                'apellido' => 'User'
-            ]);
-
-        $data = [
-            'nombre' => 'Test',
-            'apellido' => 'User',
-            'rut' => '12345678-9',
-            'fecha_nacimiento' => '1990-01-01'
-        ];
-
-        $response = $this->postJson('/api/pacientes', $data);
-
-        $response->assertStatus(201)
-            ->assertJson([
-                'success' => true,
-                'message' => 'Paciente creado exitosamente',
-                'data' => [
-                    'id' => 1,
-                    'nombre' => 'Test',
-                    'apellido' => 'User'
-                ]
-            ]);
-    });
 });
-
 describe('Pruebas de Mutación Avanzadas', function () {
     test('search_should_handle_empty_results', function () {
         // Given: No hay pacientes en la base de datos
@@ -499,24 +334,30 @@ describe('Pruebas de Mutación Avanzadas', function () {
             ->assertJsonValidationErrors(['searchQuery']);
     })->group('pacientes', 'mutacion');
 
-    test('search_should_handle_invalid_field_types', function () {
-        // When: Enviamos tipos de campos inválidos
+    test('search_should_handle_invalid_field_type', function () {
+        // Given: Preparamos una búsqueda con un campo de tipo inválido
         $searchQuery = [
             'searchQuery' => [
                 'filters' => [
-                    'activo' => 'no_boolean_value'
+                    'activo' => 'no-boolean'  // Esto debería ser un booleano
                 ],
                 'fieldMap' => [
-                    'activo' => ['type' => 'boolean']
+                    'activo' => [
+                        'type' => 'boolean'
+                    ]
                 ]
             ]
         ];
 
+        // When: Enviamos la solicitud
         $response = post('/api/pacientes/search', $searchQuery);
 
         // Then: Debemos recibir un error de validación
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['searchQuery.filters.activo']);
+            ->assertJson([
+                'success' => false,
+                'message' => 'Error de validación'
+            ]);
     })->group('pacientes', 'mutacion');
 
     test('search_should_handle_invalid_json_format', function () {

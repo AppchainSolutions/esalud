@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Repository\PacienteRepository;
 use Clockwork\Clockwork;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Paciente;
 
 class PacienteService extends BaseService
 {
@@ -80,5 +82,42 @@ class PacienteService extends BaseService
     private function validatePhoneNumber(string $phone): bool
     {
         return preg_match('/^(\+?56)?[ -]?9[ -]?[0-9]{4}[ -]?[0-9]{4}$/', $phone) === 1;
+    }
+
+    /**
+     * Crea un nuevo paciente
+     *
+     * @param array $data
+     * @return Paciente
+     */
+    public function store(array $data)
+    {
+        // Validar datos
+        $validator = Validator::make($data, [
+            'rut' => 'required|string|unique:pacientes,rut',
+            'nombres' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'fecha_nacimiento' => 'nullable|date',
+            'genero' => 'nullable|string|in:M,F',
+            'empresa' => 'nullable|exists:empresas,id',
+            'area' => 'nullable|exists:areas,id',
+            'exposicion' => 'nullable|array',
+            'activo' => 'nullable|boolean',
+            'protocolo_minsal' => 'nullable|boolean',
+            'email' => 'nullable|email|max:255',
+            'telefono' => 'nullable|string|max:20'
+        ]);
+
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
+
+        // Si hay exposiciones, convertirlas a JSON
+        if (isset($data['exposicion'])) {
+            $data['exposicion'] = json_encode($data['exposicion']);
+        }
+
+        // Crear el paciente
+        return Paciente::create($data);
     }
 }

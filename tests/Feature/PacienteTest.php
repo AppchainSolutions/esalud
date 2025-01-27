@@ -356,6 +356,12 @@ describe('Validaciones', function () {
 
 // Grupo de pruebas para creación de pacientes
 describe('Creación de Pacientes', function () {
+    beforeEach(function () {
+        // Autenticar usuario para todas las pruebas de este grupo
+        $user = User::factory()->create();
+        $this->actingAs($user);
+    });
+
     test('puede crear un nuevo paciente', function () {
         // Given: Tenemos los datos necesarios para crear un paciente
         $empresa = Empresa::factory()->create();
@@ -399,5 +405,95 @@ describe('Creación de Pacientes', function () {
         // And: Las exposiciones se guardaron como JSON
         $paciente = Paciente::where('rut', '12345678-9')->first();
         expect(json_decode($paciente->exposicion))->toEqual(['Ruido', 'Polvo']);
+    })->group('pacientes', 'creacion');
+
+    test('puede crear paciente con datos mínimos requeridos', function () {
+        // Given: Solo los datos mínimos requeridos
+        $empresa = Empresa::factory()->create();
+        $area = Area::factory()->create();
+
+        $pacienteData = [
+            'rut' => '98765432-1',
+            'nombres' => 'Ana',
+            'apellidos' => 'Silva',
+            'fecha_nacimiento' => '1995-05-15',
+            'genero' => 'F',
+            'empresa' => $empresa->id,
+            'area' => $area->id,
+            'activo' => true
+        ];
+
+        // When: Creamos el paciente
+        $response = post('/api/pacientes', $pacienteData);
+
+        // Then: Se crea exitosamente
+        $response->assertStatus(201);
+        
+        // And: Los datos mínimos están en la base de datos
+        $this->assertDatabaseHas('pacientes', [
+            'rut' => '98765432-1',
+            'nombres' => 'Ana',
+            'apellidos' => 'Silva'
+        ]);
+    })->group('pacientes', 'creacion');
+
+    test('puede crear paciente con protocolo minsal', function () {
+        // Given: Datos con protocolo minsal activo
+        $empresa = Empresa::factory()->create();
+        $area = Area::factory()->create();
+
+        $pacienteData = [
+            'rut' => '11222333-4',
+            'nombres' => 'Carlos',
+            'apellidos' => 'Ruiz',
+            'fecha_nacimiento' => '1988-12-20',
+            'genero' => 'M',
+            'empresa' => $empresa->id,
+            'area' => $area->id,
+            'activo' => true,
+            'protocolo_minsal' => true,
+            'exposicion' => ['Ruido']
+        ];
+
+        // When: Creamos el paciente
+        $response = post('/api/pacientes', $pacienteData);
+
+        // Then: Se crea exitosamente
+        $response->assertStatus(201);
+
+        // And: El protocolo minsal está activo
+        $this->assertDatabaseHas('pacientes', [
+            'rut' => '11222333-4',
+            'protocolo_minsal' => true
+        ]);
+    })->group('pacientes', 'creacion');
+
+    test('puede crear paciente inactivo', function () {
+        // Given: Datos de paciente inactivo
+        $empresa = Empresa::factory()->create();
+        $area = Area::factory()->create();
+
+        $pacienteData = [
+            'rut' => '44555666-7',
+            'nombres' => 'María',
+            'apellidos' => 'López',
+            'fecha_nacimiento' => '1992-08-10',
+            'genero' => 'F',
+            'empresa' => $empresa->id,
+            'area' => $area->id,
+            'activo' => false
+        ];
+
+        // When: Creamos el paciente
+        $response = post('/api/pacientes', $pacienteData);
+
+        // Then: Se crea exitosamente
+        $response->assertStatus(201);
+
+        // And: El paciente está inactivo en la base de datos
+        $this->assertDatabaseHas('pacientes', [
+            'rut' => '44555666-7',
+            'activo' => false
+        ]);
     })->group('pacientes', 'creacion');
 });

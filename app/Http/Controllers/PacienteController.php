@@ -60,32 +60,33 @@ class PacienteController extends Controller
     }
 
     /**
-     * Obtiene un paciente específico
-     * 
+     * Crea un nuevo paciente
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    // public function show(Request $request)
-    // {
-    //     try {
-    //         $paciente = $this->pacienteService->show($request);
+    public function store(Request $request)
+    {
+        try {
+            $paciente = $this->pacienteService->store($request->all());
 
-    //         return response()->json([
-    //             'success' => true,
-    //             'data' => $paciente
-    //         ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Paciente creado exitosamente',
+                'data' => $paciente
+            ], 201);
 
-    //     } catch (\Exception $e) {
-    //         Log::error('Error al obtener paciente', [
-    //             'message' => $e->getMessage(),
-    //             'trace' => $e->getTraceAsString()
-    //         ]);
+        } catch (\Exception $e) {
+            Log::error('Error al crear paciente', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
 
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Error al obtener paciente',
-    //             'error' => $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al crear paciente',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

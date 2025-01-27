@@ -18,17 +18,17 @@ beforeEach(function () {
 });
 
 // Grupo de pruebas para la página principal
-describe('Vista Principal', function() {
+describe('Vista Principal', function () {
     test('puede renderizar la página de pacientes', function () {
         $response = get('/pacientes');
-        
+
         $response->assertStatus(200)
-            ->assertInertia(fn ($assert) => $assert->component('PacientePage'));
+            ->assertInertia(fn($assert) => $assert->component('PacientePage'));
     })->group('pacientes', 'vista');
 });
 
 // Grupo de pruebas para búsqueda
-describe('Búsqueda de Pacientes', function() {
+describe('Búsqueda de Pacientes', function () {
     test('puede buscar paciente por rut', function () {
         // Given: Un paciente con RUT específico
         $paciente = Paciente::factory()->create([
@@ -268,7 +268,7 @@ describe('Búsqueda de Pacientes', function() {
 });
 
 // Grupo de pruebas para validaciones
-describe('Validaciones', function() {
+describe('Validaciones', function () {
     test('valida rut único al crear paciente', function () {
         // Given: Un paciente existente
         $pacienteExistente = Paciente::factory()->create([
@@ -355,7 +355,7 @@ describe('Validaciones', function() {
 });
 
 // Grupo de pruebas para creación de pacientes
-describe('Creación de Pacientes', function() {
+describe('Creación de Pacientes', function () {
     test('puede crear un nuevo paciente', function () {
         // Given: Tenemos los datos necesarios para crear un paciente
         $empresa = Empresa::factory()->create();

@@ -5,6 +5,8 @@ namespace Tests\Feature\Api;
 use App\Models\Paciente;
 use App\Models\User;
 use App\Models\Exposicion;
+use App\Models\Empresa;
+use App\Models\Area;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Artisan;
@@ -382,86 +384,131 @@ class PacienteTest extends TestCase
         }
     }
 
-    // public function test_search_with_multiple_filters()
-    // {
-    //     // Limpiar la base de datos
-    //     Paciente::query()->delete();
+    public function test_can_render_paciente_page()
+    {
+        $response = $this->get('/pacientes');
+        $response->assertStatus(200);
+        $response->assertInertia(fn ($assert) => $assert->component('PacientePage'));
+    }
 
-    //     // Crear pacientes con diferentes combinaciones
-    //     $paciente1 = Paciente::factory()->create([
-    //         'empresa' => 1,
-    //         'area' => 1,
-    //         'activo' => true
-    //     ]);
+    public function test_search_handles_invalid_request()
+    {
+        $searchQuery = [
+            'searchQuery' => [
+                'filters' => [
+                    'invalid_field' => 'some_value',
+                ],
+                'fieldMap' => [
+                    'invalid_field' => ['type' => 'invalid_type']
+                ]
+            ]
+        ];
 
-    //     $paciente2 = Paciente::factory()->create([
-    //         'empresa' => 1,
-    //         'area' => 2,
-    //         'activo' => true
-    //     ]);
+        $response = $this->postJson('/api/pacientes/search', $searchQuery);
 
-    //     $searchQuery = [
-    //         'filters' => [
-    //             'empresa' => 1,
-    //             'area' => 1,
-    //             'activo' => true,
-    //         ],
-    //         'fieldMap' => [
-    //             'empresa' => ['type' => 'numeric', 'relation' => false],
-    //             'area' => ['type' => 'numeric', 'relation' => false],
-    //             'activo' => ['type' => 'boolean']
-    //         ]
-    //     ];
+        $response->assertStatus(500)
+            ->assertJson([
+                'success' => false,
+                'message' => 'Error al buscar pacientes'
+            ]);
+    }
 
-    //     $response = $this->postJson('/api/pacientes/search', $searchQuery);
+    public function test_search_with_multiple_filters()
+    {
+        // Limpiar la base de datos
+        Paciente::query()->delete();
+        Exposicion::query()->delete();
 
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             'success' => true
-    //         ])
-    //         ->assertJsonCount(1, 'data')
-    //         ->assertJsonPath('data.0.empresa', 1)
-    //         ->assertJsonPath('data.0.area', 1);
-    // }
+        // Crear exposiciones de prueba
+        $exposicion1 = Exposicion::create(['descripcion' => 'Ruido']);
+        $exposicion2 = Exposicion::create(['descripcion' => 'Polvo']);
 
-    // public function test_search_with_invalid_query_format()
-    // {
-    //     $searchQuery = [
-    //         'filters' => null,
-    //         'fieldMap' => null
-    //     ];
+        // Crear empresa de prueba
+        $empresa = Empresa::factory()->create();
+        $area = Area::factory()->create();
 
-    //     $response = $this->postJson('/api/pacientes/search', $searchQuery);
+        // Crear pacientes que coincidan con todos los filtros
+        $pacientesCoinciden = Paciente::factory()->count(2)->create([
+            'exposicion' => json_encode(['Ruido', 'Polvo']),
+            'activo' => true,
+            'protocolo_minsal' => false,
+            'empresa' => $empresa->id,
+            'area' => $area->id
+        ]);
 
-    //     $response->assertStatus(500)
-    //         ->assertJson([
-    //             'success' => false,
-    //             'message' => 'Error al buscar pacientes'
-    //         ]);
-    // }
+        // Crear pacientes que no coinciden con todos los filtros
+        $pacientesNoCoinciden = Paciente::factory()->count(3)->create([
+            'exposicion' => json_encode(['Vibración']),
+            'activo' => true,
+            'empresa' => $empresa->id,
+            'area' => $area->id + 1
+        ]);
 
-    // public function test_search_with_empty_results()
-    // {
-    //     // Limpiar la base de datos
-    //     Paciente::query()->delete();
+        $searchQuery = [
+            'searchQuery' => [
+                'filters' => [
+                    'exposicion' => ['Ruido', 'Polvo'],
+                    'activo' => true,
+                    'protocolo_minsal' => false,
+                    'empresa' => $empresa->id,
+                    'area' => $area->id
+                ],
+                'fieldMap' => [
+                    'exposicion' => ['type' => 'array', 'operator' => 'contains'],
+                    'activo' => ['type' => 'boolean'],
+                    'protocolo_minsal' => ['type' => 'boolean'],
+                    'empresa' => ['type' => 'numeric', 'relation' => false],
+                    'area' => ['type' => 'numeric', 'relation' => false]
+                ]
+            ]
+        ];
 
-    //     $searchQuery = [
-    //         'filters' => [
-    //             'rut' => '99999999-9',
-    //             'activo' => true,
-    //         ],
-    //         'fieldMap' => [
-    //             'rut' => ['type' => 'text', 'operator' => 'like'],
-    //             'activo' => ['type' => 'boolean']
-    //         ]
-    //     ];
+        $response = $this->postJson('/api/pacientes/search', $searchQuery);
 
-    //     $response = $this->postJson('/api/pacientes/search', $searchQuery);
+        // Verificar la respuesta
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true
+            ])
+            ->assertJsonCount(2, 'data');
 
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             'success' => true,
-    //             'data' => []
-    //         ]);
-    // }
+        // Verificar que los IDs corresponden a los pacientes correctos
+        $responseData = $response->json('data');
+        $coincidentIds = $pacientesCoinciden->pluck('id')->toArray();
+
+        foreach ($responseData as $paciente) {
+            $this->assertTrue(in_array($paciente['id'], $coincidentIds));
+            $exposiciones = json_decode($paciente['exposicion'], true);
+            $this->assertTrue(
+                count(array_intersect($exposiciones, ['Ruido', 'Polvo'])) > 0,
+                'El paciente debe tener al menos una de las exposiciones buscadas'
+            );
+            $this->assertTrue($paciente['activo']);
+            $this->assertFalse($paciente['protocolo_minsal']);
+            $this->assertEquals($empresa->id, $paciente['empresa']);
+            $this->assertEquals($area->id, $paciente['area']);
+        }
+    }
+
+    public function test_search_with_empty_filters()
+    {
+        // Crear algunos pacientes de prueba
+        $pacientes = Paciente::factory()->count(5)->create();
+
+        $searchQuery = [
+            'searchQuery' => [
+                'filters' => [],
+                'fieldMap' => []
+            ]
+        ];
+
+        $response = $this->postJson('/api/pacientes/search', $searchQuery);
+
+        // Verificar que devuelve todos los pacientes cuando no hay filtros
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true
+            ])
+            ->assertJsonCount(5, 'data');
+    }
 }

@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Services\PacienteService;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class PacienteController extends Controller
 {
@@ -39,6 +40,41 @@ class PacienteController extends Controller
     public function search(Request $request)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                'searchQuery' => 'required|array',
+                'searchQuery.filters' => 'required|array',
+                'searchQuery.fieldMap' => 'required|array',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error de validación',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Validación adicional para tipos de campos
+            $fieldMap = $request->input('searchQuery.fieldMap');
+            $filters = $request->input('searchQuery.filters');
+
+            foreach ($fieldMap as $field => $config) {
+                if (isset($filters[$field])) {
+                    $value = $filters[$field];
+                    $type = $config['type'] ?? null;
+
+                    if ($type === 'boolean' && !is_bool($value) && $value !== null) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Error de validación',
+                            'errors' => [
+                                "searchQuery.filters.$field" => ["El campo debe ser de tipo booleano"]
+                            ]
+                        ], 422);
+                    }
+                }
+            }
+
             $data = $this->pacienteService->search($request);
 
             return response()->json([

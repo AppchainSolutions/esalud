@@ -227,6 +227,78 @@ class PacienteTest extends TestCase
         }
     }
 
+    public function test_can_search_by_area()
+    {
+        // Limpiar la base de datos
+        Paciente::query()->delete();
+
+        // Crear pacientes con diferentes áreas
+        $area1 = Paciente::factory()->count(3)->create([
+            'area' => 1,
+            'activo' => true,
+            'protocolo_minsal' => false
+        ]);
+
+        // Crear pacientes de otra área
+        $area2 = Paciente::factory()->count(2)->create([
+            'area' => 2,
+            'activo' => true,
+            'protocolo_minsal' => false
+        ]);
+
+        // Verificar que se crearon los registros correctamente
+        $this->assertEquals(3, Paciente::where('area', 1)->count());
+        $this->assertEquals(2, Paciente::where('area', 2)->count());
+
+        $searchQuery = [
+            'searchQuery' => [
+                'filters' => [
+                    'id' => null,
+                    'rut' => null,
+                    'empresa' => null,
+                    'area' => 1,
+                    'unidad' => null,
+                    'planta' => null,
+                    'ceco' => null,
+                    'activo' => true,
+                    'protocolo_minsal' => false,
+                    'exposicion' => [],
+                ],
+                'fieldMap' => [
+                    'rut' => ['type' => 'text', 'operator' => 'like'],
+                    'empresa' => ['type' => 'numeric', 'relation' => false],
+                    'area' => ['type' => 'numeric', 'relation' => false],
+                    'unidad' => ['type' => 'numeric', 'relation' => false],
+                    'planta' => ['type' => 'numeric', 'relation' => false],
+                    'ceco' => ['type' => 'numeric', 'relation' => false],
+                    'activo' => ['type' => 'boolean'],
+                    'protocolo_minsal' => ['type' => 'boolean'],
+                    'exposicion' => ['type' => 'array', 'relation' => true]
+                ]
+            ]
+        ];
+
+        $response = $this->postJson('/api/pacientes/search', $searchQuery);
+
+        // Verificar la respuesta
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true
+            ])
+            ->assertJsonCount(3, 'data'); // Verificar que devuelve los 3 pacientes del área 1
+
+        // Verificar que todos los IDs en la respuesta corresponden a pacientes del área 1
+        $responseData = $response->json('data');
+        $area1Ids = $area1->pluck('id')->toArray();
+
+        foreach ($responseData as $paciente) {
+            $this->assertTrue(in_array($paciente['id'], $area1Ids));
+            $this->assertEquals(1, $paciente['area']);
+            $this->assertTrue($paciente['activo']);
+            $this->assertFalse($paciente['protocolo_minsal']);
+        }
+    }
+
     // public function test_search_with_multiple_filters()
     // {
     //     // Limpiar la base de datos

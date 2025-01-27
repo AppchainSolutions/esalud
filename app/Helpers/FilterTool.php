@@ -35,6 +35,9 @@ class FilterTool
         // Tipos booleanos
         'boolean' => 'boolean',
         'bool' => 'boolean',
+
+        // Array
+        'array' => 'array',
     ];
 
     /**
@@ -123,6 +126,16 @@ class FilterTool
                     $query->where($field, 'like', "%{$value}%");
                 } elseif ($config['operator'] === 'equals') {
                     $query->where($field, '=', $value);
+                } elseif ($config['operator'] === 'contains') {
+                    if (is_array($value)) {
+                        $query->where(function($q) use ($field, $value) {
+                            foreach ($value as $val) {
+                                $q->orWhere($field, 'like', "%{$val}%");
+                            }
+                        });
+                    } else {
+                        $query->where($field, 'like', "%{$value}%");
+                    }
                 } else {
                     $query->where($field, $value);
                 }
@@ -155,6 +168,17 @@ class FilterTool
                     });
                 }
                 break;
+     /*private static function applyExposicionFilter(object $query, $field, $criteria)
+    {
+        try {
+            foreach ($criteria as $term) {
+                $query->whereFullText($field, '"' . $term . '\"');
+                return $query->orWhereFullText($field, $term);
+            }
+        } catch (QueryException $e) {
+            return 'Error al aplicar filtro de exposición';
+        }
+    }*/
         }
     }
 

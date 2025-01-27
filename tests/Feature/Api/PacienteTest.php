@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Models\Paciente;
 use App\Models\User;
+use App\Models\Exposicion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Artisan;
@@ -294,6 +295,84 @@ class PacienteTest extends TestCase
         foreach ($responseData as $paciente) {
             $this->assertTrue(in_array($paciente['id'], $area1Ids));
             $this->assertEquals(1, $paciente['area']);
+            $this->assertTrue($paciente['activo']);
+            $this->assertFalse($paciente['protocolo_minsal']);
+        }
+    }
+
+    public function test_can_search_by_exposicion()
+    {
+        // Limpiar la base de datos
+        Paciente::query()->delete();
+        Exposicion::query()->delete();
+
+        // Crear exposiciones de prueba
+        $exposicion1 = Exposicion::create(['descripcion' => 'Ruido']);
+        $exposicion2 = Exposicion::create(['descripcion' => 'Polvo']);
+        $exposicion3 = Exposicion::create(['descripcion' => 'Vibración']);
+
+        // Crear pacientes con diferentes exposiciones
+        $pacientesExp1 = Paciente::factory()->count(3)->create([
+            'exposicion' => 'Ruido,Polvo', // Múltiples exposiciones separadas por coma
+            'activo' => true,
+            'protocolo_minsal' => false
+        ]);
+
+        // Crear pacientes con otra exposición
+        $pacientesExp2 = Paciente::factory()->count(2)->create([
+            'exposicion' => 'Vibración',
+            'activo' => true,
+            'protocolo_minsal' => false
+        ]);
+
+        // Verificar que se crearon los registros correctamente
+        $this->assertEquals(3, Paciente::where('exposicion', 'Ruido,Polvo')->count());
+        $this->assertEquals(2, Paciente::where('exposicion', 'Vibración')->count());
+
+        $searchQuery = [
+            'searchQuery' => [
+                'filters' => [
+                    'id' => null,
+                    'rut' => null,
+                    'empresa' => null,
+                    'area' => null,
+                    'unidad' => null,
+                    'planta' => null,
+                    'ceco' => null,
+                    'activo' => true,
+                    'protocolo_minsal' => false,
+                    'exposicion' => ['Ruido', 'Polvo'], // Array de exposiciones a buscar
+                ],
+                'fieldMap' => [
+                    'rut' => ['type' => 'text', 'operator' => 'like'],
+                    'empresa' => ['type' => 'numeric', 'relation' => false],
+                    'area' => ['type' => 'numeric', 'relation' => false],
+                    'unidad' => ['type' => 'numeric', 'relation' => false],
+                    'planta' => ['type' => 'numeric', 'relation' => false],
+                    'ceco' => ['type' => 'numeric', 'relation' => false],
+                    'activo' => ['type' => 'boolean'],
+                    'protocolo_minsal' => ['type' => 'boolean'],
+                    'exposicion' => ['type' => 'text', 'operator' => 'contains'] // Usamos contains para buscar en el string de exposiciones
+                ]
+            ]
+        ];
+
+        $response = $this->postJson('/api/pacientes/search', $searchQuery);
+
+        // Verificar la respuesta
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true
+            ])
+            ->assertJsonCount(3, 'data'); // Verificar que devuelve los 3 pacientes con exposición a ruido o polvo
+
+        // Verificar que todos los IDs en la respuesta corresponden a pacientes con las exposiciones buscadas
+        $responseData = $response->json('data');
+        $exp1Ids = $pacientesExp1->pluck('id')->toArray();
+
+        foreach ($responseData as $paciente) {
+            $this->assertTrue(in_array($paciente['id'], $exp1Ids));
+            $this->assertTrue(str_contains($paciente['exposicion'], 'Ruido') || str_contains($paciente['exposicion'], 'Polvo'));
             $this->assertTrue($paciente['activo']);
             $this->assertFalse($paciente['protocolo_minsal']);
         }

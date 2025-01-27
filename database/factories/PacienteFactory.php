@@ -13,8 +13,8 @@ use App\Models\Genero;
 use App\Models\GrupoSanguineo;
 use App\Models\Instruccion;
 use App\Models\LeySocial;
-use App\Models\Nacionalidad;
 use App\Models\Modalidad;
+use App\Models\Nacionalidad;
 use App\Models\Paciente;
 use App\Models\Planta;
 use App\Models\Prevision;
@@ -69,7 +69,7 @@ class PacienteFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'empresa' => Empresa::inRandomOrder()->first()->id,
             'estado_civil' => EstadoCivil::inRandomOrder()->first()->id,
-            'exposicion' => Exposicion::inRandomOrder()->first()->descripcion,
+            'exposicion' => Exposicion::inRandomOrder()->take(rand(1, 3))->pluck('descripcion')->implode(','),
             'fecha_nacimiento' => $this->faker->date(),
             'genero' => Genero::inRandomOrder()->first()->id,
             'grupo_sanguineo' => GrupoSanguineo::inRandomOrder()->first()->id,

@@ -63,11 +63,11 @@ class PacienteTest extends TestCase
             ],
             'fieldMap' => [
                 'rut' => ['type' => 'text', 'operator' => 'like'],
-                'empresa' => ['type' => 'numeric', 'relation' => true],
-                'area' => ['type' => 'numeric', 'relation' => true],
-                'unidad' => ['type' => 'numeric', 'relation' => true],
-                'planta' => ['type' => 'numeric', 'relation' => true],
-                'ceco' => ['type' => 'numeric', 'relation' => true],
+                'empresa' => ['type' => 'numeric', 'relation' => false],
+                'area' => ['type' => 'numeric', 'relation' => false],
+                'unidad' => ['type' => 'numeric', 'relation' => false],
+                'planta' => ['type' => 'numeric', 'relation' => false],
+                'ceco' => ['type' => 'numeric', 'relation' => false],
                 'activo' => ['type' => 'boolean'],
                 'protocolo_minsal' => ['type' => 'boolean'],
                 'exposicion' => ['type' => 'array', 'relation' => true]
@@ -121,11 +121,11 @@ class PacienteTest extends TestCase
                 ],
                 'fieldMap' => [
                     'rut' => ['type' => 'text', 'operator' => 'like'],
-                    'empresa' => ['type' => 'numeric', 'relation' => true],
-                    'area' => ['type' => 'numeric', 'relation' => true],
-                    'unidad' => ['type' => 'numeric', 'relation' => true],
-                    'planta' => ['type' => 'numeric', 'relation' => true],
-                    'ceco' => ['type' => 'numeric', 'relation' => true],
+                    'empresa' => ['type' => 'numeric', 'relation' => false],
+                    'area' => ['type' => 'numeric', 'relation' => false],
+                    'unidad' => ['type' => 'numeric', 'relation' => false],
+                    'planta' => ['type' => 'numeric', 'relation' => false],
+                    'ceco' => ['type' => 'numeric', 'relation' => false],
                     'activo' => ['type' => 'boolean'],
                     'protocolo_minsal' => ['type' => 'boolean'],
                     'exposicion' => ['type' => 'array', 'relation' => true]
@@ -159,46 +159,86 @@ class PacienteTest extends TestCase
     {
         // Limpiar la base de datos
         Paciente::query()->delete();
-        
+
         // Crear pacientes con diferentes empresas
-        $pacienteEmpresa1 = Paciente::factory()->create(['empresa' => 1, 'activo' => true]);
-        $pacienteEmpresa2 = Paciente::factory()->create(['empresa' => 2, 'activo' => true]);
+        $empresa1 = Paciente::factory()->count(3)->create([
+            'empresa' => 1,
+            'activo' => true,
+            'protocolo_minsal' => false
+        ]);
+
+        // Crear pacientes de otra empresa
+        $empresa2 = Paciente::factory()->count(2)->create([
+            'empresa' => 2,
+            'activo' => true,
+            'protocolo_minsal' => false
+        ]);
+
+        // Verificar que se crearon los registros correctamente
+        $this->assertEquals(3, Paciente::where('empresa', 1)->count());
+        $this->assertEquals(2, Paciente::where('empresa', 2)->count());
 
         $searchQuery = [
             'searchQuery' => [
                 'filters' => [
+                    'id' => null,
+                    'rut' => null,
                     'empresa' => 1,
+                    'area' => null,
+                    'unidad' => null,
+                    'planta' => null,
+                    'ceco' => null,
                     'activo' => true,
+                    'protocolo_minsal' => false,
+                    'exposicion' => [],
                 ],
                 'fieldMap' => [
-                    'empresa' => ['type' => 'numeric', 'relation' => true],
-                    'activo' => ['type' => 'boolean']
+                    'rut' => ['type' => 'text', 'operator' => 'like'],
+                    'empresa' => ['type' => 'numeric', 'relation' => false],
+                    'area' => ['type' => 'numeric', 'relation' => false],
+                    'unidad' => ['type' => 'numeric', 'relation' => false],
+                    'planta' => ['type' => 'numeric', 'relation' => false],
+                    'ceco' => ['type' => 'numeric', 'relation' => false],
+                    'activo' => ['type' => 'boolean'],
+                    'protocolo_minsal' => ['type' => 'boolean'],
+                    'exposicion' => ['type' => 'array', 'relation' => true]
                 ]
             ]
         ];
 
         $response = $this->postJson('/api/pacientes/search', $searchQuery);
 
+        // Verificar la respuesta
         $response->assertStatus(200)
             ->assertJson([
                 'success' => true
             ])
-            ->assertJsonCount(1, 'data')
-            ->assertJsonPath('data.0.empresa', 1);
+            ->assertJsonCount(3, 'data'); // Verificar que devuelve los 3 pacientes de empresa 1
+
+        // Verificar que todos los IDs en la respuesta corresponden a pacientes de la empresa 1
+        $responseData = $response->json('data');
+        $empresa1Ids = $empresa1->pluck('id')->toArray();
+
+        foreach ($responseData as $paciente) {
+            $this->assertTrue(in_array($paciente['id'], $empresa1Ids));
+            $this->assertEquals(1, $paciente['empresa']);
+            $this->assertTrue($paciente['activo']);
+            $this->assertFalse($paciente['protocolo_minsal']);
+        }
     }
 
     // public function test_search_with_multiple_filters()
     // {
     //     // Limpiar la base de datos
     //     Paciente::query()->delete();
-        
+
     //     // Crear pacientes con diferentes combinaciones
     //     $paciente1 = Paciente::factory()->create([
     //         'empresa' => 1,
     //         'area' => 1,
     //         'activo' => true
     //     ]);
-        
+
     //     $paciente2 = Paciente::factory()->create([
     //         'empresa' => 1,
     //         'area' => 2,
@@ -212,8 +252,8 @@ class PacienteTest extends TestCase
     //             'activo' => true,
     //         ],
     //         'fieldMap' => [
-    //             'empresa' => ['type' => 'numeric', 'relation' => true],
-    //             'area' => ['type' => 'numeric', 'relation' => true],
+    //             'empresa' => ['type' => 'numeric', 'relation' => false],
+    //             'area' => ['type' => 'numeric', 'relation' => false],
     //             'activo' => ['type' => 'boolean']
     //         ]
     //     ];

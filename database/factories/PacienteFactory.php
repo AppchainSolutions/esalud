@@ -69,7 +69,7 @@ class PacienteFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'empresa' => Empresa::inRandomOrder()->first()->id,
             'estado_civil' => EstadoCivil::inRandomOrder()->first()->id,
-            'exposicion' => Exposicion::inRandomOrder()->take(rand(1, 3))->pluck('descripcion')->implode(','),
+            'exposicion' => json_encode(Exposicion::inRandomOrder()->take(rand(1, 3))->pluck('descripcion')->toArray()),
             'fecha_nacimiento' => $this->faker->date(),
             'genero' => Genero::inRandomOrder()->first()->id,
             'grupo_sanguineo' => GrupoSanguineo::inRandomOrder()->first()->id,

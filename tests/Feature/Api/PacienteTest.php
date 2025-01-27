@@ -313,21 +313,21 @@ class PacienteTest extends TestCase
 
         // Crear pacientes con diferentes exposiciones
         $pacientesExp1 = Paciente::factory()->count(3)->create([
-            'exposicion' => 'Ruido,Polvo', // Múltiples exposiciones separadas por coma
+            'exposicion' => json_encode(['Ruido', 'Polvo']), // Array de exposiciones
             'activo' => true,
             'protocolo_minsal' => false
         ]);
 
         // Crear pacientes con otra exposición
         $pacientesExp2 = Paciente::factory()->count(2)->create([
-            'exposicion' => 'Vibración',
+            'exposicion' => json_encode(['Vibración']), // Array con una exposición
             'activo' => true,
             'protocolo_minsal' => false
         ]);
 
         // Verificar que se crearon los registros correctamente
-        $this->assertEquals(3, Paciente::where('exposicion', 'Ruido,Polvo')->count());
-        $this->assertEquals(2, Paciente::where('exposicion', 'Vibración')->count());
+        $this->assertEquals(3, Paciente::where('exposicion', json_encode(['Ruido', 'Polvo']))->count());
+        $this->assertEquals(2, Paciente::where('exposicion', json_encode(['Vibración']))->count());
 
         $searchQuery = [
             'searchQuery' => [
@@ -352,7 +352,7 @@ class PacienteTest extends TestCase
                     'ceco' => ['type' => 'numeric', 'relation' => false],
                     'activo' => ['type' => 'boolean'],
                     'protocolo_minsal' => ['type' => 'boolean'],
-                    'exposicion' => ['type' => 'text', 'operator' => 'contains'] // Usamos contains para buscar en el string de exposiciones
+                    'exposicion' => ['type' => 'array', 'operator' => 'contains'] // Cambiamos a tipo array
                 ]
             ]
         ];
@@ -372,7 +372,11 @@ class PacienteTest extends TestCase
 
         foreach ($responseData as $paciente) {
             $this->assertTrue(in_array($paciente['id'], $exp1Ids));
-            $this->assertTrue(str_contains($paciente['exposicion'], 'Ruido') || str_contains($paciente['exposicion'], 'Polvo'));
+            $exposiciones = json_decode($paciente['exposicion'], true);
+            $this->assertTrue(
+                count(array_intersect($exposiciones, ['Ruido', 'Polvo'])) > 0,
+                'El paciente debe tener al menos una de las exposiciones buscadas'
+            );
             $this->assertTrue($paciente['activo']);
             $this->assertFalse($paciente['protocolo_minsal']);
         }

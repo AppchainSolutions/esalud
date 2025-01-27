@@ -126,18 +126,24 @@ class FilterTool
                     $query->where($field, 'like', "%{$value}%");
                 } elseif ($config['operator'] === 'equals') {
                     $query->where($field, '=', $value);
-                } elseif ($config['operator'] === 'contains') {
+                } else {
+                    $query->where($field, $value);
+                }
+                break;
+
+            case 'array':
+                if ($config['operator'] === 'contains') {
                     if (is_array($value)) {
                         $query->where(function($q) use ($field, $value) {
                             foreach ($value as $val) {
+                                $jsonArray = json_encode([$val]);
+                                // Buscar el valor tanto en arrays como en arrays más grandes
                                 $q->orWhere($field, 'like', "%{$val}%");
                             }
                         });
                     } else {
                         $query->where($field, 'like', "%{$value}%");
                     }
-                } else {
-                    $query->where($field, $value);
                 }
                 break;
 
@@ -161,24 +167,17 @@ class FilterTool
                 $query->where($field, (bool)$value);
                 break;
 
-            case 'array':
-                if ($config['relation'] && !empty($value)) {
-                    $query->whereHas($field, function ($q) use ($value) {
-                        $q->whereIn('id', (array)$value);
-                    });
+            case 'date':
+                if (isset($config['operator']) && $config['operator'] === 'between') {
+                    $query->whereBetween($field, $value);
+                } else {
+                    $query->where($field, $value);
                 }
                 break;
-     /*private static function applyExposicionFilter(object $query, $field, $criteria)
-    {
-        try {
-            foreach ($criteria as $term) {
-                $query->whereFullText($field, '"' . $term . '\"');
-                return $query->orWhereFullText($field, $term);
-            }
-        } catch (QueryException $e) {
-            return 'Error al aplicar filtro de exposición';
-        }
-    }*/
+
+            default:
+                $query->where($field, $value);
+                break;
         }
     }
 

@@ -32,7 +32,7 @@ class PacienteController extends Controller
 
     /**
      * Busca pacientes según los criterios especificados
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -45,7 +45,6 @@ class PacienteController extends Controller
                 'success' => true,
                 'data' => $data,
             ]);
-
         } catch (\Exception $e) {
             Log::error('Error en búsqueda de pacientes', [
                 'message' => $e->getMessage(),
@@ -70,7 +69,7 @@ class PacienteController extends Controller
     // {
     //     try {
     //         $paciente = $this->pacienteService->show($request);
-            
+
     //         return response()->json([
     //             'success' => true,
     //             'data' => $paciente

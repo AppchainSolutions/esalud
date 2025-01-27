@@ -40,7 +40,7 @@ abstract class BaseService implements ServiceInterface
 
         try {
             $response = $this->repository->search($request);
-            
+
             // Extraer datos de la respuesta JSON
             $data = $response->getData(true)['data'];
             $total = $response->getData(true)['meta']['total'];
@@ -55,7 +55,6 @@ abstract class BaseService implements ServiceInterface
                 ]);
 
             return $data;
-
         } catch (\Throwable $e) {
             // Registrar errores en Clockwork y Log
             $this->clockwork->event("Error en Búsqueda de {$this->resourceName}")

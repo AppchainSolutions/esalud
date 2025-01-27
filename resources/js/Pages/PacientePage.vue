@@ -11,7 +11,6 @@ import {
     searchItems,
     handleStoreItem,
     closeForm,
-    openToCreate,
     openToEdit,
 } from "@/utils/helper.js";
 import { debugHelpers as debug } from "@/utils/debug.js";
@@ -290,8 +289,15 @@ async function searchPacientes() {
     }
 }
 
-function openFormCreate() {
-    openToCreate(state);
+function frmCreate() {
+    state.editedItem = { ...state.defaultItem };
+    state.editedIndex = -1;
+    state.dialog = true;
+}
+
+function openFormEdit(item) {
+    openToEdit(state, item);
+    handleInputChange();
 }
 
 function storeItems() {
@@ -333,11 +339,6 @@ const update = async () => {
         type: "success",
     });
 };
-
-function openFormEdit(item) {
-    openToEdit(state, item);
-    handleInputChange();
-}
 
 const remove = async (item) => {
     handleRemoveItem(state, item);
@@ -525,7 +526,7 @@ const remove = async (item) => {
                                     variant="tonal"
                                     class="ma-2"
                                     color="#009AA4"
-                                    @click="openFormCreate"
+                                    @click="frmCreate"
                                 >
                                 </v-btn>
                                 <v-dialog v-model="state.dialog" persistent>
@@ -614,8 +615,6 @@ const remove = async (item) => {
                                                                 state.editedItem
                                                                     .activo
                                                             "
-                                                            false-value="true"
-                                                            true-value="false"
                                                             class="ml-2"
                                                             color="green-darken-3"
                                                             inset
@@ -627,8 +626,6 @@ const remove = async (item) => {
                                                                     .protocolo_minsal
                                                             "
                                                             hide-details
-                                                            false-value="true"
-                                                            true-value="false"
                                                             class="ml-2"
                                                             color="green-darken-3"
                                                             inset

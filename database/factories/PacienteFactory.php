@@ -34,26 +34,25 @@ class PacienteFactory extends Factory
 
     public function definition()
     {
-        Paciente::Truncate();
-        Afp::factory()->create();
-        Area::factory()->create();
-        Ceco::factory()->create();
-        Empresa::factory()->create();
-        EstadoCivil::factory()->create();
-        Exposicion::factory()->create();
-        Genero::factory()->create();
-        GrupoSanguineo::factory()->create();
-        Instruccion::factory()->create();
-        LeySocial::factory()->create();
-        Nacionalidad::factory()->create();
-        Modalidad::factory()->create();
-        Planta::factory()->create();
-        Prevision::factory()->create();
-        Pueblo::factory()->create();
-        Religion::factory()->create();
-        Seguro::factory()->create();
-        Unidad::factory()->create();
-
+        // Crear datos de prueba para las relaciones si no existen
+        if (Afp::count() === 0) Afp::factory()->create();
+        if (Area::count() === 0) Area::factory()->create();
+        if (Ceco::count() === 0) Ceco::factory()->create();
+        if (Empresa::count() === 0) Empresa::factory()->create();
+        if (EstadoCivil::count() === 0) EstadoCivil::factory()->create();
+        if (Exposicion::count() === 0) Exposicion::factory()->create();
+        if (Genero::count() === 0) Genero::factory()->create();
+        if (GrupoSanguineo::count() === 0) GrupoSanguineo::factory()->create();
+        if (Instruccion::count() === 0) Instruccion::factory()->create();
+        if (LeySocial::count() === 0) LeySocial::factory()->create();
+        if (Nacionalidad::count() === 0) Nacionalidad::factory()->create();
+        if (Modalidad::count() === 0) Modalidad::factory()->create();
+        if (Planta::count() === 0) Planta::factory()->create();
+        if (Prevision::count() === 0) Prevision::factory()->create();
+        if (Pueblo::count() === 0) Pueblo::factory()->create();
+        if (Religion::count() === 0) Religion::factory()->create();
+        if (Seguro::count() === 0) Seguro::factory()->create();
+        if (Unidad::count() === 0) Unidad::factory()->create();
 
         return [
             'actividad_economica' => $this->faker->jobTitle,
@@ -91,7 +90,6 @@ class PacienteFactory extends Factory
             'telefono1' => $this->faker->phoneNumber,
             'telefono2' => $this->faker->phoneNumber,
             'unidad' => Unidad::inRandomOrder()->first()->id,
-
         ];
     }
 }

@@ -22,9 +22,8 @@ Route::middleware([
 ])->group(function () {
 
     // Rutas de Pacientes
-    Route::get('pacientes/search', [PacienteController::class, 'search']);
-    Route::get('pacientes', [PacienteController::class, 'index']);
-    Route::post('pacientes', [PacienteController::class, 'store']);
+    Route::apiResource('pacientes', PacienteController::class);
+    Route::post('pacientes/search', [PacienteController::class, 'search']);
 
     // Aquí puedes agregar más grupos de rutas protegidas
 });

@@ -1,0 +1,7 @@
+default:
+  suites:
+    default:
+      paths:
+        - tests/Feature/Cucumber
+      contexts:
+        - Tests\Feature\Cucumber\Steps\SearchPatientsSteps

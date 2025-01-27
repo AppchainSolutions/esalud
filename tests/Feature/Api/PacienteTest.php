@@ -155,35 +155,37 @@ class PacienteTest extends TestCase
         }
     }
 
-    // public function test_can_search_by_empresa()
-    // {
-    //     // Limpiar la base de datos
-    //     Paciente::query()->delete();
+    public function test_can_search_by_empresa()
+    {
+        // Limpiar la base de datos
+        Paciente::query()->delete();
         
-    //     // Crear pacientes con diferentes empresas
-    //     $pacienteEmpresa1 = Paciente::factory()->create(['empresa' => 1, 'activo' => true]);
-    //     $pacienteEmpresa2 = Paciente::factory()->create(['empresa' => 2, 'activo' => true]);
+        // Crear pacientes con diferentes empresas
+        $pacienteEmpresa1 = Paciente::factory()->create(['empresa' => 1, 'activo' => true]);
+        $pacienteEmpresa2 = Paciente::factory()->create(['empresa' => 2, 'activo' => true]);
 
-    //     $searchQuery = [
-    //         'filters' => [
-    //             'empresa' => 1,
-    //             'activo' => true,
-    //         ],
-    //         'fieldMap' => [
-    //             'empresa' => ['type' => 'numeric', 'relation' => true],
-    //             'activo' => ['type' => 'boolean']
-    //         ]
-    //     ];
+        $searchQuery = [
+            'searchQuery' => [
+                'filters' => [
+                    'empresa' => 1,
+                    'activo' => true,
+                ],
+                'fieldMap' => [
+                    'empresa' => ['type' => 'numeric', 'relation' => true],
+                    'activo' => ['type' => 'boolean']
+                ]
+            ]
+        ];
 
-    //     $response = $this->postJson('/api/pacientes/search', $searchQuery);
+        $response = $this->postJson('/api/pacientes/search', $searchQuery);
 
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             'success' => true
-    //         ])
-    //         ->assertJsonCount(1, 'data')
-    //         ->assertJsonPath('data.0.empresa', 1);
-    // }
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true
+            ])
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.empresa', 1);
+    }
 
     // public function test_search_with_multiple_filters()
     // {

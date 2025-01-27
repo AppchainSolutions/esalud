@@ -92,20 +92,6 @@ class FilterTool
                     }
                 }
 
-                // Agregar relaciones necesarias desde searchQuery.endpoints
-                //$searchQuery = config('searchQuery');
-                //$modelName = class_basename($modelClass);
-                //$relations = [];
-
-                /*
-                 if (isset($relations)) {
-                    $relations = array_filter(
-                        array_keys($relations),
-                        function ($endpoint) use ($searchQuery, $modelName) {
-                            return !empty($relations[$endpoint]['relation']);
-                        }
-                    );
-                }*/
             }
             if (!empty($relations)) {
                 $query->with($relations);
@@ -135,6 +121,8 @@ class FilterTool
             case 'text':
                 if ($config['operator'] === 'like') {
                     $query->where($field, 'like', "%{$value}%");
+                } elseif ($config['operator'] === 'equals') {
+                    $query->where($field, '=', $value);
                 } else {
                     $query->where($field, $value);
                 }

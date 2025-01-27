@@ -143,22 +143,23 @@ Configuraciones específicas del workspace actual:
   - Redis
   - Cypress y Pest para testing
 
-- Principios:
-  - SOLID
-  - DRY
-  - TypeScript
-  - Diseño responsive
-  - Documentación en español
-  - Separación de Responsabilidades:
-    - Controllers: Se encargan de:
-      - Manejar las peticiones HTTP
-      - Renderizar vistas
-      - Coordinar entre la capa de presentación y la lógica de negocio
-    - Services: Se encargan de:
-      - Lógica de negocio
-      - Validaciones de reglas de negocio
-      - Orquestar operaciones complejas
-      - Coordinar con repositorios
+## Principios:
+
+- SOLID
+- DRY
+- TypeScript
+- Diseño responsive
+- Documentación en español
+- Separación de Responsabilidades:
+  - Controllers: Se encargan de:
+    - Manejar las peticiones HTTP
+    - Renderizar vistas
+    - Coordinar entre la capa de presentación y la lógica de negocio
+  - Services: Se encargan de:
+    - Lógica de negocio
+    - Validaciones de reglas de negocio
+    - Orquestar operaciones complejas
+    - Coordinar con repositorios
   - Principios SOLID:
     - Single Responsibility Principle: El Service no debería tener la responsabilidad de manejar la presentación
   - Interface Segregation: Mantener las interfaces limpias y específicas a su propósito
@@ -175,3 +176,18 @@ Configuraciones específicas del workspace actual:
   - Services en app/Services
   - Models en app/Models
   - Tests en tests/Feature y tests/Unit
+
+## Script de Backup:
+
+1. Ubicación: /scripts/backup-db.sh
+2. Configuración en .env
+3. Sistema de logging
+4. Rotación de backups
+5. Variables en .env:
+   1. Configuración de directorios
+   2. Retención de backups
+   3. Credenciales de base de datos
+6. Cron configurado:
+   1. Ejecución semanal (domingos a medianoche)
+   2. Backup automático
+   3. Compresión automática

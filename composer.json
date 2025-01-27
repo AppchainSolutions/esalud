@@ -25,7 +25,7 @@
   "require-dev": {
     "behat/behat": "^3.18",
     "fakerphp/faker": "^1.9.1",
-    "infection/infection": "^0.29.8",
+    "infection/infection": "^0.29.10",
     "itsgoingd/clockwork": "^5.3",
     "kitloong/laravel-migrations-generator": "^7.0",
     "laravel/dusk": "^8.2",

@@ -1,5 +1,211 @@
 # Guía de Testing - eSalud
 
+## Estrategia de Testing End-to-End y Frontend
+
+### Frontend Testing con Cypress
+
+Utilizamos Cypress para pruebas end-to-end del frontend debido a sus capacidades superiores para testing de aplicaciones Vue.js y una mejor experiencia de desarrollo.
+
+#### Configuración de Cypress
+
+```bash
+# Instalación
+npm install cypress --save-dev
+
+# Iniciar Cypress
+npx cypress open
+```
+
+#### Estructura de Pruebas Cypress
+
+```javascript
+// cypress/e2e/pacientes.cy.js
+describe('Gestión de Pacientes', () => {
+  beforeEach(() => {
+    cy.intercept('/api/pacientes*').as('getPacientes')
+    cy.visit('/pacientes')
+  })
+
+  it('debe mostrar lista de pacientes', () => {
+    cy.wait('@getPacientes')
+    cy.get('[data-test="pacientes-table"]').should('be.visible')
+  })
+
+  it('debe permitir crear nuevo paciente', () => {
+    cy.get('[data-test="nuevo-paciente"]').click()
+    cy.get('[data-test="form-rut"]').type('12345678-9')
+    cy.get('[data-test="form-submit"]').click()
+    cy.get('[data-test="success-message"]').should('be.visible')
+  })
+})
+```
+
+#### Mejores Prácticas Cypress
+
+1. Usar `data-test` attributes para selectores
+2. Implementar Page Objects para reutilización
+3. Interceptar llamadas API para mejor control
+4. Mantener pruebas independientes
+5. Documentar casos de prueba complejos
+
+### Backend Testing con Pest
+
+Utilizamos Pest para pruebas unitarias y de integración del backend, aprovechando su sintaxis moderna y mejor integración con Laravel.
+
+#### Configuración de Pest
+
+```bash
+# Instalación
+composer require pestphp/pest --dev
+composer require pestphp/pest-plugin-laravel --dev
+
+# Inicialización
+./vendor/bin/pest --init
+```
+
+#### Estructura de Pruebas Pest
+
+```php
+// tests/Feature/PacienteCrudTest.php
+test('puede crear un paciente', function () {
+    $data = [
+        'rut' => '12345678-9',
+        'nombres' => 'Juan',
+        'apellidos' => 'Pérez'
+    ];
+    
+    $response = $this->postJson('/api/pacientes', $data);
+    
+    $response->assertStatus(201)
+        ->assertJson(['success' => true]);
+});
+
+test('valida datos requeridos', function () {
+    $response = $this->postJson('/api/pacientes', []);
+    
+    $response->assertStatus(422)
+        ->assertJsonValidationErrors(['rut', 'nombres', 'apellidos']);
+});
+```
+
+#### Mejores Prácticas Pest
+
+1. Usar nombres descriptivos para los tests
+2. Agrupar tests relacionados
+3. Mantener tests independientes
+4. Usar factories para datos de prueba
+5. Mockear servicios externos
+
+## Comandos de Testing
+
+### Pruebas Backend (Pest)
+
+```bash
+# Ejecutar todas las pruebas
+php artisan test
+
+# Ejecutar todas las pruebas de pacientes
+php artisan test --group=pacientes
+
+# Ejecutar subgrupos específicos de pacientes
+php artisan test --group=pacientes.busqueda
+php artisan test --group=pacientes.crud
+
+# Ejecutar múltiples grupos o subgrupos
+php artisan test --group=pacientes.busqueda,pacientes.crud
+
+# Filtrar pruebas por nombre dentro de un grupo
+php artisan test --group=pacientes --filter=testBusquedaPorRut
+```
+
+### Estructura de Grupos de Pruebas
+
+```
+pacientes/                    # Grupo principal de pruebas de pacientes
+├── busqueda/                # Subgrupo para pruebas de búsqueda
+│   ├── BusquedaPorRut
+│   ├── BusquedaPorNombre
+│   └── BusquedaAvanzada
+├── crud/                    # Subgrupo para pruebas CRUD
+│   ├── CrearPaciente
+│   ├── ActualizarPaciente
+│   ├── EliminarPaciente
+│   └── ObtenerPaciente
+└── validacion/             # Subgrupo para pruebas de validación
+    ├── ValidacionRut
+    └── ValidacionDatos
+```
+
+### Ejemplo de Implementación
+
+```php
+// tests/Feature/Pacientes/Busqueda/BusquedaPorRutTest.php
+uses()->group('pacientes', 'pacientes.busqueda');
+
+test('puede buscar paciente por rut', function () {
+    // ...
+});
+
+// tests/Feature/Pacientes/Crud/CrearPacienteTest.php
+uses()->group('pacientes', 'pacientes.crud');
+
+test('puede crear nuevo paciente', function () {
+    // ...
+});
+```
+
+### Pruebas Frontend (Cypress)
+
+```bash
+# Abrir Cypress en modo interactivo
+npx cypress open
+
+# Ejecutar pruebas en modo headless
+npx cypress run
+
+# Ejecutar un archivo específico
+npx cypress run --spec "cypress/e2e/pacientes.cy.js"
+
+# Ejecutar en un navegador específico
+npx cypress run --browser chrome
+```
+
+### Pruebas de Mutación
+
+```bash
+# Ejecutar pruebas de mutación
+php artisan test --group=mutacion
+
+# Ejecutar pruebas de un grupo específico
+php artisan test --group=pacientes
+
+# Ejecutar múltiples grupos
+php artisan test --group=mutacion,pacientes
+
+# Ejecutar tests específicos dentro del grupo
+php artisan test --group=mutacion --filter=PacienteTest
+
+# Ver resultados detallados
+php artisan test --group=mutacion -v
+```
+
+### Scripts NPM Recomendados
+
+```json
+{
+  "scripts": {
+    "test": "php artisan test",
+    "test:mutation": "php artisan test --group=mutacion",
+    "test:pacientes": "php artisan test --group=pacientes",
+    "test:pacientes:busqueda": "php artisan test --group=pacientes.busqueda",
+    "test:pacientes:crud": "php artisan test --group=pacientes.crud",
+    "test:e2e": "cypress run",
+    "test:e2e:open": "cypress open",
+    "test:all": "npm run test && npm run test:e2e"
+  }
+}
+```
+
 ## Pruebas de Mutación
 
 Las pruebas de mutación son una técnica avanzada que nos ayuda a evaluar la calidad de nuestras pruebas unitarias. La herramienta modifica pequeñas partes del código (crea "mutantes") y verifica si nuestras pruebas detectan estos cambios.
@@ -13,24 +219,26 @@ Las pruebas de mutación son una técnica avanzada que nos ayuda a evaluar la ca
 ### Uso del Comando
 
 ```bash
-# Ejecutar pruebas de mutación básicas
-php artisan test:mutation
+# Ejecutar pruebas de mutación
+php artisan test --group=mutacion
 
-# Ejecutar con información detallada
-php artisan test:mutation --debug
+# Ejecutar pruebas de un grupo específico
+php artisan test --group=pacientes
 
-# Especificar número de hilos
-php artisan test:mutation --threads=4
+# Ejecutar múltiples grupos
+php artisan test --group=mutacion,pacientes
 
-# Especificar ruta personalizada para cobertura
-php artisan test:mutation --coverage-path=custom/path
+# Ejecutar tests específicos dentro del grupo
+php artisan test --group=mutacion --filter=PacienteTest
+
+# Ver resultados detallados
+php artisan test --group=mutacion -v
 ```
 
 ### Opciones Disponibles
 
 - `--debug`: Muestra información detallada durante la ejecución
 - `--coverage-path`: Ruta personalizada para los archivos de cobertura
-- `--threads`: Número de hilos a usar (por defecto: número de CPU)
 
 ### Reportes Generados
 

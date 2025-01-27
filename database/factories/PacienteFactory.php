@@ -35,24 +35,24 @@ class PacienteFactory extends Factory
     public function definition()
     {
         // Crear datos de prueba para las relaciones si no existen
-        if (Afp::count() === 0) Afp::factory()->create();
-        if (Area::count() === 0) Area::factory()->create();
-        if (Ceco::count() === 0) Ceco::factory()->create();
-        if (Empresa::count() === 0) Empresa::factory()->create();
-        if (EstadoCivil::count() === 0) EstadoCivil::factory()->create();
-        if (Exposicion::count() === 0) Exposicion::factory()->create();
-        if (Genero::count() === 0) Genero::factory()->create();
-        if (GrupoSanguineo::count() === 0) GrupoSanguineo::factory()->create();
-        if (Instruccion::count() === 0) Instruccion::factory()->create();
-        if (LeySocial::count() === 0) LeySocial::factory()->create();
-        if (Nacionalidad::count() === 0) Nacionalidad::factory()->create();
-        if (Modalidad::count() === 0) Modalidad::factory()->create();
-        if (Planta::count() === 0) Planta::factory()->create();
-        if (Prevision::count() === 0) Prevision::factory()->create();
-        if (Pueblo::count() === 0) Pueblo::factory()->create();
-        if (Religion::count() === 0) Religion::factory()->create();
-        if (Seguro::count() === 0) Seguro::factory()->create();
-        if (Unidad::count() === 0) Unidad::factory()->create();
+        if (Afp::count() === 0) Afp::factory()->count(10)->create();
+        if (Area::count() === 0) Area::factory()->count(10)->create();
+        if (Ceco::count() === 0) Ceco::factory()->count(10)->create();
+        if (Empresa::count() === 0) Empresa::factory()->count(10)->create();
+        if (EstadoCivil::count() === 0) EstadoCivil::factory()->count(10)->create();
+        if (Exposicion::count() === 0) Exposicion::factory()->count(10)->create();
+        if (Genero::count() === 0) Genero::factory()->count(10)->create();
+        if (GrupoSanguineo::count() === 0) GrupoSanguineo::factory()->count(10)->create();
+        if (Instruccion::count() === 0) Instruccion::factory()->count(10)->create();
+        if (LeySocial::count() === 0) LeySocial::factory()->count(10)->create();
+        if (Nacionalidad::count() === 0) Nacionalidad::factory()->count(10)->create();
+        if (Modalidad::count() === 0) Modalidad::factory()->count(10)->create();
+        if (Planta::count() === 0) Planta::factory()->count(10)->create();
+        if (Prevision::count() === 0) Prevision::factory()->count(10)->create();
+        if (Pueblo::count() === 0) Pueblo::factory()->count(10)->create();
+        if (Religion::count() === 0) Religion::factory()->count(10)->create();
+        if (Seguro::count() === 0) Seguro::factory()->count(10)->create();
+        if (Unidad::count() === 0) Unidad::factory()->count(10)->create();
 
         return [
             'actividad_economica' => $this->faker->jobTitle,

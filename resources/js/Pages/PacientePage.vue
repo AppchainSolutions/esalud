@@ -271,7 +271,8 @@ async function searchPacientes() {
     try {
         state.loadingSearch = true;
         const response = await searchItems(state.urlSearch, state.searchQuery, state.endpoints);
-        state.tableItems = response.data;
+        debug.info("Pacientes encontrados:", response.data);
+        //state.tableItems = response.data;
         notify({
             title: "Búsqueda con resultado",
             text: "Se encontraron " + response.data.length + " pacientes",

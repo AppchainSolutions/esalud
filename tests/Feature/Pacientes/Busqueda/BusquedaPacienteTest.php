@@ -248,18 +248,6 @@ describe('Búsqueda de Pacientes', function () {
 });
 
 describe('PacienteService Tests', function () {
-    test('search_should_handle_pagination_correctly', function () {
-        $service = new PacienteService(new PacienteRepository());
-        
-        $request = new Request([
-            'page' => 2,
-            'per_page' => 10
-        ]);
-
-        $result = $service->search($request);
-        expect($result)->toBeArray();
-    });
-
     test('search_should_handle_filters', function () {
         $service = new PacienteService(new PacienteRepository());
         

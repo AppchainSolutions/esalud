@@ -90,34 +90,10 @@ class PacienteService extends BaseService
      * @param array $data
      * @return Paciente
      */
-    public function store(array $data)
+    public function store($request)
     {
-        // Validar datos
-        $validator = Validator::make($data, [
-            'rut' => 'required|string|unique:pacientes,rut',
-            'nombres' => 'required|string|max:255',
-            'apellidos' => 'required|string|max:255',
-            'fecha_nacimiento' => 'nullable|date',
-            'genero' => 'nullable|string|in:M,F',
-            'empresa' => 'nullable|exists:empresas,id',
-            'area' => 'nullable|exists:areas,id',
-            'exposicion' => 'nullable|array',
-            'activo' => 'nullable|boolean',
-            'protocolo_minsal' => 'nullable|boolean',
-            'email' => 'nullable|email|max:255',
-            'telefono' => 'nullable|string|max:20'
-        ]);
-
-        if ($validator->fails()) {
-            throw new \Illuminate\Validation\ValidationException($validator);
-        }
-
-        // Si hay exposiciones, convertirlas a JSON
-        if (isset($data['exposicion'])) {
-            $data['exposicion'] = json_encode($data['exposicion']);
-        }
-
-        // Crear el paciente
-        return Paciente::create($data);
+        $this->validateBusinessRules($request);
+        // Crear el paciente usando el repositorio
+        return $this->pacienteRepository->createPaciente($request);
     }
 }

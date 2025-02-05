@@ -1,0 +1,317 @@
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
+//use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\Finder\Finder;
+
+/**
+ * Comando para limpiar archivos temporales y caché en el sistema
+ * 
+ * Características principales:
+ * - Elimina archivos log y json temporales
+ * - Limpia caché de Laravel (rutas, vistas, configuración)
+ * - Gestiona directorios críticos del sistema
+ * - Soporte para limpieza selectiva de directorios
+ * - Registro de eventos y errores
+ * Ejemplos de uso:
+ * 
+ * # Comportamiento por defecto: elimina logs y json, limpia caché
+ * php artisan storage:clean
+ * 
+ * # Incluir directorios específicos
+ * php artisan storage:clean --sessions
+ * php artisan storage:clean --views
+ * php artisan storage:clean --cache
+ * php artisan storage:clean --clockwork
+ * 
+ * # Combinaciones de directorios
+ * php artisan storage:clean --sessions --views
+ * php artisan storage:clean --cache --clockwork
+ * 
+ * # Incluir todos los directorios
+ * php artisan storage:clean --sessions --views --cache --clockwork
+ * 
+
+ * 
+ * Opciones:
+ * - --sessions: Incluye archivos en el directorio de sesiones
+ * - --views: Incluye archivos en el directorio de vistas
+ * - --cache: Incluye archivos en el directorio de caché
+ * - --clockwork: Incluye archivos de Clockwork
+
+ * 
+ * Precaución: Usar con cuidado, especialmente en entornos de producción
+ */
+class CleanStorageFiles extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'storage:clean 
+                            {--sessions : Incluir directorio de sesiones} 
+                            {--views : Incluir directorio de vistas} 
+                            {--cache : Incluir directorio de caché} 
+                            {--clockwork : Incluir directorio de Clockwork}
+                            {--redis : Limpiar registros de Redis}
+                            {--all : Limpiar todos los directorios y registros}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Limpia archivos temporales y caché del sistema
+
+Descripción Detallada:
+  Este comando ayuda a mantener limpio el sistema eliminando archivos temporales
+  y limpiando diferentes tipos de caché. Es útil para liberar espacio en disco
+  y resolver problemas de caché.
+
+Archivos que se limpian por defecto:
+  - Archivos .log en el directorio storage
+  - Archivos .json temporales
+  - Caché de Laravel (rutas, vistas, configuración)
+
+Opciones Disponibles:
+  --sessions    : Incluye la limpieza del directorio de sesiones
+  --views       : Incluye la limpieza del directorio de vistas compiladas
+  --cache       : Incluye la limpieza del directorio de caché
+  --clockwork   : Incluye la limpieza de archivos de Clockwork
+  --redis       : Limpia los registros almacenados en Redis
+  --all         : Limpia todos los directorios y registros, incluyendo Redis
+
+Ejemplos de Uso:
+  # Limpieza básica (logs y json)
+  php artisan storage:clean
+
+  # Limpiar sesiones y vistas
+  php artisan storage:clean --sessions --views
+
+  # Limpiar todo incluyendo Redis
+  php artisan storage:clean --all
+
+Nota: Usar con precaución en entornos de producción';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
+        $storagePath = storage_path();
+        $deletedFiles = 0;
+
+        // Configurar directorios a ignorar por defecto
+        $ignoreDirs = [
+            'framework/sessions',
+            'framework/views',
+            'framework/cache',
+            'clockwork'
+        ];
+
+        // Filtrar directorios basado en opciones
+        $ignoreDirs = array_filter($ignoreDirs, function($dir) {
+            $option = str_replace('framework/', '', $dir);
+            return !$this->option($option) && !$this->option('all');
+        });
+
+        // Buscar archivos .log y .json recursivamente
+        $finder = new Finder();
+        $finder->files()
+            ->in($storagePath)
+            ->name('*.log')
+            ->name('*.json')
+            ->notPath($ignoreDirs);
+
+        foreach ($finder as $file) {
+            $filePath = $file->getRealPath();
+
+            try {
+                // Eliminar archivo
+                unlink($filePath);
+                $deletedFiles++;
+
+                $this->info("Eliminado: {$filePath}");
+            } catch (\Exception $e) {
+                $this->warn("No se pudo eliminar {$filePath}: " . $e->getMessage());
+            }
+        }
+
+
+        $this->info("Se eliminaron {$deletedFiles} archivos temporales de storage.");
+
+        // Mostrar directorios excluidos
+        if (!empty($ignoreDirs)) {
+            $this->warn("Directorios excluidos: " . implode(', ', $ignoreDirs));
+        }
+
+        try {
+            // Mantén tu lógica existente de limpieza de archivos
+            $this->cleanFiles();
+
+            // Agrega nuevos métodos de limpieza
+            $this->clearLaravelCaches();
+
+            // Registro de log
+            Log::info('Limpieza de almacenamiento completada exitosamente.');
+            $this->info('Limpieza de almacenamiento completada.');
+        } catch (\Exception $e) {
+            // Mejora en el manejo de errores
+            Log::error('Error en limpieza de almacenamiento: ' . $e->getMessage());
+            $this->error('Error en limpieza: ' . $e->getMessage());
+        }
+    }
+
+    private function cleanFiles()
+    {
+        $storagePath = storage_path();
+        $deletedFiles = 0;
+        $totalSize = 0;
+
+        // Directorios específicos a limpiar con rutas completas
+        $cleanDirectories = $this->getCleanDirectories($storagePath);
+
+        $this->info('Iniciando limpieza de directorios específicos...');
+
+        foreach ($cleanDirectories as $dirPath) {
+            if (!File::exists($dirPath)) {
+                $this->warn("El directorio no existe: $dirPath");
+                continue;
+            }
+
+            $deletedInDirectory = $this->processDirectory($dirPath);
+            $deletedFiles += $deletedInDirectory['count'];
+            $totalSize += $deletedInDirectory['size'];
+        }
+
+        $this->printCleanupSummary($deletedFiles, $totalSize);
+
+        return $deletedFiles;
+    }
+
+    private function getCleanDirectories($storagePath)
+    {
+        return [
+            $storagePath . '/logs',
+            $storagePath . '/framework/cache/data',
+            $storagePath . '/framework/sessions',
+            $storagePath . '/framework/views',
+            $storagePath . '/clockwork'
+        ];
+    }
+
+    private function processDirectory($dirPath)
+    {
+        $deletedCount = 0;
+        $totalSize = 0;
+
+        $files = File::files($dirPath);
+
+        foreach ($files as $file) {
+            try {
+                $fileInfo = new \SplFileInfo($file);
+                $fileSize = $fileInfo->getSize();
+
+                if ($this->shouldDeleteFile($file) && File::delete($file)) {
+                    $deletedCount++;
+                    $totalSize += $fileSize;
+                    $this->info("Eliminado: $file");
+                }
+            } catch (\Exception $e) {
+                $this->warn("No se pudo eliminar $file: " . $e->getMessage());
+            }
+        }
+
+        return [
+            'count' => $deletedCount,
+            'size' => $totalSize
+        ];
+    }
+
+    private function shouldDeleteFile($file)
+    {
+        // Condiciones para eliminar archivos
+        return 
+            // Archivos con más de 24 horas
+            File::lastModified($file) < now()->subDay()->timestamp &&
+            // Archivos menores a 50MB
+            File::size($file) < 50 * 1024 * 1024 &&
+            // Excluir archivos críticos
+            !preg_match('/\.(gitignore|env|lock|php)$/', $file);
+    }
+
+    private function printCleanupSummary($deletedFiles, $totalSize)
+    {
+        $this->info("Archivos eliminados: $deletedFiles");
+        $this->info("Espacio liberado: " . number_format($totalSize / 1024 / 1024, 2) . " MB");
+    }
+
+    // Método para limpiar cachés de Laravel con más logging
+    private function clearLaravelCaches()
+    {
+        $caches = [
+            'cache:clear' => 'Caché general',
+            'route:clear' => 'Caché de rutas',
+            'config:clear' => 'Caché de configuración',
+            'view:clear' => 'Caché de vistas',
+            'optimize:clear' => 'Optimización'
+        ];
+
+        foreach ($caches as $command => $description) {
+            try {
+                // Ejecutar comando y capturar salida
+                $exitCode = Artisan::call($command);
+                
+                // Registro detallado
+                Log::info("Comando Artisan ejecutado", [
+                    'command' => $command,
+                    'description' => $description,
+                    'exit_code' => $exitCode
+                ]);
+
+                // Mostrar salida del comando
+                $output = Artisan::output();
+                
+                if ($exitCode === 0) {
+                    $this->info("{$description} limpiada");
+                    if (!empty(trim($output))) {
+                        $this->line($output);
+                    }
+                } else {
+                    $this->warn("Posible error limpiando {$description}. Código de salida: {$exitCode}");
+                    Log::warning("Posible error en comando Artisan", [
+                        'command' => $command,
+                        'exit_code' => $exitCode,
+                        'output' => $output
+                    ]);
+                }
+            } catch (\Exception $e) {
+                $this->error("Error ejecutando {$command}: " . $e->getMessage());
+                Log::error("Error en comando Artisan", [
+                    'command' => $command,
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+            }
+        }
+
+        // Comando final de optimización
+        try {
+            $optimizeExitCode = Artisan::call('optimize');
+            Log::info("Comando optimize ejecutado", ['exit_code' => $optimizeExitCode]);
+            $this->info('Aplicación optimizada');
+        } catch (\Exception $e) {
+            $this->error("Error en optimización: " . $e->getMessage());
+            Log::error("Error en optimización", [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+        }
+    }
+}

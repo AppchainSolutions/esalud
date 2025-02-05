@@ -24,10 +24,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'lastname',
-        'rut',
         'email',
         'password',
+        'rol',
+        'activo'
     ];
 
     /**
@@ -52,6 +52,16 @@ class User extends Authenticatable
     ];
 
     /**
+     * Verifica si el usuario es un paciente
+     *
+     * @return bool
+     */
+    public function esPaciente()
+    {
+        return $this->rol === 'paciente';
+    }
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array<int, string>
@@ -59,4 +69,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function paciente()
+    {
+        return $this->hasOne(Paciente::class);
+    }
 }

@@ -1,5 +1,8 @@
 /node_modules
 /vendor
+/public
+/bootstrap
+/storage
 .idea
 .vscode
 .vite
@@ -7,12 +10,9 @@
 .devdbrc
 docker
 tasks.md
-/public/hot
 
 Data.session.sql
 DataBase.session.sql
 Local.session.sql
 database/database.db
-
-
 

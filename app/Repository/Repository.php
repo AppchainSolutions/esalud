@@ -97,7 +97,7 @@ abstract class Repository implements RepositoryInterface
     public function show(Request $request)
     {
         try {
-            $filters = $request->input('data');
+            $filters = $request->input('data', []); // Usar un array vacío por defecto
             Log::info($request);
             $query = $this->model->query()
             ->select("*");

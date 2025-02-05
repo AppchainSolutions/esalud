@@ -32,12 +32,13 @@ use App\Models\Prevision;
 use App\Models\Pueblo;
 use App\Models\Religion;
 use App\Models\Seguro;
+use App\Models\User;
 use App\Models\Vacuna;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
+use Illuminate\Support\Str;
 
 class Paciente extends Model
 {
@@ -178,11 +179,43 @@ class Paciente extends Model
         return $this->belongsTo(Exposicion::class, 'exposicion', 'id');
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tieneAcceso()
+    {
+        return !is_null($this->user_id);
+    }
+
+    public function getNombreCompletoAttribute()
+    {
+        return "{$this->nombres} {$this->apellidos}";
+    }
+
+    public function generarTokenActivacion()
+    {
+        $this->token_activacion = Str::random(64);
+        $this->save();
+        return $this->token_activacion;
+    }
+
+    public function estaActivado()
+    {
+        return !is_null($this->user_id);
+    }
+
     protected $table = 'paciente';
     protected $fillable = [
+        'user_id',
         'rut',
-        'nombre',
+        'nombres',
         'apellidos',
+        'token_activacion',
+        'fecha_nacimiento',
+        'telefono',
+        'direccion',
         'actividad_economica',
         'activo',
         'afp',
@@ -190,14 +223,12 @@ class Paciente extends Model
         'cargo',
         'ceco',
         'ciudad',
-        'direccion',
         'donante',
         'edad',
         'email',
         'empresa',
         'estado_civil',
         'exposicion',
-        'fecha_nacimiento',
         'genero',
         'grupo_sanguineo',
         'instruccion',
@@ -217,4 +248,7 @@ class Paciente extends Model
         'unidad',
     ];
 
+    protected $casts = [
+        'fecha_nacimiento' => 'date',
+    ];
 }

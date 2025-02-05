@@ -40,7 +40,16 @@ const user = computed(() => page.props.auth.user);
         toggleBtn() {
             this.rail = !this.rail;
         },
-        inicio() {
+        home() {
+            const loader = $loading.show();
+            router.visit("/", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
+        },
+        dashboard() {
             const loader = $loading.show();
             router.visit("/dashboard", {
                 method: 'get', 
@@ -59,6 +68,36 @@ const user = computed(() => page.props.auth.user);
                 },
             });
         },
+        mi_dashboard() {
+            const loader = $loading.show();
+            router.visit("/mi_dashboard", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
+        },
+        mi_perfil_personal() {
+            const loader = $loading.show();
+            router.visit("/mi_perfil_personal", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
+        },
+        mi_perfil_medico() {
+            const loader = $loading.show();
+            router.visit("/mi_perfil_medico", {
+                method: 'get', 
+                onSuccess: () => {
+                        loader.hide();
+                },
+            });
+        },
+        
+        
+        
         atenciones() {
             const loader = $loading.show();
 
@@ -264,23 +303,50 @@ const user = computed(() => page.props.auth.user);
 
                     <v-list density="compact" nav>
                         <v-list-item
-                            prepend-icon="mdi-home-city"
+                            prepend-icon="mdi-home"
+                            color="rgb(0, 0, 0)"
+                            title="Inicio"
+                            @click="home"
+                        ></v-list-item>
+                        
+                        <v-list-item
+                            prepend-icon="mdi-view-dashboard"
                             color="rgb(0, 0, 0)"
                             title="Dashboard"
-                            value="Inicio"
-                            @click="inicio"
+                            @click="dashboard"
+                            v-if ="user.isAdmin"
+                        ></v-list-item>
+
+                        <v-list-item
+                            prepend-icon="mdi-monitor-dashboard"
+                            color="rgb(0, 0, 0)"
+                            title="Mi resumen personal"
+                            @click="mi_dashboard"
+                            v-if ="user.isAdmin == false && user.rol=='paciente'"
                         ></v-list-item>
                         <v-list-item
                             prepend-icon="mdi-account"
                             title="Paciente"
-                            value="Paciente"
                             @click="paciente"
                             v-if ="user.isAdmin"
+                        ></v-list-item>
+                        <v-list-item
+                            prepend-icon="mdi-account"
+                            title="Mis datos personales"
+                            @click="mi_perfil_personal"
+                            v-if ="!user.isAdmin && user.rol=='paciente'"
+
+                        ></v-list-item>
+                        <v-list-item
+                            prepend-icon="mdi-clipboard-pulse"
+                            title="Mi datos médico"
+                            @click="mi_perfil_medico"
+                            v-if ="!user.isAdmin && user.rol=='paciente'"
                         ></v-list-item>
                         <v-divider></v-divider>
                     </v-list>
                     <v-list density="compact" nav>
-                        <v-list-group value="consultas" v-if="isAdmin">
+                        <v-list-group value="consultas" v-if="user.isAdmin">
                             <template v-slot:activator="{ props }">
                                 <v-list-item
                                     v-bind="props"
@@ -319,7 +385,7 @@ const user = computed(() => page.props.auth.user);
                                 @click="vacunaConsulta"
                             />
                         </v-list-group>
-                        <v-list-group value="examenes" v-if="isAdmin">
+                        <v-list-group value="examenes" v-if="user.isAdmin">
                             <template v-slot:activator="{ props }">
                                 <v-list-item
                                     v-bind="props"

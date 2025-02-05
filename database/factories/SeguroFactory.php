@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Seguro;
+use App\Models\SeguroSalud;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SeguroFactory extends Factory
 {
-    protected $model = Seguro::class;
+    protected $model = SeguroSalud::class;
 
     public function definition()
     {

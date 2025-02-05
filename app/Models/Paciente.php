@@ -2,38 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Afp;
-use App\Models\Alergia;
-use App\Models\AntecedenteFamiliar;
-use App\Models\Area;
-use App\Models\AtencionDiaria;
-use App\Models\Ceco;
-use App\Models\Certificacion;
-use App\Models\Cirugia;
-use App\Models\Diat;
-use App\Models\Diep;
-use App\Models\Enfermedad;
-use App\Models\Empresa;
-use App\Models\EstadoCertificacion;
-use App\Models\EstadoCivil;
-use App\Models\ExAsma;
-use App\Models\ExAlcohol;
-use App\Models\ExEpo;
-use App\Models\Exposicion;
-use App\Models\FactorRiesgo;
-use App\Models\GrupoSanguineo;
-use App\Models\Instruccion;
-use App\Models\LeySocial;
-use App\Models\LicenciaMedica;
-use App\Models\Medicamento;
-use App\Models\Modalidad;
-use App\Models\Planta;
-use App\Models\Prevision;
-use App\Models\Pueblo;
-use App\Models\Religion;
-use App\Models\Seguro;
-use App\Models\User;
-use App\Models\Vacuna;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -130,10 +99,7 @@ class Paciente extends Model
     {
         return $this->belongsTo(Ceco::class, 'ceco', 'id');
     }
-    public function seguro(): BelongsTo
-    {
-        return $this->belongsTo(Seguro::class, 'seguro', 'id');
-    }
+
     public function estado_civil(): BelongsTo
     {
         return $this->belongsTo(EstadoCivil::class, 'estado_civil', 'id');
@@ -142,7 +108,19 @@ class Paciente extends Model
     {
         return $this->belongsTo(Afp::class, 'afp', 'id');
     }
-    public function grupo_sanguineo(): BelongsTo
+    public function nacionalidad(): BelongsTo
+    {
+        return $this->belongsTo(Nacionalidad::class, 'nacionalidad', 'id');
+    }
+    public function genero(): BelongsTo
+    {
+        return $this->belongsTo(Genero::class, 'genero', 'id');
+    }
+    public function estadoCivil(): BelongsTo
+    {
+        return $this->belongsTo(EstadoCivil::class, 'estado_civil', 'id');
+    }
+    public function grupoSanguineo(): BelongsTo
     {
         return $this->belongsTo(GrupoSanguineo::class, 'grupo_sanguineo', 'id');
     }
@@ -158,13 +136,24 @@ class Paciente extends Model
     {
         return $this->belongsTo(Planta::class, 'planta', 'id');
     }
+
+    public function seguroSalud(): BelongsTo
+    {
+        return $this->belongsTo(SeguroSalud::class);
+    }
+
+    public function nivelInstruccion(): BelongsTo
+    {
+        return $this->belongsTo(NivelInstruccion::class, 'nivel_instruccion', 'id');
+    }
+
     public function prevision(): BelongsTo
     {
         return $this->belongsTo(Prevision::class, 'prevision', 'id');
     }
-    public function pueblo(): BelongsTo
+    public function puebloOriginario(): BelongsTo
     {
-        return $this->belongsTo(Pueblo::class, 'pueblo', 'id');
+        return $this->belongsTo(PuebloOriginario::class, 'pueblo', 'id');
     }
     public function religion(): BelongsTo
     {
@@ -231,7 +220,7 @@ class Paciente extends Model
         'exposicion',
         'genero',
         'grupo_sanguineo',
-        'instruccion',
+        'nivel_instruccion',
         'ley_social',
         'modalidad',
         'nacionalidad',

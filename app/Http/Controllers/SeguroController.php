@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repository\SeguroRepository;
+use App\Models\SeguroSalud;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
 
 class SeguroController extends Controller
 {
@@ -33,12 +37,13 @@ class SeguroController extends Controller
     public function all()
     {
         try {
-            $query = Seguro::all();
+            $query = SeguroSalud::all();
              return response()->json([
                 'result' => $query
             ]);
         } catch (QueryException $error) {
             Session::flash('message', 'No se encuentran registros.');
+            Log::error($error);
 
         };
     }

@@ -5,31 +5,53 @@ namespace App\Http\Controllers\Paciente;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use App\Models\Paciente;
 
 class MiPerfilController extends Controller
 {
     public function personal()
     {
-        $paciente = Auth::user();
+        $user_id = Auth::user()->id;
 
-        // if (!$paciente) {
-        //     return redirect()->route('paciente.registro')
-        //         ->with('error', 'Debes completar tu registro de paciente');
-        // }
-
-        return Inertia::render('Paciente/MiPerfilPersonal');
+        $paciente = Paciente::where('user_id', "=", $user_id)
+            ->with('afp', 'nacionalidad', 'genero', 'estadoCivil', 'nivelInstruccion', 'puebloOriginario', 'religion', 'prevision', 'seguroSalud', 'unidad', 'area', 'ceco', 'empresa')
+            ->firstOrFail()
+            ->toArray();
+        return Inertia::render('Paciente/MiPerfilPersonal', ['paciente' => $paciente]);
     }
     public function medico()
     {
-        $paciente = Auth::user();
+        $user_id = Auth::user();
+
+        $paciente = Paciente::where('user_id', $user_id)
+            ->with([
+                'alergia',
+                'enfermedad',
+                'cirugia',
+                'factor',
+                'medicamento',
+                'vacuna',
+                'familiar',
+                'diat',
+                'diep',
+                'certificacion',
+                'estado_certificacion',
+                'exasma',
+                'exalcohol',
+                'exepo',
+                'exequilibrio',
+            ])
+            ->firstOrFail();
+
 
         // if (!$paciente) {
         //     return redirect()->route('paciente.registro')
         //         ->with('error', 'Debes completar tu registro de paciente');
         // }
 
-        return Inertia::render('Paciente/MiPerfilMedico');
+        return Inertia::render('Paciente/MiPerfilMedico', ['paciente'=> $paciente]);
     }
 
     public function update(Request $request)

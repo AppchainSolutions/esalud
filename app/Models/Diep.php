@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\TipoEnfermedad;
-use App\Models\Seguro;
+use App\Models\SeguroSalud;
 
 class Diep extends Model
 {
@@ -16,9 +16,9 @@ class Diep extends Model
     {
         return $this->belongsTo(TipoEnfermedad::class);
     }
-    public function seguro(): BelongsTo
+    public function seguroSalud(): BelongsTo
     {
-        return $this->belongsTo(Seguro::class, 'seguro');
+        return $this->belongsTo(SeguroSalud::class);
     }
 
 
@@ -27,7 +27,7 @@ class Diep extends Model
         'paciente_id',
         'idpgp',
         'enfermedad',
-        'seguro',
+        'seguro_salud',
         'estado_diep',
         'fecha_admision',
         'folio',

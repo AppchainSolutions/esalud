@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Accidente;
 use App\Models\TipoAccidente;
-use App\Models\Seguro;
+use App\Models\SeguroSalud;
 
 
 class Diat extends Model
@@ -22,9 +22,9 @@ class Diat extends Model
     {
         return $this->belongsTo(TipoAccidente::class);
     }
-    public function seguro(): BelongsTo
+    public function seguroSalud(): BelongsTo
     {
-        return $this->belongsTo(Seguro::class, 'seguro');
+        return $this->belongsTo(SeguroSalud::class);
     }
 
 
@@ -33,7 +33,7 @@ class Diat extends Model
         'paciente_id',
         'idpgp',
         'accidente',
-        'seguro',
+        'seguro_Salud',
         'estado_diat',
         'fecha_admision',
         'folio',

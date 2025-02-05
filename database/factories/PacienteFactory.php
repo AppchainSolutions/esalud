@@ -20,7 +20,7 @@ use App\Models\Planta;
 use App\Models\Prevision;
 use App\Models\Pueblo;
 use App\Models\Religion;
-use App\Models\Seguro;
+use App\Models\SeguroSalud;
 use App\Models\Unidad;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
@@ -51,7 +51,7 @@ class PacienteFactory extends Factory
         Prevision::factory()->create();
         Pueblo::factory()->create();
         Religion::factory()->create();
-        Seguro::factory()->create();
+        SeguroSalud::factory()->create();
         Unidad::factory()->create();
 
 
@@ -87,7 +87,7 @@ class PacienteFactory extends Factory
             'pueblo' => Pueblo::inRandomOrder()->first()->id,
             'religion' => Religion::inRandomOrder()->first()->id,
             'rut' => RutGenerator::generarRut(),
-            'seguro' => Seguro::inRandomOrder()->first()->id,
+            'seguro_salud' => SeguroSalud::inRandomOrder()->first()->id,
             'telefono1' => $this->faker->phoneNumber,
             'telefono2' => $this->faker->phoneNumber,
             'unidad' => Unidad::inRandomOrder()->first()->id,

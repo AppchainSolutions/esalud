@@ -23,7 +23,7 @@ const volver = () => {
         <v-row justify="center">
             <v-card min-width="500">
                 <v-card-title class="justify-space-between"
-                    >{{ user.name }} [ {{ user.lastname }} ]
+                    >{{ user.name }} : {{ user.id }} 
                 </v-card-title>
                 <v-card-text>
                     <v-card-actions>

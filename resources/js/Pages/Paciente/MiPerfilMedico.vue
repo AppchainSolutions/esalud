@@ -7,15 +7,15 @@ import DiatDiep from "@/Pages/SubPages/DiatDiep.vue";
 import Examenes from "@/Pages/Examenes/Examenes.vue";
 import Certificaciones from "@/Pages/SubPages/Certificaciones.vue";
 import { router } from "@inertiajs/vue3";
-import { usePage } from '@inertiajs/vue3'
+import { usePage } from "@inertiajs/vue3";
 import { useDataStore } from "@/store.js";
 
 const store = useDataStore();
 defineOptions({ layout: AppLayout });
-const page = usePage()
-const user = usePage().props.auth.user
+const page = usePage();
+const user = usePage().props.auth.user;
 const paciente = page.props.paciente;
-store.setPacienteSelected(paciente[0]);
+store.setPaciente(paciente["id"]);
 
 const volver = () => {
     router.get("paciente");
@@ -28,7 +28,7 @@ const volver = () => {
             <v-card min-width="500">
                 {{ paciente }}
                 <v-card-title class="justify-space-between"
-                    >{{ user.name }} : {{ user.id }} 
+                    >{{ user.name }} : {{ user.id }}
                 </v-card-title>
                 <v-card-text>
                     <v-card-actions>

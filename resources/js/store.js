@@ -1,24 +1,21 @@
 import { defineStore } from "pinia";
 
 export const useDataStore = defineStore("DataStore", {
-  state: () => ({
-    selected: {
+    state: () => ({
+        selected: {},
+        userSelected: {},
+        pacienteSelected: 0,
+    }),
+    getters: {
+        getUserSelected: (state) => state.userSelected,
+        getPacienteSelected: (state) => state.pacienteSelected,
     },
-    userSelected: {
+    actions: {
+        async setUserSelected(user) {
+            this.userSelected = user;
+        },
+        async setPaciente(paciente) {
+            this.pacienteSelected = paciente.id ? paciente.id : paciente;
+        },
     },
-    pacienteSelected: {
-    },
-  }),
-  getters: {
-    getUserSelected: (state) => state.userSelected,
-    getPacienteSelected: (state) => state.pacienteSelected,
-  },
-  actions: {
-    async setUserSelected(user) {
-      state.userSelected = user;
-    },
-    async setPacienteSelected(paciente) {
-      state.pacienteSelected = paciente.id ? paciente.id : paciente;
-    },
-  },
 });

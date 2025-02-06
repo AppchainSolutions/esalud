@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Truncar la tabla users
-        User::truncate();
+        //User::truncate();
 
         User::create([
             'name' => 'Admin',
@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@example.com',
             'isAdmin' => true,
             'password' => Hash::make('clave123'),
-            'isAdmin' => true,
+            'rol' => 'admin',
         ]);
 
         User::create([
@@ -33,9 +33,9 @@ class UserSeeder extends Seeder
             'lastname' => 'User',
             'rut' => '12345678-0',
             'email' => 'test@example.com',
-            'isAdmin' => false,
+            'isAdmin' => true,
             'password' => Hash::make('clave123'),
-            'isAdmin' => false,
+            'rol' => 'admin',
         ]);
 
         // Puedes agregar más usuarios según sea necesario

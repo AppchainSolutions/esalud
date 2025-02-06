@@ -27,7 +27,7 @@ describe("PacientePage.vue", () => {
             "grupos_sanguineos",
             "leyes_sociales",
             "nacionalidades",
-            "niveles_instruccion",
+            "nivel_instruccion",
             "previsiones",
             "pueblos_originarios",
             "religiones",
@@ -35,7 +35,9 @@ describe("PacientePage.vue", () => {
         ];
 
         endpoints.forEach((endpoint) => {
-            const input = wrapper.find(`input[v-model="state.list.${endpoint}"]`);
+            const input = wrapper.find(
+                `input[v-model="state.list.${endpoint}"]`
+            );
             expect(input.exists()).toBe(true);
         });
     });
@@ -54,7 +56,9 @@ describe("PacientePage.vue", () => {
         ];
 
         editedItemFields.forEach((field) => {
-            const input = wrapper.find(`input[v-model="state.editedItem.${field}"]`);
+            const input = wrapper.find(
+                `input[v-model="state.editedItem.${field}"]`
+            );
             expect(input.exists()).toBe(true);
         });
     });

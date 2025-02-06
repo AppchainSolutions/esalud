@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,24 +13,23 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('lastname');
-            $table->string('rut')->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('rol')->default('paciente');
-            $table->boolean('activo')->default(true);
-            $table->rememberToken();
             $table->bigInteger('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
-            $table->timestamp('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestamp('updated_at')->nullable()->default(DB::raw("now()"));
-            $table->text('two_factor_secret')->nullable();
-            $table->text('two_factor_recovery_codes')->nullable();
-            $table->timestamp('two_factor_confirmed_at')->nullable();
+            $table->boolean('activo')->default(true);
             $table->boolean('isAdmin')->nullable()->default(false);
             $table->boolean('notification_exepo')->nullable()->default(false);
+            $table->rememberToken();
+            $table->string('email')->unique();
+            $table->string('lastname');
+            $table->string('name');
+            $table->string('password');
+            $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('rol')->default('paciente');
+            $table->string('rut')->unique();
+            $table->text('two_factor_recovery_codes')->nullable();
+            $table->text('two_factor_secret')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('two_factor_confirmed_at')->nullable();
+            $table->timestamps();
         });
     }
 

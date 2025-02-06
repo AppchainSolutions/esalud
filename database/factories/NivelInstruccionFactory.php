@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Religiones;
+use App\Models\NivelInstruccion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ReligionesFactory extends Factory
+class NivelInstruccionFactory extends Factory
 {
-    protected $model = Religiones::class;
+    protected $model = NivelInstruccion::class;
 
     public function definition()
     {

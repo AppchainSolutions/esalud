@@ -6,7 +6,7 @@ namespace App\Helpers;
 
 class RutGenerator
 {
-    public static function generarRut()
+    public static function generate()
     {
         $numero = rand(1000000, 25000000); // Genera un número aleatorio
         $dv = self::calcularDigitoVerificador($numero); // Calcula el dígito verificador

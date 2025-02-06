@@ -161,7 +161,7 @@ it('belongs to grupo sanguineo', function () {
     expect($paciente->grupo_sanguineo())->toBeInstanceOf(BelongsTo::class);
 });
 
-it('belongs to instruccion', function () {
+it('belongs to nivelInstruccion', function () {
     $paciente = Pacientes::factory()->create();
     expect($paciente->nivel_instruccion_id())->toBeInstanceOf(BelongsTo::class);
 });

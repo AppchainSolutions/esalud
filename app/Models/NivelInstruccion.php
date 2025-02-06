@@ -15,7 +15,7 @@ class NivelInstruccion extends Model
         return $this->belongsTo(Paciente::class);
     }
 
-    protected $table = 'niveles_instruccion';
+    protected $table = 'nivel_instruccion';
 
     protected $fillable = [
         'descripcion',

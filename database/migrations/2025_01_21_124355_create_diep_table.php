@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('idpgp')->nullable();
             $table->string('enfermedad')->nullable();
             $table->string('estado_diep')->nullable();
+            $table->integer('seguro_salud')->nullable();
         });
     }
 

@@ -5,20 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Accidente;
-use App\Models\AccidenteCondicion;
-use App\Models\Calificacion;
-use App\Models\Derivacion;
-use App\Models\ErrorCritico;
-use App\Models\EstadoMental;
-use App\Models\FuenteIncidente;
-use App\Models\LugarAtencion;
-use App\Models\MedioDerivacion;
-use App\Models\Paciente;
-use App\Models\Responsable;
-use App\Models\SistemaAfectado;
-use App\Models\TipoAtencion;
-use App\Models\TipoLicencia;
 use App\Models\Turno;
 
 class AtencionDiaria extends Model
@@ -69,6 +55,7 @@ class AtencionDiaria extends Model
     {
         return $this->belongsTo(Accidente::class);
     }
+  
     public function accidente_condicion(): BelongsTo
     {
         return $this->belongsTo(AccidenteCondicion::class);
@@ -94,9 +81,7 @@ class AtencionDiaria extends Model
         'accidente',
         'acompanado',
         'alerta_she',
-        'area',
         'at_realizada_por',
-        'calificacion',
         'comentario',
         'cuenta_acr',
         'declaracion_completa',
@@ -120,6 +105,6 @@ class AtencionDiaria extends Model
         'sistema_afectado',
         'tipo_atencion',
         'tipo_licencia',
-        'turno_id',
+        'turno',
     ];
 }

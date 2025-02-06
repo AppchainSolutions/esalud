@@ -4,10 +4,7 @@ import { router } from "@inertiajs/vue3";
 import { reactive, ref, onMounted, computed } from "vue";
 import moment from "moment";
 import { useDate } from "vuetify";
-import {
-    fetchData,
-    handleStoreItem,
-} from "@/helper.js";
+import { fetchData, handleStoreItem } from "@/helper.js";
 import { usePage } from "@inertiajs/vue3";
 
 const page = usePage();
@@ -100,7 +97,7 @@ const state = reactive({
         fecha_nacimiento: paciente.fecha_nacimiento,
         genero: paciente.genero,
         grupo_sanguineo: paciente.grupo_sanguineo,
-        instruccion: paciente.instruccion,
+        nivelInstruccion: paciente.nivelInstruccion,
         ley_social: paciente.ley_social,
         modalidad: paciente.modalidad,
         nacionalidad: paciente.nacionalidad,
@@ -134,9 +131,7 @@ onMounted(async () => {
 //**********\\\\  COMPUTE PROPERTIES ////*************/
 //**********\\\\ METHODS ////*************/
 const formatDate = computed(() => {
-    let formatted = moment(state.frmItem.fecha_nacimiento).format(
-        "DD/MM/YYYY"
-    );
+    let formatted = moment(state.frmItem.fecha_nacimiento).format("DD/MM/YYYY");
     return formatted;
 });
 
@@ -451,11 +446,11 @@ const update = async () => {
                             </v-col>
                             <v-col cols="6" sm="4" md="2">
                                 <v-select
-                                    :items="state.list.instruccion"
+                                    :items="state.list.nivelInstruccion"
                                     item-title="descripcion"
                                     item-value="id"
-                                    v-model="state.frmItem.instruccion"
-                                    label="Nivel de Instruccion"
+                                    v-model="state.frmItem.nivelInstruccion"
+                                    label="Nivel de NivelInstruccion"
                                     clearable
                                     variant="underlined"
                                 ></v-select>
@@ -466,9 +461,7 @@ const update = async () => {
                         <v-row class="mt-2">
                             <v-col cols="12" sm="6" md="3">
                                 <v-text-field
-                                    v-model="
-                                        state.frmItem.actividad_economica
-                                    "
+                                    v-model="state.frmItem.actividad_economica"
                                     label="Actividad económica"
                                     required
                                     clearable

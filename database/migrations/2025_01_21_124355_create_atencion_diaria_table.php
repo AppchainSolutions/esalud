@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -19,7 +18,6 @@ return new class extends Migration
             $table->integer('accidente_condicion')->nullable()->default(0);
             $table->boolean('alerta_she')->nullable()->default(false);
             $table->string('at_realizada_por')->nullable();
-            $table->integer('calificacion')->nullable()->default(0);
             $table->boolean('cuenta_acr')->nullable()->default(false);
             $table->boolean('declaracion_completa')->nullable()->default(false);
             $table->integer('derivacion')->nullable()->default(0);
@@ -44,8 +42,7 @@ return new class extends Migration
             $table->integer('tipo_atencion')->nullable()->default(0);
             $table->integer('tipo_licencia')->nullable()->default(0);
             $table->integer('turno')->nullable()->default(0);
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestamps();
             $table->boolean('acompanado')->nullable()->default(false);
             $table->text('comentario')->nullable();
         });

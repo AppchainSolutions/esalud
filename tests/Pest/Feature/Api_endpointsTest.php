@@ -15,7 +15,7 @@ $endpoints = [
     'grupos_sanguineos',
     'leyes_sociales',
     'nacionalidades',
-    'niveles_instruccion',
+    'nivel_instruccion',
     'previsiones',
     'pueblos_originarios',
     'religiones',

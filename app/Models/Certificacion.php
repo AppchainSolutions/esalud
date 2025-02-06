@@ -14,7 +14,7 @@ class Certificacion extends Model
     {
         return $this->belongsTo(Paciente::class, 'paciente_id', 'id');
     }
-    protected $table = 'certificaciones';
+    protected $table = 'certificacion';
     protected $fillable = [
         'paciente_id',
         'certificacion',

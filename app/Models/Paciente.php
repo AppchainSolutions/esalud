@@ -33,7 +33,7 @@ class Paciente extends Model
     {
         return $this->hasMany(Cirugia::class);
     }
-    public function factor(): HasMany
+    public function factorRiesgo(): HasMany
     {
         return $this->hasMany(FactorRiesgo::class);
     }
@@ -61,26 +61,58 @@ class Paciente extends Model
     {
         return $this->hasMany(Certificacion::class);
     }
-    public function estado_certificacion(): HasMany
+    public function estadoCertificacion(): HasMany
     {
         return $this->hasMany(EstadoCertificacion::class);
     }
-    public function exasma(): HasMany
+    public function exAsma(): HasMany
     {
         return $this->hasMany(ExAsma::class);
     }
-    public function exalcohol(): HasMany
+    public function exAlcohol(): HasMany
     {
         return $this->hasMany(ExAlcohol::class);
     }
-    public function exepo(): HasMany
+    public function exEpo(): HasMany
     {
         return $this->hasMany(ExEpo::class);
     }
 
-    public function exequilibrio(): HasMany
+    public function exEquilibrio(): HasMany
     {
         return $this->hasMany(ExEquilibrio::class);
+    }
+    public function exPsico(): HasMany
+    {
+        return $this->hasMany(ExPsico::class);
+    }
+    public function exPVTMERT(): HasMany
+    {
+        return $this->hasMany(ExPVTMERT::class);
+    }
+    public function exRespirador(): HasMany
+    {
+        return $this->hasMany(ExRespirador::class);
+    }
+    public function exRuido(): HasMany
+    {
+        return $this->hasMany(ExRuido::class);
+    }
+    public function exSalud(): HasMany
+    {
+        return $this->hasMany(ExSalud::class);
+    }
+    public function exSilice(): HasMany
+    {
+        return $this->hasMany(ExSilice::class);
+    }
+    public function exSolvente(): HasMany
+    {
+        return $this->hasMany(ExSolvente::class);
+    }
+    public function exSomnolencia(): HasMany
+    {
+        return $this->hasMany(ExSomnolencia::class);
     }
 
     public function empresa(): BelongsTo
@@ -108,6 +140,7 @@ class Paciente extends Model
     {
         return $this->belongsTo(Afp::class, 'afp', 'id');
     }
+  
     public function nacionalidad(): BelongsTo
     {
         return $this->belongsTo(Nacionalidad::class, 'nacionalidad', 'id');
@@ -124,10 +157,10 @@ class Paciente extends Model
     {
         return $this->belongsTo(GrupoSanguineo::class, 'grupo_sanguineo', 'id');
     }
-    public function instruccion(): BelongsTo
-    {
-        return $this->belongsTo(Instruccion::class, 'instruccion', 'id');
-    }
+    // public function nivelInstruccion(): BelongsTo
+    // {
+    //     return $this->belongsTo(NivelInstruccion::class, 'nivel_instruccion', 'id');
+    // }
     public function ley_social(): BelongsTo
     {
         return $this->belongsTo(LeySocial::class, 'ley_social', 'id');
@@ -198,43 +231,47 @@ class Paciente extends Model
     protected $table = 'paciente';
     protected $fillable = [
         'user_id',
-        'rut',
-        'nombres',
-        'apellidos',
-        'token_activacion',
-        'fecha_nacimiento',
-        'telefono',
-        'direccion',
         'actividad_economica',
         'activo',
         'afp',
+        'apellidos',
         'area',
         'cargo',
         'ceco',
         'ciudad',
+        'direccion',
         'donante',
         'edad',
         'email',
         'empresa',
         'estado_civil',
+        'certificacion',
+        'estado_certificacion',
         'exposicion',
+        'fecha_nacimiento',
+        'factor_riesgo',
         'genero',
         'grupo_sanguineo',
-        'nivel_instruccion',
         'ley_social',
         'modalidad',
         'nacionalidad',
+        'nivel_instruccion',
+        'nombre',
         'ocupacion',
         'planta',
         'prevision',
         'profesion',
         'protocolo_minsal',
-        'pueblo',
+        'pueblo_originario',
         'religion',
         'seguro',
+        'telefono',
         'telefono1',
         'telefono2',
+        'token_activacion',
         'unidad',
+        'user_id',
+        'rut',
     ];
 
     protected $casts = [

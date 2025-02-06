@@ -23,27 +23,38 @@ class MiPerfilController extends Controller
     }
     public function medico()
     {
-        $user_id = Auth::user();
+        $user_id = Auth::user()->id;
 
         $paciente = Paciente::where('user_id', $user_id)
             ->with([
                 'alergia',
                 'enfermedad',
                 'cirugia',
-                'factor',
+                'factorRiesgo',
                 'medicamento',
                 'vacuna',
                 'familiar',
                 'diat',
                 'diep',
-                'certificacion',
-                'estado_certificacion',
-                'exasma',
-                'exalcohol',
-                'exepo',
-                'exequilibrio',
+                // 'certificacion',
+                // 'estadoCertificacion',
+                'exAsma',
+                'exAlcohol',
+                'exEpo',
+                'exEquilibrio',
+                'exPsico',
+                'exPVTMERT',
+                'exRespirador',
+                'exRuido',
+                'exSalud',
+                'exSilice',
+                'exSolvente',
+                'exSomnolencia',
             ])
-            ->firstOrFail();
+            ->firstOrFail()
+            ->get();
+
+        dd($paciente);
 
 
         // if (!$paciente) {
@@ -51,7 +62,7 @@ class MiPerfilController extends Controller
         //         ->with('error', 'Debes completar tu registro de paciente');
         // }
 
-        return Inertia::render('Paciente/MiPerfilMedico', ['paciente'=> $paciente]);
+        return Inertia::render('Paciente/MiPerfilMedico', ['paciente' => $paciente]);
     }
 
     public function update(Request $request)

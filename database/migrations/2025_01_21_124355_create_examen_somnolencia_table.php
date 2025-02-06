@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -20,8 +19,7 @@ return new class extends Migration
             $table->date('fecha_primer')->nullable();
             $table->date('fecha_segundo')->nullable();
             $table->string('resultado')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestamps();
             $table->integer('nivel_riesgo')->nullable();
         });
     }

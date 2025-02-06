@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,7 +14,7 @@ return new class extends Migration
         Schema::create('diat', function (Blueprint $table) {
             $table->integer('paciente_id');
             $table->integer('accidente')->nullable();
-            $table->integer('seguro')->nullable();
+            $table->integer('seguro_salud')->nullable();
             $table->string('comentario')->nullable();
             $table->date('fecha_admision')->nullable();
             $table->integer('folio')->nullable();
@@ -23,11 +22,11 @@ return new class extends Migration
             $table->string('origen_denuncia')->nullable();
             $table->string('sucursal')->nullable();
             $table->integer('tipo_accidente')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestamps();
             $table->integer('idpgp')->nullable();
             $table->string('validado_por')->nullable();
-            $table->integer('estado_diat')->nullable();
+            $table->unsignedBigInteger('estado_diat')->nullable();
+            $table->foreign('estado_diat')->references('id')->on('estado_diat');
             $table->increments('id');
             $table->boolean('aprobado')->nullable();
         });

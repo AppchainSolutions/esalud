@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -21,8 +20,7 @@ return new class extends Migration
             $table->date('fecha_recepcion')->nullable();
             $table->date('fecha_termino')->nullable();
             $table->integer('folio')->nullable();
-            $table->timestampTz('created_at')->nullable()->default(DB::raw("now()"));
-            $table->timestampTz('updated_at')->nullable()->default(DB::raw("now()"));
+            $table->timestamps();
             $table->string('caract_reposo')->nullable();
             $table->string('lugar_reposo')->nullable();
             $table->string('tipo_licencia')->nullable();

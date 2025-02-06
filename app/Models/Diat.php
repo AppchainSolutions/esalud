@@ -33,7 +33,7 @@ class Diat extends Model
         'paciente_id',
         'idpgp',
         'accidente',
-        'seguro_Salud',
+        'seguro_salud',
         'estado_diat',
         'fecha_admision',
         'folio',

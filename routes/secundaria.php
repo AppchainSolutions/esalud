@@ -84,7 +84,7 @@ Route::middleware([
     Route::resource('fuente_incidente', FuenteIncidenteController::class);
     Route::resource('genero', GeneroController::class);
     Route::resource('grupo_sanguineo', GrupoSanguineoController::class);
-    Route::resource('instruccion', InstruccionController::class);
+    Route::resource('nivelInstruccion', InstruccionController::class);
     Route::resource('ley_social', LeySocialController::class);
     Route::resource('lugar_atencion', LugarAtencionController::class);
     Route::resource('medio_derivacion', MedioDerivacionController::class);

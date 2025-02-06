@@ -15,7 +15,7 @@ defineOptions({ layout: AppLayout });
 const page = usePage();
 const user = usePage().props.auth.user;
 const paciente = page.props.paciente;
-store.setPaciente(paciente["id"]);
+store.setPaciente(paciente);
 
 const volver = () => {
     router.get("paciente");
@@ -26,16 +26,9 @@ const volver = () => {
     <v-container fluid>
         <v-row justify="center">
             <v-card min-width="500">
-                {{ paciente }}
-                <v-card-title class="justify-space-between"
-                    >{{ user.name }} : {{ user.id }}
-                </v-card-title>
                 <v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn variant="tonal" color="#662D91" @click="volver">
-                            Volver
-                        </v-btn>
                     </v-card-actions>
                     <v-stepper
                         editable

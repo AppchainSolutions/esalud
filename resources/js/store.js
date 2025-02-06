@@ -4,7 +4,7 @@ export const useDataStore = defineStore("DataStore", {
     state: () => ({
         selected: {},
         userSelected: {},
-        pacienteSelected: 0,
+        pacienteSelected: [],
     }),
     getters: {
         getUserSelected: (state) => state.userSelected,
@@ -15,7 +15,7 @@ export const useDataStore = defineStore("DataStore", {
             this.userSelected = user;
         },
         async setPaciente(paciente) {
-            this.pacienteSelected = paciente.id ? paciente.id : paciente;
+            this.pacienteSelected = paciente;
         },
     },
 });

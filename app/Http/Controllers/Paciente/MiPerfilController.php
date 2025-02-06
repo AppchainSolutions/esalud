@@ -26,6 +26,32 @@ class MiPerfilController extends Controller
         $user_id = Auth::user()->id;
 
         $paciente = Paciente::where('user_id', "=", $user_id)
+            ->select('id')
+            ->with([
+                'alergia',
+                'enfermedad',
+                'cirugia',
+                'factorRiesgo',
+                'medicamento',
+                'vacuna',
+                'familiar',
+                'diat',
+                'diep',
+                // 'certificacion',
+                // 'estadoCertificacion',
+                'exAsma',
+                'exAlcohol',
+                'exEpo',
+                'exEquilibrio',
+                'exPsico',
+                'exPVTMERT',
+                'exRespirador',
+                'exRuido',
+                'exSalud',
+                'exSilice',
+                'exSolvente',
+                'exSomnolencia',
+            ])
             ->firstOrFail()
             ->toArray();
 

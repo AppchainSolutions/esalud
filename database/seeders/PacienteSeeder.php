@@ -18,11 +18,16 @@ use App\Models\ExEpo;
 use App\Models\ExHumoNegro;
 use App\Models\ExMetal;
 use App\Models\ExPsico;
+use App\Models\LicenciaMedica;
+use App\Models\Medicamento;
+use App\Models\Vacuna;
+use App\Models\Cirugia;
 use App\Models\TrastornoCronico;
 use App\Models\Afp;
 use App\Models\Area;
 use App\Models\Empresa;
 use App\Models\EstadoCivil;
+use App\Models\FactorRiesgo;
 use App\Models\Genero;
 use App\Models\SeguroSalud;
 use App\Models\NivelInstruccion;
@@ -93,15 +98,15 @@ class PacienteSeeder extends Seeder
     {
         // Lista de modelos con sus respectivos factories
         $modelos = [
-                // AtencionDiaria::class => 4,
+            // AtencionDiaria::class => 4,
 
             Alergia::class => 4,
             Enfermedad::class => 4,
-            //TrastornoCronico::class => 4
-            //Cirugia::class => 4,
-            //FactorRiesgo::class => 4,
-            //Medicamento::class => 4,
-            //Vacuna::class => 4,
+            Cirugia::class => 4,
+            TrastornoCronico::class => 4,
+            FactorRiesgo::class => 4,
+            Medicamento::class => 4,
+            Vacuna::class => 4,
 
             // AntecedenteFamiliar::class => 4,
 

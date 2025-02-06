@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\TrastornoCronico;
+use App\Models\Paciente;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TrastornoCronicoFactory extends Factory
@@ -12,7 +13,9 @@ class TrastornoCronicoFactory extends Factory
     public function definition(): array
     {
         return [
-            'descripcion' => $this->generarDescripcionTrastornoCronico()
+            'paciente_id' => Paciente::factory(),
+            'descripcion' => $this->generarDescripcionTrastornoCronico(),
+            'cie10' => $this->generarCodigoCIE10()
         ];
     }
 
@@ -79,6 +82,32 @@ class TrastornoCronicoFactory extends Factory
         }
 
         return $descripcion;
+    }
+
+    // Método para generar códigos CIE-10
+    private function generarCodigoCIE10(): string
+    {
+        $codigosCIE10 = [
+            // Cardiovasculares
+            'I10', 'I11', 'I50', 'I25',
+            
+            // Metabólicas
+            'E11', 'E66', 'E78',
+            
+            // Respiratorias
+            'J44', 'J45', 'J84',
+            
+            // Neurológicas
+            'G40', 'G35', 'G20',
+            
+            // Autoinmunes
+            'M06', 'M32', 'M34',
+            
+            // Renales
+            'N18', 'N04'
+        ];
+
+        return $this->faker->randomElement($codigosCIE10);
     }
 
     // Estado para trastornos crónicos leves

@@ -13,6 +13,7 @@ return new class extends Migration {
     {
         Schema::create('trastorno_cronico', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('paciente_id');
             $table->string('descripcion')->nullable();
             $table->string('cie10')->nullable();
             $table->timestamps();

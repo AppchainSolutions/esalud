@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Modalidad;
+use App\Models\ModalidadAtencion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ModalidadFactory extends Factory
+class ModalidadAtencionFactory extends Factory
 {
-    protected $model = Modalidad::class;
+    protected $model = ModalidadAtencion::class;
 
     public function definition()
     {

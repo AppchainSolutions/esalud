@@ -14,7 +14,7 @@ use App\Models\GrupoSanguineo;
 use App\Models\NivelInstruccion;
 use App\Models\LeySocial;
 use App\Models\Nacionalidad;
-use App\Models\Modalidad;
+use App\Models\ModalidadAtencion;
 use App\Models\Paciente;
 use App\Models\Planta;
 use App\Models\Prevision;
@@ -57,7 +57,7 @@ class PacienteFactory extends Factory
             'seguro_salud' => SeguroSalud::inRandomOrder()->first()->id,
             'ley_social' => LeySocial::inRandomOrder()->first()->id,
             'nacionalidad' => Nacionalidad::inRandomOrder()->first()->id,
-            'modalidad' => Modalidad::inRandomOrder()->first()->id,
+            'modalidad_atencion' => ModalidadAtencion::inRandomOrder()->first()->id,
             'pueblo_originario' => PuebloOriginario::inRandomOrder()->first()->id,
             'religion' => Religion::inRandomOrder()->first()->id,
             'planta' => Planta::inRandomOrder()->first()->id,

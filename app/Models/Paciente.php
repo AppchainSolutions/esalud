@@ -140,7 +140,7 @@ class Paciente extends Model
     {
         return $this->belongsTo(Afp::class, 'afp', 'id');
     }
-  
+
     public function nacionalidad(): BelongsTo
     {
         return $this->belongsTo(Nacionalidad::class, 'nacionalidad', 'id');
@@ -192,9 +192,9 @@ class Paciente extends Model
     {
         return $this->belongsTo(Religion::class, 'religion', 'id');
     }
-    public function modalidad(): BelongsTo
+    public function modalidadAtencion(): BelongsTo
     {
-        return $this->belongsTo(Modalidad::class, 'modalidad', 'id');
+        return $this->belongsTo(ModalidadAtencion::class, 'modalidadAtencion', 'id');
     }
     public function exposicion(): BelongsTo
     {
@@ -253,7 +253,7 @@ class Paciente extends Model
         'genero',
         'grupo_sanguineo',
         'ley_social',
-        'modalidad',
+        'modalidad_atencion',
         'nacionalidad',
         'nivel_instruccion',
         'nombre',

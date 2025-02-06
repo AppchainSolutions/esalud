@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Paciente;
 
-class Modalidad extends Model
+class ModalidadAtencion extends Model
 {
     use HasFactory;
-    public function modalidadd(): BelongsTo
+    public function modalidadAtencion(): BelongsTo
     {
-        return $this->belongsTo(Paciente::class, 'modalidad', 'id');
+        return $this->belongsTo(Paciente::class, 'modalidadAtencion', 'id');
     }
-    protected $table = 'modalidad';
+    protected $table = 'modalidad_atencion';
 
     protected $fillable = [
         'descripcion',

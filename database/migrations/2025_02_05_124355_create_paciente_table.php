@@ -44,7 +44,7 @@ return new class extends Migration {
             $table->string('email_verified_at')->nullable();
             $table->string('email')->nullable();
             $table->string('exposicion')->nullable();
-            $table->string('modalidad')->nullable();
+            $table->string('modalidad_atencion')->nullable();
             $table->string('nombre');
             $table->string('ocupacion')->nullable();
             $table->string('password')->nullable();

@@ -118,8 +118,8 @@ it('can create a paciente', function () {
     expect($paciente->ley_social_id)->toBe($leySocial->id);
     expect($paciente->leySocial())->toBeInstanceOf(BelongsTo::class);
     expect($paciente->lista_espera)->toBe(true);
-    expect($paciente->modalidad())->toBeInstanceOf(BelongsTo::class);
-    expect($paciente->modalidad)->toBe('Modalidad1');
+    expect($paciente->modalidadAtencion())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->modalidadAtencion)->toBe('Modalidad1');
     expect($paciente->nacionalidad_id)->toBe($nacionalidad->id);
     expect($paciente->nacionalidad())->toBeInstanceOf(BelongsTo::class);
     expect($paciente->nivel_instruccion_id)->toBe($nivelInstruccion->id);
@@ -186,9 +186,9 @@ it('belongs to religion', function () {
     expect($paciente->religion_id())->toBeInstanceOf(BelongsTo::class);
 });
 
-it('belongs to modalidad', function () {
+it('belongs to modalidadAtencion', function () {
     $paciente = Pacientes::factory()->create();
-    expect($paciente->modalidad())->toBeInstanceOf(BelongsTo::class);
+    expect($paciente->modalidadAtencion())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('has fillable attributes', function () {

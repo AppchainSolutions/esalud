@@ -28,7 +28,7 @@ use App\Models\SeguroSalud;
 use App\Models\NivelInstruccion;
 use App\Models\LeySocial;
 use App\Models\Nacionalidad;
-use App\Models\Modalidad;
+use App\Models\ModalidadAtencion;
 use App\Models\PuebloOriginario;
 use App\Models\Religion;
 use App\Models\Planta;
@@ -300,7 +300,7 @@ class PacienteSeeder extends Seeder
                 ['id' => 1, 'descripcion' => 'Chilena'],
                 ['id' => 2, 'descripcion' => 'Extranjera']
             ],
-            Modalidad::class => [
+            ModalidadAtencion::class => [
                 ['id' => 1, 'descripcion' => 'Presencial'],
                 ['id' => 2, 'descripcion' => 'Remoto'],
                 ['id' => 3, 'descripcion' => 'Híbrido']

@@ -2,7 +2,9 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { router } from "@inertiajs/vue3";
 import { reactive, ref, onMounted, computed } from "vue";
-import moment from "moment";
+import moment from 'moment';
+import 'moment/locale/es';
+moment.locale('es');
 import { useDate } from "vuetify";
 import { fetchData, handleStoreItem } from "@/helper.js";
 import { usePage } from "@inertiajs/vue3";
@@ -38,43 +40,6 @@ const state = reactive({
         "unidad",
     ],
 
-    validationSchema: {
-        rutRules: [
-            (value) => {
-                const regex = /^[0-9]+[-|‐]{1}[0-9kK]{1}$/;
-                if (!regex.test(value)) {
-                    return false;
-                }
-
-                // Separar el número y el dígito verificador
-                let splitidRut = value.split("-");
-                let num = splitidRut[0];
-                let dv = splitidRut[1].toLowerCase();
-                // Calcular el dígito verificador esperado
-                let m = 0,
-                    s = 1;
-                for (; num; num = Math.floor(num / 10)) {
-                    s = (s + (num % 10) * (9 - (m++ % 6))) % 11;
-                }
-                let dvEsperado = s ? s - 1 : "k";
-                const validate = dv === dvEsperado;
-                return validate
-                    ? true
-                    : "El rut no es válido. Por favor, verifique el formato y los dígitos.";
-            },
-        ],
-        emailRules: [
-            (value) => {
-                if (value) return true;
-                return "Se necesita un email.";
-            },
-            (value) => {
-                if (/.+@.+\..+/.test(value)) return true;
-                return "El email debe ser válido.";
-            },
-        ],
-    },
-
     frmItem: {
         rut: paciente.rut,
         nombre: paciente.nombre,
@@ -94,20 +59,22 @@ const state = reactive({
         empresa: paciente.empresa,
         estado_civil: paciente.estado_civil,
         exposicion: paciente.exposicion,
-        fecha_nacimiento: paciente.fecha_nacimiento,
+        fecha_nacimiento: paciente.fecha_nacimiento 
+            ? moment(paciente.fecha_nacimiento).format('DD/MM/YYYY') 
+            : null,
         genero: paciente.genero,
         grupo_sanguineo: paciente.grupo_sanguineo,
-        nivelInstruccion: paciente.nivelInstruccion,
+        nivel_instruccion: paciente.nivel_instruccion,
         ley_social: paciente.ley_social,
-        modalidad: paciente.modalidad,
+        modalidad_atencion: paciente.modalidad_atencion,
         nacionalidad: paciente.nacionalidad,
         ocupacion: paciente.ocupacion,
         planta: paciente.planta,
         prevision: paciente.prevision,
         profesion: paciente.profesion,
-        pueblo: paciente.pueblo,
+        pueblo_originario: paciente.pueblo_originario,
         religion: paciente.religion,
-        seguro: paciente.seguro,
+        seguro_salud: paciente.seguro_salud,
         telefono1: paciente.telefono1,
         telefono2: paciente.telefono2,
         unidad: paciente.unidad,
@@ -129,12 +96,18 @@ onMounted(async () => {
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/
-//**********\\\\ METHODS ////*************/
+const calcularEdad = computed(() => {
+    return paciente.fecha_nacimiento 
+        ? moment().diff(moment(paciente.fecha_nacimiento), 'years') 
+        : null;
+});
+
 const formatDate = computed(() => {
     let formatted = moment(state.frmItem.fecha_nacimiento).format("DD/MM/YYYY");
     return formatted;
 });
 
+//**********\\\\ METHODS ////*************/
 function close() {
     closeForm(state);
 }
@@ -244,7 +217,6 @@ const update = async () => {
                             <v-col cols="6" sm="4" md="2">
                                 <v-text-field
                                     v-model="state.frmItem.email"
-                                    :rules="state.validationSchema.emailRules"
                                     label="Email"
                                     type="email"
                                     required
@@ -262,17 +234,16 @@ const update = async () => {
                                     type="date"
                                     :format="formatDate"
                                     @input="handleInputChange"
+                                    readonly
                                 ></v-text-field>
                             </v-col>
 
                             <v-col cols="6" sm="4" md="2">
                                 <v-text-field
-                                    v-model="state.frmItem.edad"
-                                    label="Edad*"
-                                    type="text"
-                                    variant="underlined"
+                                    :value="calcularEdad + ' años'"
+                                    label="Edad"
                                     readonly
-                                ></v-text-field>
+                                />
                             </v-col>
 
                             <v-col cols="6" sm="4" md="2">
@@ -370,8 +341,8 @@ const update = async () => {
                                     ]"
                                     item-title="descripcion"
                                     item-value="descripcion"
-                                    v-model="state.frmItem.modalidad"
-                                    label="Modalidad de atención"
+                                    v-model="state.frmItem.modalidadAtencion"
+                                    label="ModalidadAtencion de atención"
                                     clearable
                                     variant="underlined"
                                 >

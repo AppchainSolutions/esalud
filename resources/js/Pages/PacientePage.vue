@@ -129,7 +129,7 @@ const state = reactive({
         grupo_sanguineo: null,
         nivelInstruccion: null,
         ley_social: null,
-        modalidad: null,
+        modalidadAtencion: null,
         nacionalidad: null,
         ocupacion: null,
         planta: null,
@@ -167,7 +167,7 @@ const state = reactive({
         grupo_sanguineo: null,
         nivelInstruccion: null,
         ley_social: null,
-        modalidad: null,
+        modalidadAtencion: null,
         nacionalidad: null,
         ocupacion: null,
         planta: null,
@@ -736,9 +736,9 @@ const remove = async (item) => {
                                                         item-value="descripcion"
                                                         v-model="
                                                             state.editedItem
-                                                                .modalidad
+                                                                .modalidadAtencion
                                                         "
-                                                        label="Modalidad de atención"
+                                                        label="ModalidadAtencion de atención"
                                                         clearable
                                                         variant="underlined"
                                                     >

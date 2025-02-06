@@ -12,36 +12,22 @@ class CirugiaFactory extends Factory
 
     public function definition()
     {
-        $tiposCirugia = [
-            'Cirugía General',
-            'Cirugía Cardiovascular',
-            'Cirugía Plástica',
-            'Cirugía Ortopédica',
-            'Cirugía Neurológica',
-            'Cirugía de Tórax',
-            'Cirugía Laparoscópica',
-            'Cirugía Reconstructiva',
-            'Cirugía Oncológica',
-            'Cirugía Vascular'
-        ];
-
         return [
             'paciente_id' => Paciente::factory(),
-            'cirugia' => $this->faker->randomElement($tiposCirugia),
-            'fecha' => $this->faker->dateTimeBetween('-10 years', 'now'),
             'comentario' => $this->faker->optional(0.7)->sentence(),
-            'lugar' => $this->faker->randomElement([
-                'Hospital Público',
-                'Clínica Privada',
-                'Centro Médico',
-                'Hospital Regional'
+            'cirugia' => $this->faker->randomElement([
+                'Cirugía General',
+                'Cirugía Cardiovascular',
+                'Cirugía Plástica',
+                'Cirugía Ortopédica',
+                'Cirugía Neurológica',
+                'Cirugía de Tórax',
+                'Cirugía Laparoscópica',
+                'Cirugía Reconstructiva',
+                'Cirugía Oncológica',
+                'Cirugía Vascular'
             ]),
-            'resultado' => $this->faker->randomElement([
-                'Exitoso',
-                'Parcialmente Exitoso',
-                'Complicaciones Menores',
-                'Sin Complicaciones'
-            ])
+            'fecha_cirugia' => $this->faker->dateTimeBetween('-10 years', 'now')
         ];
     }
 }

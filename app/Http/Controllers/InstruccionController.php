@@ -30,19 +30,7 @@ class InstruccionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function all()
-    {
-        try {
-            $query = InstruccionModel::all();
-             return response()->json([
-                'result' => $query
-            ]);
-        } catch (QueryException $error) {
-            Session::flash('message', 'No se encuentran registros.');
-            Log::error($error);
 
-        };
-    }
 
     /**
      * Show the form for editing the specified resource.

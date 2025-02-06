@@ -28,7 +28,7 @@ use App\Http\Controllers\NacionalidadController;
 use App\Http\Controllers\NivelRiesgoController;
 use App\Http\Controllers\PlantaController;
 use App\Http\Controllers\PrevisionController;
-use App\Http\Controllers\PuebloController;
+use App\Http\Controllers\PuebloOriginarioController;
 use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\ResponsableController;
 use App\Http\Controllers\SemaforoController;
@@ -84,7 +84,7 @@ Route::middleware([
     Route::resource('fuente_incidente', FuenteIncidenteController::class);
     Route::resource('genero', GeneroController::class);
     Route::resource('grupo_sanguineo', GrupoSanguineoController::class);
-    Route::resource('nivelInstruccion', InstruccionController::class);
+    Route::resource('nivel_instruccion', InstruccionController::class);
     Route::resource('ley_social', LeySocialController::class);
     Route::resource('lugar_atencion', LugarAtencionController::class);
     Route::resource('medio_derivacion', MedioDerivacionController::class);
@@ -92,7 +92,7 @@ Route::middleware([
     Route::resource('nivel_riesgo', NivelRiesgoController::class);
     Route::resource('planta', PlantaController::class);
     Route::resource('prevision', PrevisionController::class);
-    Route::resource('pueblo', PuebloController::class);
+    Route::resource('pueblo_originario', PuebloOriginarioController::class);
     Route::resource('religion', ReligionController::class);
     Route::resource('responsable', ResponsableController::class);
     Route::resource('semaforo', SemaforoController::class);

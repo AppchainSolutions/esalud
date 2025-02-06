@@ -59,9 +59,8 @@ const state = reactive({
         empresa: paciente.empresa,
         estado_civil: paciente.estado_civil,
         exposicion: paciente.exposicion,
-        fecha_nacimiento: paciente.fecha_nacimiento 
-            ? moment(paciente.fecha_nacimiento).format('DD/MM/YYYY') 
-            : null,
+        fecha_nacimiento: "",
+        edad:"",
         genero: paciente.genero,
         grupo_sanguineo: paciente.grupo_sanguineo,
         nivel_instruccion: paciente.nivel_instruccion,
@@ -92,20 +91,26 @@ const date = useDate();
 
 //**********\\\\  LIFE CYCLE HOOKS ////*************/
 onMounted(async () => {
+    state.frmItem.fecha_nacimiento = moment(paciente.fecha_nacimiento).format("DD/MM/YYYY");
+    console.log(state.frmItem.fecha_nacimiento);
+    console.log(calcularEdad());
+    state.frmItem.edad = calcularEdad();
     state.list = await fetchData(state.endpoints);
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/
-const calcularEdad = computed(() => {
-    return paciente.fecha_nacimiento 
-        ? moment().diff(moment(paciente.fecha_nacimiento), 'years') 
+const calcularEdad = (() => {
+
+    return paciente.fecha_nacimiento
+        ? moment().diff(moment(paciente.fecha_nacimiento), 'years')
         : null;
 });
 
-const formatDate = computed(() => {
-    let formatted = moment(state.frmItem.fecha_nacimiento).format("DD/MM/YYYY");
-    return formatted;
-});
+// const formatDate = computed(() => {
+//     let formatted = moment(paciente.fecha_nacimiento).format("DD/MM/YYYY");
+//    console.log(formatted);
+//     return formatted;
+// });
 
 //**********\\\\ METHODS ////*************/
 function close() {
@@ -151,7 +156,6 @@ const update = async () => {
                                     label="Rut* (12345678-9)"
                                     type="text"
                                     required
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -161,7 +165,6 @@ const update = async () => {
                                     label="Nombre*"
                                     type="text"
                                     required
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -172,7 +175,6 @@ const update = async () => {
                                     label="Apellidos*"
                                     required
                                     type="text"
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -209,7 +211,6 @@ const update = async () => {
                                     color="success"
                                     hide-details
                                     inset
-                                    clearable
                                     variant="underlined"
                                 ></v-switch>
                             </v-col>
@@ -220,7 +221,6 @@ const update = async () => {
                                     label="Email"
                                     type="email"
                                     required
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -229,18 +229,15 @@ const update = async () => {
                                 <v-text-field
                                     v-model="state.frmItem.fecha_nacimiento"
                                     label="Fecha de nacimiento"
-                                    clearable
                                     variant="underlined"
-                                    type="date"
-                                    :format="formatDate"
+                                    type="text"
                                     @input="handleInputChange"
-                                    readonly
                                 ></v-text-field>
                             </v-col>
 
                             <v-col cols="6" sm="4" md="2">
                                 <v-text-field
-                                    :value="calcularEdad + ' años'"
+                                    v-model="state.frmItem.edad"
                                     label="Edad"
                                     readonly
                                 />
@@ -250,7 +247,6 @@ const update = async () => {
                                 <v-text-field
                                     v-model="state.frmItem.direccion"
                                     label="Dirección"
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -259,7 +255,6 @@ const update = async () => {
                                 <v-text-field
                                     label="teléfono 1"
                                     v-model="state.frmItem.telefono1"
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -268,7 +263,6 @@ const update = async () => {
                                 <v-text-field
                                     v-model="state.frmItem.telefono2"
                                     label="teléfono 2"
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -280,7 +274,6 @@ const update = async () => {
                                     item-value="id"
                                     v-model="state.frmItem.grupo_sanguineo"
                                     label="Grupo sanguíneo"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -292,7 +285,6 @@ const update = async () => {
                                     item-value="id"
                                     v-model="state.frmItem.estado_civil"
                                     label="Estado civil"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -304,7 +296,6 @@ const update = async () => {
                                     item-value="id"
                                     v-model="state.frmItem.nacionalidad"
                                     label="Nacionalidad"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -316,7 +307,6 @@ const update = async () => {
                                     item-value="id"
                                     label="Religion / Culto"
                                     v-model="state.frmItem.religion"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -328,7 +318,6 @@ const update = async () => {
                                     item-value="id"
                                     label="Género"
                                     v-model="state.frmItem.genero"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -343,7 +332,6 @@ const update = async () => {
                                     item-value="descripcion"
                                     v-model="state.frmItem.modalidadAtencion"
                                     label="ModalidadAtencion de atención"
-                                    clearable
                                     variant="underlined"
                                 >
                                 </v-select>
@@ -352,7 +340,6 @@ const update = async () => {
                                 <v-text-field
                                     label="Ciudad"
                                     v-model="state.frmItem.ciudad"
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -364,7 +351,6 @@ const update = async () => {
                                     item-value="id"
                                     v-model="state.frmItem.prevision"
                                     label="Previsión de Salud"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -376,7 +362,6 @@ const update = async () => {
                                     item-value="id"
                                     v-model="state.frmItem.afp"
                                     label="AFP"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -388,7 +373,6 @@ const update = async () => {
                                     item-value="id"
                                     v-model="state.frmItem.ley_social"
                                     label="Leyes Sociales"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -400,7 +384,6 @@ const update = async () => {
                                     item-value="id"
                                     v-model="state.frmItem.seguro"
                                     label="Administradores del Seguro Ley 16.744"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -411,7 +394,6 @@ const update = async () => {
                                     item-value="id"
                                     v-model="state.frmItem.pueblo"
                                     label="Pueblo originario"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -422,7 +404,6 @@ const update = async () => {
                                     item-value="id"
                                     v-model="state.frmItem.nivelInstruccion"
                                     label="Nivel de NivelInstruccion"
-                                    clearable
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
@@ -435,7 +416,6 @@ const update = async () => {
                                     v-model="state.frmItem.actividad_economica"
                                     label="Actividad económica"
                                     required
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -445,7 +425,6 @@ const update = async () => {
                                     :items="state.list.empresa"
                                     item-title="descripcion"
                                     item-value="id"
-                                    clearable
                                     v-model="state.frmItem.empresa"
                                     label="Empresa*"
                                     variant="underlined"
@@ -456,7 +435,6 @@ const update = async () => {
                                 <v-text-field
                                     v-model="state.frmItem.cargo"
                                     label="Cargo"
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -466,7 +444,6 @@ const update = async () => {
                                     :items="state.list.area"
                                     item-title="descripcion"
                                     item-value="id"
-                                    clearable
                                     v-model="state.frmItem.area"
                                     label="Área"
                                     single
@@ -479,7 +456,6 @@ const update = async () => {
                                     :items="state.list.unidad"
                                     item-title="descripcion"
                                     item-value="id"
-                                    clearable
                                     v-model="state.frmItem.unidad"
                                     label="Unidad"
                                     variant="underlined"
@@ -490,7 +466,6 @@ const update = async () => {
                                 <v-text-field
                                     v-model="state.frmItem.ocupacion"
                                     label="Ocupación"
-                                    clearable
                                     variant="underlined"
                                 ></v-text-field>
                             </v-col>
@@ -500,7 +475,6 @@ const update = async () => {
                                     :items="state.list.exposicion"
                                     item-title="descripcion"
                                     item-value="descripcion"
-                                    clearable
                                     chips
                                     v-model="state.frmItem.exposicion"
                                     label="Exposicion"
@@ -514,7 +488,6 @@ const update = async () => {
                                     :items="state.list.ceco"
                                     item-title="descripcion"
                                     item-value="id"
-                                    clearable
                                     v-model="state.frmItem.ceco"
                                     label="Área de Trabajo (Cencos)"
                                     single
@@ -527,7 +500,6 @@ const update = async () => {
                                     :items="state.list.planta"
                                     item-title="descripcion"
                                     item-value="id"
-                                    clearable
                                     v-model="state.frmItem.planta"
                                     label="Planta"
                                     single
@@ -546,7 +518,7 @@ const update = async () => {
                             variant="tonal"
                             @click="storeItems"
                         >
-                            Guardar
+                            Actualizar sus datos
                         </v-btn>
                     </v-card-actions>
                 </v-card>

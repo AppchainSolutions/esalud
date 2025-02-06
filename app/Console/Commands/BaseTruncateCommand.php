@@ -60,7 +60,26 @@ class BaseTruncateCommand extends Command
      */
     private function getAllTables(): array
     {
-        return array_map('reset', DB::select('SHOW TABLES'));
+        $connection = DB::connection();
+        $driverName = $connection->getDriverName();
+
+        switch ($driverName) {
+            case 'sqlite':
+                $tables = $connection->select("SELECT name FROM sqlite_master WHERE type='table'");
+                return array_map(function($table) { return $table->name; }, $tables);
+
+            case 'pgsql':
+                $tables = $connection->select("SELECT tablename FROM pg_tables WHERE schemaname = 'public'");
+                return array_map(function($table) { return $table->tablename; }, $tables);
+
+            case 'mysql':
+                $tables = $connection->select('SHOW TABLES');
+                return array_map('reset', $tables);
+
+            default:
+                $this->error("Unsupported database driver: $driverName");
+                return [];
+        }
     }
 
     /**

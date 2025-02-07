@@ -249,6 +249,7 @@ class Paciente extends Model
         'cargo',
         'ceco',
         'ciudad',
+        'cuenta_activada',
         'direccion',
         'donante',
         'edad',

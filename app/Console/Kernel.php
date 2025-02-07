@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\TimezoneCheckCommand::class,
         \App\Console\Commands\TestAtencionDiariaFactory::class,
         \App\Console\Commands\BaseTruncateCommand::class,
+        \App\Console\Commands\TestActivationEmail::class,
     ];
 
     protected function schedule(Schedule $schedule)

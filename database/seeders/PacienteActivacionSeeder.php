@@ -83,18 +83,29 @@ class PacienteActivacionSeeder extends Seeder
         // Generar token de activación
         $token = $paciente->generarTokenActivacion();
 
-        // Opcional: Simular envío de correo (en ambiente local/testing)
-        //if (app()->environment(['local', 'testing'])) {
-            //Mail::to($paciente->email)->send(new PacienteActivacionMail($paciente, $token));
-        //}
+        // Enviar correo con información de activación
+        if (app()->environment(['local', 'testing'])) {
+            $activationUrl = route('paciente.activar', ['token' => $token]);
+            
+            Mail::to($paciente->email)->send(new PacienteActivacionMail(
+                $paciente, 
+                $token, 
+                $activationUrl,
+                24 // Horas de expiración
+            ));
+
+            // Mensaje informativo con detalles de seguridad
+            $this->command->info("Correo de activación enviado:");
+            $this->command->info("Token de Activación: {$token}");
+            $this->command->info("URL de Activación: {$activationUrl}");
+            $this->command->info("Expira: {$paciente->token_activacion_expira}");
+        }
 
         // Mensaje informativo
-        $this->command->info("Paciente de prueba creado:");
+        $this->command->info("Paciente de prueba creado.");
         $this->command->info("Email: {$paciente->email}");
         $this->command->info("Activo: {$paciente->activo}");
         $this->command->info("Cuenta Activada: {$paciente->cuenta_activada}");
-        $this->command->info("Token de Activación: {$token}");
-        $this->command->info("Expira: {$paciente->token_activacion_expira}");
     }
 
     private function ensureRelatedRecordsExist(\Faker\Generator $faker)

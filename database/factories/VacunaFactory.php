@@ -19,7 +19,7 @@ class VacunaFactory extends Factory
             'paciente_id' => Paciente::factory(),
             'vacuna' => $vacunaInfo['nombre'],
             'tipo_vacuna' => $vacunaInfo['tipo'],
-            'fecha_vacuna' => $this->generarFechaVacuna(),
+            'fecha_vacuna' => $this->faker->date(),
             'comentario' => $this->faker->optional(0.7)->sentence()
         ];
     }

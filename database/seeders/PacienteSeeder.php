@@ -3,46 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Paciente;
-use App\Models\Alergia;
-use App\Models\AntecedenteFamiliar;
-use App\Models\AtencionDiaria;
-use App\Models\Certificacion;
-use App\Models\Diat;
-use App\Models\Diep;
-use App\Models\Enfermedad;
-use App\Models\ExAlcohol;
-use App\Models\ExAldehido;
-use App\Models\ExEquilibrio;
-use App\Models\ExEpo;
-use App\Models\ExHumoNegro;
-use App\Models\ExMetal;
-use App\Models\ExPsico;
-use App\Models\LicenciaMedica;
-use App\Models\Medicamento;
-use App\Models\Vacuna;
-use App\Models\Cirugia;
-use App\Models\TrastornoCronico;
-use App\Models\Afp;
-use App\Models\Area;
-use App\Models\Empresa;
-use App\Models\EstadoCivil;
-use App\Models\FactorRiesgo;
-use App\Models\Genero;
-use App\Models\SeguroSalud;
-use App\Models\NivelInstruccion;
-use App\Models\LeySocial;
-use App\Models\Nacionalidad;
-use App\Models\ModalidadAtencion;
-use App\Models\PuebloOriginario;
-use App\Models\Religion;
-use App\Models\Planta;
-use App\Models\Prevision;
-use App\Models\Unidad;
-use App\Models\GrupoSanguineo;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use App\Models\Paciente;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -56,7 +21,7 @@ class PacienteSeeder extends Seeder
         $this->seedTablasReferencia();
 
         // Primero crear registros base
-        $this->crearRegistrosBase();
+        //$this->crearRegistrosBase();
 
         // Crear 10 pacientes sin asociar
         $pacientesSinUser = Paciente::factory()->count(10)->create();
@@ -108,7 +73,7 @@ class PacienteSeeder extends Seeder
             Medicamento::class => 4,
             Vacuna::class => 4,
 
-            // AntecedenteFamiliar::class => 4,
+            AntecedenteFamiliar::class => 4,
 
             //LicenciaMedica::class => 4,
             // Diat::class => 4,
@@ -140,6 +105,95 @@ class PacienteSeeder extends Seeder
     {
         // Tablas de referencia a poblar
         $tablasReferencia = [
+
+            Afp::class => [
+                ['id' => 1, 'descripcion' => 'Habitat'],
+                ['id' => 2, 'descripcion' => 'Provida'],
+                ['id' => 3, 'descripcion' => 'Cuprum'],
+                ['id' => 4, 'descripcion' => 'Capital'],
+                ['id' => 5, 'descripcion' => 'Modelo']
+            ],
+            Area::class => [
+                ['id' => 1, 'descripcion' => 'Recursos Humanos'],
+                ['id' => 2, 'descripcion' => 'Producción'],
+                ['id' => 3, 'descripcion' => 'Mantenimiento'],
+                ['id' => 4, 'descripcion' => 'Administración'],
+                ['id' => 5, 'descripcion' => 'Seguridad']
+            ],
+            Empresa::class => [
+                ['id' => 1, 'descripcion' => 'Empresa A', 'rut' => '11.111.111-1'],
+                ['id' => 2, 'descripcion' => 'Empresa B', 'rut' => '22.222.222-2'],
+                ['id' => 3, 'descripcion' => 'Empresa C', 'rut' => '33.333.333-3']
+            ],
+            EstadoCivil::class => [
+                ['id' => 1, 'descripcion' => 'Soltero/a'],
+                ['id' => 2, 'descripcion' => 'Casado/a'],
+                ['id' => 3, 'descripcion' => 'Divorciado/a'],
+                ['id' => 4, 'descripcion' => 'Viudo/a']
+            ],
+            Genero::class => [
+                ['id' => 1, 'descripcion' => 'Masculino'],
+                ['id' => 2, 'descripcion' => 'Femenino'],
+                ['id' => 3, 'descripcion' => 'Otro']
+            ],
+            SeguroSalud::class => [
+                ['id' => 1, 'descripcion' => 'Fonasa'],
+                ['id' => 2, 'descripcion' => 'Isapre Banmédica'],
+                ['id' => 3, 'descripcion' => 'Isapre Consalud']
+            ],
+            NivelInstruccion::class => [
+                ['id' => 1, 'descripcion' => 'Básica'],
+                ['id' => 2, 'descripcion' => 'Media'],
+                ['id' => 3, 'descripcion' => 'Técnica'],
+                ['id' => 4, 'descripcion' => 'Universitaria']
+            ],
+            LeySocial::class => [
+                ['id' => 1, 'descripcion' => 'Ley 16.744'],
+                ['id' => 2, 'descripcion' => 'Código del Trabajo']
+            ],
+            Nacionalidad::class => [
+                ['id' => 1, 'descripcion' => 'Chilena'],
+                ['id' => 2, 'descripcion' => 'Extranjera']
+            ],
+            ModalidadAtencion::class => [
+                ['id' => 1, 'descripcion' => 'Presencial'],
+                ['id' => 2, 'descripcion' => 'Remoto'],
+                ['id' => 3, 'descripcion' => 'Híbrido']
+            ],
+            PuebloOriginario::class => [
+                ['id' => 1, 'descripcion' => 'Mapuche'],
+                ['id' => 2, 'descripcion' => 'Aymara'],
+                ['id' => 3, 'descripcion' => 'Otro']
+            ],
+            Religion::class => [
+                ['id' => 1, 'descripcion' => 'Católica'],
+                ['id' => 2, 'descripcion' => 'Evangélica'],
+                ['id' => 3, 'descripcion' => 'Sin religión']
+            ],
+            Planta::class => [
+                ['id' => 1, 'descripcion' => 'Planta A'],
+                ['id' => 2, 'descripcion' => 'Planta B'],
+                ['id' => 3, 'descripcion' => 'Planta C']
+            ],
+            Prevision::class => [
+                ['id' => 1, 'descripcion' => 'AFP'],
+                ['id' => 2, 'descripcion' => 'IPS']
+            ],
+            Unidad::class => [
+                ['id' => 1, 'descripcion' => 'Unidad 1'],
+                ['id' => 2, 'descripcion' => 'Unidad 2'],
+                ['id' => 3, 'descripcion' => 'Unidad 3']
+            ],
+            GrupoSanguineo::class => [
+                ['id' => 1, 'descripcion' => 'A+'],
+                ['id' => 2, 'descripcion' => 'A-'],
+                ['id' => 3, 'descripcion' => 'B+'],
+                ['id' => 4, 'descripcion' => 'B-'],
+                ['id' => 5, 'descripcion' => 'AB+'],
+                ['id' => 6, 'descripcion' => 'AB-'],
+                ['id' => 7, 'descripcion' => 'O+'],
+                ['id' => 8, 'descripcion' => 'O-']
+            ],
 
             'accidente_condicion' => [
                 ['id' => 1, 'descripcion' => 'Leve'],

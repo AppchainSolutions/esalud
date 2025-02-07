@@ -75,12 +75,8 @@ class ActivacionController extends Controller
             'cuenta_activada' => true
         ]);
 
-        // Iniciar sesión
-        Auth::login($user);
-
-        // Redirigir al dashboard
-        return redirect()->route('paciente.dashboard')
-            ->with('success', 'Cuenta activada exitosamente');
+        // Redirigir al login con mensaje de éxito
+        return redirect()->route('login')->with('success', 'Cuenta activada exitosamente. Inicie sesión con sus nuevas credenciales.');
     }
 
     public function generarTokenActivacion(Paciente $paciente)

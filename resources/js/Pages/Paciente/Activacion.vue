@@ -218,11 +218,28 @@ const isFormValid = computed(() => {
 
 const submitActivacion = () => {
   form.post(route('paciente.completar-activacion'), {
-    onSuccess: () => {
-      // Redirigir o mostrar mensaje de éxito
+    onSuccess: (page) => {
+      // Mostrar diálogo de confirmación antes de redirigir
+      $q.dialog({
+        title: 'Cuenta Activada',
+        message: 'Su cuenta ha sido activada exitosamente. Será redirigido a la página de inicio de sesión.',
+        persistent: true,
+        ok: {
+          label: 'Iniciar Sesión',
+          color: 'primary'
+        }
+      }).onOk(() => {
+        // Redirigir al login
+        window.location.href = route('login')
+      })
     },
     onError: (errors) => {
       // Manejar errores de activación
+      $q.notify({
+        type: 'negative',
+        message: 'Hubo un problema al activar su cuenta. Por favor, verifique los datos e intente nuevamente.',
+        position: 'top'
+      })
     }
   })
 }

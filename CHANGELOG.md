@@ -63,6 +63,11 @@
   - Soporte para múltiples navegadores
   - Scripts de ejecución de pruebas
   - Generación de reportes de pruebas
+- Implementación de formulario de activación de cuenta
+  - Componente Vue para activación de pacientes
+  - Validación de complejidad de contraseña
+  - Medidor de fortaleza de contraseña
+  - Rutas para activación de cuenta
 
 ### Removed
 - Eliminación completa de Cypress
@@ -85,6 +90,14 @@
 - Mejora en la estrategia de testing end-to-end
 - Reemplazo de framework de testing end-to-end
 - Actualización de estrategia de testing
+- Mejora en la seguridad de creación de contraseñas
+- Actualización de componentes de frontend para activación
+
+### Security
+- Implementación de validaciones de contraseña
+  - Longitud mínima de 12 caracteres
+  - Requiere combinación de mayúsculas, minúsculas, números y caracteres especiales
+  - Medidor de fortaleza de contraseña
 
 ### Testing
 - Añadidos tests unitarios para:

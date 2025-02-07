@@ -105,61 +105,79 @@ class PacienteActivacionService
      */
     public function activarCuenta(string $tokenPlano, array $datosUsuario): User
     {
-        // Validar token
+        // Validar token de activación
         $paciente = $this->validarToken($tokenPlano);
 
         // Validar datos de usuario
         $this->validarDatosActivacion($datosUsuario);
 
-        $usuarioUpdated = User::create([
-            'name' => $paciente->nombre,
-            'lastname' => $paciente->apellidos,
-            'email' => $paciente->email,
-            'password' => Hash::make($datosUsuario['password']),
-            'rol' => 'paciente',
-            'activo' => true,
-            'rut' => $paciente->rut
-        ]);
+        // Iniciar transacción de base de datos
+        return DB::transaction(function () use ($paciente, $datosUsuario) {
+            try {
+                // Crear usuario
+                $user = User::create([
+                    'name' => $paciente->nombre,
+                    'last_name' => $paciente->apellidos,
+                    'rut' => $paciente->rut,
+                    'email' => $paciente->email, // Usar email del paciente
+                    'password' => Hash::make($datosUsuario['password']),
+                    'rol' => 'paciente',
+                    'isAdmin' => false
+                ]);
 
-        // Marcar paciente como activo
-        $paciente->update([
-            'cuenta_activada' => true,
-            'user_id' => $usuarioUpdated->id,
-            'token_activacion' => null,
-            'token_activacion_expira' => null
-        ]);
+                // Vincular usuario con paciente
+                $paciente->update([
+                    'cuenta_activada' => true,
+                    'user_id' => $user->id,
+                    'token_activacion' => null,
+                    'token_activacion_expira' => null
+                ]);
 
-        Log::info('Paciente activado', [
-            'paciente_id' => $paciente->id,
-            'activo' => $paciente->activo,
-            'user_id' => $paciente->user_id
-        ]);
+                // Disparar evento de cuenta activada
+                event(new PacienteActivado($paciente, $user));
 
-        // Disparar evento de cuenta activada
-        event(new PacienteActivado($paciente, $usuarioUpdated));
+                // Registrar log de activación
+                Log::info('Cuenta de paciente activada', [
+                    'paciente_id' => $paciente->id,
+                    'user_id' => $user->id,
+                    'email' => $user->email
+                ]);
 
-        return $usuarioUpdated;
+                return $user;
+            } catch (\Exception $e) {
+                // Registrar error
+                Log::error('Error al activar cuenta de paciente', [
+                    'paciente_id' => $paciente->id,
+                    'error' => $e->getMessage()
+                ]);
+
+                throw new \Exception('No se pudo activar la cuenta: ' . $e->getMessage());
+            }
+        });
     }
 
     /**
-     * Valida los datos de activación de cuenta
+     * Validar datos de activación de cuenta
      * 
-     * @param array $datosUsuario
+     * @param array $datos
      * @throws \Illuminate\Validation\ValidationException
      */
-    private function validarDatosActivacion(array $datosUsuario)
+    private function validarDatosActivacion(array $datos)
     {
-        Validator::make($datosUsuario, [
+        $validator = Validator::make($datos, [
             'password' => [
-                'required', 
-                'confirmed', 
-                'min:8', 
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/'
+                'required',
+                'confirmed',
+                'min:12',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
             ]
         ], [
-            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
-            'password.regex' => 'La contraseña debe contener al menos una mayúscula, una minúscula y un número.',
+            'password.min' => 'La contraseña debe tener al menos 12 caracteres.',
+            'password.regex' => 'La contraseña debe incluir mayúsculas, minúsculas, números y caracteres especiales.',
             'password.confirmed' => 'La confirmación de contraseña no coincide.'
-        ])->validate();
+        ]);
+
+        // Lanzar excepción si la validación falla
+        $validator->validate();
     }
 }

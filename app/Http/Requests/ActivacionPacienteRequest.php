@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class ActivacionPacienteRequest extends FormRequest
 {
@@ -12,6 +11,7 @@ class ActivacionPacienteRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // Aquí podrías agregar lógica adicional de autorización si es necesario
         return true;
     }
 
@@ -23,21 +23,15 @@ class ActivacionPacienteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'token' => [
-                'required', 
-                'string', 
-                'exists:paciente,token_activacion'
-            ],
+            'token' => ['required', 'string', 'min:64', 'max:64'],
             'password' => [
                 'required', 
-                'confirmed', 
-                Password::min(12)
-                    ->letters()
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised()
-            ]
+                'string', 
+                'min:12', 
+                'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+            ],
+            'password_confirmation' => ['required', 'same:password']
         ];
     }
 
@@ -49,16 +43,15 @@ class ActivacionPacienteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'token.required' => 'El token de activación es inválido.',
-            'token.exists' => 'El token de activación no es válido o ha expirado.',
+            'token.required' => 'El token de activación es obligatorio.',
+            'token.min' => 'El token de activación no es válido.',
+            'token.max' => 'El token de activación no es válido.',
             'password.required' => 'La contraseña es obligatoria.',
-            'password.confirmed' => 'Las contraseñas no coinciden.',
             'password.min' => 'La contraseña debe tener al menos 12 caracteres.',
-            'password.letters' => 'La contraseña debe contener letras.',
-            'password.mixed' => 'La contraseña debe tener mayúsculas y minúsculas.',
-            'password.numbers' => 'La contraseña debe contener números.',
-            'password.symbols' => 'La contraseña debe contener símbolos.',
-            'password.uncompromised' => 'La contraseña es demasiado común. Por favor, elija una contraseña más segura.'
+            'password.regex' => 'La contraseña debe incluir mayúsculas, minúsculas, números y caracteres especiales.',
+            'password.confirmed' => 'La confirmación de contraseña no coincide.',
+            'password_confirmation.required' => 'Debe confirmar la contraseña.',
+            'password_confirmation.same' => 'La confirmación de contraseña no coincide.'
         ];
     }
 }

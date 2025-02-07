@@ -7,6 +7,7 @@ use App\Services\PacienteActivacionService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PacienteActivacionController extends Controller
 {
@@ -60,9 +61,14 @@ class PacienteActivacionController extends Controller
     public function activarCuenta(ActivacionPacienteRequest $request)
     {
         try {
-            // Activar cuenta
+            Log::info('Datos de activación recibidos', [
+                'token' => $request->input('token'),
+                'email' => $request->input('email')
+            ]);
+
+            // Activar cuenta usando el servicio
             $user = $this->activacionService->activarCuenta(
-                $request->token, 
+                $request->input('token'), 
                 $request->validated()
             );
 
@@ -73,9 +79,14 @@ class PacienteActivacionController extends Controller
             return redirect()->route('paciente.dashboard')
                 ->with('success', 'Cuenta activada exitosamente');
         } catch (\Exception $e) {
-            // Error en la activación
+            Log::error('Error en activación de cuenta', [
+                'mensaje' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            // Redirigir de vuelta con mensaje de error
             return back()->withErrors([
-                'error' => $e->getMessage()
+                'error' => $e->getMessage() ?? 'Ocurrió un error al activar la cuenta'
             ]);
         }
     }

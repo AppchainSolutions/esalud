@@ -11,7 +11,7 @@
             Configura tu contraseña para acceder a tu cuenta
           </v-card-subtitle>
 
-          <v-form @submit.prevent="submitActivacion" ref="activacionForm">
+          <v-form @submit.prevent="submit" ref="activacionForm">
             <v-text-field
               v-model="form.password"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -57,7 +57,7 @@
             ></v-text-field>
 
             <v-progress-linear
-              :value="passwordStrength * 33.33"
+              :value="passwordStrength.strength * 20"
               :color="passwordStrengthColor"
               height="7"
               class="my-3"
@@ -65,18 +65,18 @@
 
             <v-expand-transition>
               <v-alert 
-                v-if="passwordStrength < 2" 
+                v-if="passwordStrength.strength < 3" 
                 type="warning" 
                 dense 
                 outlined
                 class="mb-4"
               >
-                {{ passwordStrengthMessage }}
+                {{ passwordStrength.message }}
               </v-alert>
             </v-expand-transition>
 
             <v-list 
-              v-if="passwordStrength < 3" 
+              v-if="passwordStrength.strength < 5" 
               dense 
               class="py-0"
             >
@@ -120,8 +120,7 @@
 
 <script setup>
 import { ref, computed, reactive } from 'vue'
-import { useForm } from '@inertiajs/vue3'
-import { useDialog, useToast } from 'vuetify'
+import { useForm, router } from '@inertiajs/vue3'
 
 const props = defineProps({
   token: {
@@ -135,7 +134,7 @@ const props = defineProps({
 })
 
 const form = useForm({
-  token: props.token,
+  token: route().params.token || '',
   password: '',
   password_confirmation: ''
 })
@@ -143,7 +142,34 @@ const form = useForm({
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
 
-const passwordStrength = ref(0)
+const passwordStrength = computed(() => {
+  const password = form.password;
+  let strength = 0;
+  
+  // Criterios de complejidad
+  const hasLowercase = /[a-z]/.test(password);
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[@$!%*?&]/.test(password);
+  const minLength = password.length >= 12;
+
+  // Calcular fuerza de contraseña
+  if (hasLowercase) strength++;
+  if (hasUppercase) strength++;
+  if (hasNumber) strength++;
+  if (hasSpecialChar) strength++;
+  if (minLength) strength++;
+
+  return {
+    strength: strength,
+    message: strength < 3 
+      ? 'Contraseña débil' 
+      : strength < 5 
+        ? 'Contraseña moderada' 
+        : 'Contraseña fuerte'
+  };
+})
+
 const passwordRequirements = reactive([
   { 
     text: 'Mínimo 12 caracteres', 
@@ -163,22 +189,14 @@ const passwordRequirements = reactive([
   }
 ])
 
-const passwordStrengthMessage = computed(() => {
-  switch(passwordStrength.value) {
-    case 0: return 'Contraseña muy débil'
-    case 1: return 'Contraseña débil'
-    case 2: return 'Contraseña moderada'
-    case 3: return 'Contraseña fuerte'
-    default: return ''
-  }
-})
-
 const passwordStrengthColor = computed(() => {
-  switch(passwordStrength.value) {
+  switch(passwordStrength.value.strength) {
     case 0: return 'error'
     case 1: return 'warning'
     case 2: return 'warning'
     case 3: return 'success'
+    case 4: return 'success'
+    case 5: return 'success'
     default: return 'error'
   }
 })
@@ -215,34 +233,29 @@ const confirmPasswordRules = [
 const isFormValid = computed(() => {
   return form.password === form.password_confirmation && 
          form.password.length >= 12 && 
-         passwordStrength.value >= 2
+         passwordStrength.value.strength >= 3
 })
 
-const submitActivacion = () => {
-  form.post(route('paciente.completar-activacion'), {
-    onSuccess: (page) => {
-      // Mostrar diálogo de confirmación antes de redirigir
-      const dialog = useDialog()
-      dialog.confirm({
-        title: 'Cuenta Activada',
-        message: 'Su cuenta ha sido activada exitosamente. Será redirigido a la página de inicio de sesión.',
-        confirmText: 'Iniciar Sesión',
-        cancelText: 'Cancelar',
-        persistent: true,
-        onConfirm: () => {
-          // Redirigir al login
-          window.location.href = route('login')
-        }
-      })
+const submit = () => {
+  form.post(route('paciente.activar'), {
+    onSuccess: () => {
+      // Notificación de éxito
+      console.log('Cuenta activada exitosamente');
+      // Redirigir al dashboard o mostrar mensaje
     },
     onError: (errors) => {
-      // Manejar errores de activación
-      const toast = useToast()
-      toast.error('Hubo un problema al activar su cuenta. Por favor, verifique los datos e intente nuevamente.', {
-        position: 'top'
-      })
+      console.error('Errores de activación:', errors);
+      // Manejar errores específicos
+      if (errors.password) {
+        // Mostrar mensaje de error de contraseña
+        console.error(errors.password);
+      }
+      if (errors.token) {
+        // Mostrar mensaje de error de token
+        console.error(errors.token);
+      }
     }
-  })
+  });
 }
 </script>
 

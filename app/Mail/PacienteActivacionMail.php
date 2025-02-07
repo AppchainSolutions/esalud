@@ -29,12 +29,37 @@ class PacienteActivacionMail extends Mailable implements ShouldQueue
     public $token;
 
     /**
-     * Create a new message instance.
+     * URL de activación
+     *
+     * @var string
      */
-    public function __construct(Paciente $paciente, string $token)
-    {
+    public $activationUrl;
+
+    /**
+     * Horas de expiración del token
+     *
+     * @var int
+     */
+    public $expiracionHoras;
+
+    /**
+     * Create a new message instance.
+     *
+     * @param Paciente $paciente Paciente que se está activando
+     * @param string $token Token de activación
+     * @param string $activationUrl URL de activación
+     * @param int $expiracionHoras Horas de validez del token
+     */
+    public function __construct(
+        Paciente $paciente, 
+        string $token, 
+        string $activationUrl, 
+        int $expiracionHoras = 24
+    ) {
         $this->paciente = $paciente;
         $this->token = $token;
+        $this->activationUrl = $activationUrl;
+        $this->expiracionHoras = $expiracionHoras;
     }
 
     /**
@@ -53,15 +78,13 @@ class PacienteActivacionMail extends Mailable implements ShouldQueue
      */
     public function content(): Content
     {
-        // Generar URL de activación
-        $activationUrl = route('paciente.activacion', ['token' => $this->token]);
-
         return new Content(
             markdown: 'emails.paciente-activacion',
             with: [
                 'paciente' => $this->paciente,
-                'activationUrl' => $activationUrl,
-                'expiracionHoras' => 24
+                'token' => $this->token,
+                'activationUrl' => $this->activationUrl,
+                'expiracionHoras' => $this->expiracionHoras
             ]
         );
     }

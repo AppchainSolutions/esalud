@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\BooleanCastTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    use BooleanCastTrait;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -24,10 +26,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'lastname',
         'email',
         'password',
         'rol',
-        'activo'
+        'activo',
+        'rut'
     ];
 
     /**
@@ -49,6 +53,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'activo' => 'boolean',
     ];
 
     /**
@@ -73,5 +78,27 @@ class User extends Authenticatable
     public function paciente()
     {
         return $this->hasOne(Paciente::class);
+    }
+
+    // Sobrescribir método de casting para manejar compatibilidad
+    public function getAttribute($key)
+    {
+        $value = parent::getAttribute($key);
+
+        if (in_array($key, ['activo']) && $value !== null) {
+            return $this->castToBoolean($value);
+        }
+
+        return $value;
+    }
+
+    // Método para establecer valores booleanos
+    public function setAttribute($key, $value)
+    {
+        if (in_array($key, ['activo'])) {
+            $value = $this->booleanToDatabaseValue($this->castToBoolean($value));
+        }
+
+        return parent::setAttribute($key, $value);
     }
 }

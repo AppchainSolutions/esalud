@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use App\Traits\BooleanCastTrait;
 
 class Paciente extends Model
 {
     use HasFactory;
+    use BooleanCastTrait;
 
     public function atenciones(): HasMany
     {
@@ -287,4 +289,26 @@ class Paciente extends Model
         'activo' => 'boolean',
         'cuenta_activada' => 'boolean'
     ];
+
+    // Sobrescribir método de casting para manejar compatibilidad
+    public function getAttribute($key)
+    {
+        $value = parent::getAttribute($key);
+
+        if (in_array($key, ['activo', 'cuenta_activada']) && $value !== null) {
+            return $this->castToBoolean($value);
+        }
+
+        return $value;
+    }
+
+    // Método para establecer valores booleanos
+    public function setAttribute($key, $value)
+    {
+        if (in_array($key, ['activo', 'cuenta_activada'])) {
+            $value = $this->booleanToDatabaseValue($this->castToBoolean($value));
+        }
+
+        return parent::setAttribute($key, $value);
+    }
 }

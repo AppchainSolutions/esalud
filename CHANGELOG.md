@@ -64,6 +64,12 @@
   - Scripts de ejecución de pruebas
   - Generación de reportes de pruebas
 
+### Removed
+- Eliminación completa de Cypress
+  - Desinstalación de dependencias
+  - Eliminación de archivos de configuración
+  - Migración total a Playwright para pruebas end-to-end
+
 ### Changed
 - Implementación de pruebas de generación de token y envío de correo
   - Usa paciente con email 'omar.ahumadag@gmail.com' como caso de prueba
@@ -77,6 +83,8 @@
 - Actualización de scripts de soporte para pruebas
 - Migración de pruebas de Cypress a Playwright
 - Mejora en la estrategia de testing end-to-end
+- Reemplazo de framework de testing end-to-end
+- Actualización de estrategia de testing
 
 ### Testing
 - Añadidos tests unitarios para:
@@ -90,5 +98,7 @@
 - Nuevas pruebas para flujo de activación de pacientes
 - Soporte para testing en Chrome y Firefox
 - Configuración de traza y captura de pantalla
+- Migración completa a Playwright
+- Mejora en la configuración de pruebas end-to-end
 
 **Fecha**: 5 de febrero de 2025

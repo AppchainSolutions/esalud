@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -186,7 +185,7 @@ class Paciente extends Model
     }
     public function puebloOriginario(): BelongsTo
     {
-        return $this->belongsTo(PuebloOriginario::class, 'pueblo', 'id');
+        return $this->belongsTo(PuebloOriginario::class);
     }
     public function religion(): BelongsTo
     {
@@ -219,8 +218,16 @@ class Paciente extends Model
     public function generarTokenActivacion()
     {
         $this->token_activacion = Str::random(64);
+        $this->token_activacion_expira = now()->addHours(24);
         $this->save();
         return $this->token_activacion;
+    }
+
+    public function tokenActivacionVigente()
+    {
+        return $this->token_activacion && 
+               $this->token_activacion_expira && 
+               now()->lessThan($this->token_activacion_expira);
     }
 
     public function estaActivado()
@@ -269,6 +276,7 @@ class Paciente extends Model
         'telefono1',
         'telefono2',
         'token_activacion',
+        'token_activacion_expira',
         'unidad',
         'user_id',
         'rut',

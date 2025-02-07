@@ -10,7 +10,7 @@ class PuebloOriginario extends Model
     use HasFactory;
     public function puebloOriginario(): BelongsTo
     {
-        return $this->belongsTo(Paciente::class, 'pueblo', 'id');
+        return $this->belongsTo(Paciente::class);
     }
     protected $table = 'pueblo_originario';
 

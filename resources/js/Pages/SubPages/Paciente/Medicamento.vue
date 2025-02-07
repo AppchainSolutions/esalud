@@ -15,24 +15,22 @@ const store = useDataStore();
 const state = reactive({
     headers: [
         {
-            title: "Cirugía",
+            title: "Medicamento",
             align: "start",
             sortable: true,
-            key: "cirugia",
+            key: "medicamento",
         },
         { title: "Comentario", key: "comentario", sortable: false },
         { title: "Acciones", align: "center", key: "actions" },
     ],
-
     editedItem: {
         paciente_id: null,
-        cirugia: null,
+        medicamento: null,
         comentario: null,
     },
-
     defaultItem: {
         paciente_id: null,
-        cirugia: null,
+        medicamento: null,
         comentario: null,
     },
     searchQuery: {
@@ -44,14 +42,13 @@ const state = reactive({
     list: [],
     loading: false,
     valid: null,
-    formTitle: "Cirugías",
-    formCrear: "Nueva Cirugía",
-    formEdit: "Editar Cirugía",
-    urlSearch: "cirugia/search",
-    urlShow: "cirugia/show",
-    urlUpdate: "cirugia/update",
-    urlDelete: "cirugia/delete",
-    urlStore: "cirugia",
+    formTitle: "Medicamentos",
+    formCrear: "Nuevo Medicamento",
+    formEdit: "Editar Medicamento",
+    urlShow: "medicamento/show",
+    urlUpdate: "medicamento/update",
+    urlDelete: "medicamento/delete",
+    urlStore: "medicamento",
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/
@@ -59,13 +56,10 @@ const editedItemTitle = computed(() =>
     state.editedIndex === -1 ? state.formCrear : state.formEdit
 );
 
-//**********\\\\ METHODS ////*************/
-
 function close() {
     closeForm(state);
 }
 //**********\\\\  CRUD ////*************/
-
 const handleShow = async () => {
     state.searchQuery.paciente_id = store.getSelected.id;
     await handleShowItem(state);
@@ -94,7 +88,7 @@ function openFormEdit(item) {
 }
 
 const remove = async (item) => {
-    handleRemoveItem(state, item);
+    await handleRemoveItem(state, item);
 };
 </script>
 
@@ -103,7 +97,7 @@ const remove = async (item) => {
         <v-data-table :headers="state.headers" :items="state.tableItems">
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Cirugías</v-toolbar-title>
+                    <v-toolbar-title>Medicamentos</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="state.dialog">
@@ -136,24 +130,14 @@ const remove = async (item) => {
 
                                 <v-card-text>
                                     <v-container>
-                                        <!------------->
                                         <v-row>
                                             <v-col>
                                                 <v-text-field
                                                     v-model="
-                                                        state.editedItem.cirugia
-                                                    "
-                                                    label="cirugia"
-                                                    type="text"
-                                                    variant="underlined"
-                                                ></v-text-field>
-
-                                                <v-text-field
-                                                    v-model="
                                                         state.editedItem
-                                                            .fecha_cirugia
+                                                            .medicamento
                                                     "
-                                                    label="Fecha de la cirugía (escriba una fecha aproximada)"
+                                                    label="Medicamento"
                                                     type="text"
                                                     variant="underlined"
                                                 ></v-text-field>
@@ -163,13 +147,12 @@ const remove = async (item) => {
                                                         state.editedItem
                                                             .comentario
                                                     "
-                                                    label="comentario"
+                                                    label="Comentario"
                                                     type="text"
                                                     variant="underlined"
                                                 ></v-text-field>
                                             </v-col>
                                         </v-row>
-                                        <!------------->
                                     </v-container>
                                 </v-card-text>
 
@@ -204,8 +187,8 @@ const remove = async (item) => {
                             density="compact"
                             class="mr-2 ml-2"
                             color="#009AA4"
-                            :icon="'mdi-account-edit'"
                             variant="tonal"
+                            :icon="'mdi-account-edit'"
                             @click="openFormEdit(item)"
                         ></v-btn>
                     </template>
@@ -218,8 +201,8 @@ const remove = async (item) => {
                             density="compact"
                             class="mr-2 ml-2"
                             color="#009AA4"
-                            :icon="'mdi-delete'"
                             variant="tonal"
+                            :icon="'mdi-delete'"
                             @click="remove(item)"
                         ></v-btn>
                     </template>

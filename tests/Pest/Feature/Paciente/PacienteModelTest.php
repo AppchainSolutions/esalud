@@ -10,7 +10,7 @@ use App\Models\GruposSanguineos;
 use App\Models\LeyesSociales;
 use App\Models\Nacionalidades;
 use App\Models\NivelesInstruccion;
-use App\Models\Pacientes;
+use App\Models\Paciente;
 use App\Models\Previsiones;
 use App\Models\PueblosOriginarios;
 use App\Models\Religiones;
@@ -33,10 +33,10 @@ it('can create a paciente', function () {
     $seguro = SegurosSalud::factory()->create();
     $estadoCivil = EstadosCiviles::factory()->create();
 
-    //$paciente = Pacientes::factory()->count(1)->create();
+    //$paciente = Paciente::factory()->count(1)->create();
 
     // Crear un paciente usando el factory
-    $paciente = Pacientes::factory()->create([
+    $paciente = Paciente::factory()->create([
         'apellidos_responsable' => 'Aguilar',
         'apellidos' => 'Perez',
         'calles_id' => calles::inRandomOrder()->first()->id,
@@ -138,61 +138,61 @@ it('can create a paciente', function () {
     expect($paciente->seguroSalud())->toBeInstanceOf(BelongsTo::class);
     expect($paciente->telefono1)->toBe('337-597-4667');
     expect($paciente->telefono2)->toBe('+1-505-479-9905');
-    expect($paciente)->toBeInstanceOf(Pacientes::class);
+    expect($paciente)->toBeInstanceOf(Paciente::class);
 });
 
 it('belongs to seguro', function () {
-    $paciente = Pacientes::factory()->create();
+    $paciente = Paciente::factory()->create();
     expect($paciente->seguro_salud_id())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('belongs to establecimiento educacional', function () {
-    $paciente = Pacientes::factory()->create();
+    $paciente = Paciente::factory()->create();
     expect($paciente->establecimiento_educacional_id())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('belongs to estado civil', function () {
-    $paciente = Pacientes::factory()->create();
+    $paciente = Paciente::factory()->create();
     expect($paciente->estado_civil())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('belongs to grupo sanguineo', function () {
-    $paciente = Pacientes::factory()->create();
+    $paciente = Paciente::factory()->create();
     expect($paciente->grupo_sanguineo())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('belongs to nivelInstruccion', function () {
-    $paciente = Pacientes::factory()->create();
+    $paciente = Paciente::factory()->create();
     expect($paciente->nivel_instruccion_id())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('belongs to ley social', function () {
-    $paciente = Pacientes::factory()->create();
+    $paciente = Paciente::factory()->create();
     expect($paciente->ley_social_id())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('belongs to prevision', function () {
-    $paciente = Pacientes::factory()->create();
+    $paciente = Paciente::factory()->create();
     expect($paciente->prevision_id())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('belongs to pueblo', function () {
-    $paciente = Pacientes::factory()->create();
+    $paciente = Paciente::factory()->create();
     expect($paciente->pueblo_indigena_id())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('belongs to religion', function () {
-    $paciente = Pacientes::factory()->create();
+    $paciente = Paciente::factory()->create();
     expect($paciente->religion_id())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('belongs to modalidadAtencion', function () {
-    $paciente = Pacientes::factory()->create();
+    $paciente = Paciente::factory()->create();
     expect($paciente->modalidadAtencion())->toBeInstanceOf(BelongsTo::class);
 });
 
 it('has fillable attributes', function () {
-    $paciente = new Pacientes;
+    $paciente = new Paciente;
     expect($paciente->getFillable())->toEqual([
         'apellidos_responsable',
         'apellidos',

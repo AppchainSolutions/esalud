@@ -65,6 +65,8 @@ class PacienteFactory extends Factory
             'unidad' => Unidad::inRandomOrder()->first()->id,
             'telefono1' => $this->faker->phoneNumber,
             'telefono2' => $this->faker->optional()->phoneNumber,
+            'token_activacion' => null,
+            'token_activacion_expira' => null,
         ];
     }
 }

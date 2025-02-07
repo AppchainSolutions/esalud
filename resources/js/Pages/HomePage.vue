@@ -1,3 +1,15 @@
+<script setup>
+import AppLayout from "@/Layouts/AppLayout.vue";
+import { Link } from "@inertiajs/vue3";
+
+defineProps({
+    user: {
+        type: Object,
+        default: null,
+    },
+});
+</script>
+
 <template>
     <AppLayout>
         <div class="container mx-auto px-4 py-8">
@@ -80,7 +92,7 @@
 
                         </template>
 
-                        <template v-if="user.isAdmin === true">
+                        <template v-if="user.rol === 'admin'">
 
                             <div class="grid grid-cols-[1fr,2fr] gap-6">
                                 <div>
@@ -183,14 +195,4 @@
     </AppLayout>
 </template>
 
-<script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link } from "@inertiajs/vue3";
 
-defineProps({
-    user: {
-        type: Object,
-        default: null,
-    },
-});
-</script>

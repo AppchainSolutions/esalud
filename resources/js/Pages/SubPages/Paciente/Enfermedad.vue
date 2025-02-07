@@ -1,24 +1,25 @@
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive } from "vue";
 import { useDataStore } from "@/store.js";
 import {
     handleRemoveItem,
     handleShowItem,
     handleStoreItem,
-    handleEditItem,
     closeForm,
     openToCreate,
     openToEdit,
+    fetchData
 } from "@/helper.js";
 
 const store = useDataStore();
 const state = reactive({
+    endpoints: ["trastorno_cronico"],
     headers: [
         {
-            title: "Cirugía",
+            title: "Enfermedad",
             align: "start",
             sortable: true,
-            key: "cirugia",
+            key: "trastorno_cronico.descripcion",
         },
         { title: "Comentario", key: "comentario", sortable: false },
         { title: "Acciones", align: "center", key: "actions" },
@@ -26,13 +27,13 @@ const state = reactive({
 
     editedItem: {
         paciente_id: null,
-        cirugia: null,
+        trastorno_cronico: null,
         comentario: null,
     },
 
     defaultItem: {
         paciente_id: null,
-        cirugia: null,
+        trastorno_cronico: null,
         comentario: null,
     },
     searchQuery: {
@@ -44,16 +45,19 @@ const state = reactive({
     list: [],
     loading: false,
     valid: null,
-    formTitle: "Cirugías",
-    formCrear: "Nueva Cirugía",
-    formEdit: "Editar Cirugía",
-    urlSearch: "cirugia/search",
-    urlShow: "cirugia/show",
-    urlUpdate: "cirugia/update",
-    urlDelete: "cirugia/delete",
-    urlStore: "cirugia",
+    formTitle: "Enfermedades",
+    formCrear: "Nueva Enfermedades",
+    formEdit: "Editar Enfermedades",
+    urlSearch: "enfermedad/search",
+    urlShow: "enfermedad/show",
+    urlUpdate: "enfermedad/update",
+    urlDelete: "enfermedad/delete",
+    urlStore: "enfermedad",
 });
-
+//**********\\\\  LIFE CYCLE HOOKS ////*************/
+onMounted(async () => {
+    state.list = await fetchData(state.endpoints);
+});
 //**********\\\\  COMPUTE PROPERTIES ////*************/
 const editedItemTitle = computed(() =>
     state.editedIndex === -1 ? state.formCrear : state.formEdit
@@ -103,7 +107,7 @@ const remove = async (item) => {
         <v-data-table :headers="state.headers" :items="state.tableItems">
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Cirugías</v-toolbar-title>
+                    <v-toolbar-title>{{ state.formTitle }}</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="state.dialog">
@@ -141,22 +145,24 @@ const remove = async (item) => {
                                             <v-col>
                                                 <v-text-field
                                                     v-model="
-                                                        state.editedItem.cirugia
+                                                        state.editedItem.enfermedad
                                                     "
-                                                    label="cirugia"
+                                                    label="enfermedad"
                                                     type="text"
                                                     variant="underlined"
                                                 ></v-text-field>
 
-                                                <v-text-field
+                                                <v-select
                                                     v-model="
-                                                        state.editedItem
-                                                            .fecha_cirugia
+                                                        state.editedItem.trastorno_cronico
                                                     "
-                                                    label="Fecha de la cirugía (escriba una fecha aproximada)"
-                                                    type="text"
+                                                    :items="state.list.trastorno_cronico"
+                                                    item-title="descripcion"
+                                                    item-value="id"
+                                                    label="Trastorno Crónico"
                                                     variant="underlined"
-                                                ></v-text-field>
+                                                    clearable
+                                                ></v-select>
 
                                                 <v-text-field
                                                     v-model="

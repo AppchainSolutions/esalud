@@ -1,16 +1,9 @@
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive } from "vue";
 import { useDataStore } from "@/store.js";
-import {
-    handleRemoveItem,
-    handleShowItem,
-    handleStoreItem,
-    closeForm,
-    openToCreate,
-    openToEdit,
-} from "@/helper.js";
 
 const store = useDataStore();
+
 const state = reactive({
     headers: [
         {
@@ -24,77 +17,30 @@ const state = reactive({
     ],
 
     editedItem: {
-        paciente_id: null,
-        alergia: null,
-        comentario: null,
-    },
-
-    defaultItem: {
-        paciente_id: null,
-        alergia: null,
-        comentario: null,
-    },
-    searchQuery: {
-        paciente_id: null,
-    },
+        paciente_id: "",
+        alergia: "",
+        comentario: "",
+    },   
     dialog: false,
-    tableItems: [],
-    editedIndex: -1,
-    list: [],
+    tableItems: store.getPacienteSelected.alergia,
     loading: false,
-    valid: null,
     formTitle: "Alergias",
-    formCrear: "Nueva Alergia",
-    formEdit: "Editar Alergia",
-    urlSearch: "alergia/search",
-    urlShow: "alergia/show",
-    urlUpdate: "alergia/update",
-    urlDelete: "alergia/delete",
-    urlStore: "alergia",
 });
 
-//**********\\\\  COMPUTE PROPERTIES ////*************/
-const editedItemTitle = computed(() =>
-    state.editedIndex === -1 ? state.formCrear : state.formEdit
-);
 
 //**********\\\\ METHODS ////*************/
 
 function close() {
-    closeForm(state);
+    state.dialog = false;
 }
 //**********\\\\  CRUD ////*************/
 
-const handleShow = async () => {
-    state.searchQuery.paciente_id = store.getSelected.id;
-    await handleShowItem(state);
-};
-
-function openFormCreate() {
-    openToCreate(state);
+function verDetalle(item) {
+    console.log(item);
+    state.editedItem = { ...item };
+    state.dialog = true;
 }
 
-function storeItems() {
-    return state.editedIndex > -1 ? update() : create();
-}
-
-const create = async () => {
-    await handleStoreItem(state, "create");
-    closeForm(state);
-};
-
-const update = async () => {
-    await handleStoreItem(state, "edit");
-    closeForm(state);
-};
-
-function openFormEdit(item) {
-    openToEdit(state, item);
-}
-
-const remove = async (item) => {
-    handleRemoveItem(state, item);
-};
 </script>
 
 <template>
@@ -106,36 +52,9 @@ const remove = async (item) => {
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="state.dialog">
-                        <template v-slot:activator="{ props }">
-                            <v-btn
-                                icon="mdi-update"
-                                variant="tonal"
-                                class="ma-2"
-                                color="#009AA4"
-                                @click="handleShow"
-                            >
-                            </v-btn>
-                            <v-btn
-                                icon="mdi-account-multiple-plus"
-                                variant="tonal"
-                                class="ma-2"
-                                color="#009AA4"
-                                @click="openFormCreate"
-                            >
-                            </v-btn>
-                        </template>
-
                         <v-card>
-                            <form @submit.prevent="submit">
-                                <v-card-title>
-                                    <span class="text-h5"
-                                        >{{ editedItemTitle }}
-                                    </span>
-                                </v-card-title>
-
                                 <v-card-text>
                                     <v-container>
-                                        <!------------->
                                         <v-row>
                                             <v-col>
                                                 <v-text-field
@@ -177,19 +96,11 @@ const remove = async (item) => {
                                     <v-btn
                                         color="blue-darken-1"
                                         variant="tonal"
-                                        @click="close"
+                                        @click="close()"
                                     >
                                         Cancelar
                                     </v-btn>
-                                    <v-btn
-                                        color="blue-darken-1"
-                                        variant="tonal"
-                                        @click="storeItems"
-                                    >
-                                        Guardar
-                                    </v-btn>
                                 </v-card-actions>
-                            </form>
                         </v-card>
                     </v-dialog>
                 </v-toolbar>
@@ -205,28 +116,13 @@ const remove = async (item) => {
                             color="#009AA4"
                             :icon="'mdi-account-edit'"
                             variant="tonal"
-                            @click="openFormEdit(item)"
+                            @click="verDetalle(item)"
                         ></v-btn>
                     </template>
                 </v-tooltip>
-
-                <v-tooltip text="Eliminar" location="top">
-                    <template v-slot:activator="{ props }">
-                        <v-btn
-                            v-bind="props"
-                            density="compact"
-                            class="mr-2 ml-2"
-                            color="#009AA4"
-                            :icon="'mdi-delete'"
-                            variant="tonal"
-                            @click="remove(item)"
-                        ></v-btn>
-                    </template>
-                </v-tooltip>
+                
             </template>
-            <template v-slot:no-data>
-                <v-btn variant="tonal" @click="handleShow"> Iniciar </v-btn>
-            </template>
+           
         </v-data-table>
     </v-container>
 </template>

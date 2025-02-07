@@ -180,7 +180,6 @@ const state = reactive({
         unidad: null,
     },
     dialog: false,
-    dialogActivationAccount: false,
     editedIndex: -1,
     formCrear: "Nuevo Paciente",
     formEdit: "Editar datos del Paciente",
@@ -266,18 +265,8 @@ function storeItems() {
 }
 
 const create = async () => {
-await handleStoreItem(state, "create");
-    close();
-    state.dialogActivationAccount = true;
-};
-
-const closeCrear = () => {
-    state.dialogDelete = false;
-};
-
-const activacionConfirmed = async () => {
-    console.log("Activacion");
-    closeDelete();
+    await handleStoreItem(state, "create");
+    closeForm(state);
 };
 
 const update = async () => {
@@ -1098,7 +1087,7 @@ const remove = async (item) => {
         </v-sheet>
     </v-container>
             <ConfirmDialog
-                v-model="state.dialogActivationAccount"
+                v-model="state.dialogDelete"
                 question="¿Está seguro que desea eliminar este paciente?"
                 description="Esta acción no se puede deshacer y eliminará permanentemente el registro del paciente."
                 @confirm="deleteItemConfirmed"

@@ -389,10 +389,10 @@ const update = async () => {
                             </v-col>
                             <v-col cols="6" sm="4" md="2">
                                 <v-select
-                                    :items="state.list.pueblo"
+                                    :items="state.list.pueblo_originario"
                                     item-title="descripcion"
                                     item-value="id"
-                                    v-model="state.frmItem.pueblo"
+                                    v-model="state.frmItem.pueblo_originario"
                                     label="Pueblo originario"
                                     variant="underlined"
                                 ></v-select>

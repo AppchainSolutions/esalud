@@ -2,11 +2,11 @@
 
 namespace App\Repository;
 
-use App\Models\Pueblo;
+use App\Models\PuebloOriginario;
 
 class PuebloRepository extends Repository
 {
-    public function __construct(Pueblo $model)
+    public function __construct(PuebloOriginario $model)
     {
         $this->model = $model;
     }

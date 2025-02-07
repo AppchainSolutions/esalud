@@ -59,40 +59,40 @@ abstract class Repository implements RepositoryInterface
     }
 
     public function update(Request $request)
-{
-    // Extract the 'id' from the incoming request data
-    $id = $request->input('data.id');
-    Log::info('Attempting to update model with ID: ' . $id);
+    {
+        // Extract the 'id' from the incoming request data
+        $id = $request->input('data.id');
+        Log::info('Attempting to update model with ID: ' . $id);
 
-    // Retrieve the data to update and log it
-    $dataToUpdate = $request->input('data');
-    Log::info('Incoming data for update: ', $dataToUpdate);
+        // Retrieve the data to update and log it
+        $dataToUpdate = $request->input('data');
+        Log::info('Incoming data for update: ', $dataToUpdate);
 
-    // Remove the 'id' key to prepare for updating the model
-    unset($dataToUpdate['id']);
-    
-    // Log the data that will be used for the update
-    Log::info('Data prepared for update: ', $dataToUpdate);
+        // Remove the 'id' key to prepare for updating the model
+        unset($dataToUpdate['id']);
 
-    try {
-        // Retrieve the model instance or fail if not found
-        $model = $this->model->findOrFail($id);
-        
-        // Update the model instance with the new data
-        $model->fill($dataToUpdate);
-        $model->save();
+        // Log the data that will be used for the update
+        Log::info('Data prepared for update: ', $dataToUpdate);
 
-        Log::info('Model updated successfully with ID: ' . $id);
-        
-        return response()->json(['message' => 'Model updated successfully.'], 200);
-    } catch (ModelNotFoundException $e) {
-        Log::error('Model not found for ID: ' . $id);
-        return response()->json(['error' => 'Model not found.'], 404);
-    } catch (\Exception $e) {
-        Log::error('Error updating model with ID: ' . $id . '. Error: ' . $e->getMessage());
-        return response()->json(['error' => 'An error occurred while updating the model.'], 500);
+        try {
+            // Retrieve the model instance or fail if not found
+            $model = $this->model->findOrFail($id);
+
+            // Update the model instance with the new data
+            $model->fill($dataToUpdate);
+            $model->save();
+
+            Log::info('Model updated successfully with ID: ' . $id);
+
+            return response()->json(['message' => 'Model updated successfully.'], 200);
+        } catch (ModelNotFoundException $e) {
+            Log::error('Model not found for ID: ' . $id);
+            return response()->json(['error' => 'Model not found.'], 404);
+        } catch (\Exception $e) {
+            Log::error('Error updating model with ID: ' . $id . '. Error: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred while updating the model.'], 500);
+        }
     }
-}
 
     public function show(Request $request)
     {
@@ -100,7 +100,7 @@ abstract class Repository implements RepositoryInterface
             $filters = $request->input('data', []); // Usar un array vacío por defecto
             Log::info($request);
             $query = $this->model->query()
-            ->select("*");
+                ->select("*");
             return Tools::filterData($filters, $query);
         } catch (QueryException $e) {
             return response()->json([

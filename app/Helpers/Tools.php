@@ -29,6 +29,7 @@ class Tools
 
         try {
             foreach ($filters as $field => $criteria) {
+                Log::info($criteria);
                 switch ($field) {
                     case 'fecha':
                         self::applyDateFilter($query, $field, $criteria);

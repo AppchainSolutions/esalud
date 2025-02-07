@@ -5,7 +5,6 @@ import {
     handleRemoveItem,
     handleShowItem,
     handleStoreItem,
-    handleEditItem,
     closeForm,
     openToCreate,
     openToEdit,
@@ -15,24 +14,24 @@ const store = useDataStore();
 const state = reactive({
     headers: [
         {
-            title: "Cirugía",
+            title: "Parentesco",
             align: "start",
             sortable: true,
-            key: "cirugia",
+            key: "parentesco",
         },
-        { title: "Comentario", key: "comentario", sortable: false },
+        { title: "Patologia", key: "patologia", sortable: false },
         { title: "Acciones", align: "center", key: "actions" },
     ],
 
     editedItem: {
         paciente_id: null,
-        cirugia: null,
+        parentesco: null,
         comentario: null,
     },
 
     defaultItem: {
         paciente_id: null,
-        cirugia: null,
+        parentesco: null,
         comentario: null,
     },
     searchQuery: {
@@ -44,14 +43,14 @@ const state = reactive({
     list: [],
     loading: false,
     valid: null,
-    formTitle: "Cirugías",
-    formCrear: "Nueva Cirugía",
-    formEdit: "Editar Cirugía",
-    urlSearch: "cirugia/search",
-    urlShow: "cirugia/show",
-    urlUpdate: "cirugia/update",
-    urlDelete: "cirugia/delete",
-    urlStore: "cirugia",
+    formTitle: "Antecedentes Familiares",
+    formCrear: "Nueva Antecedentes Familiares",
+    formEdit: "Editar Antecedentes Familiares",
+    urlSearch: "familiar/search",
+    urlShow: "familiar/show",
+    urlUpdate: "familiar/update",
+    urlDelete: "familiar/delete",
+    urlStore: "familiar",
 });
 
 //**********\\\\  COMPUTE PROPERTIES ////*************/
@@ -100,10 +99,10 @@ const remove = async (item) => {
 
 <template>
     <v-container>
-        <v-data-table :headers="state.headers" :items="state.tableItems">
+        <v-data-table :headers="state.headers" :items="state.tableItems" style="min-width: 850px"       >
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Cirugías</v-toolbar-title>
+                    <v-toolbar-title>{{ state.formTitle }}</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="state.dialog">
@@ -141,9 +140,9 @@ const remove = async (item) => {
                                             <v-col>
                                                 <v-text-field
                                                     v-model="
-                                                        state.editedItem.cirugia
+                                                        state.editedItem.parentesco
                                                     "
-                                                    label="cirugia"
+                                                    label="Parentesco"
                                                     type="text"
                                                     variant="underlined"
                                                 ></v-text-field>
@@ -151,7 +150,7 @@ const remove = async (item) => {
                                                 <v-text-field
                                                     v-model="
                                                         state.editedItem
-                                                            .fecha_cirugia
+                                                            .fecha_parentesco
                                                     "
                                                     label="Fecha de la cirugía (escriba una fecha aproximada)"
                                                     type="text"
@@ -161,9 +160,9 @@ const remove = async (item) => {
                                                 <v-text-field
                                                     v-model="
                                                         state.editedItem
-                                                            .comentario
+                                                            .patologia
                                                     "
-                                                    label="comentario"
+                                                    label="Patologia"
                                                     type="text"
                                                     variant="underlined"
                                                 ></v-text-field>

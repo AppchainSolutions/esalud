@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Hash;
 use App\Events\PacienteActivado;
 use App\Models\Paciente;
 use App\Models\RegistroActividad;
 use App\Models\User;
 use App\Services\PacienteActivacionService;
-use Illuminate\Support\Facades\Hash;
+use App\Exceptions\TokenActivacionInvalidoException;
 use Illuminate\Support\Facades\Artisan;
 use Database\Seeders\PacienteActivacionSeeder;
 
@@ -81,15 +82,22 @@ it('activa una cuenta de paciente', function () {
 });
 
 it('lanza una excepción para token de activación expirado', function () {
+    $tokenPlano = 'token_antiguo';
+    $tokenHash = Hash::make($tokenPlano);
+
     $paciente = Paciente::factory()->create([
-        'token_activacion' => 'token_antiguo',
+        'token_activacion' => $tokenHash,
         'token_activacion_expira' => now()->subHours(25)
     ]);
 
     $activacionService = new PacienteActivacionService();
 
-    expect(fn() => $activacionService->validarToken('token_invalido'))
-        ->toThrow(\Exception::class, 'Token de activación inválido o expirado');
+    try {
+        $activacionService->validarToken($tokenPlano);
+        $this->fail('No se lanzó la excepción esperada');
+    } catch (TokenActivacionInvalidoException $e) {
+        $this->assertEquals('Token de activación inválido o expirado', $e->getMessage());
+    }
 });
 
 it('registra la actividad de activación de cuenta', function () {

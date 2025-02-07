@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use App\Events\PacienteActivado;
+use App\Exceptions\TokenActivacionInvalidoException;
 
 class PacienteActivacionService
 {
@@ -72,21 +73,23 @@ class PacienteActivacionService
      * 
      * @param string $tokenPlano
      * @return Paciente
+     * @throws TokenActivacionInvalidoException
      */
     public function validarToken(string $tokenPlano): Paciente
     {
-        // Buscar paciente con token vigente
-        $paciente = Paciente::where(function ($query) use ($tokenPlano) {
-            $query->whereNotNull('token_activacion')
-                ->whereNotNull('token_activacion_expira')
-                ->where('token_activacion_expira', '>', now());
-        })->get()->first(function ($paciente) use ($tokenPlano) {
-            // Verificar hash del token
-            return Hash::check($tokenPlano, $paciente->token_activacion);
-        });
+        $paciente = Paciente::where('token_activacion_expira', '>', now())
+            ->whereNotNull('token_activacion')
+            ->get()
+            ->first(function ($paciente) use ($tokenPlano) {
+                try {
+                    return Hash::check($tokenPlano, $paciente->token_activacion);
+                } catch (\Exception $e) {
+                    return false;
+                }
+            });
 
         if (!$paciente) {
-            throw new \Exception('Token de activación inválido o expirado');
+            throw new TokenActivacionInvalidoException('Token de activación inválido o expirado');
         }
 
         return $paciente;

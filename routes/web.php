@@ -135,9 +135,9 @@ Route::get('/paciente/activar/{token}', [App\Http\Controllers\Paciente\Activacio
 Route::post('/paciente/activar', [App\Http\Controllers\Paciente\ActivacionController::class, 'activar'])
     ->name('paciente.activar');
 
-// Ruta para activación de cuenta de paciente
+// Rutas de activación de cuenta de paciente sin autenticación
 Route::get('/activar-cuenta/{token}', [App\Http\Controllers\Paciente\ActivacionController::class, 'activar'])
     ->name('paciente.activar');
 
-Route::post('/activar-cuenta/{token}', [App\Http\Controllers\Paciente\ActivacionController::class, 'completarActivacion'])
+Route::post('/activar-cuenta', [App\Http\Controllers\Paciente\ActivacionController::class, 'completarActivacion'])
     ->name('paciente.completar-activacion');

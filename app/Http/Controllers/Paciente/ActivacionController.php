@@ -26,7 +26,22 @@ class ActivacionController extends Controller
         ]);
     }
 
-    public function activar(Request $request)
+    public function activar($token)
+    {
+        // Buscar paciente con el token
+        $paciente = Paciente::where('token_activacion', $token)
+            ->whereNull('user_id')
+            ->firstOrFail();
+
+        // Mostrar formulario de activación sin autenticación
+        return Inertia::render('Paciente/Activacion', [
+            'token' => $token,
+            'paciente' => $paciente,
+            'mostrarFormulario' => true
+        ]);
+    }
+
+    public function completarActivacion(Request $request)
     {
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
@@ -56,7 +71,8 @@ class ActivacionController extends Controller
         // Vincular usuario con paciente
         $paciente->update([
             'user_id' => $user->id,
-            'token_activacion' => null  // Limpiar token de activación
+            'token_activacion' => null,  // Limpiar token de activación
+            'cuenta_activada' => true
         ]);
 
         // Iniciar sesión

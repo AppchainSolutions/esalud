@@ -1,25 +1,13 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Activación de Cuenta de Paciente', () => {
-  let pacienteEmail: string;
+  const pacienteEmail = 'paciente_prueba@example.com';
   let activationToken: string;
 
   test.beforeEach(async ({ request }) => {
     // Resetear base de datos
     const resetResponse = await request.get('/api/pruebas/reset-database');
     expect(resetResponse.ok()).toBeTruthy();
-
-    // Crear paciente de prueba
-    const pacienteResponse = await request.post('/api/pruebas/pacientes/crear', {
-      data: {
-        nombre: 'Juan',
-        apellidos: 'Pérez',
-        email: 'juan.perez.test@example.com'
-      }
-    });
-    expect(pacienteResponse.ok()).toBeTruthy();
-    const pacienteData = await pacienteResponse.json();
-    pacienteEmail = pacienteData.email;
 
     // Generar token de activación
     const tokenResponse = await request.get('/api/pruebas/pacientes/generar-token', {

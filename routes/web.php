@@ -13,6 +13,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LicenciaMedicaController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PacienteActivacionController;
 use App\Http\Controllers\VacunaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -113,6 +114,14 @@ Route::middleware(['auth', 'acceso.paciente'])->prefix('paciente')->group(functi
 });
 
 // Rutas de Activación de Pacientes
+Route::get('/activar/{token}', [PacienteActivacionController::class, 'mostrarFormulario'])
+    ->name('paciente.activacion')
+    ->middleware('guest');
+
+Route::post('/activar', [PacienteActivacionController::class, 'activarCuenta'])
+    ->name('paciente.activar')
+    ->middleware('guest');
+
 Route::get('/paciente/activar/{token}', [App\Http\Controllers\Paciente\ActivacionController::class, 'mostrarFormularioActivacion'])
     ->name('paciente.activar.formulario');
 

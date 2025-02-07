@@ -11,21 +11,26 @@ class Tools
     /**
      * Filters data based on provided criteria.
      *
-     * This function applies various filters to a database query based on the provided filter array.
-     * It handles special cases for date and full-text search, and applies default filtering for other fields.
+     * Esta función aplica filtros a una consulta de base de datos con soporte especial para campos booleanos.
+     * Maneja diferentes formatos de valores booleanos para garantizar compatibilidad entre bases de datos.
      *
-     * @param array $filters An associative array of filters where keys are field names and values are filter criteria.
-     * @param object $query The query object to apply the filters to.
+     * Ejemplos de uso de filtros booleanos:
+     * - ['activo' => true]     // Booleano PHP
+     * - ['activo' => 'true']   // Cadena 'true'
+     * - ['activo' => 1]        // Entero 1
+     * - ['activo' => '1']      // Cadena '1'
      *
-     * @return mixed Returns the filtered query results as a collection if successful,
-     *               or a string error message if an exception occurs during filtering.
+     * @param array $filters Un array asociativo de filtros donde las claves son nombres de campos y los valores son criterios de filtrado.
+     * @param object $query El objeto de consulta al que se aplicarán los filtros.
+     *
+     * @return mixed Devuelve los resultados de la consulta filtrada como una colección.
+     * @throws QueryException Si ocurre un error durante el filtrado.
      */
     public static function filterData(array $filters, object $query)
     {
         if (empty($filters)) {
             return $query->all()->get();
         }
-
 
         try {
             foreach ($filters as $field => $criteria) {
@@ -38,7 +43,13 @@ class Tools
                         self::applyExposicionFilter($query, $field, $criteria);
                         break;
                     default:
-                        $query->where($field, $criteria);
+                        // Manejo especial para campos booleanos
+                        if (is_bool($criteria) || in_array(strtolower($criteria), ['true', 'false', '1', '0'])) {
+                            $boolValue = filter_var($criteria, FILTER_VALIDATE_BOOLEAN);
+                            $query->where($field, $boolValue ? 1 : 0);
+                        } else {
+                            $query->where($field, $criteria);
+                        }
                         break;
                 }
             }

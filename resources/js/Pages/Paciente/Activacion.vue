@@ -121,6 +121,7 @@
 <script setup>
 import { ref, computed, reactive } from 'vue'
 import { useForm } from '@inertiajs/vue3'
+import { useDialog, useToast } from 'vuetify'
 
 const props = defineProps({
   token: {
@@ -221,24 +222,23 @@ const submitActivacion = () => {
   form.post(route('paciente.completar-activacion'), {
     onSuccess: (page) => {
       // Mostrar diálogo de confirmación antes de redirigir
-      $q.dialog({
+      const dialog = useDialog()
+      dialog.confirm({
         title: 'Cuenta Activada',
         message: 'Su cuenta ha sido activada exitosamente. Será redirigido a la página de inicio de sesión.',
+        confirmText: 'Iniciar Sesión',
+        cancelText: 'Cancelar',
         persistent: true,
-        ok: {
-          label: 'Iniciar Sesión',
-          color: 'primary'
+        onConfirm: () => {
+          // Redirigir al login
+          window.location.href = route('login')
         }
-      }).onOk(() => {
-        // Redirigir al login
-        window.location.href = route('login')
       })
     },
     onError: (errors) => {
       // Manejar errores de activación
-      $q.notify({
-        type: 'negative',
-        message: 'Hubo un problema al activar su cuenta. Por favor, verifique los datos e intente nuevamente.',
+      const toast = useToast()
+      toast.error('Hubo un problema al activar su cuenta. Por favor, verifique los datos e intente nuevamente.', {
         position: 'top'
       })
     }

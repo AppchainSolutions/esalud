@@ -44,6 +44,12 @@
   - Test de manejo de token expirado
   - Test de bloqueo de token inválido
   - Tareas personalizadas de Cypress para pruebas de backend
+- Endpoints de prueba para Cypress
+  - Controlador `PruebasController` para gestionar pruebas
+  - Rutas de API para reset de base de datos
+  - Endpoints para crear pacientes de prueba
+  - Métodos para generar tokens de activación
+  - Simulación de verificación de correos electrónicos
 
 ### Changed
 - Implementación de pruebas de generación de token y envío de correo
@@ -52,10 +58,14 @@
   - Comprueba que el correo de activación se envía exitosamente
 - Estructura de pruebas de activación de pacientes
 - Mejora en la gestión de tokens de activación
+- Estructura de soporte para pruebas end-to-end
+- Mejora en la configuración de pruebas de Cypress
 
 ### Testing
 - Añadidos tests unitarios para:
   - `generarTokenActivacion()`: Valida generación y almacenamiento de token
   - `enviarCorreoActivacion()`: Confirma envío de correo de activación
+- Implementación de tareas personalizadas para Cypress
+- Preparación de ambiente de testing
 
 **Fecha**: 5 de febrero de 2025

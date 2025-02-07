@@ -2,7 +2,10 @@
     "private": true,
     "scripts": {
         "build": "vite build && vite build --ssr",
-        "dev": "vite"
+        "dev": "vite",
+        "test:e2e": "playwright test",
+        "test:e2e:ui": "playwright test --ui",
+        "test:e2e:report": "playwright show-report"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
@@ -20,6 +23,7 @@
         "autoprefixer": "^10.4.7",
         "axios": "^1.6.1",
         "css-loader": "^6.8.1",
+        "cypress": "^14.0.2",
         "date-fns": "^3.3.1",
         "highcharts-vue": "^1.4.3",
         "jasmine": "^5.1.0",

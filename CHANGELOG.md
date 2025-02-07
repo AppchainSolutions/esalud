@@ -57,6 +57,12 @@
   - Scripts de inicialización de pruebas
   - Comandos personalizados de Cypress
   - Interceptores de llamadas API
+- Implementación de pruebas end-to-end con Playwright
+  - Configuración de entorno de testing
+  - Pruebas de activación de pacientes
+  - Soporte para múltiples navegadores
+  - Scripts de ejecución de pruebas
+  - Generación de reportes de pruebas
 
 ### Changed
 - Implementación de pruebas de generación de token y envío de correo
@@ -69,6 +75,8 @@
 - Mejora en la configuración de pruebas de Cypress
 - Mejora en la configuración de bases de datos para testing
 - Actualización de scripts de soporte para pruebas
+- Migración de pruebas de Cypress a Playwright
+- Mejora en la estrategia de testing end-to-end
 
 ### Testing
 - Añadidos tests unitarios para:
@@ -79,5 +87,8 @@
 - Implementación de estrategias de testing end-to-end
 - Configuración de seguridad para pruebas
 - Mejora en la gestión de estados de pruebas
+- Nuevas pruebas para flujo de activación de pacientes
+- Soporte para testing en Chrome y Firefox
+- Configuración de traza y captura de pantalla
 
 **Fecha**: 5 de febrero de 2025

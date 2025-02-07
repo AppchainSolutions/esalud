@@ -38,12 +38,20 @@
   - Verifica generación de token de 64 caracteres
   - Comprueba almacenamiento de token de activación
   - Valida establecimiento de fecha de expiración del token
+- Pruebas de Cypress para flujo de activación de pacientes
+  - Test de generación de token de activación
+  - Test de activación de cuenta con token válido
+  - Test de manejo de token expirado
+  - Test de bloqueo de token inválido
+  - Tareas personalizadas de Cypress para pruebas de backend
 
 ### Changed
 - Implementación de pruebas de generación de token y envío de correo
   - Usa paciente con email 'omar.ahumadag@gmail.com' como caso de prueba
   - Verifica que el servicio de activación genera tokens correctamente
   - Comprueba que el correo de activación se envía exitosamente
+- Estructura de pruebas de activación de pacientes
+- Mejora en la gestión de tokens de activación
 
 ### Testing
 - Añadidos tests unitarios para:

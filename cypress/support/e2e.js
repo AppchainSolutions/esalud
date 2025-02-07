@@ -18,3 +18,6 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Importar tareas personalizadas
+import './tasks';

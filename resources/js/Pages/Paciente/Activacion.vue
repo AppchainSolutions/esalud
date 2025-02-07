@@ -21,7 +21,29 @@
               label="Contraseña"
               required
               @input="validatePassword"
-            ></v-text-field>
+            >
+              <template v-slot:append>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon v-bind="attrs" v-on="on">
+                      mdi-help-circle
+                    </v-icon>
+                  </template>
+                  <div>
+                    <strong>Requisitos de Contraseña:</strong>
+                    <ul class="pl-4">
+                      <li>Mínimo 12 caracteres</li>
+                      <li>Incluir mayúsculas y minúsculas</li>
+                      <li>Contener números</li>
+                      <li>Usar caracteres especiales</li>
+                    </ul>
+                    <p class="mt-2 text-caption">
+                      Una contraseña fuerte protege tu información personal
+                    </p>
+                  </div>
+                </v-tooltip>
+              </template>
+            </v-text-field>
 
             <v-text-field
               v-model="form.password_confirmation"
@@ -41,14 +63,41 @@
               class="my-3"
             ></v-progress-linear>
 
-            <v-alert 
-              v-if="passwordStrength < 2" 
-              type="warning" 
+            <v-expand-transition>
+              <v-alert 
+                v-if="passwordStrength < 2" 
+                type="warning" 
+                dense 
+                outlined
+                class="mb-4"
+              >
+                {{ passwordStrengthMessage }}
+              </v-alert>
+            </v-expand-transition>
+
+            <v-list 
+              v-if="passwordStrength < 3" 
               dense 
-              outlined
+              class="py-0"
             >
-              {{ passwordStrengthMessage }}
-            </v-alert>
+              <v-list-item 
+                v-for="(requirement, index) in passwordRequirements" 
+                :key="index"
+                :color="requirement.met ? 'success' : 'error'"
+                class="px-0"
+              >
+                <v-list-item-icon class="mr-2">
+                  <v-icon :color="requirement.met ? 'success' : 'error'">
+                    {{ requirement.met ? 'mdi-check-circle' : 'mdi-close-circle' }}
+                  </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ requirement.text }}
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
 
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -69,7 +118,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 
 const props = defineProps({
@@ -93,6 +142,25 @@ const showPassword = ref(false)
 const showConfirmPassword = ref(false)
 
 const passwordStrength = ref(0)
+const passwordRequirements = reactive([
+  { 
+    text: 'Mínimo 12 caracteres', 
+    met: computed(() => form.password.length >= 12) 
+  },
+  { 
+    text: 'Incluir mayúsculas y minúsculas', 
+    met: computed(() => /[A-Z]/.test(form.password) && /[a-z]/.test(form.password)) 
+  },
+  { 
+    text: 'Contener números', 
+    met: computed(() => /[0-9]/.test(form.password)) 
+  },
+  { 
+    text: 'Usar caracteres especiales', 
+    met: computed(() => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(form.password)) 
+  }
+])
+
 const passwordStrengthMessage = computed(() => {
   switch(passwordStrength.value) {
     case 0: return 'Contraseña muy débil'

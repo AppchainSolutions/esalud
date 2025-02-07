@@ -237,10 +237,11 @@ class Paciente extends Model
 
     protected $table = 'paciente';
     protected $fillable = [
-        'user_id',
-        'actividad_economica',
+        'cuenta_activada',
         'activo',
+        'actividad_economica',
         'afp',
+        'antecedentes_familiares',
         'apellidos',
         'area',
         'cargo',
@@ -272,7 +273,6 @@ class Paciente extends Model
         'pueblo_originario',
         'religion',
         'seguro',
-        'telefono',
         'telefono1',
         'telefono2',
         'token_activacion',
@@ -284,5 +284,7 @@ class Paciente extends Model
 
     protected $casts = [
         'fecha_nacimiento' => 'date',
+        'activo' => 'boolean',
+        'cuenta_activada' => 'boolean'
     ];
 }

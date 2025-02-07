@@ -14,6 +14,7 @@ return new class extends Migration {
         Schema::create('paciente', function (Blueprint $table) {
             $table->id();
             $table->boolean('activo')->nullable()->default(true);
+            $table->boolean('cuenta_activada')->default(false);
             $table->boolean('donante')->nullable()->default(false);
             $table->boolean('protocolo_minsal')->nullable()->default(false);
             $table->date('fecha_nacimiento')->nullable();

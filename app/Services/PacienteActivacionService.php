@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PacienteActivacionMail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use App\Events\PacienteActivado;
 
@@ -24,6 +25,8 @@ class PacienteActivacionService
     {
         // Generar token único de 64 caracteres
         $token = Str::random(64);
+
+        Log::info('paciente: ' . $paciente);
 
         // Almacenar token con hash para mayor seguridad
         $paciente->update([
@@ -51,12 +54,6 @@ class PacienteActivacionService
                 new PacienteActivacionMail($paciente, $tokenPlano)
             );
 
-            // Registrar evento de envío
-            Log::info('Correo de activación enviado', [
-                'paciente_id' => $paciente->id,
-                'email' => $paciente->email
-            ]);
-
             return true;
         } catch (\Exception $e) {
             // Registrar error de envío
@@ -79,11 +76,11 @@ class PacienteActivacionService
     public function validarToken(string $tokenPlano): Paciente
     {
         // Buscar paciente con token vigente
-        $paciente = Paciente::where(function($query) use ($tokenPlano) {
+        $paciente = Paciente::where(function ($query) use ($tokenPlano) {
             $query->whereNotNull('token_activacion')
-                  ->whereNotNull('token_activacion_expira')
-                  ->where('token_activacion_expira', '>', now());
-        })->get()->first(function($paciente) use ($tokenPlano) {
+                ->whereNotNull('token_activacion_expira')
+                ->where('token_activacion_expira', '>', now());
+        })->get()->first(function ($paciente) use ($tokenPlano) {
             // Verificar hash del token
             return Hash::check($tokenPlano, $paciente->token_activacion);
         });
@@ -101,37 +98,65 @@ class PacienteActivacionService
      * @param string $tokenPlano
      * @param array $datosUsuario
      * @return User
+     * @throws \Exception
      */
     public function activarCuenta(string $tokenPlano, array $datosUsuario): User
     {
         // Validar token
         $paciente = $this->validarToken($tokenPlano);
 
-        // Validar que el paciente no tenga usuario
-        if ($paciente->user_id) {
-            throw new \Exception('La cuenta ya ha sido activada');
-        }
+        // Validar datos de usuario
+        $this->validarDatosActivacion($datosUsuario);
 
-        // Crear usuario
-        $user = User::create([
-            'name' => $paciente->nombres . ' ' . $paciente->apellidos,
+        $usuarioUpdated = User::create([
+            'name' => $paciente->nombre,
+            'lastname' => $paciente->apellidos,
             'email' => $paciente->email,
-            'username' => $paciente->email,
             'password' => Hash::make($datosUsuario['password']),
-            'rol' => 'paciente'
+            'rol' => 'paciente',
+            'activo' => true,
+            'rut' => $paciente->rut
         ]);
 
-        // Actualizar paciente
+        // Marcar paciente como activo
         $paciente->update([
-            'user_id' => $user->id,
-            'activo' => true,
+            'cuenta_activada' => true,
+            'user_id' => $usuarioUpdated->id,
             'token_activacion' => null,
             'token_activacion_expira' => null
         ]);
 
-        // Disparar evento de cuenta activada
-        event(new PacienteActivado($paciente, $user));
+        Log::info('Paciente activado', [
+            'paciente_id' => $paciente->id,
+            'activo' => $paciente->activo,
+            'user_id' => $paciente->user_id
+        ]);
 
-        return $user;
+        // Disparar evento de cuenta activada
+        event(new PacienteActivado($paciente, $usuarioUpdated));
+
+        return $usuarioUpdated;
+    }
+
+    /**
+     * Valida los datos de activación de cuenta
+     * 
+     * @param array $datosUsuario
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    private function validarDatosActivacion(array $datosUsuario)
+    {
+        Validator::make($datosUsuario, [
+            'password' => [
+                'required', 
+                'confirmed', 
+                'min:8', 
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/'
+            ]
+        ], [
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.regex' => 'La contraseña debe contener al menos una mayúscula, una minúscula y un número.',
+            'password.confirmed' => 'La confirmación de contraseña no coincide.'
+        ])->validate();
     }
 }

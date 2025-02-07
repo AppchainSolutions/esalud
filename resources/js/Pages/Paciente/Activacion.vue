@@ -1,83 +1,71 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg">
-      <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Activación de Cuenta
-        </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
-          Configura tu contraseña para acceder a tu cuenta
-        </p>
-      </div>
-      
-      <form @submit.prevent="submitActivacion" class="mt-8 space-y-6">
-        <input type="hidden" name="token" :value="token" />
-        
-        <div class="rounded-md shadow-sm -space-y-px">
-          <div>
-            <label for="password" class="sr-only">Contraseña</label>
-            <input 
-              id="password" 
-              name="password" 
-              type="password" 
-              required 
+  <v-container fluid fill-height class="login-container">
+    <v-row align="center" justify="center">
+      <v-col cols="12" sm="8" md="4">
+        <v-card elevation="12" class="pa-6">
+          <v-card-title class="text-center">
+            <h2 class="text-h4 font-weight-bold primary--text">Activación de Cuenta</h2>
+          </v-card-title>
+          
+          <v-card-subtitle class="text-center mb-4">
+            Configura tu contraseña para acceder a tu cuenta
+          </v-card-subtitle>
+
+          <v-form @submit.prevent="submitActivacion" ref="activacionForm">
+            <v-text-field
               v-model="form.password"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPassword ? 'text' : 'password'"
+              @click:append="showPassword = !showPassword"
+              :rules="passwordRules"
+              label="Contraseña"
+              required
               @input="validatePassword"
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Contraseña"
-            />
-          </div>
-          <div>
-            <label for="password_confirmation" class="sr-only">Confirmar Contraseña</label>
-            <input 
-              id="password_confirmation" 
-              name="password_confirmation" 
-              type="password" 
-              required 
+            ></v-text-field>
+
+            <v-text-field
               v-model="form.password_confirmation"
+              :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showConfirmPassword ? 'text' : 'password'"
+              @click:append="showConfirmPassword = !showConfirmPassword"
+              :rules="confirmPasswordRules"
+              label="Confirmar Contraseña"
+              required
               @input="validatePassword"
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Confirmar Contraseña"
-            />
-          </div>
-        </div>
+            ></v-text-field>
 
-        <div v-if="passwordStrength" class="mt-2">
-          <div class="h-2 w-full bg-gray-200 rounded-full">
-            <div 
-              :class="{
-                'bg-red-500': passwordStrength < 2,
-                'bg-yellow-500': passwordStrength === 2,
-                'bg-green-500': passwordStrength === 3
-              }"
-              :style="`width: ${passwordStrength * 33.33}%`" 
-              class="h-2 rounded-full transition-all duration-300"
-            ></div>
-          </div>
-          <p 
-            :class="{
-              'text-red-500': passwordStrength < 2,
-              'text-yellow-500': passwordStrength === 2,
-              'text-green-500': passwordStrength === 3
-            }"
-            class="text-sm mt-1"
-          >
-            {{ passwordStrengthMessage }}
-          </p>
-        </div>
+            <v-progress-linear
+              :value="passwordStrength * 33.33"
+              :color="passwordStrengthColor"
+              height="7"
+              class="my-3"
+            ></v-progress-linear>
 
-        <div>
-          <button 
-            type="submit" 
-            :disabled="!isFormValid"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-          >
-            Activar Cuenta
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
+            <v-alert 
+              v-if="passwordStrength < 2" 
+              type="warning" 
+              dense 
+              outlined
+            >
+              {{ passwordStrengthMessage }}
+            </v-alert>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn 
+                type="submit" 
+                color="primary" 
+                :disabled="!isFormValid"
+                block
+              >
+                Activar Cuenta
+              </v-btn>
+            </v-card-actions>
+          </v-form>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup>
@@ -101,6 +89,9 @@ const form = useForm({
   password_confirmation: ''
 })
 
+const showPassword = ref(false)
+const showConfirmPassword = ref(false)
+
 const passwordStrength = ref(0)
 const passwordStrengthMessage = computed(() => {
   switch(passwordStrength.value) {
@@ -109,6 +100,16 @@ const passwordStrengthMessage = computed(() => {
     case 2: return 'Contraseña moderada'
     case 3: return 'Contraseña fuerte'
     default: return ''
+  }
+})
+
+const passwordStrengthColor = computed(() => {
+  switch(passwordStrength.value) {
+    case 0: return 'error'
+    case 1: return 'warning'
+    case 2: return 'warning'
+    case 3: return 'success'
+    default: return 'error'
   }
 })
 
@@ -131,6 +132,16 @@ const validatePassword = () => {
   passwordStrength.value = strength
 }
 
+const passwordRules = [
+  v => !!v || 'La contraseña es requerida',
+  v => v.length >= 12 || 'La contraseña debe tener al menos 12 caracteres',
+]
+
+const confirmPasswordRules = [
+  v => !!v || 'Confirmar contraseña es requerido',
+  v => v === form.password || 'Las contraseñas no coinciden',
+]
+
 const isFormValid = computed(() => {
   return form.password === form.password_confirmation && 
          form.password.length >= 12 && 
@@ -138,7 +149,7 @@ const isFormValid = computed(() => {
 })
 
 const submitActivacion = () => {
-  form.post(route('paciente.activar'), {
+  form.post(route('paciente.completar-activacion'), {
     onSuccess: () => {
       // Redirigir o mostrar mensaje de éxito
     },
@@ -150,5 +161,8 @@ const submitActivacion = () => {
 </script>
 
 <style scoped>
-/* Estilos adicionales si son necesarios */
+.login-container {
+  background-color: #f5f5f5;
+  height: 100vh;
+}
 </style>

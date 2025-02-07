@@ -68,6 +68,11 @@
   - Validación de complejidad de contraseña
   - Medidor de fortaleza de contraseña
   - Rutas para activación de cuenta
+- Implementación de pruebas E2E para activación de paciente
+  - Escenarios de activación con contraseña válida
+  - Pruebas de validación de complejidad de contraseña
+  - Manejo de tokens expirados
+  - Validación de formulario de activación
 
 ### Removed
 - Eliminación completa de Cypress
@@ -92,6 +97,8 @@
 - Actualización de estrategia de testing
 - Mejora en la seguridad de creación de contraseñas
 - Actualización de componentes de frontend para activación
+- Actualización de estrategia de testing E2E
+- Mejora en cobertura de pruebas para flujo de activación
 
 ### Security
 - Implementación de validaciones de contraseña

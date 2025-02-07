@@ -1,71 +1,108 @@
 import { test, expect } from '@playwright/test';
-import axios from 'axios';
 
-test.describe('Flujo de Activación de Paciente', () => {
+test.describe('Activación de Cuenta de Paciente', () => {
   let pacienteEmail: string;
   let activationToken: string;
 
-  // Antes de cada prueba, preparar el entorno
-  test.beforeEach(async () => {
+  test.beforeEach(async ({ request }) => {
     // Resetear base de datos
-    await axios.post('http://localhost:8000/api/pruebas/reset-database');
+    const resetResponse = await request.get('/api/pruebas/reset-database');
+    expect(resetResponse.ok()).toBeTruthy();
 
-    // Generar paciente de prueba
-    const pacienteResponse = await axios.post('http://localhost:8000/api/pruebas/pacientes/crear', {
-      nombre: 'Paciente',
-      apellidos: 'Prueba',
-      email: 'paciente_prueba@example.com'
+    // Crear paciente de prueba
+    const pacienteResponse = await request.post('/api/pruebas/pacientes/crear', {
+      data: {
+        nombre: 'Juan',
+        apellidos: 'Pérez',
+        email: 'juan.perez.test@example.com'
+      }
     });
+    expect(pacienteResponse.ok()).toBeTruthy();
+    const pacienteData = await pacienteResponse.json();
+    pacienteEmail = pacienteData.email;
 
-    pacienteEmail = pacienteResponse.data.email;
-  });
-
-  test('Generar y validar token de activación', async ({ page }) => {
     // Generar token de activación
-    const tokenResponse = await axios.post('http://localhost:8000/api/pruebas/pacientes/generar-token', {
-      email: pacienteEmail
+    const tokenResponse = await request.get('/api/pruebas/pacientes/generar-token', {
+      params: { email: pacienteEmail }
     });
-
-    activationToken = tokenResponse.data.token;
-
-    // Verificar que el token se generó correctamente
-    expect(activationToken).toBeTruthy();
-    expect(activationToken.length).toBeGreaterThan(10);
+    expect(tokenResponse.ok()).toBeTruthy();
+    const tokenData = await tokenResponse.json();
+    activationToken = tokenData.token;
   });
 
-  test('Activación de cuenta con token válido', async ({ page }) => {
-    // Generar token de activación
-    const tokenResponse = await axios.post('http://localhost:8000/api/pruebas/pacientes/generar-token', {
-      email: pacienteEmail
-    });
+  test('Activación de cuenta con contraseña válida', async ({ page }) => {
+    // Navegar al formulario de activación
+    await page.goto(`/activar/${activationToken}`);
 
-    activationToken = tokenResponse.data.token;
+    // Verificar que el formulario está presente
+    await expect(page.getByText('Activación de Cuenta')).toBeVisible();
 
-    // Navegar a la página de activación
-    await page.goto(`http://localhost:8000/activar/${activationToken}`);
+    // Ingresar contraseña
+    const passwordInput = page.getByPlaceholder('Contraseña');
+    const confirmPasswordInput = page.getByPlaceholder('Confirmar Contraseña');
+    const activarButton = page.getByRole('button', { name: 'Activar Cuenta' });
 
-    // Llenar formulario de activación
-    await page.fill('input[name="password"]', 'P@ssw0rd2025!Seguro');
-    await page.fill('input[name="password_confirmation"]', 'P@ssw0rd2025!Seguro');
-    await page.click('button[type="submit"]');
+    // Contraseña débil (debe desactivar botón)
+    await passwordInput.fill('short');
+    await confirmPasswordInput.fill('short');
+    await expect(activarButton).toBeDisabled();
 
-    // Verificar redirección a login
-    await expect(page).toHaveURL(/login/);
+    // Contraseña moderada (debe activar botón)
+    const validPassword = 'P@ssw0rd2024!Test';
+    await passwordInput.fill(validPassword);
+    await confirmPasswordInput.fill(validPassword);
+    await expect(activarButton).toBeEnabled();
+
+    // Enviar formulario
+    await activarButton.click();
+
+    // Verificar redireccionamiento al dashboard
+    await expect(page).toHaveURL(/dashboard/);
+    await expect(page.getByText('Cuenta activada exitosamente')).toBeVisible();
   });
 
-  test('Manejo de token expirado', async ({ page }) => {
+  test('Activación de cuenta con contraseña inválida', async ({ page }) => {
+    // Navegar al formulario de activación
+    await page.goto(`/activar/${activationToken}`);
+
+    // Verificar que el formulario está presente
+    await expect(page.getByText('Activación de Cuenta')).toBeVisible();
+
+    // Escenarios de contraseña inválida
+    const testCases = [
+      { password: 'short', confirm: 'short', description: 'Contraseña muy corta' },
+      { password: 'onlylowercase', confirm: 'onlylowercase', description: 'Sin mayúsculas ni números' },
+      { password: 'ONLYUPPERCASE', confirm: 'ONLYUPPERCASE', description: 'Sin minúsculas ni números' },
+      { password: 'NoSpecialChars123', confirm: 'NoSpecialChars123', description: 'Sin caracteres especiales' },
+      { password: 'Diff3rentPass!', confirm: 'Diff3rentPass@', description: 'Contraseñas no coinciden' }
+    ];
+
+    for (const testCase of testCases) {
+      const passwordInput = page.getByPlaceholder('Contraseña');
+      const confirmPasswordInput = page.getByPlaceholder('Confirmar Contraseña');
+      const activarButton = page.getByRole('button', { name: 'Activar Cuenta' });
+
+      await passwordInput.fill(testCase.password);
+      await confirmPasswordInput.fill(testCase.confirm);
+
+      // Verificar que el botón está deshabilitado
+      await expect(activarButton).toBeDisabled();
+    }
+  });
+
+  test('Intento de activación con token expirado', async ({ page, request }) => {
     // Generar token expirado
-    const tokenResponse = await axios.post('http://localhost:8000/api/pruebas/pacientes/generar-token-expirado', {
-      email: pacienteEmail
+    const expiredTokenResponse = await request.get('/api/pruebas/pacientes/generar-token-expirado', {
+      params: { email: pacienteEmail }
     });
+    expect(expiredTokenResponse.ok()).toBeTruthy();
+    const expiredTokenData = await expiredTokenResponse.json();
+    const expiredToken = expiredTokenData.token;
 
-    activationToken = tokenResponse.data.token;
-
-    // Navegar a la página de activación
-    await page.goto(`http://localhost:8000/activar/${activationToken}`);
+    // Navegar al formulario de activación con token expirado
+    await page.goto(`/activar/${expiredToken}`);
 
     // Verificar mensaje de error
-    const errorMessage = await page.textContent('.error-message');
-    expect(errorMessage).toContain('Token expirado');
+    await expect(page.getByText('El enlace de activación no es válido o ha expirado')).toBeVisible();
   });
 });

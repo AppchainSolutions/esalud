@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Paciente;
 use App\Services\PacienteActivacionService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PruebasController extends Controller
 {
-    protected $activacionService;
+    protected $pacienteActivacionService;
 
-    public function __construct(PacienteActivacionService $activacionService)
+    public function __construct(PacienteActivacionService $pacienteActivacionService)
     {
-        $this->activacionService = $activacionService;
+        $this->pacienteActivacionService = $pacienteActivacionService;
     }
 
     /**
@@ -22,105 +23,111 @@ class PruebasController extends Controller
      */
     public function resetDatabase()
     {
-        if (app()->environment('testing')) {
-            // Limpiar tablas
-            \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            \DB::table('paciente')->truncate();
-            \DB::table('users')->truncate();
-            \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-            return response()->json(['status' => 'Database reset successfully']);
+        if (app()->environment(['testing', 'local'])) {
+            Artisan::call('migrate:fresh');
+            Artisan::call('db:seed', ['--class' => 'PruebasPacienteSeeder']);
+            
+            return response()->json([
+                'status' => 'success', 
+                'message' => 'Base de datos reseteada'
+            ]);
         }
 
-        return response()->json(['error' => 'Not allowed in this environment'], 403);
+        return response()->json([
+            'status' => 'error', 
+            'message' => 'Acción no permitida en este entorno'
+        ], 403);
     }
 
     /**
-     * Crear paciente para pruebas
+     * Crear paciente de prueba
      */
-    public function crearPacientePrueba(Request $request)
+    public function crearPaciente(Request $request)
     {
         $paciente = Paciente::create([
-            'nombre' => $request->input('nombre', 'Paciente de Prueba'),
+            'nombre' => $request->input('nombre', 'Paciente'),
             'apellidos' => $request->input('apellidos', 'Prueba'),
             'email' => $request->input('email', 'paciente_prueba@example.com'),
-            'rut' => $request->input('rut', '11.111.111-1'),
-            'activo' => false,
-            'cuenta_activada' => false
+            'estado' => 'pendiente_activacion'
         ]);
 
-        return response()->json($paciente);
+        return response()->json([
+            'paciente_id' => $paciente->id,
+            'email' => $paciente->email
+        ]);
     }
 
     /**
      * Generar token de activación para pruebas
      */
-    public function generarTokenActivacion(Request $request)
+    public function generarToken(Request $request)
     {
-        $paciente = Paciente::where('email', $request->input('email'))->first();
+        $email = $request->input('email');
+        $paciente = Paciente::where('email', $email)->firstOrFail();
 
-        if (!$paciente) {
-            return response()->json(['error' => 'Paciente no encontrado'], 404);
-        }
-
-        $token = $this->activacionService->generarTokenActivacion($paciente);
+        $token = $this->pacienteActivacionService->generarTokenActivacion($paciente);
 
         return response()->json([
             'token' => $token,
-            'paciente_id' => $paciente->id
+            'email' => $paciente->email
         ]);
     }
 
     /**
      * Generar token de activación expirado para pruebas
      */
-    public function generarTokenActivacionExpirado(Request $request)
+    public function generarTokenExpirado(Request $request)
     {
-        $paciente = Paciente::where('email', $request->input('email'))->first();
+        $email = $request->input('email');
+        $paciente = Paciente::where('email', $email)->firstOrFail();
 
-        if (!$paciente) {
-            return response()->json(['error' => 'Paciente no encontrado'], 404);
-        }
-
-        $token = Str::random(64);
-        $paciente->update([
-            'token_activacion' => Hash::make($token),
-            'token_activacion_expira' => now()->subHours(25)
-        ]);
+        // Generar token con fecha de expiración en el pasado
+        $paciente->token_activacion = Str::random(60);
+        $paciente->token_activacion_expira = now()->subHours(2);
+        $paciente->save();
 
         return response()->json([
-            'token' => $token,
-            'paciente_id' => $paciente->id
+            'token' => $paciente->token_activacion,
+            'email' => $paciente->email
         ]);
     }
 
     /**
-     * Verificar correo electrónico para pruebas
+     * Ejecutar un seeder específico
      */
-    public function verificarCorreo(Request $request)
+    public function ejecutarSeeder($nombreSeeder)
     {
-        // Simular verificación de correo para pruebas
-        // En un escenario real, esto sería más complejo
-        $correos = [
-            'paciente_prueba@example.com' => [
-                'subject' => 'Activación de Cuenta',
-                'body' => 'Su token de activación es: TOKEN_PRUEBA'
-            ]
-        ];
+        if (app()->environment(['testing', 'local'])) {
+            try {
+                $seederClass = "Database\\Seeders\\{$nombreSeeder}";
+                
+                if (!class_exists($seederClass)) {
+                    return response()->json([
+                        'status' => 'error', 
+                        'message' => "Seeder {$nombreSeeder} no encontrado"
+                    ], 404);
+                }
 
-        $to = $request->input('to');
-        $subject = $request->input('subject');
-        $contains = $request->input('contains');
-
-        $correo = $correos[$to] ?? null;
-
-        if ($correo && 
-            ($subject === null || strpos($correo['subject'], $subject) !== false) &&
-            ($contains === null || strpos($correo['body'], $contains) !== false)
-        ) {
-            return response()->json(['exists' => true]);
+                \Illuminate\Support\Facades\Artisan::call('db:seed', [
+                    '--class' => $seederClass,
+                    '--force' => true
+                ]);
+                
+                return response()->json([
+                    'status' => 'success', 
+                    'message' => "Seeder {$nombreSeeder} ejecutado correctamente"
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 'error', 
+                    'message' => "Error al ejecutar seeder: " . $e->getMessage()
+                ], 500);
+            }
         }
 
-        return response()->json(['exists' => false]);
+        return response()->json([
+            'status' => 'error', 
+            'message' => 'Acción no permitida en este entorno'
+        ], 403);
     }
 }

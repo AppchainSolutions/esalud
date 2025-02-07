@@ -1,35 +1,54 @@
-@component('mail::message')
-# Activación de Cuenta eSalud
+@extends('vendor.mail.html.layout')
 
-Estimado/a {{ $paciente->nombre }} {{ $paciente->apellidos }},
+@section('content')
+    <div>
+        <h3>Activación de Cuenta eSalud</h3>
 
-Hemos recibido una solicitud para activar su cuenta en eSalud. 
+        @php
+            $nombreCompleto = $paciente->nombre . ' ' . $paciente->apellidos;
+            $tokenActivacion = $token;
+            $urlActivacion = $activationUrl;
+            $horasExpiracion = $expiracionHoras;
+        @endphp
 
-## Detalles de Activación
+        <p>Estimado/a {{ $nombreCompleto }},</p>
 
-- **Token de Activación:** `{{ $token }}`
-- **Enlace de Activación:** {{ $activationUrl }}
-- **Válido por:** {{ $expiracionHoras }} horas
+        <p>Hemos recibido una solicitud para activar su cuenta en eSalud.</p>
 
-Para completar el proceso de activación, haga clic en el siguiente botón o copie y pegue el enlace en su navegador:
+        <h4>Detalles de Activación</h4>
 
-@component('mail::button', ['url' => $activationUrl])
-Activar Cuenta
-@endcomponent
+        <table>
+            <tr>
+                <td><strong>Token de Activación:</strong></td>
+                <td><code>{{ $tokenActivacion }}</code></td>
+            </tr>
+            <tr>
+                <td><strong>Enlace de Activación:</strong></td>
+                <td><a href="{{ $urlActivacion }}">Activar Cuenta</a></td>
+            </tr>
+            <tr>
+                <td><strong>Válido por:</strong></td>
+                <td>{{ $horasExpiracion }} horas</td>
+            </tr>
+        </table>
 
-**Importante:**
-- Este enlace de activación es único y solo se puede usar una vez.
-- El token es confidencial, no lo comparta con nadie.
-- Si no ha solicitado esta activación, ignore este correo o contacte con soporte.
+        <p><strong>Importante:</strong></p>
+        <ul>
+            <li>Este enlace de activación es único y solo se puede usar una vez.</li>
+            <li>El token es confidencial, no lo comparta con nadie.</li>
+            <li>Si no ha solicitado esta activación, ignore este correo o contacte con soporte.</li>
+        </ul>
 
-**Medidas de Seguridad:**
-- Verifique que el enlace provenga de nuestro dominio oficial.
-- No haga clic en enlaces de correos sospechosos.
-- Si tiene dudas, contacte con nuestro equipo de soporte.
+        <p><strong>Medidas de Seguridad:</strong></p>
+        <ul>
+            <li>Verifique que el enlace provenga de nuestro dominio oficial.</li>
+            <li>No haga clic en enlaces de correos sospechosos.</li>
+            <li>Si tiene dudas, contacte con nuestro equipo de soporte.</li>
+        </ul>
 
-Si tiene problemas para activar su cuenta, por favor contacte con nuestro soporte técnico.
+        <p>Si tiene problemas para activar su cuenta, por favor contacte con nuestro soporte técnico.</p>
 
-Saludos cordiales,
-Equipo eSalud
-
-@endcomponent
+        <p>Saludos cordiales,<br>
+        Equipo eSalud</p>
+    </div>
+@endsection

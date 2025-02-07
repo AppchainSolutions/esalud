@@ -86,14 +86,15 @@
                 :color="requirement.met ? 'success' : 'error'"
                 class="px-0"
               >
-                <v-list-item-icon class="mr-2">
-                  <v-icon :color="requirement.met ? 'success' : 'error'">
-                    {{ requirement.met ? 'mdi-check-circle' : 'mdi-close-circle' }}
-                  </v-icon>
-                </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>
+                  <v-list-item-title class="d-flex justify-space-between align-center">
                     {{ requirement.text }}
+                    <v-icon 
+                      :color="requirement.met ? 'success' : 'error'"
+                      class="ml-2"
+                    >
+                      {{ requirement.met ? 'mdi-check-circle' : 'mdi-close-circle' }}
+                    </v-icon>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>

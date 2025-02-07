@@ -50,6 +50,13 @@
   - Endpoints para crear pacientes de prueba
   - Métodos para generar tokens de activación
   - Simulación de verificación de correos electrónicos
+- Configuración avanzada de ambiente de testing
+  - Configuración de Cypress con variables de entorno
+  - Seeder específico para pruebas de pacientes
+  - Archivo .env.testing con configuraciones seguras
+  - Scripts de inicialización de pruebas
+  - Comandos personalizados de Cypress
+  - Interceptores de llamadas API
 
 ### Changed
 - Implementación de pruebas de generación de token y envío de correo
@@ -60,6 +67,8 @@
 - Mejora en la gestión de tokens de activación
 - Estructura de soporte para pruebas end-to-end
 - Mejora en la configuración de pruebas de Cypress
+- Mejora en la configuración de bases de datos para testing
+- Actualización de scripts de soporte para pruebas
 
 ### Testing
 - Añadidos tests unitarios para:
@@ -67,5 +76,8 @@
   - `enviarCorreoActivacion()`: Confirma envío de correo de activación
 - Implementación de tareas personalizadas para Cypress
 - Preparación de ambiente de testing
+- Implementación de estrategias de testing end-to-end
+- Configuración de seguridad para pruebas
+- Mejora en la gestión de estados de pruebas
 
 **Fecha**: 5 de febrero de 2025

@@ -122,7 +122,6 @@ Route::middleware('guest')->group(function () {
 
     // Procesar activación de cuenta
     Route::post('/activar', [PacienteActivacionController::class, 'activarCuenta'])
-        ->name('paciente.activacion.completar')
-        ->middleware('signed');
+        ->name('paciente.activacion.completar');
 });
 

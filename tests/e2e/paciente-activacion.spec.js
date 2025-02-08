@@ -71,4 +71,36 @@ test.describe('Flujo de Activación de Paciente', () => {
     await expect(page.locator('.alert-error')).toBeVisible();
     await expect(page.locator('.alert-error')).toContainText(/Token expirado/);
   });
+
+  test('Validación de campos obligatorios', async ({ page }) => {
+    // Navegar a la página de activación
+    await page.goto('/activar-cuenta');
+    
+    // Intentar enviar formulario sin datos
+    await page.click('button[type="submit"]');
+    
+    // Verificar mensajes de error para campos obligatorios
+    await expect(page.locator('.token-error')).toBeVisible();
+    await expect(page.locator('.token-error')).toContainText(/Token es obligatorio/);
+    
+    await expect(page.locator('.password-error')).toBeVisible();
+    await expect(page.locator('.password-error')).toContainText(/Contraseña es obligatoria/);
+  });
+
+  test('Validar que contraseñas coincidan', async ({ page }) => {
+    // Navegar a la página de activación
+    await page.goto('/activar-cuenta');
+    
+    // Simular llenado de formulario con contraseñas diferentes
+    await page.fill('input[name="token"]', 'token-ejemplo');
+    await page.fill('input[name="password"]', 'PassSegura2024!');
+    await page.fill('input[name="password_confirmation"]', 'PassDiferente2024!');
+    
+    // Enviar formulario
+    await page.click('button[type="submit"]');
+    
+    // Verificar mensaje de error de contraseñas no coincidentes
+    await expect(page.locator('.password-mismatch-error')).toBeVisible();
+    await expect(page.locator('.password-mismatch-error')).toContainText(/Las contraseñas no coinciden/);
+  });
 });

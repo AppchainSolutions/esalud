@@ -85,26 +85,37 @@ class PacienteActivacionController extends Controller
             'password.confirmed' => 'Las contraseñas no coinciden.'
         ]);
 
+
+
         try {
-            $paciente = $this->activacionService->validarToken($request->input('token'));
+             $paciente = $this->activacionService->validarToken($request->input('token'));
+
 
             // Verificar expiración del token
             if ($paciente->token_activacion_expira < now()) {
-                return redirect('/')->with('error', 'Token de activación inválido o expirado');
+                return Inertia::render('Paciente/Activacion', [
+                    'token' => $request->input('token'),
+                    'email' => $request->input('email'),
+                    'error' => 'Token de activación inválido o expirado'
+                ]);
             }
 
-            // Verificar que el email corresponda al token
+        //     // Verificar que el email corresponda al token
             if ($paciente->email !== $request->input('email')) {
-                return redirect('/')->with('error', 'Correo electrónico no válido para este token de activación');
+                return Inertia::render('Paciente/Activacion', [
+                    'token' => $request->input('token'),
+                    'email' => $request->input('email'),
+                    'error' => 'Correo electrónico no válido para este token de activación'
+                ]);
             }
 
-            // Verificar si la cuenta ya está activada
+        //     // Verificar si la cuenta ya está activada
             if ($paciente->cuenta_activada) {
                 return Inertia::render('Paciente/Activacion', [
-                'token' => $request->input('token'),
-                'email' => $request->input('email'),
-                'error' => 'La cuenta ya ha sido activada'
-            ]);
+                    'token' => $request->input('token'),
+                    'email' => $request->input('email'),
+                    'error' => 'La cuenta ya ha sido activada'
+                ]);
             }
 
             // Activar cuenta y obtener el usuario
@@ -114,46 +125,58 @@ class PacienteActivacionController extends Controller
                 'email' => $request->input('email')
             ]);
 
-            // Autenticar al usuario
-            Auth::login($usuario);
+            $this->debugLog('Activación de cuenta', ['usuario' => $usuario]);
+
+            // Autenticar al usuario y generar sesión
+            Auth::login($usuario, true); // true para "remember me"
+
+            // Regenerar la sesión para seguridad
+            request()->session()->regenerate();
+
+            // Registrar evento de inicio de sesión
+            $this->debugLog('Usuario autenticado después de activación', [
+                'user_id' => $usuario->id,
+                'email' => $usuario->email
+            ]);
 
             // Redirigir al dashboard del paciente
-            return redirect()->route('paciente.mi_dashboard')->with('status', 'Cuenta activada exitosamente');
+            return redirect()->intended(route('home'))->with('status', 'Cuenta activada exitosamente');
+       
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Redirigir de vuelta con errores de validación
-            return back()->withErrors($e->validator);
-        } catch (TokenActivacionInvalidoException $e) {
-            // Verificar si el token corresponde a una cuenta ya activada
-            $pacienteActivado = Paciente::where('token_activacion', $request->input('token'))
-                ->where('cuenta_activada', true)
-                ->first();
+             // Redirigir de vuelta con errores de validación
+             return back()->withErrors($e->validator);
+         } catch (TokenActivacionInvalidoException $e) {
+             // Verificar si el token corresponde a una cuenta ya activada
+             $pacienteActivado = Paciente::where('token_activacion', $request->input('token'))
+                 ->where('cuenta_activada', true)
+                 ->first();
 
-            if ($pacienteActivado) {
-                return Inertia::render('Paciente/Activacion', [
-                'token' => $request->input('token'),
-                'email' => $request->input('email'),
-                'error' => 'La cuenta ya ha sido activada'
-            ]);
-            }
+             if ($pacienteActivado) {
+                 return Inertia::render('Paciente/Activacion', [
+                     'token' => $request->input('token'),
+                     'email' => $request->input('email'),
+                     'error' => 'La cuenta ya ha sido activada'
+                 ]);
+             }
 
-            // Renderizar formulario con mensaje de error
-            return Inertia::render('Paciente/Activacion', [
-                'token' => $request->input('token'),
-                'email' => $request->input('email'),
-                'error' => $e->getMessage()
-            ]);
-        } catch (\Exception $e) {
-            $this->errorLog('Error en activación de cuenta', [
-                'email' => $request->input('email'),
-                'error' => $e->getMessage()
-            ]);
+             // Renderizar formulario con mensaje de error
+             return Inertia::render('Paciente/Activacion', [
+                 'token' => $request->input('token'),
+                 'email' => $request->input('email'),
+                 'error' => 'La cuenta ya ha sido activada'
+             ]);
+         } catch (\Exception $e) {
+             $this->errorLog('Error en activación de cuenta', [
+                 'email' => $request->input('email'),
+                 'error' => $e->getMessage()
+             ]);
 
-            // Renderizar formulario con mensaje de error
-            return Inertia::render('Paciente/Activacion', [
-                'token' => $request->input('token'),
-                'email' => $request->input('email'),
-                'error' => $e->getMessage() ?? 'Ocurrió un error al activar la cuenta'
-            ]);
-        }
+             // Renderizar formulario con mensaje de error
+             return Inertia::render('Paciente/Activacion', [
+                 'token' => $request->input('token'),
+                 'email' => $request->input('email'),
+                 'error' => $e->getMessage() ?? 'Ocurrió un error al activar la cuenta'
+             ]);
+         }
     }
 }

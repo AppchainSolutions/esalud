@@ -154,17 +154,17 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    paciente: {
-        type: Object,
-        default: () => ({}),
-    },
+    email: {
+        type: String,
+        required: true,
+    }
 });
 
 const form = reactive({
-    token: route().params.token || '80uIgxnqREQS4PGkg82gP8PGcR4uWGz8bZtCq1EXWtOJK3Cm7YSzowcM8t7Uvahi',
-    email: 'omar.ahumadag@gmail.com',
-    password: 'P@ssw0rd2025!Esalud',
-    password_confirmation: 'P@ssw0rd2025!Esalud'
+    token: props.token,
+    email: props.email,
+    password: '',
+    password_confirmation: ''
 });
 
 const showPassword = ref(false);

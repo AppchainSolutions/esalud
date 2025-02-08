@@ -6,36 +6,65 @@ namespace App\Helpers;
 
 class RutGenerator
 {
-    public static function generate()
+    public static function generate($length = 8)
     {
-        $numero = rand(1000000, 25000000); // Genera un número aleatorio
-        $dv = self::calcularDigitoVerificador($numero); // Calcula el dígito verificador
-
-        return $numero.'-'.$dv; // Retorna el RUT en formato "12345678-9"
+        // Generar número base aleatorio
+        $numero = str_pad(rand(1, pow(10, $length) - 1), $length, '0', STR_PAD_LEFT);
+        
+        // Calcular dígito verificador
+        $dv = self::calcularDigitoVerificador($numero);
+        
+        // Retornar RUT completo con formato
+        return $numero . '-' . $dv;
     }
 
-    private static function calcularDigitoVerificador($numero)
+    public static function calcularDigitoVerificador($numero)
     {
-        $suma = 0;
-        $multiplicador = 2;
-
         // Convierte el número a cadena para poder acceder a sus dígitos
-        $numeroStr = (string) $numero;
+        $numero = (string) $numero;
 
-        // Calcula la suma de los dígitos multiplicados
-        for ($i = strlen($numeroStr) - 1; $i >= 0; $i--) {
-            $suma += $numeroStr[$i] * $multiplicador;
-            $multiplicador = $multiplicador < 7 ? $multiplicador + 1 : 2; // Ciclo de multiplicadores
+        // Inicializa variables
+        $suma = 0;
+        $multiplo = 2;
+
+        // Calcula la suma de los dígitos multiplicados (de derecha a izquierda)
+        for ($i = strlen($numero) - 1; $i >= 0; $i--) {
+            $suma += $numero[$i] * $multiplo;
+            $multiplo = $multiplo < 7 ? $multiplo + 1 : 2;
         }
 
-        $dv = 11 - ($suma % 11);
+        // Calcula el resto
+        $resto = $suma % 11;
 
-        if ($dv == 10) {
-            return 'K';
-        } elseif ($dv == 11) {
-            return '0';
-        } else {
-            return $dv;
+        // Mapea el resultado
+        switch (11 - $resto) {
+            case 10:
+                return 'K';
+            case 11:
+                return '0';
+            default:
+                return (string) (11 - $resto);
         }
+    }
+
+    public static function validarRut($rut)
+    {
+        // Eliminar puntos y guión, convertir a mayúsculas
+        $rut = strtoupper(preg_replace('/[.-]/', '', $rut));
+        
+        // Validar formato
+        if (!preg_match('/^[0-9]{7,8}[0-9K]$/', $rut)) {
+            return false;
+        }
+        
+        // Separar cuerpo y dígito verificador
+        $cuerpo = substr($rut, 0, -1);
+        $dv = substr($rut, -1);
+        
+        // Calcular dígito verificador
+        $dvCalculado = self::calcularDigitoVerificador($cuerpo);
+        
+        // Comparar dígitos verificadores
+        return $dv === $dvCalculado;
     }
 }

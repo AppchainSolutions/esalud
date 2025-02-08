@@ -1,0 +1,21 @@
+{
+    "name": "esalud/enhanced-logging",
+    "description": "Enhanced logging package for Laravel with advanced context and security features",
+    "type": "library",
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Esalud\\EnhancedLogging\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Esalud\\EnhancedLogging\\Providers\\EnhancedLoggingServiceProvider"
+            ]
+        }
+    }
+}

@@ -90,8 +90,14 @@ class PacienteActivacionService
      */
     public function validarToken(string $tokenPlano): Paciente
     {
+        // Preparar los filtros para la búsqueda del paciente
+        $filters = [
+            'token_activacion' => $tokenPlano,
+            'cuenta_activada' => false
+        ];
+
         // Buscar paciente con token de activación
-        $paciente = Paciente::where('token_activacion', $tokenPlano)
+        $paciente = Paciente::where($filters)
             ->where('token_activacion_expira', '>', now())
             ->first();
 

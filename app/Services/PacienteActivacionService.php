@@ -5,12 +5,12 @@ namespace App\Services;
 use App\Models\Paciente;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\PacienteActivacionMail;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\Mail\PacienteActivacionMail;
+use Illuminate\Support\Facades\Validator;
 use App\Events\PacienteActivado;
 use App\Exceptions\TokenActivacionInvalidoException;
 
@@ -77,18 +77,21 @@ class PacienteActivacionService
      */
     public function validarToken(string $tokenPlano): Paciente
     {
-        $paciente = Paciente::where('token_activacion_expira', '>', now())
-            ->whereNotNull('token_activacion')
+        // Buscar paciente con token de activación
+        $paciente = Paciente::where('token_activacion', '!=', null)
+            ->where('token_activacion_expira', '>', now())
             ->get()
             ->first(function ($paciente) use ($tokenPlano) {
-                try {
-                    return Hash::check($tokenPlano, $paciente->token_activacion);
-                } catch (\Exception $e) {
-                    return false;
-                }
+                // Comparar tokens de manera más segura
+                return Hash::check($tokenPlano, $paciente->token_activacion);
             });
 
         if (!$paciente) {
+            Log::warning('Intento de activación con token inválido', [
+                'token' => Str::limit($tokenPlano, 10, '...'),
+                'timestamp' => now()
+            ]);
+
             throw new TokenActivacionInvalidoException('Token de activación inválido o expirado');
         }
 

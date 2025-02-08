@@ -53,6 +53,7 @@
               :rules="confirmPasswordRules"
               label="Confirmar Contraseña"
               required
+              clearable
               @input="validatePassword"
             ></v-text-field>
 
@@ -107,6 +108,7 @@
                 color="primary" 
                 :disabled="!isFormValid"
                 block
+                variant="tonal"
               >
                 Activar Cuenta
               </v-btn>
@@ -120,7 +122,7 @@
 
 <script setup>
 import { ref, computed, reactive } from 'vue'
-import { useForm, router } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   token: {
@@ -133,7 +135,7 @@ const props = defineProps({
   }
 })
 
-const form = useForm({
+const form = reactive({
   token: route().params.token || '',
   password: '',
   password_confirmation: ''
@@ -237,25 +239,27 @@ const isFormValid = computed(() => {
 })
 
 const submit = () => {
-  form.post(route('paciente.activar'), {
-    onSuccess: () => {
-      // Notificación de éxito
-      console.log('Cuenta activada exitosamente');
-      // Redirigir al dashboard o mostrar mensaje
-    },
-    onError: (errors) => {
-      console.error('Errores de activación:', errors);
-      // Manejar errores específicos
-      if (errors.password) {
-        // Mostrar mensaje de error de contraseña
-        console.error(errors.password);
-      }
-      if (errors.token) {
-        // Mostrar mensaje de error de token
-        console.error(errors.token);
-      }
-    }
-  });
+  console.log(form);
+  router.post('/activar', form);
+  // form.post(route('paciente.activar'), {
+  //   onSuccess: () => {
+  //     // Notificación de éxito
+  //     console.log('Cuenta activada exitosamente');
+  //     // Redirigir al dashboard o mostrar mensaje
+  //   },
+  //   onError: (errors) => {
+  //     console.error('Errores de activación:', errors);
+  //     // Manejar errores específicos
+  //     if (errors.password) {
+  //       // Mostrar mensaje de error de contraseña
+  //       console.error(errors.password);
+  //     }
+  //     if (errors.token) {
+  //       // Mostrar mensaje de error de token
+  //       console.error(errors.token);
+  //     }
+  //   }
+  //});
 }
 </script>
 

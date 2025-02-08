@@ -54,8 +54,8 @@ return new class extends Migration {
             $table->string('rut')->unique();
             $table->string('telefono1')->nullable();
             $table->string('telefono2')->nullable();
-            $table->timestamp('token_activacion')->nullable();
-            $table->timestamp('token_activacion_expira')->nullable()->after('token_activacion');
+            $table->string('token_activacion')->nullable();
+            $table->timestamp('token_activacion_expira')->nullable();
             $table->timestamps();
 
         });

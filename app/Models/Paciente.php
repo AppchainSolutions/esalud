@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 use App\Traits\BooleanCastTrait;
 
 class Paciente extends Model
@@ -219,10 +220,11 @@ class Paciente extends Model
 
     public function generarTokenActivacion()
     {
-        $this->token_activacion = Str::random(64);
+        $tokenPlano = Str::random(64);
+        $this->token_activacion = Hash::make($tokenPlano);
         $this->token_activacion_expira = now()->addHours(24);
         $this->save();
-        return $this->token_activacion;
+        return $tokenPlano;
     }
 
     public function tokenActivacionVigente()
@@ -235,6 +237,17 @@ class Paciente extends Model
     public function estaActivado()
     {
         return !is_null($this->user_id);
+    }
+
+    public function verificarTokenActivacion(string $tokenPlano): bool
+    {
+        // Verificar que el token no esté expirado
+        if ($this->token_activacion_expira < now()) {
+            return false;
+        }
+
+        // Verificar la integridad del token
+        return Hash::check($tokenPlano, $this->token_activacion);
     }
 
     protected $table = 'paciente';

@@ -38,14 +38,14 @@ class PacienteActivacionSeeder extends Seeder
 
         // Asegurar que existan registros en las tablas de relaciones
         $this->ensureRelatedRecordsExist($faker);
-        Paciente::truncate();
+        //Paciente::truncate();
         // Crear paciente de prueba para activación
         $paciente = Paciente::firstOrCreate(
             [
                 'email' => 'omar.ahumadag@gmail.com',
             ],
             [
-                'rut' => '12.345.678-9',
+                'rut' => '12345678-9',
                 'nombre' => 'Juan Carlos',
                 'apellidos' => 'Pérez González',
                 'actividad_economica' => $faker->jobTitle(),
@@ -85,7 +85,7 @@ class PacienteActivacionSeeder extends Seeder
 
         // Enviar correo con información de activación
         if (app()->environment(['local', 'testing'])) {
-            $activationUrl = route('paciente.activar', ['token' => $token]);
+            $activationUrl = route('paciente.activacion.formulario', ['token' => $token, 'email' => $paciente->email]);
             
             Mail::to($paciente->email)->send(new PacienteActivacionMail(
                 $paciente, 

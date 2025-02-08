@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Events\PacienteActivado;
 use App\Exceptions\TokenActivacionInvalidoException;
 use Esalud\EnhancedLogging\Traits\ContextualLogging;
+use Illuminate\Support\Facades\URL;
 
 class PacienteActivacionService
 {
@@ -27,14 +28,12 @@ class PacienteActivacionService
      */
     public function generarTokenActivacion(Paciente $paciente): string
     {
-        // Generar token único de 64 caracteres
-        $token = Str::random(64);
+        // Generar un token único y seguro
+        $token = Str::random(60);
 
-        Log::info('paciente: ' . $paciente);
-
-        // Almacenar token con hash para mayor seguridad
+        // Almacenar el token y su expiración en el paciente
         $paciente->update([
-            'token_activacion' => Hash::make($token),
+            'token_activacion' => $token,
             'token_activacion_expira' => now()->addHours(24)
         ]);
 
@@ -42,33 +41,44 @@ class PacienteActivacionService
     }
 
     /**
+     * Generar URL firmada de activación
+     * 
+     * @param Paciente $paciente
+     * @return string
+     */
+    public function generarUrlActivacion(Paciente $paciente): string
+    {
+        // Generar token de activación
+        $token = $this->generarTokenActivacion($paciente);
+
+        // Generar URL firmada con expiración
+        return URL::temporarySignedRoute('paciente.activacion.formulario', now()->addHours(24), ['token' => $token]);
+    }
+
+    /**
      * Envía correo de activación al paciente
      * 
      * @param Paciente $paciente
-     * @return bool
+     * @param int $horasExpiracion Horas de validez del token
+     * @return void
      */
-    public function enviarCorreoActivacion(Paciente $paciente): bool
+    public function enviarCorreoActivacion(Paciente $paciente, int $horasExpiracion = 24): void
     {
-        // Generar token de activación
-        $tokenPlano = $this->generarTokenActivacion($paciente);
+        // Generar URL de activación firmada
+        $activationUrl = $this->generarUrlActivacion($paciente);
 
-        try {
-            // Enviar correo de activación
-            Mail::to($paciente->email)->send(
-                new PacienteActivacionMail($paciente, $tokenPlano)
-            );
+        // Registrar evento de envío de correo
+        // event(new TokenActivacionGenerado($paciente)); // Este evento no está definido en el código proporcionado
 
-            return true;
-        } catch (\Exception $e) {
-            // Registrar error de envío
-            Log::error('Error al enviar correo de activación', [
-                'paciente_id' => $paciente->id,
-                'email' => $paciente->email,
-                'error' => $e->getMessage()
-            ]);
-
-            return false;
-        }
+        // Enviar correo de activación
+        Mail::to($paciente->email)->send(
+            new PacienteActivacionMail(
+                $paciente, 
+                $paciente->token_activacion, 
+                $activationUrl, 
+                $horasExpiracion
+            )
+        );
     }
 
     /**
@@ -81,15 +91,20 @@ class PacienteActivacionService
     public function validarToken(string $tokenPlano): Paciente
     {
         // Buscar paciente con token de activación
-        $paciente = Paciente::where('token_activacion', '!=', null)
+        $paciente = Paciente::where('token_activacion', $tokenPlano)
             ->where('token_activacion_expira', '>', now())
-            ->get()
-            ->first(function ($paciente) use ($tokenPlano) {
-                // Comparar tokens de manera más segura
-                return Hash::check($tokenPlano, $paciente->token_activacion);
-            });
+            ->first();
 
         if (!$paciente) {
+            // Verificar si ya existe un paciente con este token y cuenta activada
+            $pacienteActivado = Paciente::where('token_activacion', $tokenPlano)
+                ->where('cuenta_activada', true)
+                ->first();
+
+            if ($pacienteActivado) {
+                throw new TokenActivacionInvalidoException('La cuenta ya ha sido activada');
+            }
+
             $this->errorLog('Token de activación inválido o expirado', [
                 'token' => Str::limit($tokenPlano, 10, '...'),
                 'timestamp' => now()
@@ -126,7 +141,7 @@ class PacienteActivacionService
                 'string', 
                 'min:12', 
                 'confirmed',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/'
             ]
         ]);
 

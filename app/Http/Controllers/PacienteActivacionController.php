@@ -139,8 +139,9 @@ class PacienteActivacionController extends Controller
                 'email' => $usuario->email
             ]);
 
-            // Redirigir al dashboard del paciente
-            return redirect()->intended(route('home'))->with('status', 'Cuenta activada exitosamente');
+            // Redirigir a la página de inicio
+            return redirect()->intended(route('home'))
+                ->with('status', 'Tu cuenta ha sido activada exitosamente. ¡Bienvenido a eSalud!');
        
         } catch (\Illuminate\Validation\ValidationException $e) {
              // Redirigir de vuelta con errores de validación

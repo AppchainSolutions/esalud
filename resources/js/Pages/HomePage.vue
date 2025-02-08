@@ -2,17 +2,46 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
 
-defineProps({
+const props = defineProps({
     user: {
         type: Object,
         default: null,
     },
+    // Mensajes de estado
+    status: {
+        type: String,
+        default: null
+    },
+    error: {
+        type: String,
+        default: null
+    }
 });
 </script>
 
 <template>
     <AppLayout>
         <div class="container mx-auto px-4 py-8">
+            <!-- Mensajes de estado -->
+            <v-alert
+                v-if="props.status"
+                type="success"
+                variant="tonal"
+                closable
+                class="mb-4"
+            >
+                {{ props.status }}
+            </v-alert>
+
+            <v-alert
+                v-if="props.error"
+                type="error"
+                variant="tonal"
+                closable
+                class="mb-4"
+            >
+                {{ props.error }}
+            </v-alert>
             <h1 class="text-3xl font-bold mb-6">Bienvenido a eSalud</h1>
 
             <div v-if="user" class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -21,55 +50,70 @@ defineProps({
                         <template v-if="user.rol === 'paciente'">
                             <div class="grid grid-cols-[1fr,2fr] gap-6">
                                 <div>
-                                  <h2 class="text-xl font-semibold mb-4">
-                                      Información General de Salud:
-                                  </h2>
-                                  <v-row>
-                                    <v-col cols="2"><img
-                                        src="https://picsum.photos/id/11/200/300"
-                                        alt=""
-                                        class="w-full object-cover rounded-lg shadow-md"
+                                    <h2 class="text-xl font-semibold mb-4">
+                                        Información General de Salud:
+                                    </h2>
+                                    <v-row>
+                                        <v-col cols="2"
+                                            ><img
+                                                src="https://picsum.photos/id/11/200/300"
+                                                alt=""
+                                                class="w-full object-cover rounded-lg shadow-md"
                                         /></v-col>
-                                    <v-col> <p>
-                                          Lorem ipsum dolor sit amet consectetur
-                                          adipisicing elit. Quisquam, quod. Lorem ipsum
-                                          dolor, sit amet consectetur adipisicing elit.
-                                          Quisquam, quod. Lorem ipsum dolor, sit amet
-                                          consectetur adipisicing elit. Quisquam, quod.
-                                          Explicabo voluptate dolorum, consectetur 
-                                          repellendus nesciunt aut enim, accusamus 
-                                        architecto mollitia maxime sapiente 
-                                        perspiciatis, officiis nisi ratione 
-                                        reprehenderit cumque. Dolorum, quaerat.
-                                      </p>
-                                      <p>
-                                          Lorem ipsum dolor sit amet consectetur
-                                          adipisicing elit. Quisquam, quod. Lorem ipsum
-                                          dolor, sit amet consectetur adipisicing elit.
-                                          Quisquam, quod. Lorem ipsum dolor, sit amet
-                                          consectetur adipisicing elit. Quisquam, quod.
-                                          Explicabo voluptate dolorum, consectetur 
-                                          repellendus nesciunt aut enim, accusamus 
-                                        architecto mollitia maxime sapiente 
-                                        perspiciatis, officiis nisi ratione 
-                                        reprehenderit cumque. Dolorum, quaerat.
-                                      </p>
-                                      <p>
-                                          Lorem ipsum dolor sit amet consectetur
-                                          adipisicing elit. Quisquam, quod. Lorem ipsum
-                                          dolor, sit amet consectetur adipisicing elit.
-                                          Quisquam, quod. Lorem ipsum dolor, sit amet
-                                          consectetur adipisicing elit. Quisquam, quod.
-                                          Explicabo voluptate dolorum, consectetur 
-                                          repellendus nesciunt aut enim, accusamus 
-                                        architecto mollitia maxime sapiente 
-                                        perspiciatis, officiis nisi ratione 
-                                        reprehenderit cumque. Dolorum, quaerat.
-                                      </p>
-                                    </v-col>
-                                  </v-row>
-                                    
-                                       
+                                        <v-col>
+                                            <p>
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Quisquam, quod. Lorem ipsum
+                                                dolor, sit amet consectetur
+                                                adipisicing elit. Quisquam,
+                                                quod. Lorem ipsum dolor, sit
+                                                amet consectetur adipisicing
+                                                elit. Quisquam, quod. Explicabo
+                                                voluptate dolorum, consectetur
+                                                repellendus nesciunt aut enim,
+                                                accusamus architecto mollitia
+                                                maxime sapiente perspiciatis,
+                                                officiis nisi ratione
+                                                reprehenderit cumque. Dolorum,
+                                                quaerat.
+                                            </p>
+                                            <p>
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Quisquam, quod. Lorem ipsum
+                                                dolor, sit amet consectetur
+                                                adipisicing elit. Quisquam,
+                                                quod. Lorem ipsum dolor, sit
+                                                amet consectetur adipisicing
+                                                elit. Quisquam, quod. Explicabo
+                                                voluptate dolorum, consectetur
+                                                repellendus nesciunt aut enim,
+                                                accusamus architecto mollitia
+                                                maxime sapiente perspiciatis,
+                                                officiis nisi ratione
+                                                reprehenderit cumque. Dolorum,
+                                                quaerat.
+                                            </p>
+                                            <p>
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Quisquam, quod. Lorem ipsum
+                                                dolor, sit amet consectetur
+                                                adipisicing elit. Quisquam,
+                                                quod. Lorem ipsum dolor, sit
+                                                amet consectetur adipisicing
+                                                elit. Quisquam, quod. Explicabo
+                                                voluptate dolorum, consectetur
+                                                repellendus nesciunt aut enim,
+                                                accusamus architecto mollitia
+                                                maxime sapiente perspiciatis,
+                                                officiis nisi ratione
+                                                reprehenderit cumque. Dolorum,
+                                                quaerat.
+                                            </p>
+                                        </v-col>
+                                    </v-row>
                                 </div>
                             </div>
 
@@ -89,62 +133,75 @@ defineProps({
                                     No hay notificaciones nuevas.
                                 </p>
                             </div>
-
                         </template>
 
                         <template v-if="user.rol === 'admin'">
-
                             <div class="grid grid-cols-[1fr,2fr] gap-6">
                                 <div>
-                                  <h2 class="text-xl font-semibold mb-4">
-                                      Información General:
-                                  </h2>
-                                  <v-row>
-                                    <v-col cols="2"><img
-                                        src="https://picsum.photos/seed/picsum/200/300"
-                                        alt=""
-                                        class="w-full object-cover rounded-lg shadow-md"
+                                    <h2 class="text-xl font-semibold mb-4">
+                                        Información General:
+                                    </h2>
+                                    <v-row>
+                                        <v-col cols="2"
+                                            ><img
+                                                src="https://picsum.photos/seed/picsum/200/300"
+                                                alt=""
+                                                class="w-full object-cover rounded-lg shadow-md"
                                         /></v-col>
-                                    <v-col> <p>
-                                          Lorem ipsum dolor sit amet consectetur
-                                          adipisicing elit. Quisquam, quod. Lorem ipsum
-                                          dolor, sit amet consectetur adipisicing elit.
-                                          Quisquam, quod. Lorem ipsum dolor, sit amet
-                                          consectetur adipisicing elit. Quisquam, quod.
-                                          Explicabo voluptate dolorum, consectetur 
-                                          repellendus nesciunt aut enim, accusamus 
-                                        architecto mollitia maxime sapiente 
-                                        perspiciatis, officiis nisi ratione 
-                                        reprehenderit cumque. Dolorum, quaerat.
-                                      </p>
-                                      <p>
-                                          Lorem ipsum dolor sit amet consectetur
-                                          adipisicing elit. Quisquam, quod. Lorem ipsum
-                                          dolor, sit amet consectetur adipisicing elit.
-                                          Quisquam, quod. Lorem ipsum dolor, sit amet
-                                          consectetur adipisicing elit. Quisquam, quod.
-                                          Explicabo voluptate dolorum, consectetur 
-                                          repellendus nesciunt aut enim, accusamus 
-                                        architecto mollitia maxime sapiente 
-                                        perspiciatis, officiis nisi ratione 
-                                        reprehenderit cumque. Dolorum, quaerat.
-                                      </p>
-                                      <p>
-                                          Lorem ipsum dolor sit amet consectetur
-                                          adipisicing elit. Quisquam, quod. Lorem ipsum
-                                          dolor, sit amet consectetur adipisicing elit.
-                                          Quisquam, quod. Lorem ipsum dolor, sit amet
-                                          consectetur adipisicing elit. Quisquam, quod.
-                                          Explicabo voluptate dolorum, consectetur 
-                                          repellendus nesciunt aut enim, accusamus 
-                                        architecto mollitia maxime sapiente 
-                                        perspiciatis, officiis nisi ratione 
-                                        reprehenderit cumque. Dolorum, quaerat.
-                                      </p>
-                                    </v-col>
-                                  </v-row>
-                                    
-                                       
+                                        <v-col>
+                                            <p>
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Quisquam, quod. Lorem ipsum
+                                                dolor, sit amet consectetur
+                                                adipisicing elit. Quisquam,
+                                                quod. Lorem ipsum dolor, sit
+                                                amet consectetur adipisicing
+                                                elit. Quisquam, quod. Explicabo
+                                                voluptate dolorum, consectetur
+                                                repellendus nesciunt aut enim,
+                                                accusamus architecto mollitia
+                                                maxime sapiente perspiciatis,
+                                                officiis nisi ratione
+                                                reprehenderit cumque. Dolorum,
+                                                quaerat.
+                                            </p>
+                                            <p>
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Quisquam, quod. Lorem ipsum
+                                                dolor, sit amet consectetur
+                                                adipisicing elit. Quisquam,
+                                                quod. Lorem ipsum dolor, sit
+                                                amet consectetur adipisicing
+                                                elit. Quisquam, quod. Explicabo
+                                                voluptate dolorum, consectetur
+                                                repellendus nesciunt aut enim,
+                                                accusamus architecto mollitia
+                                                maxime sapiente perspiciatis,
+                                                officiis nisi ratione
+                                                reprehenderit cumque. Dolorum,
+                                                quaerat.
+                                            </p>
+                                            <p>
+                                                Lorem ipsum dolor sit amet
+                                                consectetur adipisicing elit.
+                                                Quisquam, quod. Lorem ipsum
+                                                dolor, sit amet consectetur
+                                                adipisicing elit. Quisquam,
+                                                quod. Lorem ipsum dolor, sit
+                                                amet consectetur adipisicing
+                                                elit. Quisquam, quod. Explicabo
+                                                voluptate dolorum, consectetur
+                                                repellendus nesciunt aut enim,
+                                                accusamus architecto mollitia
+                                                maxime sapiente perspiciatis,
+                                                officiis nisi ratione
+                                                reprehenderit cumque. Dolorum,
+                                                quaerat.
+                                            </p>
+                                        </v-col>
+                                    </v-row>
                                 </div>
                             </div>
 
@@ -164,7 +221,6 @@ defineProps({
                                     No hay notificaciones nuevas.
                                 </p>
                             </div>
-
                         </template>
 
                         <template v-if="user.rol === 'staff'">
@@ -175,7 +231,6 @@ defineProps({
                                 Panel de Staff
                             </Link>
                         </template>
-
                     </nav>
                 </div>
             </div>
@@ -194,5 +249,3 @@ defineProps({
         </div>
     </AppLayout>
 </template>
-
-

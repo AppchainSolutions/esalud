@@ -13,6 +13,8 @@ class HomeController extends Controller
         if (Auth::check()) {
             return Inertia::render('HomePage', [
                 'user' => Auth::user(),
+                'status' => session('status'),
+                'error' => session('error')
             ]);
         }
         

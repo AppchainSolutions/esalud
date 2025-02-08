@@ -103,15 +103,18 @@ class PacienteActivacionController extends Controller
                 return redirect('/')->with('error', 'La cuenta ya ha sido activada');
             }
 
-            // Activar cuenta
-            $this->activacionService->activarCuenta($request->input('token'), [
+            // Activar cuenta y obtener el usuario
+            $usuario = $this->activacionService->activarCuenta($request->input('token'), [
                 'password' => $request->input('password'),
                 'password_confirmation' => $request->input('password_confirmation'),
                 'email' => $request->input('email')
             ]);
 
-            // Redirigir a home con mensaje de éxito
-            return redirect('/')->with('status', 'Cuenta activada exitosamente');
+            // Autenticar al usuario
+            Auth::login($usuario);
+
+            // Redirigir al dashboard del paciente
+            return redirect()->route('paciente.mi_dashboard')->with('status', 'Cuenta activada exitosamente');
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Redirigir de vuelta con errores de validación
             return back()->withErrors($e->validator);

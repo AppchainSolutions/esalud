@@ -77,14 +77,14 @@ Route::middleware([
 
     // Route::middleware(['auth', 'verified'])->group(function () {
     // Rutas existentes...
-    Route::get('mi_dashboard', [App\Http\Controllers\Paciente\MiDashboardController::class, 'index'])
-        ->name('paciente.mi_dashboard');
-    Route::get('mi_perfil_personal', [App\Http\Controllers\Paciente\MiPerfilController::class, 'personal'])
-        ->name('paciente.mi_perfil_personal');
-    Route::get('mi_perfil_medico', [App\Http\Controllers\Paciente\MiPerfilController::class, 'medico'])
-        ->name('paciente.mi_perfil_medico');
-    Route::put('mi_perfil', [App\Http\Controllers\Paciente\MiPerfilController::class, 'update'])
-        ->name('paciente.mi_perfil_personal.update');
+    // Route::get('mi_dashboard', [App\Http\Controllers\Paciente\MiDashboardController::class, 'index'])
+    //     ->name('paciente.mi_dashboard');
+    // Route::get('mi_perfil_personal', [App\Http\Controllers\Paciente\MiPerfilController::class, 'personal'])
+    //     ->name('paciente.mi_perfil_personal');
+    // Route::get('mi_perfil_medico', [App\Http\Controllers\Paciente\MiPerfilController::class, 'medico'])
+    //     ->name('paciente.mi_perfil_medico');
+    // Route::put('mi_perfil', [App\Http\Controllers\Paciente\MiPerfilController::class, 'update'])
+    //     ->name('paciente.mi_perfil_personal.update');
 
     // Rutas de activación de pacientes
     Route::post('/pacientes/{paciente}/enviar-activacion', [PacienteController::class, 'enviarActivacion'])
@@ -94,11 +94,11 @@ Route::middleware([
     // });
 
     // Ruta para activación de paciente
-    Route::get('/activar/{token}', [PacienteActivacionController::class, 'mostrarFormulario'])
-        ->name('paciente.mostrar-activacion');
+    // Route::get('/activar-cuenta/{token}', [PacienteActivacionController::class, 'mostrarFormulario'])
+    //     ->name('paciente.mostrar-activacion');
 
-    Route::post('/activar', [PacienteActivacionController::class, 'activarCuenta'])
-        ->name('paciente.activar');
+    // Route::post('/activar-cuenta', [PacienteActivacionController::class, 'activarCuenta'])
+    //     ->name('paciente.activar');
 });
 
 // Rutas protegidas para pacientes
@@ -121,23 +121,33 @@ Route::middleware(['auth', 'acceso.paciente'])->prefix('paciente')->group(functi
 });
 
 // Rutas de Activación de Pacientes
-Route::get('/activar/{token}', [PacienteActivacionController::class, 'mostrarFormulario'])
-    ->name('paciente.activacion')
-    ->middleware('guest');
+Route::middleware('guest')->group(function () {
+    // Mostrar formulario de activación
+    Route::get('/activar/{token}', [PacienteActivacionController::class, 'mostrarFormulario'])
+        ->name('paciente.activacion.formulario');
 
-Route::post('/activar', [PacienteActivacionController::class, 'activarCuenta'])
-    ->name('paciente.activar')
-    ->middleware('guest');
+    // Procesar activación de cuenta
+    Route::post('/activar', [PacienteActivacionController::class, 'activarCuenta'])
+        ->name('paciente.activacion.completar');
+});
 
-Route::get('/paciente/activar/{token}', [App\Http\Controllers\Paciente\ActivacionController::class, 'mostrarFormularioActivacion'])
-    ->name('paciente.activar.formulario');
+// Route::get('/activar/{token}', [PacienteActivacionController::class, 'mostrarFormulario'])
+//     ->name('paciente.activacion')
+//     ->middleware('guest');
 
-Route::post('/paciente/activar', [App\Http\Controllers\Paciente\ActivacionController::class, 'activar'])
-    ->name('paciente.activar');
+// Route::post('/activar', [PacienteActivacionController::class, 'activarCuenta'])
+//     ->name('paciente.activar')
+//     ->middleware('guest');
+
+// Route::get('/paciente/activar/{token}', [App\Http\Controllers\Paciente\ActivacionController::class, 'mostrarFormularioActivacion'])
+//     ->name('paciente.activar.formulario');
+
+// Route::post('/paciente/activar', [App\Http\Controllers\Paciente\ActivacionController::class, 'activar'])
+//     ->name('paciente.activar');
 
 // Rutas de activación de cuenta de paciente sin autenticación
-Route::get('/activar-cuenta/{token}', [App\Http\Controllers\Paciente\ActivacionController::class, 'activar'])
-    ->name('paciente.activar');
+// Route::get('/activar-cuenta/{token}', [App\Http\Controllers\Paciente\ActivacionController::class, 'activar'])
+//     ->name('paciente.activar');
 
-Route::post('/activar-cuenta', [App\Http\Controllers\Paciente\ActivacionController::class, 'completarActivacion'])
-    ->name('paciente.completar-activacion');
+// Route::post('/activar-cuenta', [App\Http\Controllers\Paciente\ActivacionController::class, 'completarActivacion'])
+//     ->name('paciente.completar-activacion');

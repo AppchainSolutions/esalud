@@ -88,6 +88,7 @@ El flujo de activación de pacientes es un proceso seguro y controlado que permi
 - Añadir registro de intentos de activación
 - Mejorar mensajes de error
 - Implementar autenticación de dos factores
+- Incluir validaciones biometricas como huella dactilar y/o facial
 
 ## Tecnologías Utilizadas
 

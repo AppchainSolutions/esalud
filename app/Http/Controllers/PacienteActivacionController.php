@@ -100,7 +100,11 @@ class PacienteActivacionController extends Controller
 
             // Verificar si la cuenta ya está activada
             if ($paciente->cuenta_activada) {
-                return redirect('/')->with('error', 'La cuenta ya ha sido activada');
+                return Inertia::render('Paciente/Activacion', [
+                'token' => $request->input('token'),
+                'email' => $request->input('email'),
+                'error' => 'La cuenta ya ha sido activada'
+            ]);
             }
 
             // Activar cuenta y obtener el usuario
@@ -125,19 +129,31 @@ class PacienteActivacionController extends Controller
                 ->first();
 
             if ($pacienteActivado) {
-                return redirect('/')->with('error', 'La cuenta ya ha sido activada');
+                return Inertia::render('Paciente/Activacion', [
+                'token' => $request->input('token'),
+                'email' => $request->input('email'),
+                'error' => 'La cuenta ya ha sido activada'
+            ]);
             }
 
-            // Redirigir de vuelta con mensaje de error
-            return redirect('/')->with('error', $e->getMessage());
+            // Renderizar formulario con mensaje de error
+            return Inertia::render('Paciente/Activacion', [
+                'token' => $request->input('token'),
+                'email' => $request->input('email'),
+                'error' => $e->getMessage()
+            ]);
         } catch (\Exception $e) {
             $this->errorLog('Error en activación de cuenta', [
                 'email' => $request->input('email'),
                 'error' => $e->getMessage()
             ]);
 
-            // Redirigir de vuelta con mensaje de error
-            return redirect('/')->with('error', $e->getMessage() ?? 'Ocurrió un error al activar la cuenta');
+            // Renderizar formulario con mensaje de error
+            return Inertia::render('Paciente/Activacion', [
+                'token' => $request->input('token'),
+                'email' => $request->input('email'),
+                'error' => $e->getMessage() ?? 'Ocurrió un error al activar la cuenta'
+            ]);
         }
     }
 }

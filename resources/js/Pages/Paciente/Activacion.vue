@@ -13,6 +13,15 @@
                         Configura tu contraseña para acceder a tu cuenta
                     </v-card-subtitle>
 
+                    <v-alert
+                        v-if="props.error"
+                        type="error"
+                        class="mb-4"
+                        closable
+                    >
+                        {{ props.error }}
+                    </v-alert>
+
                     <v-form @submit.prevent="submit" ref="activacionForm">
                         <v-text-field
                             v-model="form.password"
@@ -157,6 +166,10 @@ const props = defineProps({
     email: {
         type: String,
         required: true,
+    },
+    error: {
+        type: String,
+        default: null
     }
 });
 

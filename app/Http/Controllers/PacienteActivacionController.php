@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ActivacionPacienteRequest;
 use App\Services\PacienteActivacionService;
+use Esalud\EnhancedLogging\Traits\ContextualLogging;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class PacienteActivacionController extends Controller
 {
+    use ContextualLogging;
+
     /**
      * Servicio de activación de pacientes
      *
@@ -40,11 +44,21 @@ class PacienteActivacionController extends Controller
             // Validar token
             $paciente = $this->activacionService->validarToken($token);
 
+            $this->debugLog('Mostrando formulario de activación', [
+                'paciente_id' => $paciente->id,
+                'email' => $paciente->email
+            ]);
+
             return Inertia::render('Paciente/Activacion', [
                 'token' => $token,
                 'paciente' => $paciente
             ]);
         } catch (\Exception $e) {
+            $this->errorLog('Error al mostrar formulario de activación', [
+                'token' => $token,
+                'error' => $e->getMessage()
+            ]);
+
             // Token inválido o expirado
             return Inertia::render('Paciente/ActivacionError', [
                 'mensaje' => 'El enlace de activación no es válido o ha expirado.'
@@ -61,9 +75,9 @@ class PacienteActivacionController extends Controller
     public function activarCuenta(ActivacionPacienteRequest $request)
     {
         try {
-            Log::info('Datos de activación recibidos', [
-                'token' => $request->input('token'),
-                'email' => $request->input('email')
+            $this->debugLog('Iniciando activación de cuenta', [
+                'email' => $request->input('email'),
+                'token' => Str::limit($request->input('token'), 10, '...')
             ]);
 
             // Activar cuenta usando el servicio
@@ -72,6 +86,11 @@ class PacienteActivacionController extends Controller
                 $request->validated()
             );
 
+            $this->debugLog('Cuenta activada exitosamente', [
+                'user_id' => $user->id,
+                'email' => $user->email
+            ]);
+
             // Iniciar sesión
             Auth::login($user);
 
@@ -79,9 +98,9 @@ class PacienteActivacionController extends Controller
             return redirect()->route('paciente.dashboard')
                 ->with('success', 'Cuenta activada exitosamente');
         } catch (\Exception $e) {
-            Log::error('Error en activación de cuenta', [
-                'mensaje' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+            $this->errorLog('Error en activación de cuenta', [
+                'email' => $request->input('email'),
+                'error' => $e->getMessage()
             ]);
 
             // Redirigir de vuelta con mensaje de error

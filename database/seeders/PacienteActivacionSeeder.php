@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use App\Mail\PacienteActivacionMail;
 use App\Models\Afp;
 use App\Models\Area;
@@ -26,9 +27,12 @@ use App\Models\Religion;
 use App\Models\SeguroSalud;
 use App\Models\Unidad;
 use Faker\Factory as Faker;
+use Esalud\EnhancedLogging\Traits\ContextualLogging;
 
 class PacienteActivacionSeeder extends Seeder
 {
+    use ContextualLogging;
+
     /**
      * Run the database seeds.
      */
@@ -45,9 +49,9 @@ class PacienteActivacionSeeder extends Seeder
                 'email' => 'omar.ahumadag@gmail.com',
             ],
             [
-                'rut' => '12345678-9',
                 'nombre' => 'Juan Carlos',
                 'apellidos' => 'Pérez González',
+                'rut' => '12345678-9',
                 'actividad_economica' => $faker->jobTitle(),
                 'afp' => Afp::inRandomOrder()->first()->id,
                 'area' => Area::inRandomOrder()->first()->id,
@@ -80,19 +84,55 @@ class PacienteActivacionSeeder extends Seeder
             ]
         );
 
+        $this->debugLog('Paciente de prueba creado o recuperado', [
+            'paciente_id' => $paciente->id,
+            'email' => $paciente->email,
+            'rut' => $paciente->rut
+        ]);
+
+        // Agregar log de depuración
+        Log::debug('Iniciando seeder de paciente de activación', [
+            'email' => $paciente->email,
+            'rut' => $paciente->rut
+        ]);
+
         // Generar token de activación
         $token = $paciente->generarTokenActivacion();
+
+        $this->debugLog('Token de activación generado', [
+            'paciente_id' => $paciente->id,
+            'token_length' => strlen($token),
+            'expira' => $paciente->token_activacion_expira
+        ]);
+
+        // Imprimir información detallada del paciente
+        $this->command->info("Detalles del Paciente:");
+        $this->command->info("ID: {$paciente->id}");
+        $this->command->info("Nombre: {$paciente->nombre}");
+        $this->command->info("Apellidos: {$paciente->apellidos}");
+        $this->command->info("RUT: {$paciente->rut}");
+        $this->command->info("Email: {$paciente->email}");
+        $this->command->info("Token de Activación: {$token}");
 
         // Enviar correo con información de activación
         if (app()->environment(['local', 'testing'])) {
             $activationUrl = route('paciente.activacion.formulario', ['token' => $token, 'email' => $paciente->email]);
             
+            $this->debugLog('URL de activación generada', [
+                'url' => $activationUrl
+            ]);
+
             Mail::to($paciente->email)->send(new PacienteActivacionMail(
                 $paciente, 
                 $token, 
                 $activationUrl,
                 24 // Horas de expiración
             ));
+
+            $this->debugLog('Correo de activación enviado', [
+                'paciente_id' => $paciente->id,
+                'email' => $paciente->email
+            ]);
 
             // Mensaje informativo con detalles de seguridad
             $this->command->info("Correo de activación enviado:");

@@ -13,9 +13,12 @@ use App\Mail\PacienteActivacionMail;
 use Illuminate\Support\Facades\Validator;
 use App\Events\PacienteActivado;
 use App\Exceptions\TokenActivacionInvalidoException;
+use Esalud\EnhancedLogging\Traits\ContextualLogging;
 
 class PacienteActivacionService
 {
+    use ContextualLogging;
+
     /**
      * Genera un token de activación para un paciente
      * 
@@ -87,13 +90,16 @@ class PacienteActivacionService
             });
 
         if (!$paciente) {
-            Log::warning('Intento de activación con token inválido', [
-                'token' => Str::limit($tokenPlano, 10, '...'),
-                'timestamp' => now()
+            $this->errorLog('Token de activación inválido o expirado', [
+                'token' => $tokenPlano
             ]);
-
             throw new TokenActivacionInvalidoException('Token de activación inválido o expirado');
         }
+
+        $this->debugLog('Token de activación validado exitosamente', [
+            'paciente_id' => $paciente->id,
+            'email' => $paciente->email
+        ]);
 
         return $paciente;
     }
@@ -117,15 +123,31 @@ class PacienteActivacionService
         // Iniciar transacción de base de datos
         return DB::transaction(function () use ($paciente, $datosUsuario) {
             try {
-                // Crear usuario
+                $this->debugLog('Detalles completos del paciente', [
+                    'paciente' => $paciente->toArray()
+                ]);
+
+                $this->debugLog('Intentando crear usuario', [
+                    'nombre' => $paciente->nombre,
+                    'apellidos' => $paciente->apellidos,
+                    'rut' => $paciente->rut,
+                    'email' => $paciente->email
+                ]);
+
                 $user = User::create([
                     'name' => $paciente->nombre,
-                    'last_name' => $paciente->apellidos,
+                    'lastname' => $paciente->apellidos,
                     'rut' => $paciente->rut,
                     'email' => $paciente->email, // Usar email del paciente
                     'password' => Hash::make($datosUsuario['password']),
                     'rol' => 'paciente',
                     'isAdmin' => false
+                ]);
+
+                $this->debugLog('Usuario creado exitosamente', [
+                    'user_id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email
                 ]);
 
                 // Vincular usuario con paciente
@@ -134,6 +156,11 @@ class PacienteActivacionService
                     'user_id' => $user->id,
                     'token_activacion' => null,
                     'token_activacion_expira' => null
+                ]);
+
+                $this->debugLog('Cuenta de paciente activada', [
+                    'paciente_id' => $paciente->id,
+                    'user_id' => $user->id
                 ]);
 
                 // Disparar evento de cuenta activada
@@ -149,9 +176,12 @@ class PacienteActivacionService
                 return $user;
             } catch (\Exception $e) {
                 // Registrar error
-                Log::error('Error al activar cuenta de paciente', [
+                $this->errorLog('Error al activar cuenta de paciente', [
                     'paciente_id' => $paciente->id,
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                    'paciente_data' => $paciente->toArray(),
+                    'datos_usuario' => $datosUsuario
                 ]);
 
                 throw new \Exception('No se pudo activar la cuenta: ' . $e->getMessage());

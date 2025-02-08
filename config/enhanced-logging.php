@@ -21,8 +21,8 @@ return [
     // Configuración de contexto de logging
     'context' => [
         // Incluir información de clase y método
-        'include_class' => true,
-        'include_method' => true,
+        'include_class' => true,  // Habilitado
+        'include_method' => true, 
         
         // Límite de profundidad de la traza
         'trace_depth' => 2,

@@ -20,6 +20,23 @@ trait ContextualLogging
         $context['trace_id'] = Str::uuid();
         $context['ip'] = request()->ip();
         
+        // Agregar información de clase y método si está habilitado
+        if (config('enhanced-logging.context.include_class', false)) {
+            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 
+                config('enhanced-logging.context.trace_depth', 2));
+            
+            if (isset($backtrace[1])) {
+                $caller = $backtrace[1];
+                $context['source'] = strtr(
+                    config('enhanced-logging.context.format', '{class}::{method}'), 
+                    [
+                        '{class}' => $caller['class'] ?? 'Unknown',
+                        '{method}' => $caller['function'] ?? 'Unknown'
+                    ]
+                );
+            }
+        }
+        
         if ($sanitize) {
             $context = $this->sanitizeContext($context);
         }

@@ -18,6 +18,19 @@ return [
     // Tamaño máximo de archivo de log (en bytes)
     'max_log_file_size' => 5 * 1024 * 1024, // 5MB
 
+    // Configuración de contexto de logging
+    'context' => [
+        // Incluir información de clase y método
+        'include_class' => true,
+        'include_method' => true,
+        
+        // Límite de profundidad de la traza
+        'trace_depth' => 2,
+        
+        // Formatear nombre de clase y método
+        'format' => '{class}::{method}'
+    ],
+
     // Canales de log adicionales
     'channels' => [
         'security' => [

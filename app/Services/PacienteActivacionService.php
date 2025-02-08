@@ -206,4 +206,23 @@ class PacienteActivacionService
         // Lanzar excepción si la validación falla
         $validator->validate();
     }
+
+    // Método de prueba para verificar logging
+    public function pruebaLogging()
+    {
+        // Log de depuración con contexto
+        $this->debugLog('Prueba de sistema de logging con contexto', [
+            'metodo_prueba' => 'pruebaLogging',
+            'parametros' => 'Sin parámetros'
+        ]);
+
+        // Log de error con contexto
+        $this->errorLog('Ejemplo de log de error', [
+            'nivel_severidad' => 'prueba',
+            'datos_adicionales' => [
+                'clave1' => 'valor1',
+                'clave2' => 'valor2'
+            ]
+        ]);
+    }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2104741ebfd4286a730e77c9a2fc262f",
+    "content-hash": "c716e1a2d760720ba23e9228cbf9a071",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -664,30 +664,63 @@
         },
         {
             "name": "esalud/enhanced-logging",
-            "version": "dev-vulco-dev",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/enhanced-logging",
-                "reference": "eafb8d756304cbd39f821fe4d6da598758b6db7d"
+                "reference": "8277a37c800fb49ded02047fb5382c199c7f30da"
             },
             "require": {
                 "laravel/framework": "^11.0",
+                "monolog/monolog": "^3.0",
                 "php": "^8.1"
             },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Esalud\\EnhancedLogging\\Providers\\EnhancedLoggingServiceProvider"
-                    ]
-                }
+            "require-dev": {
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.0",
+                "squizlabs/php_codesniffer": "^3.7"
             },
+            "type": "library",
             "autoload": {
                 "psr-4": {
                     "Esalud\\EnhancedLogging\\": "src/"
                 }
             },
-            "description": "Enhanced logging package for Laravel with advanced context and security features",
+            "autoload-dev": {
+                "psr-4": {
+                    "Esalud\\EnhancedLogging\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "pest"
+                ],
+                "test:coverage": [
+                    "pest --coverage"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Omar Ahumada",
+                    "email": "omar.ahumadag@gmail.com",
+                    "role": "Desarrollador Principal"
+                }
+            ],
+            "description": "Paquete de logging avanzado para Laravel con características de seguridad y contexto",
+            "keywords": [
+                "contextual-logging",
+                "laravel",
+                "logging",
+                "php",
+                "security"
+            ],
             "transport-options": {
                 "symlink": true,
                 "relative": true

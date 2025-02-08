@@ -24,6 +24,18 @@ El sistema de testing de eSalud es una estrategia integral de Quality Assurance 
    - Objetivo: Simular flujos completos de usuario
    - Herramienta: Playwright
 
+## 📋 Estructura de Directorios
+
+```
+tests/
+├── Backend/
+│   ├── Feature/     # Pruebas de integración
+│   └── Unit/        # Pruebas unitarias
+└── Frontend/
+    ├── Unitarias/   # Pruebas de componentes y servicios
+    └── E2E/         # Pruebas end-to-end
+```
+
 ## 🔍 Estrategias de Testing
 
 ### Backend (Laravel/Pest)

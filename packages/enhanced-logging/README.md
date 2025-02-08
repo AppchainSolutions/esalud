@@ -69,6 +69,13 @@ return [
             'driver' => 'single', 
             'path' => storage_path('logs/activation.log'),
         ]
+    ],
+    
+    'context' => [
+        'include_class' => true,
+        'include_method' => true,
+        'trace_depth' => 2,
+        'format' => '{class}::{method}'
     ]
 ];
 ```
@@ -137,7 +144,7 @@ Puedes agregar campos sensibles en `config/enhanced-logging.php`:
 
 ## 🤝 Contribuciones
 
-Las contribuciones son bienvenidas. Por favor, abre un issue o un pull request.
+Las contribuciones son bienvenidas. Por favor, lea CONTRIBUTING.md para detalles sobre nuestro código de conducta y proceso de envío de pull requests.
 
 ## 📄 Licencia
 

@@ -111,14 +111,7 @@ Route::middleware(['auth', 'acceso.paciente'])->prefix('paciente')->group(functi
         ->name('paciente.mi_perfil.update');
 
 
-    // Route::get('/historial-medico', [App\Http\Controllers\Paciente\HistorialMedicoController::class, 'index'])
-    //     ->name('paciente.historial');
-    // Route::get('/historial-medico/{consultaId}', [App\Http\Controllers\Paciente\HistorialMedicoController::class, 'detalleConsulta'])
-    //     ->name('paciente.historial.detalle');
-
-    // Route::get('/citas', [App\Http\Controllers\Paciente\CitaController::class, 'index'])
-    //     ->name('paciente.citas');
-});
+  });
 
 // Rutas de Activación de Pacientes
 Route::middleware('guest')->group(function () {
@@ -133,23 +126,3 @@ Route::middleware('guest')->group(function () {
         ->middleware('signed');
 });
 
-// Route::get('/activar/{token}', [PacienteActivacionController::class, 'mostrarFormulario'])
-//     ->name('paciente.activacion')
-//     ->middleware('guest');
-
-// Route::post('/activar', [PacienteActivacionController::class, 'activarCuenta'])
-//     ->name('paciente.activar')
-//     ->middleware('guest');
-
-// Route::get('/paciente/activar/{token}', [App\Http\Controllers\Paciente\ActivacionController::class, 'mostrarFormularioActivacion'])
-//     ->name('paciente.activar.formulario');
-
-// Route::post('/paciente/activar', [App\Http\Controllers\Paciente\ActivacionController::class, 'activar'])
-//     ->name('paciente.activar');
-
-// Rutas de activación de cuenta de paciente sin autenticación
-// Route::get('/activar-cuenta/{token}', [App\Http\Controllers\Paciente\ActivacionController::class, 'activar'])
-//     ->name('paciente.activar');
-
-// Route::post('/activar-cuenta', [App\Http\Controllers\Paciente\ActivacionController::class, 'completarActivacion'])
-//     ->name('paciente.completar-activacion');

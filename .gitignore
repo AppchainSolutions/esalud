@@ -3,6 +3,8 @@
 /public
 /bootstrap
 /storage
+/test-results
+/playwright-report
 .idea
 .vscode
 .vite

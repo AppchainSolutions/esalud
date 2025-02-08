@@ -28,6 +28,8 @@ use App\Models\SeguroSalud;
 use App\Models\Unidad;
 use Faker\Factory as Faker;
 use Esalud\EnhancedLogging\Traits\ContextualLogging;
+use Illuminate\Support\Facades\URL;
+use App\Services\PacienteActivacionService;
 
 class PacienteActivacionSeeder extends Seeder
 {
@@ -99,6 +101,9 @@ class PacienteActivacionSeeder extends Seeder
         // Generar token de activación
         $token = $paciente->generarTokenActivacion();
 
+        // Generar URL de activación
+        $activationUrl = app(PacienteActivacionService::class)->generarUrlActivacion($paciente);
+
         $this->debugLog('Token de activación generado', [
             'paciente_id' => $paciente->id,
             'token_length' => strlen($token),
@@ -116,15 +121,12 @@ class PacienteActivacionSeeder extends Seeder
 
         // Enviar correo con información de activación
         if (app()->environment(['local', 'testing'])) {
-            $activationUrl = route('paciente.activacion.formulario', ['token' => $token, 'email' => $paciente->email]);
-            
             $this->debugLog('URL de activación generada', [
                 'url' => $activationUrl
             ]);
 
             Mail::to($paciente->email)->send(new PacienteActivacionMail(
                 $paciente, 
-                $token, 
                 $activationUrl,
                 24 // Horas de expiración
             ));

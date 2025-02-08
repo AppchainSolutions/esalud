@@ -56,6 +56,7 @@ return new class extends Migration {
             $table->string('telefono2')->nullable();
             $table->string('token_activacion')->nullable();
             $table->timestamp('token_activacion_expira')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
         });

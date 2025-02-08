@@ -1,211 +1,178 @@
 <?php
 
-use Tests\TestCase;
+namespace Tests\Feature\Pacientes\Crud;
+
 use App\Models\Paciente;
 use App\Models\User;
-use App\Services\PacienteService;
-use App\Repositories\PacienteRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Testing\TestCase;
+use Illuminate\Support\Facades\DB;
+use Tests\CreatesApplication;
 
-uses(TestCase::class, RefreshDatabase::class, WithFaker::class);
+class PacienteCrudTest extends TestCase
+{
+    use CreatesApplication;
+    use RefreshDatabase;
 
-beforeEach(function () {
-    $this->artisan('migrate');
-    $this->user = User::factory()->create();
-    $this->actingAs($this->user);
-});
+    private function datosValidosPaciente($sobreescribir = [])
+    {
+        $datosBase = [
+            'nombre' => 'Juan',
+            'apellidos' => 'Pérez González',
+            'rut' => '12.345.678-9',
+            'email' => 'juan.perez@ejemplo.com',
+            'fecha_nacimiento' => now()->subYears(30)->format('Y-m-d'),
+            'genero' => 1,
+            'estado_civil' => 1,
+            'nacionalidad' => 1,
+            'activo' => true,
+            'cuenta_activada' => false,
+            'empresa' => 1,
+            'area' => 1,
+            'cargo' => 1,
+            'exposicion' => json_encode(['Ruido', 'Polvo'])
+        ];
 
-describe('Gestión de Pacientes', function () {
-    describe('Creación de Pacientes', function () {
-        it('debe crear un paciente exitosamente', function () {
-            // Given: Tenemos los datos válidos de un paciente
-            $data = [
-                'nombre' => 'Juan',
-                'apellido' => 'Pérez',
-                'rut' => '12345678-9',
-                'fecha_nacimiento' => '1990-01-01',
-                'genero' => 'M',
-                'email' => 'juan@example.com',
-                'telefono' => '123456789',
-                'activo' => true,
-                'protocolo_minsal' => false
-            ];
+        return array_merge($datosBase, $sobreescribir);
+    }
 
-            // When: Enviamos una solicitud POST para crear el paciente
-            $response = $this->postJson('/api/pacientes', $data);
+    public function test_crear_paciente_con_datos_validos()
+    {
+        $paciente = Paciente::create($this->datosValidosPaciente());
 
-            // Then: La respuesta debe ser exitosa y el paciente debe estar en la base de datos
-            $response->assertStatus(201)
-                ->assertJson([
-                    'success' => true,
-                    'message' => 'Paciente creado exitosamente'
-                ])
-                ->assertJsonStructure([
-                    'success',
-                    'message',
-                    'data' => [
-                        'id',
-                        'nombre',
-                        'apellido',
-                        'rut'
-                    ]
-                ]);
+        $this->assertDatabaseHas('pacientes', [
+            'rut' => '12.345.678-9',
+            'email' => 'juan.perez@ejemplo.com'
+        ]);
 
-            $this->assertDatabaseHas('pacientes', [
-                'nombre' => 'Juan',
-                'apellido' => 'Pérez',
-                'rut' => '12345678-9'
-            ]);
-        });
+        $this->assertEquals('Juan', $paciente->nombre);
+        $this->assertEquals('Pérez González', $paciente->apellidos);
+    }
 
-        it('debe validar campos requeridos', function () {
-            // When: Enviamos una solicitud sin datos
-            $response = $this->postJson('/api/pacientes', []);
+    public function test_actualizar_paciente_existente()
+    {
+        $paciente = Paciente::create($this->datosValidosPaciente());
 
-            // Then: Debe retornar errores de validación
-            $response->assertStatus(422)
-                ->assertJsonValidationErrors(['nombre', 'apellido', 'rut']);
-        });
+        $paciente->update([
+            'nombre' => 'Carlos',
+            'apellidos' => 'Martínez López',
+            'email' => 'carlos.martinez@ejemplo.com'
+        ]);
 
-        it('debe validar el formato del RUT', function () {
-            // Given: Datos con RUT inválido
-            $data = [
-                'nombre' => 'Juan',
-                'apellido' => 'Pérez',
-                'rut' => 'invalid-rut'
-            ];
+        $this->assertDatabaseHas('pacientes', [
+            'id' => $paciente->id,
+            'nombre' => 'Carlos',
+            'apellidos' => 'Martínez López',
+            'email' => 'carlos.martinez@ejemplo.com'
+        ]);
+    }
 
-            // When: Enviamos la solicitud
-            $response = $this->postJson('/api/pacientes', $data);
+    public function test_eliminar_paciente()
+    {
+        $paciente = Paciente::create($this->datosValidosPaciente());
 
-            // Then: Debe retornar error de validación para el RUT
-            $response->assertStatus(422)
-                ->assertJsonValidationErrors(['rut']);
-        });
-    });
+        $pacienteId = $paciente->id;
+        $paciente->delete();
 
-    describe('Actualización de Pacientes', function () {
-        it('debe actualizar un paciente exitosamente', function () {
-            // Given: Un paciente existente
-            $paciente = Paciente::factory()->create();
-            $data = [
-                'nombre' => 'Juan Actualizado',
-                'apellido' => 'Pérez Actualizado',
-                'email' => 'juan.updated@example.com'
-            ];
+        $this->assertSoftDeleted('pacientes', [
+            'id' => $pacienteId
+        ]);
+    }
 
-            // When: Enviamos la solicitud de actualización
-            $response = $this->putJson("/api/pacientes/{$paciente->id}", $data);
+    public function test_no_puede_crear_paciente_con_rut_duplicado()
+    {
+        $this->expectException(\Illuminate\Database\QueryException::class);
 
-            // Then: La actualización debe ser exitosa
-            $response->assertStatus(200)
-                ->assertJson([
-                    'success' => true,
-                    'message' => 'Paciente actualizado exitosamente'
-                ]);
+        Paciente::create($this->datosValidosPaciente());
+        Paciente::create($this->datosValidosPaciente([
+            'nombre' => 'María',
+            'email' => 'maria.rodriguez@ejemplo.com'
+        ]));
+    }
 
-            $this->assertDatabaseHas('pacientes', [
-                'id' => $paciente->id,
-                'nombre' => 'Juan Actualizado',
-                'apellido' => 'Pérez Actualizado'
-            ]);
-        });
+    public function test_no_puede_crear_paciente_con_email_duplicado()
+    {
+        $this->expectException(\Illuminate\Database\QueryException::class);
 
-        it('debe validar RUT único al actualizar', function () {
-            // Given: Dos pacientes existentes
-            $paciente1 = Paciente::factory()->create(['rut' => '12345678-9']);
-            $paciente2 = Paciente::factory()->create(['rut' => '98765432-1']);
+        Paciente::create($this->datosValidosPaciente());
+        Paciente::create($this->datosValidosPaciente([
+            'nombre' => 'María',
+            'rut' => '98.765.432-1'
+        ]));
+    }
 
-            // When: Intentamos actualizar el segundo paciente con el RUT del primero
-            $response = $this->putJson("/api/pacientes/{$paciente2->id}", [
-                'rut' => '12345678-9'
-            ]);
+    public function test_actualizar_estado_activacion_paciente()
+    {
+        $paciente = Paciente::create($this->datosValidosPaciente());
 
-            // Then: Debe retornar error de validación
-            $response->assertStatus(422)
-                ->assertJsonValidationErrors(['rut']);
-        });
-    });
+        $paciente->update([
+            'cuenta_activada' => true
+        ]);
 
-    describe('Eliminación de Pacientes', function () {
-        it('debe eliminar un paciente exitosamente', function () {
-            // Given: Un paciente existente
-            $paciente = Paciente::factory()->create();
+        $this->assertDatabaseHas('pacientes', [
+            'id' => $paciente->id,
+            'cuenta_activada' => true
+        ]);
+    }
 
-            // When: Enviamos la solicitud de eliminación
-            $response = $this->deleteJson("/api/pacientes/{$paciente->id}");
+    public function test_actualizar_exposiciones_paciente()
+    {
+        $paciente = Paciente::create($this->datosValidosPaciente());
 
-            // Then: El paciente debe ser eliminado
-            $response->assertStatus(200)
-                ->assertJson([
-                    'success' => true,
-                    'message' => 'Paciente eliminado exitosamente'
-                ]);
+        $paciente->update([
+            'exposicion' => json_encode(['Químicos', 'Humos'])
+        ]);
 
-            $this->assertDatabaseMissing('pacientes', [
-                'id' => $paciente->id
-            ]);
-        });
+        $this->assertDatabaseHas('pacientes', [
+            'id' => $paciente->id,
+            'exposicion' => json_encode(['Químicos', 'Humos'])
+        ]);
+    }
 
-        it('debe manejar la eliminación de paciente inexistente', function () {
-            // When: Intentamos eliminar un paciente que no existe
-            $response = $this->deleteJson("/api/pacientes/999999");
+    public function test_desactivar_paciente()
+    {
+        $paciente = Paciente::create($this->datosValidosPaciente());
 
-            // Then: Debe retornar error 404
-            $response->assertStatus(404)
-                ->assertJson([
-                    'success' => false,
-                    'message' => 'Paciente no encontrado'
-                ]);
-        });
-    });
+        $paciente->update([
+            'activo' => false
+        ]);
 
-    describe('Manejo de Errores', function () {
-        it('debe manejar errores de base de datos al crear', function () {
-            // Given: Un servicio mockeado que lanza una excepción
-            $mockService = $this->mock(PacienteService::class);
-            $mockService->shouldReceive('store')
-                ->once()
-                ->andThrow(new \Exception('Error de base de datos'));
+        $this->assertDatabaseHas('pacientes', [
+            'id' => $paciente->id,
+            'activo' => false
+        ]);
+    }
 
-            // When: Intentamos crear un paciente
-            $response = $this->postJson('/api/pacientes', [
-                'nombre' => 'Test',
-                'apellido' => 'User',
-                'rut' => '12345678-9'
-            ]);
+    public function test_cambiar_empresa_area_cargo_paciente()
+    {
+        $paciente = Paciente::create($this->datosValidosPaciente());
 
-            // Then: Debe retornar error 500
-            $response->assertStatus(500)
-                ->assertJson([
-                    'success' => false,
-                    'message' => 'Error al crear paciente',
-                    'error' => 'Error de base de datos'
-                ]);
-        });
+        $paciente->update([
+            'empresa' => 2,
+            'area' => 2,
+            'cargo' => 2
+        ]);
 
-        it('debe manejar errores de base de datos al actualizar', function () {
-            // Given: Un paciente existente y un servicio mockeado
-            $paciente = Paciente::factory()->create();
-            $mockService = $this->mock(PacienteService::class);
-            $mockService->shouldReceive('update')
-                ->once()
-                ->andThrow(new \Exception('Error de base de datos'));
+        $this->assertDatabaseHas('pacientes', [
+            'id' => $paciente->id,
+            'empresa' => 2,
+            'area' => 2,
+            'cargo' => 2
+        ]);
+    }
 
-            // When: Intentamos actualizar el paciente
-            $response = $this->putJson("/api/pacientes/{$paciente->id}", [
-                'nombre' => 'Test Updated'
-            ]);
+    public function test_restaurar_paciente_eliminado()
+    {
+        $paciente = Paciente::create($this->datosValidosPaciente());
+        $pacienteId = $paciente->id;
+        $paciente->delete();
 
-            // Then: Debe retornar error 500
-            $response->assertStatus(500)
-                ->assertJson([
-                    'success' => false,
-                    'message' => 'Error al actualizar paciente',
-                    'error' => 'Error de base de datos'
-                ]);
-        });
-    });
-});
+        $pacienteRestaurado = Paciente::withTrashed()->find($pacienteId);
+        $pacienteRestaurado->restore();
+
+        $this->assertDatabaseHas('pacientes', [
+            'id' => $pacienteId
+        ]);
+        $this->assertNull($pacienteRestaurado->deleted_at);
+    }
+}

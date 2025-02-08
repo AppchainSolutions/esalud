@@ -6,6 +6,7 @@ use App\Events\PacienteActivado;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 use Esalud\EnhancedLogging\Traits\ContextualLogging;
+use App\Models\RegistroActividad; // Agregar el modelo RegistroActividad
 
 class PacienteActivadoListener implements ShouldQueue
 {
@@ -21,6 +22,14 @@ class PacienteActivadoListener implements ShouldQueue
             'paciente_id' => $event->paciente->id,
             'user_id' => $event->user->id,
             'email' => $event->user->email
+        ]);
+
+        // Crear registro de actividad
+        RegistroActividad::create([
+            'paciente_id' => $event->paciente->id,
+            'usuario_id' => $event->user->id,
+            'tipo_evento' => 'activacion_cuenta',
+            'descripcion' => 'Cuenta de paciente activada exitosamente'
         ]);
 
         // Aquí puedes agregar lógica adicional como:

@@ -43,7 +43,7 @@ return new class extends Migration {
             $table->string('ciudad')->nullable();
             $table->string('direccion')->nullable();
             $table->string('email_verified_at')->nullable();
-            $table->string('email')->nullable();
+            $table->string('email')->unique();
             $table->string('exposicion')->nullable();
             $table->string('modalidad_atencion')->nullable();
             $table->string('nombre');

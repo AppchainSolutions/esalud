@@ -3,26 +3,37 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    /**
-     * Configuraciones adicionales para pruebas
-     */
     protected function setUp(): void
     {
         parent::setUp();
-        // Configuraciones específicas de pruebas
+
+        // Configurar base de datos de testing
+        config([
+            'database.default' => 'testing',
+            'database.connections.testing' => [
+                'driver' => 'sqlite',
+                'database' => ':memory:',
+                'prefix' => '',
+                'foreign_key_constraints' => true,
+            ],
+        ]);
+
+        // Migrar base de datos
+        Artisan::call('migrate');
     }
 
-    /**
-     * Limpiezas o verificaciones después de cada prueba
-     */
     protected function tearDown(): void
     {
+        // Revertir migraciones
+        Artisan::call('migrate:reset');
+
         parent::tearDown();
-        // Limpiezas específicas
     }
 }

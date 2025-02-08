@@ -218,6 +218,17 @@ class Paciente extends Model
         return "{$this->nombres} {$this->apellidos}";
     }
 
+    protected static function booted()
+    {
+        static::creating(function ($paciente) {
+            if ($paciente->cuenta_activada === false) {
+                $tokenPlano = Str::random(64);
+                $paciente->token_activacion = Hash::make($tokenPlano);
+                $paciente->token_activacion_expira = now()->addHours(24);
+            }
+        });
+    }
+
     public function generarTokenActivacion()
     {
         $tokenPlano = Str::random(64);
@@ -252,7 +263,6 @@ class Paciente extends Model
 
     protected $table = 'paciente';
     protected $fillable = [
-        'cuenta_activada',
         'activo',
         'actividad_economica',
         'afp',

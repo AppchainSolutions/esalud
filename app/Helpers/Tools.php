@@ -29,7 +29,7 @@ class Tools
     public static function filterData(array $filters, object $query)
     {
         if (empty($filters)) {
-            return $query->all()->get();
+            return $query->get();
         }
 
         try {

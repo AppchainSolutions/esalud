@@ -99,16 +99,16 @@ class PacienteActivacionSeeder extends Seeder
         ]);
 
         // Generar token de activación
-        $token = $paciente->generarTokenActivacion();
+        //$token = $paciente->generarTokenActivacion();
 
         // Generar URL de activación
         $activationUrl = app(PacienteActivacionService::class)->generarUrlActivacion($paciente);
 
-        $this->debugLog('Token de activación generado', [
-            'paciente_id' => $paciente->id,
-            'token_length' => strlen($token),
-            'expira' => $paciente->token_activacion_expira
-        ]);
+        // $this->debugLog('Token de activación generado', [
+        //     'paciente_id' => $paciente->id,
+        //     'token_length' => strlen($token),
+        //     'expira' => $paciente->token_activacion_expira
+        // ]);
 
         // Imprimir información detallada del paciente
         $this->command->info("Detalles del Paciente:");
@@ -117,7 +117,6 @@ class PacienteActivacionSeeder extends Seeder
         $this->command->info("Apellidos: {$paciente->apellidos}");
         $this->command->info("RUT: {$paciente->rut}");
         $this->command->info("Email: {$paciente->email}");
-        $this->command->info("Token de Activación: {$token}");
 
         // Enviar correo con información de activación
         if (app()->environment(['local', 'testing'])) {
@@ -138,7 +137,6 @@ class PacienteActivacionSeeder extends Seeder
 
             // Mensaje informativo con detalles de seguridad
             $this->command->info("Correo de activación enviado:");
-            $this->command->info("Token de Activación: {$token}");
             $this->command->info("URL de Activación: {$activationUrl}");
             $this->command->info("Expira: {$paciente->token_activacion_expira}");
         }

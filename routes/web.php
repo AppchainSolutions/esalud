@@ -91,14 +91,7 @@ Route::middleware([
         ->name('pacientes.enviar-activacion');
     Route::post('/pacientes/{paciente}/reenviar-activacion', [PacienteController::class, 'reenviarActivacion'])
         ->name('pacientes.reenviar-activacion');
-    // });
-
-    // Ruta para activación de paciente
-    // Route::get('/activar-cuenta/{token}', [PacienteActivacionController::class, 'mostrarFormulario'])
-    //     ->name('paciente.mostrar-activacion');
-
-    // Route::post('/activar-cuenta', [PacienteActivacionController::class, 'activarCuenta'])
-    //     ->name('paciente.activar');
+  
 });
 
 // Rutas protegidas para pacientes

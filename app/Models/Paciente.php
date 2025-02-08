@@ -216,7 +216,7 @@ class Paciente extends Model
 
     public function getNombreCompletoAttribute()
     {
-        return "{$this->nombres} {$this->apellidos}";
+        return "{$this->nombre} {$this->apellidos}";
     }
 
     protected static function booted()

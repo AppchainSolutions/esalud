@@ -7,7 +7,7 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use App\Events\PacienteActivado;
-use App\Listeners\RegistrarActivacionPaciente;
+use App\Listeners\PacienteActivadoListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -21,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         PacienteActivado::class => [
-            RegistrarActivacionPaciente::class,
+            PacienteActivadoListener::class,
         ],
     ];
 

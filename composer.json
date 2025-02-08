@@ -8,9 +8,19 @@
     "framework"
   ],
   "license": "MIT",
+  "repositories": [
+    {
+        "type": "path",
+        "url": "packages/enhanced-logging",
+        "options": {
+            "symlink": true
+        }
+    }
+  ],
   "require": {
     "php": "^8.2",
     "cran208-laravel/mail-preview": "^1.0",
+    "esalud/enhanced-logging": "@dev",
     "guzzlehttp/guzzle": "^7.2",
     "inertiajs/inertia-laravel": "^1.0",
     "itsgoingd/clockwork": "^5.2",

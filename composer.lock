@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "03223f220a9e5c15aa996d2969cade0c",
+    "content-hash": "2104741ebfd4286a730e77c9a2fc262f",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -661,6 +661,37 @@
                 }
             ],
             "time": "2024-12-27T00:36:43+00:00"
+        },
+        {
+            "name": "esalud/enhanced-logging",
+            "version": "dev-vulco-dev",
+            "dist": {
+                "type": "path",
+                "url": "packages/enhanced-logging",
+                "reference": "eafb8d756304cbd39f821fe4d6da598758b6db7d"
+            },
+            "require": {
+                "laravel/framework": "^11.0",
+                "php": "^8.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Esalud\\EnhancedLogging\\Providers\\EnhancedLoggingServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Esalud\\EnhancedLogging\\": "src/"
+                }
+            },
+            "description": "Enhanced logging package for Laravel with advanced context and security features",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "fruitcake/php-cors",
@@ -11664,7 +11695,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "esalud/enhanced-logging": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

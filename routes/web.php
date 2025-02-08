@@ -124,11 +124,13 @@ Route::middleware(['auth', 'acceso.paciente'])->prefix('paciente')->group(functi
 Route::middleware('guest')->group(function () {
     // Mostrar formulario de activación
     Route::get('/activar/{token}', [PacienteActivacionController::class, 'mostrarFormulario'])
-        ->name('paciente.activacion.formulario');
+        ->name('paciente.activacion.formulario')
+        ->middleware('signed');
 
     // Procesar activación de cuenta
     Route::post('/activar', [PacienteActivacionController::class, 'activarCuenta'])
-        ->name('paciente.activacion.completar');
+        ->name('paciente.activacion.completar')
+        ->middleware('signed');
 });
 
 // Route::get('/activar/{token}', [PacienteActivacionController::class, 'mostrarFormulario'])

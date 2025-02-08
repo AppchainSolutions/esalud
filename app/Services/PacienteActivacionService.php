@@ -91,14 +91,16 @@ class PacienteActivacionService
 
         if (!$paciente) {
             $this->errorLog('Token de activación inválido o expirado', [
-                'token' => $tokenPlano
+                'token' => Str::limit($tokenPlano, 10, '...'),
+                'timestamp' => now()
             ]);
             throw new TokenActivacionInvalidoException('Token de activación inválido o expirado');
         }
 
         $this->debugLog('Token de activación validado exitosamente', [
             'paciente_id' => $paciente->id,
-            'email' => $paciente->email
+            'email' => $paciente->email,
+            'token_expira' => $paciente->token_activacion_expira
         ]);
 
         return $paciente;
@@ -107,84 +109,75 @@ class PacienteActivacionService
     /**
      * Activa la cuenta de un paciente
      * 
-     * @param string $tokenPlano
-     * @param array $datosUsuario
+     * @param string $tokenPlano Token de activación
+     * @param array $datosUsuario Datos para crear usuario
      * @return User
-     * @throws \Exception
+     * @throws TokenActivacionInvalidoException
      */
     public function activarCuenta(string $tokenPlano, array $datosUsuario): User
     {
-        // Validar token de activación
+        // Validar token
         $paciente = $this->validarToken($tokenPlano);
 
         // Validar datos de usuario
-        $this->validarDatosActivacion($datosUsuario);
+        $validator = Validator::make($datosUsuario, [
+            'password' => [
+                'required', 
+                'string', 
+                'min:12', 
+                'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+            ]
+        ]);
 
-        // Iniciar transacción de base de datos
-        return DB::transaction(function () use ($paciente, $datosUsuario) {
+        if ($validator->fails()) {
+            $this->errorLog('Validación de datos de usuario fallida', [
+                'paciente_id' => $paciente->id,
+                'errores' => $validator->errors()->toArray()
+            ]);
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
+
+        // Iniciar transacción para garantizar atomicidad
+        return DB::transaction(function () use ($paciente, $datosUsuario, $tokenPlano) {
             try {
-                $this->debugLog('Detalles completos del paciente', [
-                    'paciente' => $paciente->toArray()
-                ]);
-
-                $this->debugLog('Intentando crear usuario', [
-                    'nombre' => $paciente->nombre,
-                    'apellidos' => $paciente->apellidos,
-                    'rut' => $paciente->rut,
-                    'email' => $paciente->email
-                ]);
-
+                // Crear usuario asociado al paciente
                 $user = User::create([
                     'name' => $paciente->nombre,
                     'lastname' => $paciente->apellidos,
-                    'rut' => $paciente->rut,
-                    'email' => $paciente->email, // Usar email del paciente
+                    'email' => $paciente->email,
                     'password' => Hash::make($datosUsuario['password']),
                     'rol' => 'paciente',
-                    'isAdmin' => false
-                ]);
-
-                $this->debugLog('Usuario creado exitosamente', [
-                    'user_id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email
+                    'activo' => true,
+                    'rut' => $paciente->rut
                 ]);
 
                 // Vincular usuario con paciente
                 $paciente->update([
-                    'cuenta_activada' => true,
                     'user_id' => $user->id,
+                    'cuenta_activada' => true,
                     'token_activacion' => null,
                     'token_activacion_expira' => null
                 ]);
 
+                // Registrar eventos de seguridad
                 $this->debugLog('Cuenta de paciente activada', [
-                    'paciente_id' => $paciente->id,
-                    'user_id' => $user->id
-                ]);
-
-                // Disparar evento de cuenta activada
-                event(new PacienteActivado($paciente, $user));
-
-                // Registrar log de activación
-                Log::info('Cuenta de paciente activada', [
                     'paciente_id' => $paciente->id,
                     'user_id' => $user->id,
                     'email' => $user->email
                 ]);
 
+                // Emitir evento de cuenta activada
+                event(new PacienteActivado($paciente, $user));
+
                 return $user;
             } catch (\Exception $e) {
-                // Registrar error
                 $this->errorLog('Error al activar cuenta de paciente', [
                     'paciente_id' => $paciente->id,
-                    'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString(),
-                    'paciente_data' => $paciente->toArray(),
-                    'datos_usuario' => $datosUsuario
+                    'error' => $e->getMessage()
                 ]);
 
-                throw new \Exception('No se pudo activar la cuenta: ' . $e->getMessage());
+                throw $e;
             }
         });
     }

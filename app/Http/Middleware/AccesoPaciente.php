@@ -11,11 +11,11 @@ class AccesoPaciente
 {
     public function handle(Request $request, Closure $next)
     {
-        dd([
-            'authenticated' => Auth::check(),
-            'user' => Auth::user(),
-            'is_paciente' => Auth::check() ? Auth::user()->esPaciente() : null
-        ]);
+        // dd([
+        //     'authenticated' => Auth::check(),
+        //     'user' => Auth::user(),
+        //     'is_paciente' => Auth::check() ? Auth::user()->esPaciente() : null
+        // ]);
 
         if (!Auth::check() || !Auth::user()->esPaciente()) {
             return redirect()->route('login')

@@ -1,408 +1,308 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { usePage } from "@inertiajs/vue3";
+import { ref, onMounted } from 'vue'
+import { usePage, router } from '@inertiajs/vue3'
+import axios from 'axios'
+defineOptions({ layout: AppLayout });
 
+// Datos del paciente
+const page = usePage()
+const paciente = page.props.paciente
+const user = page.props.auth.user
 
-//**********\\\\  INI STATE VARIABLES AND CONST ////*************/
+// Estado del formulario
+const editable = ref(false)
+const form = ref({
+  nombre: paciente.nombre,
+  apellidos: paciente.apellidos,
+  rut: paciente.rut,
+  email: paciente.email,
+  telefono1: paciente.telefono1,
+  telefono2: paciente.telefono2,
+  direccion: paciente.direccion,
+  fecha_nacimiento: paciente.fecha_nacimiento,
+  
+  // Relaciones
+  genero: paciente.genero?.id,
+  nacionalidad: paciente.nacionalidad?.id,
+  estado_civil: paciente.estadoCivil?.id,
+  nivel_instruccion: paciente.nivelInstruccion?.id,
+  pueblo_originario: paciente.puebloOriginario?.id,
+  religion: paciente.religion?.id,
+  prevision: paciente.prevision?.id,
+  seguro_salud: paciente.seguroSalud?.id,
+  
+  // Datos laborales
+  unidad: paciente.unidad?.id,
+  area: paciente.area?.id,
+  ceco: paciente.ceco?.id,
+  empresa: paciente.empresa?.id,
+  afp: paciente.afp?.id
+})
 
-defineOptions({layout: AppLayout});
+// Listas para selects
+const generos = ref([])
+const nacionalidades = ref([])
+const estadosCiviles = ref([])
+const nivelesInstruccion = ref([])
+const pueblosOriginarios = ref([])
+const religiones = ref([])
+const previsiones = ref([])
+const seguros = ref([])
+const unidades = ref([])
+const areas = ref([])
+const cecos = ref([])
+const empresas = ref([])
+const afps = ref([])
 
-const page = usePage();
-const user = usePage().props.auth.user;
-const paciente = page.props.paciente;
-// store.setPaciente(paciente);
+// Cargar datos de selects
+const cargarDatosSelects = async () => {
+  try {
+    const endpoints = [
+      { url: route('api.generos.index'), ref: generos },
+      { url: route('api.nacionalidades.index'), ref: nacionalidades },
+      { url: route('api.estados-civiles.index'), ref: estadosCiviles },
+      { url: route('api.niveles-instruccion.index'), ref: nivelesInstruccion },
+      { url: route('api.pueblos-originarios.index'), ref: pueblosOriginarios },
+      { url: route('api.religiones.index'), ref: religiones },
+      { url: route('api.previsiones.index'), ref: previsiones },
+      { url: route('api.seguros-salud.index'), ref: seguros },
+      { url: route('api.unidades.index'), ref: unidades },
+      { url: route('api.areas.index'), ref: areas },
+      { url: route('api.cecos.index'), ref: cecos },
+      { url: route('api.empresas.index'), ref: empresas },
+      { url: route('api.afps.index'), ref: afps }
+    ]
 
+    const requests = endpoints.map(async (endpoint) => {
+      const response = await axios.get(endpoint.url)
+      endpoint.ref.value = response.data.map(item => ({
+        title: item.descripcion,
+        value: item.id
+      }))
+    })
+
+    await Promise.all(requests)
+  } catch (error) {
+    console.error('Error cargando datos de selects:', error)
+  }
+}
+
+onMounted(cargarDatosSelects)
+
+// Métodos
+const updatePerfil = () => {
+  router.put(route('paciente.perfil.update'), form.value, {
+    onSuccess: () => {
+      editable.value = false
+      // Mostrar notificación de éxito
+    },
+    onError: (errors) => {
+      console.error('Errores al actualizar:', errors)
+      // Manejar errores de validación
+    }
+  })
+}
+
+const cancelEdit = () => {
+  // Restaurar valores originales
+  form.value = { 
+    nombre: paciente.nombre,
+    apellidos: paciente.apellidos,
+    rut: paciente.rut,
+    email: paciente.email,
+    telefono1: paciente.telefono1,
+    telefono2: paciente.telefono2,
+    direccion: paciente.direccion,
+    fecha_nacimiento: paciente.fecha_nacimiento,
+    
+    genero: paciente.genero?.id,
+    nacionalidad: paciente.nacionalidad?.id,
+    estado_civil: paciente.estadoCivil?.id,
+    nivel_instruccion: paciente.nivelInstruccion?.id,
+    pueblo_originario: paciente.puebloOriginario?.id,
+    religion: paciente.religion?.id,
+    prevision: paciente.prevision?.id,
+    seguro_salud: paciente.seguroSalud?.id,
+    
+    unidad: paciente.unidad?.id,
+    area: paciente.area?.id,
+    ceco: paciente.ceco?.id,
+    empresa: paciente.empresa?.id,
+    afp: paciente.afp?.id
+  }
+  editable.value = false
+}
 </script>
 
 <template>
-    
-     <v-container fluid>
-        {{ user }}
-{{ paciente }}
+  <v-container fluid>
+    <v-sheet color="white" :elevation="6" class="rounded-lg ma-4 pa-4">
+      <v-form @submit.prevent="updatePerfil">
+        <v-row>
+          <!-- Datos Personales -->
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.nombre"
+              label="Nombre"
+              :readonly="!editable"
+            />
+            <v-text-field
+              v-model="form.apellidos"
+              label="Apellidos"
+              :readonly="!editable"
+            />
+            <v-text-field
+              v-model="form.rut"
+              label="RUT"
+              :readonly="true"
+            />
+            <v-select
+              v-model="form.genero"
+              :items="generos"
+              label="Género"
+              :readonly="!editable"
+            />
+            <v-text-field
+              v-model="form.fecha_nacimiento"
+              label="Fecha de Nacimiento"
+              type="date"
+              :readonly="!editable"
+            />
+            <v-select
+              v-model="form.nacionalidad"
+              :items="nacionalidades"
+              label="Nacionalidad"
+              :readonly="!editable"
+            />
+            <v-select
+              v-model="form.estado_civil"
+              :items="estadosCiviles"
+              label="Estado Civil"
+              :readonly="!editable"
+            />
+            <v-select
+              v-model="form.religion"
+              :items="religiones"
+              label="Religión"
+              :readonly="!editable"
+            />
+          </v-col>
 
-        <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-4 pa-4'">
-            <v-sheet color="white" :elevation="4" :class="'rounded-lg pa-2'">
-                <v-card>
-                    <v-card-title>
-                        <v-divider thickness="4px" color="#662d91"></v-divider>
-                    </v-card-title>
-                    <v-card-text>
-                        <div class="text-h6">Datos Personales</div>
-                        <v-spacer></v-spacer>
-                        <!-- <v-row>
-                            <v-col cols="6" sm="4" md="2">
-                                <v-text-field
-                                    v-model="state.frmItem.rut"
-                                    label="Rut* (12345678-9)"
-                                    type="text"
-                                    required
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="6" sm="4" md="2">
-                                <v-text-field
-                                    v-model="state.frmItem.nombre"
-                                    label="Nombre*"
-                                    type="text"
-                                    required
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
+          <!-- Datos de Contacto y Adicionales -->
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.email"
+              label="Correo Electrónico"
+              :readonly="true"
+            />
+            <v-text-field
+              v-model="form.telefono1"
+              label="Teléfono Principal"
+              :readonly="!editable"
+            />
+            <v-text-field
+              v-model="form.telefono2"
+              label="Teléfono Secundario"
+              :readonly="!editable"
+            />
+            <v-text-field
+              v-model="form.direccion"
+              label="Dirección"
+              :readonly="!editable"
+            />
+            <v-select
+              v-model="form.nivel_instruccion"
+              :items="nivelesInstruccion"
+              label="Nivel de Instrucción"
+              :readonly="!editable"
+            />
+            <v-select
+              v-model="form.pueblo_originario"
+              :items="pueblosOriginarios"
+              label="Pueblo Originario"
+              :readonly="!editable"
+            />
+            <v-select
+              v-model="form.prevision"
+              :items="previsiones"
+              label="Previsión"
+              :readonly="!editable"
+            />
+            <v-select
+              v-model="form.seguro_salud"
+              :items="seguros"
+              label="Seguro de Salud"
+              :readonly="!editable"
+            />
+          </v-col>
+        </v-row>
 
-                            <v-col cols="6" sm="4" md="2">
-                                <v-text-field
-                                    v-model="state.frmItem.apellidos"
-                                    label="Apellidos*"
-                                    required
-                                    type="text"
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
+        <!-- Datos Laborales -->
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-select
+              v-model="form.empresa"
+              :items="empresas"
+              label="Empresa"
+              :readonly="!editable"
+            />
+            <v-select
+              v-model="form.unidad"
+              :items="unidades"
+              label="Unidad"
+              :readonly="!editable"
+            />
+            <v-select
+              v-model="form.area"
+              :items="areas"
+              label="Área"
+              :readonly="!editable"
+            />
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-select
+              v-model="form.ceco"
+              :items="cecos"
+              label="Centro de Costo"
+              :readonly="!editable"
+            />
+            <v-select
+              v-model="form.afp"
+              :items="afps"
+              label="AFP"
+              :readonly="!editable"
+            />
+          </v-col>
+        </v-row>
 
-                            <v-col cols="6" sm="4" md="2">
-                                <v-switch
-                                    v-model="state.frmItem.activo"
-                                    hide-details
-                                    :value="state.frmItem.activo"
-                                    false-value="true"
-                                    true-value="false"
-                                    class="ml-2"
-                                    color="green-darken-3"
-                                    inset
-                                    label="Activo"
-                                ></v-switch>
-                                <v-switch
-                                    v-model="state.frmItem.protocolo_minsal"
-                                    hide-details
-                                    false-value="true"
-                                    true-value="false"
-                                    class="ml-2"
-                                    color="green-darken-3"
-                                    inset
-                                    label="Protocolo Minsal"
-                                ></v-switch>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-switch
-                                    v-model="state.frmItem.donante"
-                                    class="ml-2"
-                                    label="Donante"
-                                    color="success"
-                                    hide-details
-                                    inset
-                                    variant="underlined"
-                                ></v-switch>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-text-field
-                                    v-model="state.frmItem.email"
-                                    label="Email"
-                                    type="email"
-                                    required
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-text-field
-                                    v-model="state.frmItem.fecha_nacimiento"
-                                    label="Fecha de nacimiento"
-                                    variant="underlined"
-                                    type="text"
-                                    @input="handleInputChange"
-                                ></v-text-field>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-text-field
-                                    v-model="state.frmItem.edad"
-                                    label="Edad"
-                                    readonly
-                                />
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-text-field
-                                    v-model="state.frmItem.direccion"
-                                    label="Dirección"
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-text-field
-                                    label="teléfono 1"
-                                    v-model="state.frmItem.telefono1"
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-text-field
-                                    v-model="state.frmItem.telefono2"
-                                    label="teléfono 2"
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.grupo_sanguineo"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.grupo_sanguineo"
-                                    label="Grupo sanguíneo"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.estado_civil"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.estado_civil"
-                                    label="Estado civil"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.nacionalidad"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.nacionalidad"
-                                    label="Nacionalidad"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.religion"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    label="Religion / Culto"
-                                    v-model="state.frmItem.religion"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.genero"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    label="Género"
-                                    v-model="state.frmItem.genero"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="[
-                                        'Institucional (MAI)',
-                                        'Libre elección (MLE)',
-                                    ]"
-                                    item-title="descripcion"
-                                    item-value="descripcion"
-                                    v-model="state.frmItem.modalidadAtencion"
-                                    label="ModalidadAtencion de atención"
-                                    variant="underlined"
-                                >
-                                </v-select>
-                            </v-col>
-                            <v-col cols="6" sm="4" md="2">
-                                <v-text-field
-                                    label="Ciudad"
-                                    v-model="state.frmItem.ciudad"
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.prevision"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.prevision"
-                                    label="Previsión de Salud"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.afp"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.afp"
-                                    label="AFP"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.ley_social"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.ley_social"
-                                    label="Leyes Sociales"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.seguro"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.seguro"
-                                    label="Administradores del Seguro Ley 16.744"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.pueblo_originario"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.pueblo_originario"
-                                    label="Pueblo originario"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-                            <v-col cols="6" sm="4" md="2">
-                                <v-select
-                                    :items="state.list.nivelInstruccion"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.nivelInstruccion"
-                                    label="Nivel de NivelInstruccion"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-                        </v-row> -->
-                        <div class="text-h6">Datos Laborales</div>
-                        <v-spacer></v-spacer>
-                       <!--  <v-row class="mt-2">
-                            <v-col cols="12" sm="6" md="3">
-                                <v-text-field
-                                    v-model="state.frmItem.actividad_economica"
-                                    label="Actividad económica"
-                                    required
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
-
-                            <v-col cols="12" sm="6" md="3">
-                                <v-select
-                                    :items="state.list.empresa"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.empresa"
-                                    label="Empresa*"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="12" sm="6" md="3">
-                                <v-text-field
-                                    v-model="state.frmItem.cargo"
-                                    label="Cargo"
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
-
-                            <v-col cols="12" sm="6" md="3">
-                                <v-select
-                                    :items="state.list.area"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.area"
-                                    label="Área"
-                                    single
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="12" sm="6" md="3">
-                                <v-select
-                                    :items="state.list.unidad"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.unidad"
-                                    label="Unidad"
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="12" sm="6" md="3">
-                                <v-text-field
-                                    v-model="state.frmItem.ocupacion"
-                                    label="Ocupación"
-                                    variant="underlined"
-                                ></v-text-field>
-                            </v-col>
-
-                            <v-col cols="12" sm="6" md="3">
-                                <v-select
-                                    :items="state.list.exposicion"
-                                    item-title="descripcion"
-                                    item-value="descripcion"
-                                    chips
-                                    v-model="state.frmItem.exposicion"
-                                    label="Exposicion"
-                                    multiple
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="12" sm="6" md="3">
-                                <v-select
-                                    :items="state.list.ceco"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.ceco"
-                                    label="Área de Trabajo (Cencos)"
-                                    single
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-
-                            <v-col cols="12" sm="6" md="3">
-                                <v-select
-                                    :items="state.list.planta"
-                                    item-title="descripcion"
-                                    item-value="id"
-                                    v-model="state.frmItem.planta"
-                                    label="Planta"
-                                    single
-                                    variant="underlined"
-                                ></v-select>
-                            </v-col>
-                        </v-row> -->
-                    </v-card-text>
-   <!--                  <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="#009AA4" variant="tonal" @click="close">
-                            Cancelar
-                        </v-btn>
-                        <v-btn
-                            color="#009AA4"
-                            variant="tonal"
-                            @click="storeItems"
-                        >
-                            Actualizar sus datos
-                        </v-btn>
-                    </v-card-actions> -->
-                </v-card>
-            </v-sheet> 
-        </v-sheet>
-    </v-container>
+        <!-- Botones de Acción -->
+        <v-row>
+          <v-col>
+            <v-btn 
+              v-if="!editable" 
+              color="primary" 
+              @click="editable = true"
+            >
+              Editar Perfil
+            </v-btn>
+            <v-btn 
+              v-if="editable" 
+              color="success" 
+              type="submit"
+            >
+              Guardar Cambios
+            </v-btn>
+            <v-btn 
+              v-if="editable" 
+              color="error" 
+              @click="cancelEdit"
+            >
+              Cancelar
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-form>
+    </v-sheet>
+  </v-container>
 </template>

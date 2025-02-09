@@ -15,22 +15,40 @@ class MiPerfilController extends Controller
 
     public function personal()
     {
-        $user_id = Auth::user()->id;
-        $paciente = Paciente::where('user_id', $user_id)
-            ->with('afp', 'nacionalidad', 'genero', 'estadoCivil', 'nivelInstruccion', 'puebloOriginario', 'religion', 'prevision', 'seguroSalud', 'unidad', 'area', 'ceco', 'empresa')
-            ->firstOrFail();
+        try {
+            $user_id = Auth::user()->id;
+            $user = Auth::user();
 
-        \Log::info('Datos de Paciente para Perfil Personal', [
-            'user_id' => $user_id,
-            'paciente_id' => $paciente->id,
-            'nombre' => $paciente->nombre,
-            'email' => $paciente->email
-        ]);
+            \Log::channel('single')->info('Iniciando método personal de MiPerfilController', [
+                'user_id' => $user_id,
+                'user_email' => $user->email,
+                'user_name' => $user->name
+            ]);
 
-        return Inertia::render('Paciente/MiPerfilPersonal', [
-            'paciente' => $paciente,
-            'user' => Auth::user()
-        ]);
+            $paciente = Paciente::where('user_id', $user_id)
+                ->with('afp', 'nacionalidad', 'genero', 'estadoCivil', 'nivelInstruccion', 'puebloOriginario', 'religion', 'prevision', 'seguroSalud', 'unidad', 'area', 'ceco', 'empresa')
+                ->firstOrFail();
+
+            \Log::channel('single')->info('Datos de Paciente para Perfil Personal', [
+                'user_id' => $user_id,
+                'paciente_id' => $paciente->id,
+                'nombre' => $paciente->nombre,
+                'email' => $paciente->email,
+                'rut' => $paciente->rut
+            ]);
+
+            return Inertia::render('Paciente/MiPerfilPersonal', [
+                'paciente' => $paciente,
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            \Log::channel('single')->error('Error en método personal de MiPerfilController', [
+                'error_message' => $e->getMessage(),
+                'error_trace' => $e->getTraceAsString()
+            ]);
+
+            throw $e;
+        }
     }
 
     public function medico()

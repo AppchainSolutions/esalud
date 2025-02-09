@@ -13,16 +13,25 @@ class MiDashboardController extends Controller
 {
     public function index()
     {
-        $paciente = Auth::user()->paciente;
+        $paciente = Paciente::with([
+            'user', 
+            'nacionalidad', 
+            'genero', 
+            'estadoCivil', 
+            'prevision', 
+            'nivelInstruccion'
+        ])->find(Auth::user()->paciente->id);
 
-       // dd(Auth::user());
+        if (!$paciente) {
+            return redirect()->route('paciente.registro')
+                ->with('error', 'Debes completar tu registro de paciente');
+        }
 
-        // if (!$paciente) {
-        //     return redirect()->route('paciente.registro')
-        //         ->with('error', 'Debes completar tu registro de paciente');
-        // }
-
-        return Inertia::render('Paciente/MiDashboard');
+        return Inertia::render('Paciente/MiDashboard', [
+            'paciente' => $paciente,
+            'proximasCitas' => [], // Implementar lógica de próximas citas
+            'ultimasConsultas' => [] // Implementar lógica de últimas consultas
+        ]);
     }
 
     // private function obtenerProximasCitas($paciente)

@@ -70,11 +70,14 @@ const user = computed(() => page.props.auth.user);
         },
         mi_dashboard() {
             const loader = $loading.show();
-            router.visit("/mi_dashboard", {
+            router.visit(route('paciente.mi_dashboard'), {
                 method: 'get', 
                 onSuccess: () => {
                         loader.hide();
                 },
+                onError: () => {
+                        loader.hide();
+                }
             });
         },
         mi_perfil_personal() {

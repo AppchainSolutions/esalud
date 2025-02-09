@@ -15,6 +15,9 @@ class MiPerfilController extends Controller
 
     public function personal()
     {
+        // Log directo de Laravel
+        \Log::channel('single')->debug('Método personal de MiPerfilController iniciado');
+
         // Verificar si el trait está correctamente importado
         if (!method_exists($this, 'debugLog')) {
             \Log::channel('single')->warning('ContextualLogging trait no está correctamente implementado');

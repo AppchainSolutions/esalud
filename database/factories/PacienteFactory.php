@@ -6,6 +6,8 @@ use App\Models\Afp;
 use App\Models\Area;
 use App\Models\Empresa;
 use App\Models\EstadoCivil;
+use App\Models\Exposicion;
+use App\Models\Ceco;
 use App\Models\Genero;
 use App\Models\GrupoSanguineo;
 use App\Models\NivelInstruccion;
@@ -24,6 +26,7 @@ use App\Helpers\RutGenerator;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -35,41 +38,41 @@ class PacienteFactory extends Factory
 
     public function definition(): array
     {
-        $faker = Faker::create('es_ES');
-        $rut = RutGenerator::generate();
+        // Crear paciente
 
         return [
-            'nombre' => $faker->firstName,
-            'apellidos' => $faker->lastName . ' ' . $faker->lastName,
-            'rut' => $rut,
-            'email' => $faker->unique()->safeEmail,
-            'telefono1' => $faker->phoneNumber,
-            'direccion' => $faker->address,
-            'ciudad' => $faker->city,
-            'edad' => $faker->numberBetween(18, 80),
-            'fecha_nacimiento' => $faker->date(),
-            'exposicion' => $faker->randomElement(['Baja', 'Media', 'Alta']),
-            'modalidad_atencion' => '1',
-            'activo' => true,
+            'rut' => RutGenerator::generate(),
+            'activo' => $this->faker->boolean,
+            'actividad_economica' => $this->faker->jobTitle,
             'cuenta_activada' => false,
-            'user_id' => null,
-            'token_activacion' => null,
-            'token_activacion_expira' => null,
-            'afp' => 1,
-            'area' => 1,
-            'empresa' => 1,
-            'estado_civil' => 1,
-            'genero' => 1,
-            'grupo_sanguineo' => 1,
-            'ley_social' => 1,
-            'nacionalidad' => 1,
-            'nivel_instruccion' => 1,
-            'planta' => 1,
-            'prevision' => 1,
-            'pueblo_originario' => 1,
-            'religion' => 1,
-            'seguro_salud' => 1,
-            'unidad' => 1
+            'afp' => Afp::inRandomOrder()->first()->id,
+            'apellidos' => $this->faker->lastName,
+            'area' => Area::inRandomOrder()->first()->id,
+            'ceco' => Ceco::inRandomOrder()->first()->id,
+            'direccion' => $this->faker->streetAddress(),
+            'direccion' => $this->faker->streetAddress,
+            'edad' => $this->faker->numberBetween(0, 99),
+            'email' => $this->faker->unique()->safeEmail(),
+            'empresa' => Empresa::inRandomOrder()->first()->id,
+            'estado_civil' => EstadoCivil::inRandomOrder()->first()->id,
+            'exposicion' => Exposicion::inRandomOrder()->first()->id,
+            'fecha_nacimiento' => $this->faker->date(),
+            'genero' => Genero::inRandomOrder()->first()->id,
+            'grupo_sanguineo' => GrupoSanguineo::inRandomOrder()->first()->id,
+            'nivel_instruccion' => NivelInstruccion::inRandomOrder()->first()->id,
+            'ley_social' => LeySocial::inRandomOrder()->first()->id,
+            'modalidad_atencion' => ModalidadAtencion::inRandomOrder()->first()->id,
+            'nacionalidad' => Nacionalidad::inRandomOrder()->first()->id,
+            'nombre' => $this->faker->firstName,
+            'planta' => Planta::inRandomOrder()->first()->id,
+            'prevision' => Prevision::inRandomOrder()->first()->id,
+            'profesion' => $this->faker->jobTitle,
+            'pueblo_originario' => PuebloOriginario::inRandomOrder()->first()->id,
+            'religion' => Religion::inRandomOrder()->first()->id,
+            'seguro_salud' => SeguroSalud::inRandomOrder()->first()->id,
+            'telefono1' => $this->faker->phoneNumber,
+            'telefono2' => $this->faker->phoneNumber,
+            'unidad' => Unidad::inRandomOrder()->first()->id,
         ];
     }
 

@@ -22,8 +22,8 @@ class UserFactory extends Factory
             'lastname' => $this->faker->lastName(),
             'rut' => RutGenerator::generate(),
             'email' => $this->faker->unique()->safeEmail(),
-            'isAdmin' => $this->faker->boolean(20), // 20% probabilidad de ser admin
-            'rol' => $this->faker->randomElement(['staff', 'paciente']),
+            'rol' => 'paciente', // Por defecto creamos usuarios pacientes
+            'activo' => true,
             'email_verified_at' => now(),
             'password' => Hash::make('password'), // contraseña por defecto
             'two_factor_secret' => null,

@@ -1,6 +1,37 @@
 
 ## [1.5.0] - 2025-02-09
 
+### Added
+- Sistema de logging mejorado con contexto de clase y método
+- Módulo base para gestión de accidentes
+- Nuevas factories para Vacuna, Medicamento, y FactorRiesgo
+- Comando base:truncate para gestión de base de datos
+- Sistema de pruebas end-to-end con Playwright
+
+### Changed
+- Migración completa de Cypress a Playwright para pruebas E2E
+- Mejora en el flujo de activación de pacientes
+- Actualización de interfaces de usuario con Vuetify
+- Mejora en el manejo de booleanos multiplataforma
+- Optimización de seeders y factories
+
+### Fixed
+- Corrección en el manejo de filtros vacíos
+- Mejora en la validación de tokens de activación
+- Corrección en el proceso de autenticación post-activación
+- Mejora en el manejo de props en formularios
+- Optimización del manejo de diálogos y notificaciones
+
+### Security
+- Implementación de validación mejorada para tokens
+- Mejora en el proceso de activación de cuentas
+- Fortalecimiento de la seguridad en correos de activación
+
+### Removed
+- Eliminación completa de Cypress
+- Limpieza de archivos de documentación obsoletos
+- Eliminación de modelos redundantes
+
 
 ## [1.0.0] - 2025-02-09
 

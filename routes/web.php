@@ -95,7 +95,7 @@ Route::middleware([
 });
 
 // Rutas protegidas para pacientes
-Route::middleware(['auth', 'acceso.paciente'])->prefix('paciente')->group(function () {
+Route::middleware(['auth'])->prefix('paciente')->group(function () {
     Route::get('/mi_dashboard', [App\Http\Controllers\Paciente\MiDashboardController::class, 'index'])
         ->name('paciente.mi_dashboard');
     Route::get('mi_perfil', [App\Http\Controllers\Paciente\MiPerfilController::class, 'show'])

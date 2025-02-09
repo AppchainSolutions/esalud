@@ -15,8 +15,8 @@ class PacienteSeeder extends Seeder
 {
     public function run()
     {
-        User::truncate();
-        Paciente::truncate();
+       // User::truncate();
+        //Paciente::truncate();
         // Seeders para tablas de referencia
         $this->seedTablasReferencia();
 
@@ -24,36 +24,36 @@ class PacienteSeeder extends Seeder
         //$this->crearRegistrosBase();
 
         // Crear 10 pacientes sin asociar
-        $pacientesSinUser = Paciente::factory()->count(10)->create();
-        User::factory()->count(5)->create(
-            [
-                'isAdmin' => false,
-                'rol' => 'staff'
-            ]
-        );
+        // $pacientesSinUser = Paciente::factory()->count(10)->create();
+        // User::factory()->count(5)->create(
+        //     [
+        //         'isAdmin' => false,
+        //         'rol' => 'staff'
+        //     ]
+        // );
 
-        $this->call(UserSeeder::class);
+        // $this->call(UserSeeder::class);
 
-        // Crear 3 pacientes con usuarios asociados
-        $pacientesConUser = Paciente::factory()->count(3)->create();
+        // // Crear 3 pacientes con usuarios asociados
+        // $pacientesConUser = Paciente::factory()->count(3)->create();
 
-        // Asociar usuario a cada paciente con usuario
-        $pacientesConUser->each(function ($paciente) {
-            $user = User::create([
-                'name' => $paciente->nombre,
-                'lastname' => $paciente->apellidos,
-                'rut' => $paciente->rut,
-                'email' => $paciente->email,
-                'password' => Hash::make('clave123'),
-                'rol' => 'paciente', // Rol de paciente
-                'isAdmin' => false
-            ]);
+        // // Asociar usuario a cada paciente con usuario
+        // $pacientesConUser->each(function ($paciente) {
+        //     $user = User::create([
+        //         'name' => $paciente->nombre,
+        //         'lastname' => $paciente->apellidos,
+        //         'rut' => $paciente->rut,
+        //         'email' => $paciente->email,
+        //         'password' => Hash::make('clave123'),
+        //         'rol' => 'paciente', // Rol de paciente
+        //         'isAdmin' => false
+        //     ]);
 
-            // Actualizar paciente con el user_id
-            $paciente->update([
-                'user_id' => $user->id
-            ]);
-        });
+        //     // Actualizar paciente con el user_id
+        //     $paciente->update([
+        //         'user_id' => $user->id
+        //     ]);
+        // });
 
         // Crear registros relacionados para cada paciente
         $this->crearRegistrosRelacionados(Paciente::all());
@@ -195,21 +195,21 @@ class PacienteSeeder extends Seeder
                 ['id' => 8, 'descripcion' => 'O-']
             ],
 
-            'accidente_condicion' => [
+            AccidenteCondicion::class => [
                 ['id' => 1, 'descripcion' => 'Leve'],
                 ['id' => 2, 'descripcion' => 'Moderado'],
                 ['id' => 3, 'descripcion' => 'Grave'],
                 ['id' => 4, 'descripcion' => 'Crítico'],
                 ['id' => 5, 'descripcion' => 'Potencialmente Mortal']
             ],
-            'error_critico' => [
+            ErrorCritico::class => [
                 ['id' => 1, 'descripcion' => 'Sin Error Crítico'],
                 ['id' => 2, 'descripcion' => 'Error Leve'],
                 ['id' => 3, 'descripcion' => 'Error Moderado'],
                 ['id' => 4, 'descripcion' => 'Error Grave'],
                 ['id' => 5, 'descripcion' => 'Error Crítico']
             ],
-            'estado_mental' => [
+            EstadoMental::class => [
                 ['id' => 1, 'descripcion' => 'Alerta'],
                 ['id' => 2, 'descripcion' => 'Confuso'],
                 ['id' => 3, 'descripcion' => 'Desorientado']
@@ -221,7 +221,7 @@ class PacienteSeeder extends Seeder
                 ['id' => 4, 'descripcion' => 'Área de Trabajo'],
                 ['id' => 5, 'descripcion' => 'Otro']
             ],
-            'accidente' => [
+            Accidente::class => [
                 ['id' => 1, 'descripcion' => 'Caída'],
                 ['id' => 2, 'descripcion' => 'Golpe'],
                 ['id' => 3, 'descripcion' => 'Corte'],
@@ -232,20 +232,20 @@ class PacienteSeeder extends Seeder
                 ['id' => 8, 'descripcion' => 'Lesión por Máquina'],
                 ['id' => 9, 'descripcion' => 'Otro']
             ],
-            'derivacion' => [
+            Derivacion::class => [
                 ['id' => 1, 'descripcion' => 'Médico General'],
                 ['id' => 2, 'descripcion' => 'Especialista'],
                 ['id' => 3, 'descripcion' => 'Urgencias'],
                 ['id' => 4, 'descripcion' => 'Rehabilitación'],
                 ['id' => 5, 'descripcion' => 'Otro']
             ],
-            'fuente_incidente' => [
+            Fuente::class => [
                 ['id' => 1, 'descripcion' => 'Área de Trabajo'],
                 ['id' => 2, 'descripcion' => 'Tránsito'],
                 ['id' => 3, 'descripcion' => 'Hogar'],
                 ['id' => 4, 'descripcion' => 'Otro']
             ],
-            'responsable' => [
+            Responsable::class => [
                 ['id' => 1, 'descripcion' => 'Empleado'],
                 ['id' => 2, 'descripcion' => 'Empleador'],
                 ['id' => 3, 'descripcion' => 'ART/Aseguradora'],
@@ -290,6 +290,11 @@ class PacienteSeeder extends Seeder
                 ['id' => 4, 'descripcion' => 'Seguimiento'],
                 ['id' => 5, 'descripcion' => 'Especial']
             ],
+            genero,
+            afp,
+            area,
+            bateria, //baterias de examenes
+            ceco, //centros de costo
             // Añade más tablas de referencia según sea necesario
         ];
 

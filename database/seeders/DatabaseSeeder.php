@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
+            DatabaseMasterSeeder::class, // Primero crear datos maestros
             UserSeeder::class,
             PacienteActivacionSeeder::class
         ]);

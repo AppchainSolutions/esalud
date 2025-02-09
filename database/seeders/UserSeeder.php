@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Helpers\RutGenerator;
 
 class UserSeeder extends Seeder
 {
@@ -16,12 +17,12 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Truncar la tabla users
-        //User::truncate();
+        User::truncate();
 
         User::create([
             'name' => 'Admin',
             'lastname' => 'User',
-            'rut' => '12345678-9',
+            'rut' => RutGenerator::generate(),
             'email' => 'admin@example.com',
             'isAdmin' => true,
             'password' => Hash::make('clave123'),
@@ -31,7 +32,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Test',
             'lastname' => 'User',
-            'rut' => '12345678-0',
+            'rut' => RutGenerator::generate(),
             'email' => 'test@example.com',
             'isAdmin' => true,
             'password' => Hash::make('clave123'),

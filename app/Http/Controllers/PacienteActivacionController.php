@@ -141,7 +141,7 @@ class PacienteActivacionController extends Controller
 
             // Redirigir a la página de inicio
             return redirect()->intended(route('home'))
-                ->with('status', 'Tu cuenta ha sido activada exitosamente. ¡Bienvenido a eSalud!');
+                ->with('status', 'Tu cuenta ha sido activada exitosamente. ¡Bienvenido/a!');
        
         } catch (\Illuminate\Validation\ValidationException $e) {
              // Redirigir de vuelta con errores de validación

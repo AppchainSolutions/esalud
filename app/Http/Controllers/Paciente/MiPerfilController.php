@@ -39,8 +39,9 @@ class MiPerfilController extends Controller
                 'user_rol' => $user->rol
             ]);
 
-            // Buscar paciente con información detallada
+            // Buscar paciente específico del usuario con cuenta activada
             $paciente = Paciente::where('user_id', $user_id)
+                ->where('cuenta_activada', true)
                 ->with([
                     'afp', 
                     'nacionalidad', 
@@ -60,7 +61,7 @@ class MiPerfilController extends Controller
 
             // Log detallado de paciente
             if ($paciente) {
-                Log::channel('single')->info('Datos de Paciente encontrado', [
+                Log::channel('single')->info('Paciente encontrado para perfil personal', [
                     'paciente_id' => $paciente->id,
                     'nombre' => $paciente->nombre,
                     'email' => $paciente->email,
@@ -68,7 +69,7 @@ class MiPerfilController extends Controller
                     'cuenta_activada' => $paciente->cuenta_activada
                 ]);
             } else {
-                Log::channel('single')->warning('Paciente no encontrado', [
+                Log::channel('single')->warning('Paciente no encontrado o cuenta no activada', [
                     'user_id' => $user_id
                 ]);
             }

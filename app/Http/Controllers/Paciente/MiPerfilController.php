@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Esalud\EnhancedLogging\Traits\ContextualLogging;
 
@@ -16,11 +17,11 @@ class MiPerfilController extends Controller
     public function personal()
     {
         // Log directo de Laravel
-        \Log::channel('single')->debug('Método personal de MiPerfilController iniciado');
+        Log::channel('single')->debug('Método personal de MiPerfilController iniciado');
 
         // Verificar si el trait está correctamente importado
         if (!method_exists($this, 'debugLog')) {
-            \Log::channel('single')->warning('ContextualLogging trait no está correctamente implementado');
+            Log::channel('single')->warning('ContextualLogging trait no está correctamente implementado');
             return response()->json(['error' => 'Logging no disponible'], 500);
         }
 

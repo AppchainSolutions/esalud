@@ -19,7 +19,7 @@ class MiPerfilController extends Controller
             $user_id = Auth::user()->id;
             $user = Auth::user();
 
-            \Log::channel('single')->info('Iniciando método personal de MiPerfilController', [
+            $this->debugLog('Inicio método personal', [
                 'user_id' => $user_id,
                 'user_email' => $user->email,
                 'user_name' => $user->name
@@ -29,7 +29,7 @@ class MiPerfilController extends Controller
                 ->with('afp', 'nacionalidad', 'genero', 'estadoCivil', 'nivelInstruccion', 'puebloOriginario', 'religion', 'prevision', 'seguroSalud', 'unidad', 'area', 'ceco', 'empresa')
                 ->firstOrFail();
 
-            \Log::channel('single')->info('Datos de Paciente para Perfil Personal', [
+            $this->infoLog('Datos de Paciente para Perfil Personal', [
                 'user_id' => $user_id,
                 'paciente_id' => $paciente->id,
                 'nombre' => $paciente->nombre,
@@ -42,7 +42,7 @@ class MiPerfilController extends Controller
                 'user' => $user
             ]);
         } catch (\Exception $e) {
-            \Log::channel('single')->error('Error en método personal de MiPerfilController', [
+            $this->errorLog('Error en método personal de MiPerfilController', [
                 'error_message' => $e->getMessage(),
                 'error_trace' => $e->getTraceAsString()
             ]);

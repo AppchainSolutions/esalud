@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Paciente;
 
 use App\Http\Controllers\Controller;
+use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
-use App\Models\Paciente;
-
+use Esalud\EnhancedLogging\Traits\ContextualLogging;
 class MiPerfilController extends Controller
 {
+    use ContextualLogging;
+
     public function personal()
     {
         $user_id = Auth::user()->id;
@@ -19,6 +20,9 @@ class MiPerfilController extends Controller
             ->with('afp', 'nacionalidad', 'genero', 'estadoCivil', 'nivelInstruccion', 'puebloOriginario', 'religion', 'prevision', 'seguroSalud', 'unidad', 'area', 'ceco', 'empresa')
             ->firstOrFail()
             ->toArray();
+
+        $this->debugLog('Paciente', [paciente => $paciente]);
+        
         return Inertia::render('Paciente/MiPerfilPersonal', ['paciente' => $paciente]);
     }
     public function medico()
@@ -69,7 +73,7 @@ class MiPerfilController extends Controller
 
         $validatedData = $request->validate([
             'telefono' => 'nullable|string|max:20',
-            'direccion' => 'nullable|string|max:255'
+            'direccion' => 'nullable|string|max:255',
         ]);
 
         $paciente->update($validatedData);

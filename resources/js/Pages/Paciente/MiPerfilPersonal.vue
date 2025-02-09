@@ -1,145 +1,25 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { router } from "@inertiajs/vue3";
-import { reactive, ref, onMounted, computed } from "vue";
-import moment from 'moment';
-import 'moment/locale/es';
-moment.locale('es');
-import { useDate } from "vuetify";
-import { fetchData, handleStoreItem } from "@/helper.js";
 import { usePage } from "@inertiajs/vue3";
 
-const page = usePage();
-const paciente = page.props.paciente;
 
 //**********\\\\  INI STATE VARIABLES AND CONST ////*************/
 
-defineOptions({
-    layout: AppLayout,
-    paciente: Object,
-});
+defineOptions({layout: AppLayout});
 
-const state = reactive({
-    endpoints: [
-        "afp",
-        "area",
-        "ceco",
-        "estado_civil",
-        "empresa",
-        "exposicion",
-        "genero",
-        "grupo_sanguineo",
-        "nivel_instruccion",
-        "ley_social",
-        "nacionalidad",
-        "planta",
-        "prevision",
-        "pueblo_originario",
-        "religion",
-        "seguro",
-        "unidad",
-    ],
+const page = usePage();
+const user = usePage().props.auth.user;
+const paciente = page.props.paciente;
+// store.setPaciente(paciente);
 
-    frmItem: {
-        rut: paciente.rut,
-        nombre: paciente.nombre,
-        apellidos: paciente.apellidos,
-        actividad_economica: paciente.actividad_economica,
-        activo: paciente.activo,
-        protocolo_minsal: paciente.protocolo_minsal,
-        afp: paciente.afp,
-        area: paciente.area,
-        cargo: paciente.cargo,
-        ceco: paciente.ceco,
-        ciudad: paciente.ciudad,
-        direccion: paciente.direccion,
-        donante: paciente.donante,
-        edad: paciente.edad,
-        email: paciente.email,
-        empresa: paciente.empresa,
-        estado_civil: paciente.estado_civil,
-        exposicion: paciente.exposicion,
-        fecha_nacimiento: "",
-        edad:"",
-        genero: paciente.genero,
-        grupo_sanguineo: paciente.grupo_sanguineo,
-        nivel_instruccion: paciente.nivel_instruccion,
-        ley_social: paciente.ley_social,
-        modalidad_atencion: paciente.modalidad_atencion,
-        nacionalidad: paciente.nacionalidad,
-        ocupacion: paciente.ocupacion,
-        planta: paciente.planta,
-        prevision: paciente.prevision,
-        profesion: paciente.profesion,
-        pueblo_originario: paciente.pueblo_originario,
-        religion: paciente.religion,
-        seguro_salud: paciente.seguro_salud,
-        telefono1: paciente.telefono1,
-        telefono2: paciente.telefono2,
-        unidad: paciente.unidad,
-    },
-
-    list: [],
-    loadingSearch: false,
-    tableItems: [],
-    urlDelete: "paciente/delete",
-    urlShow: "paciente/show",
-    urlUpdate: "paciente/update",
-    urlStore: "paciente",
-});
-const date = useDate();
-
-//**********\\\\  LIFE CYCLE HOOKS ////*************/
-onMounted(async () => {
-    state.frmItem.fecha_nacimiento = moment(paciente.fecha_nacimiento).format("DD/MM/YYYY");
-    console.log(state.frmItem.fecha_nacimiento);
-    console.log(calcularEdad());
-    state.frmItem.edad = calcularEdad();
-    state.list = await fetchData(state.endpoints);
-});
-
-//**********\\\\  COMPUTE PROPERTIES ////*************/
-const calcularEdad = (() => {
-
-    return paciente.fecha_nacimiento
-        ? moment().diff(moment(paciente.fecha_nacimiento), 'years')
-        : null;
-});
-
-// const formatDate = computed(() => {
-//     let formatted = moment(paciente.fecha_nacimiento).format("DD/MM/YYYY");
-//    console.log(formatted);
-//     return formatted;
-// });
-
-//**********\\\\ METHODS ////*************/
-function close() {
-    closeForm(state);
-}
-
-function calcEdad(fecNac) {
-    let now = new Date();
-    let birthDate = new Date(fecNac);
-    let age = now.getFullYear() - birthDate.getFullYear();
-    return age;
-}
-
-const handleInputChange = () => {
-    let fecNac = state.frmItem.fecha_nacimiento;
-    let age = calcEdad(fecNac);
-    state.frmItem.edad = ref(age);
-};
-
-//**********\\\\  CRUD ////*************/
-
-const update = async () => {
-    await handleStoreItem(state, "edit");
-    closeForm(state);
-};
 </script>
 
 <template>
-    <v-container fluid>
+    
+     <v-container fluid>
+        {{ user }}
+{{ paciente }}
+
         <v-sheet color="white" :elevation="6" :class="'rounded-lg ma-4 pa-4'">
             <v-sheet color="white" :elevation="4" :class="'rounded-lg pa-2'">
                 <v-card>
@@ -149,7 +29,7 @@ const update = async () => {
                     <v-card-text>
                         <div class="text-h6">Datos Personales</div>
                         <v-spacer></v-spacer>
-                        <v-row>
+                        <!-- <v-row>
                             <v-col cols="6" sm="4" md="2">
                                 <v-text-field
                                     v-model="state.frmItem.rut"
@@ -407,10 +287,10 @@ const update = async () => {
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
-                        </v-row>
+                        </v-row> -->
                         <div class="text-h6">Datos Laborales</div>
                         <v-spacer></v-spacer>
-                        <v-row class="mt-2">
+                       <!--  <v-row class="mt-2">
                             <v-col cols="12" sm="6" md="3">
                                 <v-text-field
                                     v-model="state.frmItem.actividad_economica"
@@ -506,9 +386,9 @@ const update = async () => {
                                     variant="underlined"
                                 ></v-select>
                             </v-col>
-                        </v-row>
+                        </v-row> -->
                     </v-card-text>
-                    <v-card-actions>
+   <!--                  <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="#009AA4" variant="tonal" @click="close">
                             Cancelar
@@ -520,9 +400,9 @@ const update = async () => {
                         >
                             Actualizar sus datos
                         </v-btn>
-                    </v-card-actions>
+                    </v-card-actions> -->
                 </v-card>
-            </v-sheet>
+            </v-sheet> 
         </v-sheet>
     </v-container>
 </template>

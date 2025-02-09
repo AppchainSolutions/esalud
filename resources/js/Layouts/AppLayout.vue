@@ -70,7 +70,7 @@ const user = computed(() => page.props.auth.user);
         },
         mi_dashboard() {
             const loader = $loading.show();
-            router.visit(route('paciente.mi_dashboard'), {
+            router.visit('/paciente/mi_dashboard', {
                 method: 'get', 
                 onSuccess: () => {
                         loader.hide();
@@ -82,7 +82,7 @@ const user = computed(() => page.props.auth.user);
         },
         mi_perfil_personal() {
             const loader = $loading.show();
-            router.visit("/mi_perfil_personal", {
+            router.visit("/paciente/mi_perfil_personal", {
                 method: 'get', 
                 onSuccess: () => {
                         loader.hide();
@@ -91,7 +91,7 @@ const user = computed(() => page.props.auth.user);
         },
         mi_perfil_medico() {
             const loader = $loading.show();
-            router.visit("/mi_perfil_medico", {
+            router.visit("/paciente/mi_perfil_medico", {
                 method: 'get', 
                 onSuccess: () => {
                         loader.hide();

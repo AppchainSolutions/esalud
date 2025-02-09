@@ -48,17 +48,12 @@ Route::middleware([
 ])->group(function () {
     // Cambiar redireccionamiento a HomeController
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    // Agregar ruta para mi dashboard
-    // Route::get('/mi_dashboard', [App\Http\Controllers\Paciente\MiDashboardController::class, 'index'])
-    //     ->name('paciente.mi_dashboard')
-    //     ->middleware('acceso.paciente');
-
+    
+    Route::prefix('paciente')->group(__DIR__ . '/paciente.php');
     Route::prefix('consulta')->group(__DIR__ . '/consulta.php');
     Route::prefix('examen')->group(__DIR__ . '/examen.php');
     Route::prefix('secundaria')->group(__DIR__ . '/secundaria.php');
     Route::prefix('dashboard')->group(__DIR__ . '/dashboard.php');
-    Route::group([], __DIR__ . '/dashboards.php');
 
     Route::inertia('ficha', 'SubPages/FichaMedica');
     Route::resource('alergia', AlergiaController::class);
@@ -75,36 +70,12 @@ Route::middleware([
     Route::resource('paciente', PacienteController::class);
     Route::resource('vacuna', VacunaController::class);
 
-    // Route::middleware(['auth', 'verified'])->group(function () {
-    // Rutas existentes...
-    // Route::get('mi_dashboard', [App\Http\Controllers\Paciente\MiDashboardController::class, 'index'])
-    //     ->name('paciente.mi_dashboard');
-    // Route::get('mi_perfil_personal', [App\Http\Controllers\Paciente\MiPerfilController::class, 'personal'])
-    //     ->name('paciente.mi_perfil_personal');
-    // Route::get('mi_perfil_medico', [App\Http\Controllers\Paciente\MiPerfilController::class, 'medico'])
-    //     ->name('paciente.mi_perfil_medico');
-    // Route::put('mi_perfil', [App\Http\Controllers\Paciente\MiPerfilController::class, 'update'])
-    //     ->name('paciente.mi_perfil_personal.update');
-
-    // Rutas de activación de pacientes
-    Route::post('/pacientes/{paciente}/enviar-activacion', [PacienteController::class, 'enviarActivacion'])
-        ->name('pacientes.enviar-activacion');
-    Route::post('/pacientes/{paciente}/reenviar-activacion', [PacienteController::class, 'reenviarActivacion'])
-        ->name('pacientes.reenviar-activacion');
+    // Route::inertia('mi_dashboard', 'SubPages/MiDashboard');
+    // Route::inertia('mi_perfil_personal', 'SubPages/MiPerfilPersonal');
+    // Route::inertia('mi_perfil_medico', 'SubPages/MiPerfilMedico');
   
 });
 
-// Rutas protegidas para pacientes
-Route::middleware(['auth'])->prefix('paciente')->group(function () {
-    Route::get('/mi_dashboard', [App\Http\Controllers\Paciente\MiDashboardController::class, 'index'])
-        ->name('paciente.mi_dashboard');
-    Route::get('mi_perfil', [App\Http\Controllers\Paciente\MiPerfilController::class, 'show'])
-        ->name('paciente.mi_perfil');
-    Route::put('mi_perfil', [App\Http\Controllers\Paciente\MiPerfilController::class, 'update'])
-        ->name('paciente.mi_perfil.update');
-
-
-  });
 
 // Rutas de Activación de Pacientes
 Route::middleware('guest')->group(function () {

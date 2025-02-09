@@ -19,7 +19,10 @@ class UserSeeder extends Seeder
     {
         // Truncar la tabla users
         User::truncate();
-
+        Paciente::truncate();
+        
+        $this->call(DatabaseMasterSeeder::class);
+        
         User::create([
             'name' => 'Admin',
             'lastname' => 'User',
@@ -51,7 +54,6 @@ class UserSeeder extends Seeder
             'user_id' => 2
         ]);
 
-        $this->call(DatabaseMasterSeeder::class);
 
         // Puedes agregar más usuarios según sea necesario
     }

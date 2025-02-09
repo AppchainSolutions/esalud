@@ -1,25 +1,25 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import DatosMedicos from "@/Pages/SubPages/DatosMedicos.vue";
-import AntecedenteFamiliar from "@/Pages/SubPages/AntecedenteFamiliar.vue";
-import LicenciaMedica from "@/Pages/SubPages/LicenciaMedica.vue";
-import DiatDiep from "@/Pages/SubPages/DiatDiep.vue";
+import DatosMedicos from "@/Paciente/Componentes/DatosMedicos.vue";
+import AntecedenteFamiliar from "@/Paciente/Componentes/AntecedenteFamiliar.vue";
+import LicenciaMedica from "@/Paciente/Componentes/LicenciaMedica.vue";
+import DiatDiep from "@/Paciente/Componentes/DiatDiep.vue";
 import Examenes from "@/Pages/Examenes/Examenes.vue";
-import Certificaciones from "@/Pages/SubPages/Certificaciones.vue";
-import { router } from "@inertiajs/vue3";
+import Certificaciones from "@/Paciente/Componentes/Certificaciones.vue";
+// import { router } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
-import { useDataStore } from "@/store.js";
+// import { useDataStore } from "@/store.js";
 
-const store = useDataStore();
+//const store = useDataStore();
 defineOptions({ layout: AppLayout });
-const page = usePage();
-const user = usePage().props.auth.user;
-const paciente = page.props.paciente;
-store.setPaciente(paciente);
+// const page = usePage();
+// const user = usePage().props.auth.user;
+// const paciente = page.props.paciente;
+// store.setPaciente(paciente);
 
-const volver = () => {
-    router.get("paciente");
-};
+// const volver = () => {
+//     router.get("paciente");
+// };
 </script>
 
 <template>
@@ -28,7 +28,7 @@ const volver = () => {
             <v-card min-width="500">
                 <v-card-text>
                     <v-card-actions>
-                        <v-spacer></v-spacer>
+                        <v-spacer>DATOS MEDICOS</v-spacer>
                     </v-card-actions>
                     <v-stepper
                         editable
@@ -43,7 +43,8 @@ const volver = () => {
                             'Certificaciones',
                         ]"
                     >
-                        <template v-slot:item.1>
+                    
+                        <!-- <template v-slot:item.1>
                             <datos-medicos />
                         </template>
 
@@ -65,7 +66,7 @@ const volver = () => {
 
                         <template v-slot:item.6>
                             <certificaciones />
-                        </template>
+                        </template> -->
                     </v-stepper>
                 </v-card-text>
             </v-card>

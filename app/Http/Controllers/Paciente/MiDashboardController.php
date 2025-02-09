@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Paciente;
 
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
-use Carbon\Carbon;
 use App\Models\Paciente;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;

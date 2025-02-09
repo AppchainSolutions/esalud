@@ -303,6 +303,8 @@ Nota: Usar con precaución en entornos de producción';
 
         // Comando final de optimización
         try {
+            Artisan::call('ziggy:generate');
+            $this->info('Rutas creadas: Ziggy!');
             $optimizeExitCode = Artisan::call('optimize');
             Log::info("Comando optimize ejecutado", ['exit_code' => $optimizeExitCode]);
             $this->info('Aplicación optimizada');

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Esalud\EnhancedLogging\Traits\ContextualLogging;
+
 class MiPerfilController extends Controller
 {
     use ContextualLogging;
@@ -15,16 +16,23 @@ class MiPerfilController extends Controller
     public function personal()
     {
         $user_id = Auth::user()->id;
-
-        $paciente = Paciente::where('user_id', "=", $user_id)
+        $paciente = Paciente::where('user_id', $user_id)
             ->with('afp', 'nacionalidad', 'genero', 'estadoCivil', 'nivelInstruccion', 'puebloOriginario', 'religion', 'prevision', 'seguroSalud', 'unidad', 'area', 'ceco', 'empresa')
-            ->firstOrFail()
-            ->toArray();
+            ->firstOrFail();
 
-        $this->debugLog('Paciente', [paciente => $paciente]);
-        
-        return Inertia::render('Paciente/MiPerfilPersonal', ['paciente' => $paciente]);
+        \Log::info('Datos de Paciente para Perfil Personal', [
+            'user_id' => $user_id,
+            'paciente_id' => $paciente->id,
+            'nombre' => $paciente->nombre,
+            'email' => $paciente->email
+        ]);
+
+        return Inertia::render('Paciente/MiPerfilPersonal', [
+            'paciente' => $paciente,
+            'user' => Auth::user()
+        ]);
     }
+
     public function medico()
     {
         $user_id = Auth::user()->id;

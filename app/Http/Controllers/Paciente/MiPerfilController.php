@@ -19,6 +19,13 @@ class MiPerfilController extends Controller
         // Log directo de Laravel
         Log::channel('single')->debug('Método personal de MiPerfilController iniciado');
 
+        // Verificar existencia de métodos del trait
+        Log::channel('single')->info('Métodos disponibles', [
+            'has_debug_log' => method_exists($this, 'debugLog'),
+            'has_info_log' => method_exists($this, 'infoLog'),
+            'has_error_log' => method_exists($this, 'errorLog')
+        ]);
+
         // Verificar si el trait está correctamente importado
         if (!method_exists($this, 'debugLog')) {
             Log::channel('single')->warning('ContextualLogging trait no está correctamente implementado');
@@ -28,10 +35,18 @@ class MiPerfilController extends Controller
         try {
             // Verificar autenticación
             if (!Auth::check()) {
-                $this->errorLog('Intento de acceso sin autenticación', [
-                    'method' => 'personal',
-                    'ip' => request()->ip()
-                ]);
+                // Usar método del trait si está disponible, de lo contrario usar log directo
+                if (method_exists($this, 'errorLog')) {
+                    $this->errorLog('Intento de acceso sin autenticación', [
+                        'method' => 'personal',
+                        'ip' => request()->ip()
+                    ]);
+                } else {
+                    Log::channel('single')->error('Intento de acceso sin autenticación', [
+                        'method' => 'personal',
+                        'ip' => request()->ip()
+                    ]);
+                }
                 return response()->json(['error' => 'No autenticado'], 401);
             }
 
@@ -39,12 +54,22 @@ class MiPerfilController extends Controller
             $user = Auth::user();
 
             // Log de depuración con información detallada
-            $this->debugLog('Inicio método personal', [
-                'user_id' => $user_id,
-                'user_email' => $user->email,
-                'user_name' => $user->name,
-                'method' => __METHOD__
-            ]);
+            // Intentar usar método del trait, de lo contrario usar log directo
+            if (method_exists($this, 'debugLog')) {
+                $this->debugLog('Inicio método personal', [
+                    'user_id' => $user_id,
+                    'user_email' => $user->email,
+                    'user_name' => $user->name,
+                    'method' => __METHOD__
+                ]);
+            } else {
+                Log::channel('single')->debug('Inicio método personal', [
+                    'user_id' => $user_id,
+                    'user_email' => $user->email,
+                    'user_name' => $user->name,
+                    'method' => __METHOD__
+                ]);
+            }
 
             // Verificar existencia de paciente
             $paciente = Paciente::where('user_id', $user_id)
@@ -52,22 +77,42 @@ class MiPerfilController extends Controller
                 ->first();
 
             if (!$paciente) {
-                $this->errorLog('Paciente no encontrado', [
-                    'user_id' => $user_id,
-                    'method' => __METHOD__
-                ]);
+                // Usar método del trait o log directo
+                if (method_exists($this, 'errorLog')) {
+                    $this->errorLog('Paciente no encontrado', [
+                        'user_id' => $user_id,
+                        'method' => __METHOD__
+                    ]);
+                } else {
+                    Log::channel('single')->error('Paciente no encontrado', [
+                        'user_id' => $user_id,
+                        'method' => __METHOD__
+                    ]);
+                }
                 return response()->json(['error' => 'Paciente no encontrado'], 404);
             }
 
             // Log de información con datos del paciente
-            $this->infoLog('Datos de Paciente para Perfil Personal', [
-                'user_id' => $user_id,
-                'paciente_id' => $paciente->id,
-                'nombre' => $paciente->nombre,
-                'email' => $paciente->email,
-                'rut' => $paciente->rut,
-                'method' => __METHOD__
-            ]);
+            // Usar método del trait o log directo
+            if (method_exists($this, 'infoLog')) {
+                $this->infoLog('Datos de Paciente para Perfil Personal', [
+                    'user_id' => $user_id,
+                    'paciente_id' => $paciente->id,
+                    'nombre' => $paciente->nombre,
+                    'email' => $paciente->email,
+                    'rut' => $paciente->rut,
+                    'method' => __METHOD__
+                ]);
+            } else {
+                Log::channel('single')->info('Datos de Paciente para Perfil Personal', [
+                    'user_id' => $user_id,
+                    'paciente_id' => $paciente->id,
+                    'nombre' => $paciente->nombre,
+                    'email' => $paciente->email,
+                    'rut' => $paciente->rut,
+                    'method' => __METHOD__
+                ]);
+            }
 
             return Inertia::render('Paciente/MiPerfilPersonal', [
                 'paciente' => $paciente,
@@ -75,11 +120,20 @@ class MiPerfilController extends Controller
             ]);
         } catch (\Exception $e) {
             // Log de error detallado
-            $this->errorLog('Error en método personal de MiPerfilController', [
-                'error_message' => $e->getMessage(),
-                'error_trace' => $e->getTraceAsString(),
-                'method' => __METHOD__
-            ]);
+            // Usar método del trait o log directo
+            if (method_exists($this, 'errorLog')) {
+                $this->errorLog('Error en método personal de MiPerfilController', [
+                    'error_message' => $e->getMessage(),
+                    'error_trace' => $e->getTraceAsString(),
+                    'method' => __METHOD__
+                ]);
+            } else {
+                Log::channel('single')->error('Error en método personal de MiPerfilController', [
+                    'error_message' => $e->getMessage(),
+                    'error_trace' => $e->getTraceAsString(),
+                    'method' => __METHOD__
+                ]);
+            }
 
             // Lanzar excepción para manejo global de errores
             throw $e;

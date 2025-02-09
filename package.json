@@ -10,6 +10,7 @@
         "test:coverage": "vitest run --coverage"
     },
     "devDependencies": {
+        "@faker-js/faker": "^9.4.0",
         "@inertiajs/vue3": "^1.0.0",
         "@kyvg/vue3-notification": "^3.1.4",
         "@mdi/font": "^7.4.47",

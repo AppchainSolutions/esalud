@@ -3,6 +3,14 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
+    test: {
+        globals: true,
+        environment: 'happy-dom',
+        include: ['tests/unit/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+        alias: {
+            '@': '/resources/js'
+        }
+    },
     build: {
         sourcemap: true
     },

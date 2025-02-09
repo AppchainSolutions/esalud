@@ -2,6 +2,9 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { router } from "@inertiajs/vue3";
 import { reactive, ref, onMounted, computed } from "vue";
+import { useField, useForm } from 'vee-validate';
+//import '../utils/validation-rules';
+import { formatRut } from '../utils/rut-validator';
 import { useDataStore } from "@/store.js";
 import moment from "moment";
 import { useDate } from "vuetify";
@@ -14,6 +17,8 @@ import {
     openToCreate,
     openToEdit,
 } from "@/helper.js";
+import { debugHelpers as debug } from "@/utils/debug.js";
+import ConfirmDialog from "@/Components/ConfirmDialog.vue";
 
 //**********\\\\  INI STATE VARIABLES AND CONST ////*************/
 
@@ -21,6 +26,16 @@ defineOptions({ layout: AppLayout });
 
 const store = useDataStore();
 const state = reactive({
+    // validationSchema: {
+    //     rutRules: [
+    //         v => !!v || 'El RUT es requerido',
+    //         v => {
+    //             if (!v) return true;
+    //             const { validateRut } = require('@/utils/rut-validator');
+    //             return validateRut(v) || 'El RUT ingresado no es válido';
+    //         }
+    //     ]
+    // },
     endpoints: [
         "afp",
         "area",
@@ -35,7 +50,7 @@ const state = reactive({
         "nacionalidad",
         "planta",
         "prevision",
-      //  "pueblo_originario",
+        "pueblo_originario",
         "religion",
         "seguro",
         "unidad",
@@ -57,42 +72,7 @@ const state = reactive({
         },
         { title: "Acciones", sortable: false, align: "center", key: "actions" },
     ],
-    validationSchema: {
-        rutRules: [
-            (value) => {
-                const regex = /^[0-9]+[-|‐]{1}[0-9kK]{1}$/;
-                if (!regex.test(value)) {
-                    return false;
-                }
-
-                // Separar el número y el dígito verificador
-                let splitidRut = value.split("-");
-                let num = splitidRut[0];
-                let dv = splitidRut[1].toLowerCase();
-                // Calcular el dígito verificador esperado
-                let m = 0,
-                    s = 1;
-                for (; num; num = Math.floor(num / 10)) {
-                    s = (s + (num % 10) * (9 - (m++ % 6))) % 11;
-                }
-                let dvEsperado = s ? s - 1 : "k";
-                const validate = dv === dvEsperado;
-                return validate
-                    ? true
-                    : "El rut no es válido. Por favor, verifique el formato y los dígitos.";
-            },
-        ],
-        emailRules: [
-            (value) => {
-                if (value) return true;
-                return "Se necesita un email.";
-            },
-            (value) => {
-                if (/.+@.+\..+/.test(value)) return true;
-                return "El email debe ser válido.";
-            },
-        ],
-    },
+ 
     searchQuery: {
         id: null,
         rut: null,
@@ -142,45 +122,47 @@ const state = reactive({
         telefono2: null,
         unidad: null,
     },
-    defaultItem: {
-        rut: null,
-        nombre: null,
-        apellidos: null,
-        actividad_economica: null,
-        activo: true,
-        protocolo_minsal: false,
-        seguro: null,
-        afp: null,
-        ceco: null,
-        area: null,
-        cargo: null,
-        ciudad: null,
-        direccion: null,
-        donante: false,
-        edad: null,
-        email: null,
-        empresa: null,
-        estado_civil: null,
-        exposicion: [],
-        fecha_nacimiento: null,
-        genero: null,
-        grupo_sanguineo: null,
-        nivelInstruccion: null,
-        ley_social: null,
-        modalidadAtencion: null,
-        nacionalidad: null,
-        ocupacion: null,
-        planta: null,
-        prevision: null,
-        profesion: null,
-        pueblo_originario: null,
-        religion: null,
-        telefono1: null,
-        telefono2: null,
-        unidad: null,
-    },
+    // defaultItem: {
+    //     rut: null,
+    //     nombre: null,
+    //     apellidos: null,
+    //     actividad_economica: null,
+    //     activo: true,
+    //     protocolo_minsal: false,
+    //     seguro: null,
+    //     afp: null,
+    //     ceco: null,
+    //     area: null,
+    //     cargo: null,
+    //     ciudad: null,
+    //     direccion: null,
+    //     donante: false,
+    //     edad: null,
+    //     email: null,
+    //     empresa: null,
+    //     estado_civil: null,
+    //     exposicion: [],
+    //     fecha_nacimiento: null,
+    //     genero: null,
+    //     grupo_sanguineo: null,
+    //     nivelInstruccion: null,
+    //     ley_social: null,
+    //     modalidadAtencion: null,
+    //     nacionalidad: null,
+    //     ocupacion: null,
+    //     planta: null,
+    //     prevision: null,
+    //     profesion: null,
+    //     pueblo_originario: null,
+    //     religion: null,
+    //     telefono1: null,
+    //     telefono2: null,
+    //     unidad: null,
+    // },
     dialog: false,
     dialogActivationAccount: false,
+    dialogDelete: false,
+    itemToDelete: null,
     editedIndex: -1,
     formCrear: "Nuevo Paciente",
     formEdit: "Editar datos del Paciente",
@@ -205,6 +187,17 @@ onMounted(async () => {
 const editedItemTitle = computed(() =>
     state.editedIndex === -1 ? state.formCrear : state.formEdit
 );
+
+// Configuración de validación
+// const { handleSubmit, errors } = useForm();
+// const { value: rut, errorMessage: rutError } = useField('rut', 'required|rut');
+
+// // Método para manejar la validación del RUT
+// const handleRutValidation = (value) => {
+//     if (value) {
+//         state.editedItem.rut = formatRut(value);
+//     }
+// };
 
 //**********\\\\ METHODS ////*************/
 const formatDate = computed(() => {
@@ -235,6 +228,10 @@ function atenciones(item) {
 }
 
 function close() {
+    // Limpiar errores al cerrar el formulario
+    if (state.editedItem.errors) {
+        state.editedItem.errors = {};
+    }
     closeForm(state);
 }
 
@@ -261,7 +258,15 @@ function openFormCreate() {
     openToCreate(state);
 }
 
-function storeItems() {
+async function storeItems() {
+    // Validar RUT antes de guardar
+    // const { validateRut } = require('@/utils/rut-validator');
+    // if (!validateRut(state.editedItem.rut)) {
+    //     // Mostrar error si el RUT no es válido
+    //     state.editedItem.errors = { ...state.editedItem.errors, rut: ['El RUT ingresado no es válido'] };
+    //     return;
+    // }
+
     return state.editedIndex > -1 ? update() : create();
 }
 
@@ -293,6 +298,32 @@ function openFormEdit(item) {
 const remove = async (item) => {
     handleRemoveItem(state, item);
 };
+//*********** UPDATE ***********/
+const updateItem = async () => {
+    await handleStoreItem(state, "edit");
+    closeForm(state);
+};
+
+//*********** DELETE ***********/
+const deleteItem = async (item) => {
+    state.itemToDelete = item.id;
+    state.dialogDelete = true;
+};
+
+const closeDelete = () => {
+    state.dialogDelete = false;
+    state.itemToDelete = null;
+};
+
+const deleteItemConfirmed = async () => {
+    await deleteConfirmed({
+        ...state,
+        url: {
+            delete: "api/pacientes",
+        },
+    });
+    closeDelete();
+};
 </script>
 
 <template>
@@ -310,7 +341,7 @@ const remove = async (item) => {
                                 <v-col>
                                     <v-text-field
                                         v-model="state.searchQuery.rut"
-                                        :rules="state.validationSchema.rutRules"
+                                        @input="value => state.searchQuery.rut = formatRut(value)"
                                         label="Rut* (12345678-9)"
                                         type="text"
                                         variant="underlined"
@@ -477,10 +508,8 @@ const remove = async (item) => {
                                             <v-row>
                                                 <v-col cols="6" sm="4" md="2">
                                                     <v-text-field
-                                                        v-model="
-                                                            state.editedItem.rut
-                                                        "
-                                                        label="Rut* (12345678-9)"
+                                                        v-model="state.editedItem.rut"
+                                                        label="RUT (12345678-9)"
                                                         type="text"
                                                         required
                                                         clearable
@@ -570,13 +599,7 @@ const remove = async (item) => {
                                                             state.editedItem
                                                                 .email
                                                         "
-                                                        :rules="
-                                                            state
-                                                                .validationSchema
-                                                                .emailRules
-                                                        "
-                                                        label="Email"
-                                                        type="email"
+                                                        
                                                         required
                                                         clearable
                                                         variant="underlined"
@@ -841,7 +864,7 @@ const remove = async (item) => {
                                                         item-value="id"
                                                         v-model="
                                                             state.editedItem
-                                                                .pueblo
+                                                                .pueblo_originario
                                                         "
                                                         label="Pueblo originario"
                                                         clearable
@@ -852,15 +875,15 @@ const remove = async (item) => {
                                                     <v-select
                                                         :items="
                                                             state.list
-                                                                .nivelInstruccion
+                                                                .nivel_instruccion
                                                         "
                                                         item-title="descripcion"
                                                         item-value="id"
                                                         v-model="
                                                             state.editedItem
-                                                                .nivelInstruccion
+                                                                .nivel_instruccion
                                                         "
-                                                        label="Nivel de NivelInstruccion"
+                                                        label="Nivel de Instrucción"
                                                         clearable
                                                         variant="underlined"
                                                     ></v-select>
@@ -878,7 +901,7 @@ const remove = async (item) => {
                                                                 .actividad_economica
                                                         "
                                                         label="Actividad económica"
-                                                        required
+                                                        
                                                         clearable
                                                         variant="underlined"
                                                     ></v-text-field>

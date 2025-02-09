@@ -102,7 +102,7 @@ class PacienteActivacionSeeder extends Seeder
         //$token = $paciente->generarTokenActivacion();
 
         // Generar URL de activación
-        $activationUrl = app(PacienteActivacionService::class)->generarUrlActivacion($paciente);
+        $activationUrl = app(PacienteActivacionService::class)->generarUrlActivacion($paciente, 24);
 
         // $this->debugLog('Token de activación generado', [
         //     'paciente_id' => $paciente->id,
@@ -138,7 +138,7 @@ class PacienteActivacionSeeder extends Seeder
             // Mensaje informativo con detalles de seguridad
             $this->command->info("Correo de activación enviado:");
             $this->command->info("URL de Activación: {$activationUrl}");
-            $this->command->info("Expira: {$paciente->token_activacion_expira}");
+            $this->command->info("Expira: " . now()->addHours(24)->format('Y-m-d H:i:s'));
         }
 
         // Mensaje informativo

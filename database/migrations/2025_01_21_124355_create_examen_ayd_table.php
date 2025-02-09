@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -13,12 +13,14 @@ return new class extends Migration {
     {
         Schema::create('examen_ayd', function (Blueprint $table) {
             $table->id();
-            $table->integer('paciente_id');
-            $table->integer('idpgp')->nullable();
-            $table->date('fecha_control')->nullable();
-            $table->string('comentario')->nullable();
+            $table->foreignId('paciente_id')->constrained('paciente');
+            $table->string('idpgp');
+            $table->date('fecha_control');
+            $table->string('test_drogas');
+            $table->string('item');
+            $table->text('comentario');
+            $table->string('estado_examen');
             $table->timestamps();
-            $table->integer('test_drogas')->nullable();
         });
     }
 

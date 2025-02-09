@@ -15,9 +15,11 @@ class PacienteActivacionFormularioTest extends TestCase
     use RefreshDatabase;
 
     private PacienteActivacionService $activacionService;
-    protected $paciente;
-    protected $activationUrl;
-    protected $tokenPlano;
+    protected Paciente $paciente;
+    protected string $activationUrl;
+    protected string $tokenPlano;
+    protected const TEST_TOKEN = 'test-token-12345-abcde';
+    protected const TEST_PASSWORD = 'Segura123!@#456789';
 
     protected function setUp(): void
     {
@@ -33,8 +35,8 @@ class PacienteActivacionFormularioTest extends TestCase
         // Inyectar servicio de activación
         $this->activacionService = app(PacienteActivacionService::class);
 
-        // Generar token de activación
-        $this->tokenPlano = Str::random(64);
+        // Usar token determinista para tests
+        $this->tokenPlano = self::TEST_TOKEN;
         $this->paciente->update([
             'token_activacion' => $this->tokenPlano,
             'token_activacion_expira' => now()->addHours(24)
@@ -52,8 +54,8 @@ class PacienteActivacionFormularioTest extends TestCase
         $datosUsuario = [
             'token' => $this->tokenPlano,
             'email' => $this->paciente->email,
-            'password' => 'Segura123!@#456789', 
-            'password_confirmation' => 'Segura123!@#456789'
+            'password' => self::TEST_PASSWORD, 
+            'password_confirmation' => self::TEST_PASSWORD
         ];
 
         // Simular envío de formulario de activación
@@ -82,8 +84,8 @@ class PacienteActivacionFormularioTest extends TestCase
         $datosUsuario = [
             'token' => $this->tokenPlano,
             'email' => $this->paciente->email,
-            'password' => 'Segura123!@#456789', 
-            'password_confirmation' => 'Segura123!@#456789'
+            'password' => self::TEST_PASSWORD, 
+            'password_confirmation' => self::TEST_PASSWORD
         ];
 
         // Simular envío de formulario de activación con token expirado

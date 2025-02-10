@@ -42,21 +42,21 @@ class MiPerfilController extends Controller
             // Buscar paciente específico del usuario con cuenta activada
             $paciente = Paciente::where('user_id', $user_id)
                 ->where('cuenta_activada', true)
-                ->with([
-                    'afp', 
-                    'nacionalidad', 
-                    'genero', 
-                    'estadoCivil', 
-                    'nivelInstruccion', 
-                    'puebloOriginario', 
-                    'religion', 
-                    'prevision', 
-                    'seguroSalud', 
-                    'unidad', 
-                    'area', 
-                    'ceco', 
-                    'empresa'
-                ])
+                // ->with([
+                //     'afp', 
+                //     'nacionalidad', 
+                //     'genero', 
+                //     'estadoCivil', 
+                //     'nivelInstruccion', 
+                //     'puebloOriginario', 
+                //     'religion', 
+                //     'prevision', 
+                //     'seguroSalud', 
+                //     'unidad', 
+                //     'area', 
+                //     'ceco', 
+                //     'empresa'
+                // ])
                 ->first();
 
             // Log detallado de paciente
@@ -105,98 +105,98 @@ class MiPerfilController extends Controller
     {
         Log::channel('single')->debug('Método mi perfil médico de MiPerfilController iniciado');
 
-        // try {
-        // // Verificar autenticación
-        // if (!Auth::check()) {
-        //     Log::channel('single')->error('Intento de acceso sin autenticación', [
-        //         'method' => 'personal',
-        //         'ip' => request()->ip()
-        //     ]);
-        //     return response()->json(['error' => 'No autenticado'], 401);
-        // }
+        try {
+        // Verificar autenticación
+        if (!Auth::check()) {
+            Log::channel('single')->error('Intento de acceso sin autenticación', [
+                'method' => 'personal',
+                'ip' => request()->ip()
+            ]);
+            return response()->json(['error' => 'No autenticado'], 401);
+        }
 
-        // $user = Auth::user();
-        // $user_id = $user->id;
+        $user = Auth::user();
+        $user_id = $user->id;
 
-        // Log::channel('single')->info('Datos de usuario autenticado', [
-        //     'user_id' => $user_id,
-        //     'user_email' => $user->email,
-        //     'user_name' => $user->name,
-        //     'user_rol' => $user->rol
-        // ]);
+        Log::channel('single')->info('Datos de usuario autenticado', [
+            'user_id' => $user_id,
+            'user_email' => $user->email,
+            'user_name' => $user->name,
+            'user_rol' => $user->rol
+        ]);
 
-        // $paciente = Paciente::where('user_id', "=", $user_id)
-        //     ->select('id')
-        //     ->with([
-        //         'alergia',
-        //         'enfermedad',
-        //         'cirugia',
-        //         'factorRiesgo',
-        //         'medicamento',
-        //         'vacuna',
-        //         'familiar',
-        //         'diat',
-        //         'diep',
-        //         // 'certificacion',
-        //         // 'estadoCertificacion',
-        //         'exAsma',
-        //         'exAlcohol',
-        //         'exEpo',
-        //         'exEquilibrio',
-        //         'exPsico',
-        //         'exPVTMERT',
-        //         'exRespirador',
-        //         'exRuido',
-        //         'exSalud',
-        //         'exSilice',
-        //         'exSolvente',
-        //         'exSomnolencia',
-        //     ])
-        //     ->firstOrFail()
-        //     ->toArray();
+        $paciente = Paciente::where('user_id', "=", $user_id)
+            ->select('id')
+            ->with([
+                'alergia',
+                'enfermedad',
+                'cirugia',
+                'factorRiesgo',
+                'medicamento',
+                'vacuna',
+                'familiar',
+                'diat',
+                'diep',
+                // 'certificacion',
+                // 'estadoCertificacion',
+                'exAsma',
+                'exAlcohol',
+                'exEpo',
+                'exEquilibrio',
+                'exPsico',
+                'exPVTMERT',
+                'exRespirador',
+                'exRuido',
+                'exSalud',
+                'exSilice',
+                'exSolvente',
+                'exSomnolencia',
+            ])
+            ->firstOrFail()
+            ->toArray();
 
-        //     // Log detallado de paciente
-        //     if ($paciente) {
-        //         Log::channel('single')->info('Paciente encontrado para perfil personal', [
-        //             'paciente_id' => $paciente->id,
-        //             'nombre' => $paciente->nombre,
-        //             'email' => $paciente->email,
-        //             'rut' => $paciente->rut,
-        //             'cuenta_activada' => $paciente->cuenta_activada
-        //         ]);
-        //     } else {
-        //         Log::channel('single')->warning('Paciente no encontrado o cuenta no activada', [
-        //             'user_id' => $user_id
-        //         ]);
-        //     }
+            // Log detallado de paciente
+            if ($paciente) {
+                Log::channel('single')->info('Paciente encontrado para perfil personal', [
+                    'paciente_id' => $paciente->id,
+                    'nombre' => $paciente->nombre,
+                    'email' => $paciente->email,
+                    'rut' => $paciente->rut,
+                    'cuenta_activada' => $paciente->cuenta_activada
+                ]);
+            } else {
+                Log::channel('single')->warning('Paciente no encontrado o cuenta no activada', [
+                    'user_id' => $user_id
+                ]);
+            }
 
-        //     // Preparar datos para la vista
-        //     $viewData = [
-        //         'paciente' => $paciente,
-        //         'user' => $user
-        //     ];
+            // Preparar datos para la vista
+            $viewData = [
+                'paciente' => $paciente,
+                'user' => $user
+            ];
 
-        //     // Log de datos enviados a la vista
-        //     Log::channel('single')->debug('Datos enviados a la vista MiPerfilPersonal', [
-        //         'paciente' => $paciente,
-        //         'user_id' => $user->id
-        //     ]);
+            // Log de datos enviados a la vista
+            Log::channel('single')->debug('Datos enviados a la vista MiPerfilPersonal', [
+                'paciente' => $paciente,
+                'user_id' => $user->id
+            ]);
 
-        //     // Renderizar vista Inertia
-        //     return Inertia::render('Paciente/MiPerfilMedico', $viewData);
-        // } catch (\Exception $e) {
-        //     // Log de error detallado
-        //     Log::channel('single')->error('Error en método personal de MiPerfilController', [
-        //         'error_message' => $e->getMessage(),
-        //         'error_trace' => $e->getTraceAsString(),
-        //         'user_id' => $user_id ?? 'No autenticado'
-        //     ]);
+            // Renderizar vista Inertia
+            return Inertia::render('Paciente/MiPerfilMedico', $viewData);
+        } catch (\Exception $e) {
+            // Log de error detallado
+            Log::channel('single')->error('Error en método personal de MiPerfilController', [
+                'error_message' => $e->getMessage(),
+                'error_trace' => $e->getTraceAsString(),
+                'user_id' => $user_id ?? 'No autenticado'
+            ]);
 
-        //     // Lanzar excepción para manejo global de errores
-        //     throw $e;
-        // }
+            // Lanzar excepción para manejo global de errores
+            throw $e;
+        }
 
-        // return Inertia::render('Paciente/MiPerfilMedico', ['paciente' => $paciente]);
+        return Inertia::render('Paciente/MiPerfilMedico', ['paciente' => $paciente]);
     }
 
     public function update(Request $request)

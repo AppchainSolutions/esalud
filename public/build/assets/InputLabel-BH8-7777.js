@@ -1,0 +1,2 @@
+import{d as e,o as t,t as a,j as n}from"./app-Bd0vU_sz.js";import{_ as l}from"./_plugin-vue_export-helper-DlAUqK2U.js";const r={class:"block font-medium text-sm text-gray-700"},c={key:0},u={key:1},_={__name:"InputLabel",props:{value:String},setup(s){return(o,m)=>(t(),e("label",r,[s.value?(t(),e("span",c,a(s.value),1)):(t(),e("span",u,[n(o.$slots,"default")]))]))}},d=l(_,[["__file","/home/omar/www/esalud/resources/js/Components/InputLabel.vue"]]);export{d as I};
+//# sourceMappingURL=InputLabel-BH8-7777.js.map

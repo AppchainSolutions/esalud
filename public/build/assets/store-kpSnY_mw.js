@@ -1,0 +1,2 @@
+import{K as t}from"./app-Bd0vU_sz.js";const s=t("DataStore",{state:()=>({selected:{},userSelected:{},pacienteSelected:[]}),getters:{getUserSelected:e=>e.userSelected,getPacienteSelected:e=>e.pacienteSelected},actions:{async setUserSelected(e){this.userSelected=e},async setPaciente(e=null){return e&&(this.pacienteSelected=e),this.pacienteSelected}}});export{s as u};
+//# sourceMappingURL=store-kpSnY_mw.js.map

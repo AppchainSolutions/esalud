@@ -6,12 +6,11 @@ import FactorRiesgo from "./FactorRiesgo.vue";
 import Medicamento from "./Medicamento.vue";
 import Vacuna from "./Vacuna.vue";
 
-
 export default {
     components: {
-        Enfermedad,
         Alergia,
         Cirugia,
+        Enfermedad,
         FactorRiesgo,
         Medicamento,
         Vacuna,

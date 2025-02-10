@@ -9,8 +9,13 @@ import {
     openToCreate,
     openToEdit,
 } from "@/helper.js";
+import { usePage } from "@inertiajs/vue3";
 
+const page = usePage();
+const paciente = page.props.paciente;
 const store = useDataStore();
+store.setPaciente(paciente);
+
 const state = reactive({
     headers: [
         {
@@ -98,6 +103,7 @@ const remove = async (item) => {
 </script>
 
 <template>
+    {{ paciente }}
     <v-container>
         <v-data-table :headers="state.headers" :items="state.tableItems">
             <template v-slot:top>

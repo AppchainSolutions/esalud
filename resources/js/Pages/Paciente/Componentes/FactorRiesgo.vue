@@ -1,6 +1,5 @@
 <script setup>
 import { reactive, computed } from "vue";
-import { useDataStore } from "@/store.js";
 import {
     handleRemoveItem,
     handleShowItem,
@@ -10,8 +9,10 @@ import {
     openToCreate,
     openToEdit,
 } from "@/helper.js";
-
+import { useDataStore } from "@/store.js";
 const store = useDataStore();
+const paciente = store.getPacienteSelected;
+
 const state = reactive({
     headers: [
         {
@@ -37,7 +38,7 @@ const state = reactive({
         paciente_id: null,
     },
     dialog: false,
-    tableItems: [],
+    tableItems: paciente.factor_riesgo,
     editedIndex: -1,
     list: [],
     loading: false,

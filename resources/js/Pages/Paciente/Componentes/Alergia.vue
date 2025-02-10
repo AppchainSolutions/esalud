@@ -1,8 +1,8 @@
 <script setup>
 import { reactive } from "vue";
 import { useDataStore } from "@/store.js";
-
 const store = useDataStore();
+const paciente = store.getPacienteSelected;
 
 const state = reactive({
     headers: [
@@ -22,7 +22,7 @@ const state = reactive({
         comentario: "",
     },   
     dialog: false,
-    tableItems: store.getPacienteSelected.alergia,
+    tableItems: paciente.alergia,
     loading: false,
     formTitle: "Alergias",
 });

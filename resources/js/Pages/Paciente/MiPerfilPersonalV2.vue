@@ -34,6 +34,7 @@ const form = ref({
   // Relaciones
   genero: paciente.genero?.descripcion,
   nacionalidad: paciente.nacionalidad?.descripcion,
+  grupo_sanguineo: paciente.grupoSanguineo?.descripcion,
   estado_civil: paciente.estadoCivil?.descripcion,
   nivel_instruccion: paciente.nivelInstruccion?.descripcion,
   pueblo_originario: paciente.puebloOriginario?.descripcion,

@@ -1,25 +1,19 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import DatosMedicos from "@/Paciente/Componentes/DatosMedicos.vue";
-import AntecedenteFamiliar from "@/Paciente/Componentes/AntecedenteFamiliar.vue";
-import LicenciaMedica from "@/Paciente/Componentes/LicenciaMedica.vue";
-import DiatDiep from "@/Paciente/Componentes/DiatDiep.vue";
-import Examenes from "@/Pages/Examenes/Examenes.vue";
-import Certificaciones from "@/Paciente/Componentes/Certificaciones.vue";
-// import { router } from "@inertiajs/vue3";
+import DatosMedicos from "@/Pages/Paciente/Componentes/DatosMedicos.vue";
+import AntecedenteFamiliar from "@/Pages/Paciente/Componentes/AntecedenteFamiliar.vue";
+import LicenciaMedica from "@/Pages/Paciente/Componentes/LicenciaMedica.vue";
+import DiatDiep from "@/Pages/Paciente/Componentes/DiatDiep.vue";
+import Examenes from "@/Pages/Paciente/Componentes/Examenes/Examenes.vue";
+import Certificaciones from "@/Pages/Paciente/Componentes/Certificaciones.vue";
 import { usePage } from "@inertiajs/vue3";
-// import { useDataStore } from "@/store.js";
+import { useDataStore } from "@/store.js";
 
-//const store = useDataStore();
+const store = useDataStore();
 defineOptions({ layout: AppLayout });
-// const page = usePage();
-// const user = usePage().props.auth.user;
-// const paciente = page.props.paciente;
-// store.setPaciente(paciente);
-
-// const volver = () => {
-//     router.get("paciente");
-// };
+const page = usePage();
+const paciente = page.props.paciente;
+store.setPaciente(paciente);
 </script>
 
 <template>
@@ -43,8 +37,7 @@ defineOptions({ layout: AppLayout });
                             'Certificaciones',
                         ]"
                     >
-                    
-                        <!-- <template v-slot:item.1>
+                        <template v-slot:item.1>
                             <datos-medicos />
                         </template>
 
@@ -66,7 +59,7 @@ defineOptions({ layout: AppLayout });
 
                         <template v-slot:item.6>
                             <certificaciones />
-                        </template> -->
+                        </template>
                     </v-stepper>
                 </v-card-text>
             </v-card>

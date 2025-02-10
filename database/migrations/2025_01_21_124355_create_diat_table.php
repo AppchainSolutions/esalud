@@ -22,13 +22,12 @@ return new class extends Migration {
             $table->string('origen_denuncia')->nullable();
             $table->string('sucursal')->nullable();
             $table->integer('tipo_accidente')->nullable();
-            $table->timestamps();
             $table->integer('idpgp')->nullable();
             $table->string('validado_por')->nullable();
-            $table->unsignedBigInteger('estado_diat')->nullable();
-            $table->foreign('estado_diat')->references('id')->on('estado_diat');
+            $table->integer('estado_diat')->nullable();
             $table->increments('id');
             $table->boolean('aprobado')->nullable();
+            $table->timestamps();
         });
     }
 

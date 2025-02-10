@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('examen_ayd', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('paciente_id')->constrained('paciente');
+            $table->integer('paciente_id');
             $table->string('idpgp');
             $table->date('fecha_control');
             $table->string('test_drogas');

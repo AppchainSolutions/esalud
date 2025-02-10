@@ -64,21 +64,43 @@ class PacienteActivacionService
      */
     public function enviarCorreoActivacion(Paciente $paciente, int $horasExpiracion = 24): void
     {
-        // Generar URL de activación firmada
-        $activationUrl = $this->generarUrlActivacion($paciente);
-
-        // Registrar evento de envío de correo
-        // event(new TokenActivacionGenerado($paciente)); // Este evento no está definido en el código proporcionado
-
-        // Enviar correo de activación
-        Mail::to($paciente->email)->send(
-            new PacienteActivacionMail(
-                $paciente, 
-                $paciente->token_activacion, 
-                $activationUrl, 
-                $horasExpiracion
-            )
-        );
+        try {
+            // Generar URL de activación firmada
+            $activationUrl = $this->generarUrlActivacion($paciente);
+    
+            // Log adicional de depuración
+            Log::info('Intentando enviar correo de activación', [
+                'paciente_id' => $paciente->id,
+                'email' => $paciente->email,
+                'activation_url' => $activationUrl
+            ]);
+    
+            // Enviar correo de activación
+            Mail::to($paciente->email)->send(
+                new PacienteActivacionMail(
+                    $paciente, 
+                    $activationUrl, 
+                    $horasExpiracion
+                )
+            );
+    
+            // Log de éxito
+            Log::info('Correo de activación enviado exitosamente', [
+                'paciente_id' => $paciente->id,
+                'email' => $paciente->email
+            ]);
+        } catch (\Exception $e) {
+            // Log de error detallado
+            Log::error('Error al enviar correo de activación', [
+                'paciente_id' => $paciente->id,
+                'email' => $paciente->email,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+    
+            // Relanzar la excepción para que sea visible
+            throw $e;
+        }
     }
 
     /**

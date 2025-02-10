@@ -14,8 +14,11 @@ export const useDataStore = defineStore("DataStore", {
         async setUserSelected(user) {
             this.userSelected = user;
         },
-        async setPaciente(paciente) {
-            this.pacienteSelected = paciente;
+        async setPaciente(paciente = null) {
+            if (paciente) {
+                this.pacienteSelected = paciente;
+            }
+            return this.pacienteSelected;
         },
     },
 });

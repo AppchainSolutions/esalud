@@ -1,0 +1,9 @@
+[submodule "docs/dev-guidelines"]
+	path = docs/dev-guidelines
+	url = https://github.com/AppchainSolutions/dev-guidelines.git
+[submodule "libs/enhanced-logging"]
+	path = libs/enhanced-logging
+	url = https://github.com/AppchainSolutions/enhanced-logging.git
+[submodule "libs/etools"]
+	path = libs/etools
+	url = https://github.com/AppchainSolutions/etools.git

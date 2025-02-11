@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/tu-usuario/esalud/compare/v1.6.0...v1.7.0) (2025-02-11)
+
+
+### ✨ Características
+
+* **notificaciones:** Implementación completa del sistema de notificaciones de próximos controles 9248bb8
+* **workspace:** Integrar submodulos de documentación, logging y herramientas a11a2fb
+
+
+### 🔧 Tareas de Mantenimiento
+
+* configurar standard-version para versionado automático 2fc1ebf
+* **release:** 1.6.0 1520503
+
 ## [1.5.0] - 2025-02-09
 
 ### Added

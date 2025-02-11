@@ -35,6 +35,7 @@
         "axios": "^1.7.9",
         "commitizen": "^4.3.1",
         "css-loader": "^6.8.1",
+        "cz-conventional-changelog": "^3.3.0",
         "date-fns": "^3.3.1",
         "git-cz": "^4.9.0",
         "happy-dom": "^17.0.0",
@@ -69,7 +70,7 @@
         "vue3-spinners": "^1.2.2"
     },
     "name": "esalud",
-    "version": "1.11.0",
+    "version": "1.12.0",
     "main": "playwright.config.js",
     "directories": {
         "test": "tests"

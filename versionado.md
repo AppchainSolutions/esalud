@@ -30,6 +30,55 @@ Herramienta para automatizar:
 }
 ```
 
+## Uso de Standard Version
+
+### Comandos Disponibles
+
+Standard Version se configura a través de scripts en `package.json`:
+
+```bash
+# Incremento automático de versión (basado en commits)
+npm run release
+
+# Incrementos específicos de versión
+npm run release:major   # Versión mayor (2.0.0)
+npm run release:minor   # Versión menor (1.6.0)
+npm run release:patch   # Versión de parche (1.5.10)
+```
+
+### Flujo de Trabajo Recomendado
+
+1. Realizar commits siguiendo la convención:
+   - `feat:` para nuevas características
+   - `fix:` para correcciones
+   - `docs:` para cambios en documentación
+   - `chore:` para tareas de mantenimiento
+
+2. Ejecutar `npm run release`
+   - Actualiza automáticamente la versión
+   - Genera un CHANGELOG
+   - Crea un tag de git
+
+### Ejemplos de Commits
+
+```bash
+# Nueva característica
+git commit -m "feat: añadir soporte para rutas relativas en file:tag"
+
+# Corrección de error
+git commit -m "fix: corregir error de validación en formulario"
+
+# Documentación
+git commit -m "docs: actualizar README con instrucciones de instalación"
+```
+
+### Consejos
+
+- Usar commits descriptivos
+- Seguir la convención de commits
+- Revisar el CHANGELOG generado antes de hacer push
+- Usar `--release-as` para control manual de versiones
+
 ## Estructura de Versiones
 
 ### Formato Básico

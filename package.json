@@ -11,9 +11,13 @@
         "release": "standard-version",
         "release:major": "standard-version --release-as major",
         "release:minor": "standard-version --release-as minor",
-        "release:patch": "standard-version --release-as patch"
+        "release:patch": "standard-version --release-as patch",
+        "commit": "git-cz",
+        "prepare": "husky install"
     },
     "devDependencies": {
+        "@commitlint/cli": "^19.7.1",
+        "@commitlint/config-conventional": "^19.7.1",
         "@faker-js/faker": "^9.4.0",
         "@inertiajs/vue3": "^1.0.0",
         "@kyvg/vue3-notification": "^3.1.4",
@@ -29,10 +33,13 @@
         "@vue/test-utils": "^2.4.6",
         "autoprefixer": "^10.4.7",
         "axios": "^1.7.9",
+        "commitizen": "^4.3.1",
         "css-loader": "^6.8.1",
         "date-fns": "^3.3.1",
+        "git-cz": "^4.9.0",
         "happy-dom": "^17.0.0",
         "highcharts-vue": "^1.4.3",
+        "husky": "^9.1.7",
         "laravel-vite-plugin": "^1.0.0",
         "pinia": "^2.1.7",
         "postcss": "^8.4.14",
@@ -65,11 +72,15 @@
     "version": "1.10.1",
     "main": "playwright.config.js",
     "directories": {
-        "doc": "docs",
         "test": "tests"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "description": ""
+    "description": "",
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
+    }
 }

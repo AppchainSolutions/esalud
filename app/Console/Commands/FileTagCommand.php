@@ -122,10 +122,20 @@ class FileTagCommand extends Command
 
         $searchDirs = $file ? explode(',', $file) : [base_path()];
 
+        // Spinner personalizado
+        $spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+        $spinnerIndex = 0;
+
+        $this->output->write("<fg=yellow>{$spinner[$spinnerIndex]}</> Buscando archivos con el tag '$tag'...");
+
         $foundFiles = [];
 
         // Buscar archivos con el tag
         foreach (File::files($this->tagsDir) as $tagFile) {
+            // Actualizar spinner
+            $spinnerIndex = ($spinnerIndex + 1) % count($spinner);
+            $this->output->write("\r<fg=yellow>{$spinner[$spinnerIndex]}</> Buscando archivos con el tag '$tag'...");
+
             $content = File::get($tagFile);
             $tags = array_filter(explode("\n", $content));
             
@@ -138,6 +148,9 @@ class FileTagCommand extends Command
                 }
             }
         }
+
+        // Limpiar línea de spinner
+        $this->output->write("\r" . str_repeat(' ', 50) . "\r");
 
         if ($foundFiles) {
             $this->info("Archivos encontrados con el tag '$tag':");

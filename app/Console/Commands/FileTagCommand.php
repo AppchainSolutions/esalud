@@ -77,7 +77,7 @@ class FileTagCommand extends Command
         }
 
         // Resolver ruta absoluta
-        $absoluteFile = realpath($file);
+        $absoluteFile = $this->resolveFilePath($file);
 
         if (!$absoluteFile || !File::exists($absoluteFile)) {
             $this->error("El archivo $file no existe");
@@ -214,7 +214,7 @@ class FileTagCommand extends Command
         }
 
         // Resolver ruta absoluta si es necesario
-        $absoluteFile = realpath($file);
+        $absoluteFile = $this->resolveFilePath($file);
 
         if (!$absoluteFile || !File::exists($absoluteFile)) {
             $this->error("El archivo $file no existe");
@@ -259,7 +259,7 @@ class FileTagCommand extends Command
         }
 
         // Resolver ruta absoluta
-        $absoluteFile = realpath($file);
+        $absoluteFile = $this->resolveFilePath($file);
 
         if (!$absoluteFile || !File::exists($absoluteFile)) {
             $this->error("El archivo $file no existe");
@@ -298,6 +298,23 @@ class FileTagCommand extends Command
     private function generateFileHash($file)
     {
         return md5(realpath($file));
+    }
+
+    /**
+     * Mejora: Optimizar la resolución de rutas para mayor flexibilidad
+     * Se añade soporte para rutas más complejas y manejo de excepciones
+     */
+    protected function resolveFilePath($path)
+    {
+        // Implementar resolución más robusta de rutas
+        $normalizedPath = str_replace(['\\', '//'], '/', $path);
+        
+        // Añadir validación de rutas
+        if (!file_exists($normalizedPath)) {
+            throw new \InvalidArgumentException("La ruta especificada no existe: $normalizedPath");
+        }
+        
+        return realpath($normalizedPath);
     }
 
     /**

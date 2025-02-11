@@ -1,0 +1,59 @@
+{
+    "titulo": "Guía Global de Desarrollo de Software",
+    "version": "1.0.0",
+    "secciones": [
+        {
+            "nombre": "Reglas Globales de Desarrollo",
+            "descripcion": "Principios fundamentales para el desarrollo de software",
+            "principios": [
+                "Arquitectura de capas",
+                "Principios SOLID",
+                "Inyección de dependencias",
+                "Alta cohesión",
+                "Bajo acoplamiento"
+            ]
+        },
+        {
+            "nombre": "Principios de Diseño",
+            "principios": [
+                "SOLID",
+                "DRY",
+                "BDD",
+                "TDD"
+            ]
+        },
+        {
+            "nombre": "Patrones de Diseño",
+            "categorias": [
+                "Creacionales",
+                "Estructurales", 
+                "Comportamiento"
+            ],
+            "patrones_destacados": [
+                "Singleton",
+                "Factory Method",
+                "Adapter",
+                "Strategy"
+            ]
+        },
+        {
+            "nombre": "Desarrollo de APIs RESTful",
+            "principios": [
+                "Convenciones REST",
+                "Verbos HTTP semánticos",
+                "Versionamiento",
+                "Estructura de endpoints"
+            ]
+        },
+        {
+            "nombre": "Estrategia de Seguridad",
+            "aspectos_clave": [
+                "Autenticación robusta",
+                "Protección de datos",
+                "Validación de inputs",
+                "Control de acceso"
+            ]
+        }
+    ],
+    "ultima_actualizacion": "2025-02-08"
+}

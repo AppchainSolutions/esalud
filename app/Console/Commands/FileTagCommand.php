@@ -76,14 +76,16 @@ class FileTagCommand extends Command
             return 1;
         }
 
-        // Validar que el archivo exista
-        if (!File::exists($file)) {
+        // Resolver ruta absoluta
+        $absoluteFile = realpath($file);
+
+        if (!$absoluteFile || !File::exists($absoluteFile)) {
             $this->error("El archivo $file no existe");
             return 1;
         }
 
         // Generar hash del archivo
-        $fileHash = $this->generateFileHash($file);
+        $fileHash = $this->generateFileHash($absoluteFile);
         $tagFile = $this->tagsDir . '/' . $fileHash . '.tags';
 
         // Crear directorio de tags si no existe
@@ -100,9 +102,13 @@ class FileTagCommand extends Command
         if (!in_array($tag, $existingTags)) {
             $existingTags[] = $tag;
             File::put($tagFile, implode("\n", $existingTags));
-            $this->info("Tag '$tag' añadido a $file");
+            
+            // Mostrar ruta relativa
+            $relativeFile = $this->convertToRelativePath($absoluteFile);
+            $this->info("Tag '$tag' añadido a $relativeFile");
         } else {
-            $this->warn("El tag '$tag' ya existe para $file");
+            $relativeFile = $this->convertToRelativePath($absoluteFile);
+            $this->warn("El tag '$tag' ya existe para $relativeFile");
         }
 
         return 0;
@@ -121,6 +127,11 @@ class FileTagCommand extends Command
         }
 
         $searchDirs = $file ? explode(',', $file) : [base_path()];
+
+        // Convertir directorios de búsqueda a rutas absolutas
+        $absoluteSearchDirs = array_map(function($dir) {
+            return realpath($dir) ?: $dir;
+        }, $searchDirs);
 
         // Spinner personalizado
         $spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
@@ -143,7 +154,7 @@ class FileTagCommand extends Command
                 $fileHash = pathinfo($tagFile, PATHINFO_FILENAME);
                 
                 // Buscar el archivo en los directorios especificados
-                foreach ($searchDirs as $dir) {
+                foreach ($absoluteSearchDirs as $dir) {
                     $this->findFileByHash($dir, $fileHash, $foundFiles);
                 }
             }
@@ -154,8 +165,15 @@ class FileTagCommand extends Command
 
         if ($foundFiles) {
             $this->info("Archivos encontrados con el tag '$tag':");
-            foreach ($foundFiles as $foundFile) {
-                $this->line($foundFile);
+            $relativePaths = array_map([$this, 'convertToRelativePath'], $foundFiles);
+            foreach ($relativePaths as $relativePath) {
+                // Crear enlace clickable con la ruta absoluta completa
+                $absolutePath = base_path($relativePath);
+                $this->line(sprintf(
+                    '<href=%s>%s</>', 
+                    $absolutePath, 
+                    $relativePath
+                ));
             }
         } else {
             $this->warn("No se encontraron archivos con el tag '$tag'");
@@ -195,22 +213,34 @@ class FileTagCommand extends Command
             return 1;
         }
 
-        if (!File::exists($file)) {
+        // Resolver ruta absoluta si es necesario
+        $absoluteFile = realpath($file);
+
+        if (!$absoluteFile || !File::exists($absoluteFile)) {
             $this->error("El archivo $file no existe");
             return 1;
         }
 
-        $fileHash = $this->generateFileHash($file);
+        $fileHash = $this->generateFileHash($absoluteFile);
         $tagFile = $this->tagsDir . '/' . $fileHash . '.tags';
 
         if (File::exists($tagFile)) {
             $tags = array_filter(explode("\n", File::get($tagFile)));
-            $this->info("Tags para $file:");
+            
+            // Convertir ruta absoluta a relativa
+            $relativeFile = $this->convertToRelativePath($absoluteFile);
+            
+            $this->info(sprintf(
+                "Tags para <href=%s>%s</href>:", 
+                $absoluteFile, 
+                $relativeFile
+            ));
             foreach ($tags as $tag) {
                 $this->line($tag);
             }
         } else {
-            $this->warn("No hay tags para $file");
+            $relativeFile = $this->convertToRelativePath($absoluteFile);
+            $this->warn("No hay tags para $relativeFile");
         }
 
         return 0;
@@ -228,11 +258,20 @@ class FileTagCommand extends Command
             return 1;
         }
 
-        $fileHash = $this->generateFileHash($file);
+        // Resolver ruta absoluta
+        $absoluteFile = realpath($file);
+
+        if (!$absoluteFile || !File::exists($absoluteFile)) {
+            $this->error("El archivo $file no existe");
+            return 1;
+        }
+
+        $fileHash = $this->generateFileHash($absoluteFile);
         $tagFile = $this->tagsDir . '/' . $fileHash . '.tags';
 
         if (!File::exists($tagFile)) {
-            $this->error("No hay tags para este archivo");
+            $relativeFile = $this->convertToRelativePath($absoluteFile);
+            $this->error("No hay tags para el archivo $relativeFile");
             return 1;
         }
 
@@ -242,9 +281,12 @@ class FileTagCommand extends Command
         if ($index !== false) {
             unset($tags[$index]);
             File::put($tagFile, implode("\n", $tags));
-            $this->info("Tag '$tag' eliminado de $file");
+            
+            $relativeFile = $this->convertToRelativePath($absoluteFile);
+            $this->info("Tag '$tag' eliminado de $relativeFile");
         } else {
-            $this->warn("El tag '$tag' no existe para $file");
+            $relativeFile = $this->convertToRelativePath($absoluteFile);
+            $this->warn("El tag '$tag' no existe para $relativeFile");
         }
 
         return 0;
@@ -285,6 +327,68 @@ class FileTagCommand extends Command
                 break;
         }
 
+        // Procesar rutas relativas y cortas
+        if ($file) {
+            // Convertir rutas relativas a absolutas
+            if (!str_starts_with($file, '/')) {
+                // Intentar resolver rutas relativas
+                $resolvedPath = $this->resolveRelativePath($file);
+                $file = $resolvedPath ?: $file;
+            }
+        }
+
         return [$file, $tag];
+    }
+
+    /**
+     * Resolver rutas relativas dentro del proyecto
+     */
+    private function resolveRelativePath($path)
+    {
+        // Rutas base para búsqueda
+        $basePaths = [
+            base_path(),
+            base_path('app'),
+            base_path('app/Http/Controllers'),
+            base_path('app/Models'),
+            base_path('database'),
+            base_path('routes'),
+            base_path('resources'),
+            base_path('tests')
+        ];
+
+        foreach ($basePaths as $basePath) {
+            $fullPath = $basePath . '/' . $path;
+            
+            // Verificar si el archivo existe
+            if (file_exists($fullPath)) {
+                return $fullPath;
+            }
+
+            // Buscar archivos que contengan el nombre
+            $matchingFiles = glob($basePath . '/*' . $path . '*');
+            if (!empty($matchingFiles)) {
+                // Devolver el primer archivo coincidente
+                return $matchingFiles[0];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Convertir ruta absoluta a ruta relativa al proyecto
+     */
+    private function convertToRelativePath($absolutePath)
+    {
+        $basePath = base_path();
+        
+        // Quitar el base path del inicio de la ruta absoluta
+        if (strpos($absolutePath, $basePath) === 0) {
+            $relativePath = substr($absolutePath, strlen($basePath) + 1);
+            return $relativePath;
+        }
+        
+        return $absolutePath;
     }
 }

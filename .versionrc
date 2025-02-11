@@ -1,0 +1,12 @@
+{
+  "types": [
+    {"type": "feat", "section": "✨ Características"},
+    {"type": "fix", "section": "🐛 Correcciones"},
+    {"type": "docs", "section": "📝 Documentación"},
+    {"type": "refactor", "section": "♻️ Refactorizaciones"},
+    {"type": "test", "section": "✅ Tests"},
+    {"type": "chore", "section": "🔧 Tareas de Mantenimiento"}
+  ],
+  "commitUrlFormat": "https://github.com/tu-usuario/esalud/commit/{{hash}}",
+  "compareUrlFormat": "https://github.com/tu-usuario/esalud/compare/{{previousTag}}...{{currentTag}}"
+}

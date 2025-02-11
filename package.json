@@ -7,7 +7,11 @@
         "test:e2e:ui": "playwright test --ui",
         "test:e2e:report": "playwright show-report",
         "test:unit": "vitest",
-        "test:coverage": "vitest run --coverage"
+        "test:coverage": "vitest run --coverage",
+        "release": "standard-version",
+        "release:major": "standard-version --release-as major",
+        "release:minor": "standard-version --release-as minor",
+        "release:patch": "standard-version --release-as patch"
     },
     "devDependencies": {
         "@faker-js/faker": "^9.4.0",
@@ -34,6 +38,7 @@
         "postcss": "^8.4.14",
         "register-service-worker": "^1.7.2",
         "sass": "^1.69.5",
+        "standard-version": "^9.5.0",
         "sweetalert2": "^11.9.0",
         "vee-validate": "^4.12.5",
         "vite": "^5.0.0",

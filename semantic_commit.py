@@ -7,7 +7,11 @@ from typing import List, Dict
 
 def run_command(command: str) -> str:
     """Ejecutar comando de shell y devolver salida"""
-    return subprocess.check_output(command, shell=True, text=True).strip()
+    try:
+        return subprocess.check_output(command, shell=True, text=True, stderr=subprocess.STDOUT).strip()
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Error ejecutando comando: {e.output}")
+        return ""
 
 def get_git_diff() -> str:
     """Obtener diff de git"""
@@ -149,7 +153,21 @@ def suggest_scope(diff: str) -> str:
     
     return 'general'
 
+def check_git_changes() -> bool:
+    """Verificar si hay cambios para hacer commit"""
+    try:
+        # Verificar cambios en staging y working directory
+        status_output = subprocess.check_output("git status --porcelain", shell=True, text=True).strip()
+        return len(status_output) > 0
+    except subprocess.CalledProcessError:
+        return False
+
 def main():
+    # Verificar si hay cambios
+    if not check_git_changes():
+        print("❌ No hay cambios para hacer commit")
+        return
+    
     # Obtener diff
     diff = get_git_diff()
     
@@ -173,7 +191,16 @@ def main():
         confirm = input("\n¿Confirmar commit? (s/n): ").lower().strip()
         if confirm in ['s', 'si', 'y', 'yes']:
             commit_msg = f"{semantic_type}({scope}): {description.split(':\n')[0]}\n\n{description}"
-            run_command(f"git add . && git commit -m '{commit_msg}'")
+            
+            # Añadir archivos y hacer commit
+            add_result = run_command("git add .")
+            if add_result:
+                print(add_result)
+            
+            commit_result = run_command(f"git commit -m '{commit_msg}'")
+            if commit_result:
+                print(commit_result)
+            
             print("✅ Commit realizado exitosamente")
         else:
             print("❌ Commit cancelado")

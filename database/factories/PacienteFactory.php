@@ -21,6 +21,7 @@ use App\Models\SeguroSalud;
 use App\Models\Planta;
 use App\Models\Prevision;
 use App\Models\Unidad;
+use App\Models\User;
 use Faker\Factory as Faker;
 use App\Helpers\RutGenerator;
 
@@ -38,6 +39,57 @@ class PacienteFactory extends Factory
 
     public function definition(): array
     {
+        $nivelInstruccion = NivelInstruccion::count() > 0 
+            ? NivelInstruccion::inRandomOrder()->first()->id 
+            : NivelInstruccion::create(['descripcion' => 'Básica'])->id;
+
+        $leySocial = LeySocial::count() > 0 
+            ? LeySocial::inRandomOrder()->first()->id 
+            : LeySocial::create(['descripcion' => 'Ley General'])->id;
+
+        $modalidadAtencion = ModalidadAtencion::count() > 0 
+            ? ModalidadAtencion::inRandomOrder()->first()->id 
+            : ModalidadAtencion::create(['descripcion' => 'Presencial'])->id;
+
+        $nacionalidad = Nacionalidad::count() > 0 
+            ? Nacionalidad::inRandomOrder()->first()->id 
+            : Nacionalidad::create(['descripcion' => 'Chile'])->id;
+
+        $planta = Planta::count() > 0 
+            ? Planta::inRandomOrder()->first()->id 
+            : Planta::create(['descripcion' => 'Principal'])->id;
+
+        $prevision = Prevision::count() > 0 
+            ? Prevision::inRandomOrder()->first()->id 
+            : Prevision::create(['descripcion' => 'Fonasa'])->id;
+
+        $puebloOriginario = PuebloOriginario::count() > 0 
+            ? PuebloOriginario::inRandomOrder()->first()->id 
+            : PuebloOriginario::create(['descripcion' => 'Otro'])->id;
+
+        $religion = Religion::count() > 0 
+            ? Religion::inRandomOrder()->first()->id 
+            : Religion::create(['descripcion' => 'Otro'])->id;
+
+        $seguroSalud = SeguroSalud::count() > 0 
+            ? SeguroSalud::inRandomOrder()->first()->id 
+            : SeguroSalud::create(['descripcion' => 'Sin Seguro'])->id;
+
+        $genero = Genero::count() > 0 
+            ? Genero::inRandomOrder()->first()->id 
+            : Genero::create(['descripcion' => 'Otro'])->id;
+
+        $estadoCivil = EstadoCivil::count() > 0 
+            ? EstadoCivil::inRandomOrder()->first()->id 
+            : EstadoCivil::create(['descripcion' => 'Soltero'])->id;
+
+        $unidad = Unidad::count() > 0 
+            ? Unidad::inRandomOrder()->first()->id 
+            : Unidad::create(['descripcion' => 'General'])->id;
+
+        // Crear usuario si no existe
+        $user = User::factory()->create();
+
         return [
             'rut' => RutGenerator::generate(),
             'activo' => true,
@@ -52,25 +104,28 @@ class PacienteFactory extends Factory
             'telefono2' => $this->faker->phoneNumber,
             'token_activacion' => null,
             'token_activacion_expira' => null,
-            'user_id' => null,
-            'nivel_instruccion' => NivelInstruccion::inRandomOrder()->first()->id,
-            'ley_social' => LeySocial::inRandomOrder()->first()->id,
-            'modalidad_atencion' => ModalidadAtencion::inRandomOrder()->first()->id,
-            'nacionalidad' => Nacionalidad::inRandomOrder()->first()->id,
-            'nombre' => $this->faker->firstName,
-            'planta' => Planta::inRandomOrder()->first()->id,
-            'prevision' => Prevision::inRandomOrder()->first()->id,
+            'user_id' => $user->id,
+            'nivel_instruccion' => $nivelInstruccion,
+            'ley_social' => $leySocial,
+            'modalidad_atencion' => $modalidadAtencion,
+            'nacionalidad' => $nacionalidad,
+            'planta' => $planta,
+            'prevision' => $prevision,
             'profesion' => $this->faker->jobTitle,
-            'pueblo_originario' => PuebloOriginario::inRandomOrder()->first()->id,
-            'religion' => Religion::inRandomOrder()->first()->id,
-            'seguro_salud' => SeguroSalud::inRandomOrder()->first()->id,
-            'genero' => Genero::inRandomOrder()->first()->id,
-            'estado_civil' => EstadoCivil::inRandomOrder()->first()->id,
-            'telefono1' => $this->faker->phoneNumber,
-            'telefono2' => $this->faker->phoneNumber,
-            'unidad' => Unidad::inRandomOrder()->first()->id,
+            'pueblo_originario' => $puebloOriginario,
+            'religion' => $religion,
+            'seguro_salud' => $seguroSalud,
+            'genero' => $genero,
+            'estado_civil' => $estadoCivil,
+            'unidad' => $unidad,
         ];
     }
 
-
+    // Método para crear un paciente sin usuario
+    public function sinUsuario(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'user_id' => null,
+        ]);
+    }
 }

@@ -1,6 +1,10 @@
 # Flujo de Activación de Pacientes en eSalud
 
 ## Resumen General
+
+**Preparado por Omar Ahumada G.**
+**Fecha: 06-02-2025**
+
 El proceso de activación de pacientes es un flujo crítico de seguridad que permite a los nuevos pacientes crear su cuenta de usuario de manera segura y controlada.
 
 ## 1. Creación Inicial del Paciente

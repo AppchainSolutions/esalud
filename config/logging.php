@@ -54,31 +54,33 @@ return [
     */
 
     'channels' => [
-        'daily' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
-            'level' => 'error',
-            'days' => 14,
-            'permission' => 0664,
-        ],
-
-        'telegram' => [
-            'driver' => 'monolog',
-            'handler' => TelegramNotificationHandler::class,
-            'level' => Level::Critical,
-        ],
-
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single', 'stderr', 'syslog'],
+            'channels' => ['single', 'stderr'],
             'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
-            'level' => 'debug',
+            'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
+        ],
+
+        'stderr' => [
+            'driver' => 'monolog',
+            'handler' => StreamHandler::class,
+            'with' => [
+                'stream' => 'php://stderr',
+            ],
+            'formatter' => Monolog\Formatter\LineFormatter::class,
+            'formatter_with' => [
+                'format' => '[%datetime%] %channel%.%level_name%: %message% %context% %extra%',
+                'dateFormat' => 'Y-m-d H:i:s',
+                'allowInlineLineBreaks' => true,
+            ],
+            'level' => env('LOG_LEVEL', 'debug'),
+            'processors' => [PsrLogMessageProcessor::class],
         ],
 
         'daily' => [
@@ -87,6 +89,12 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 14,
             'replace_placeholders' => true,
+        ],
+
+        'telegram' => [
+            'driver' => 'monolog',
+            'handler' => TelegramNotificationHandler::class,
+            'level' => Level::Critical,
         ],
 
         'slack' => [
@@ -106,17 +114,6 @@ return [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
                 'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
-            ],
-            'processors' => [PsrLogMessageProcessor::class],
-        ],
-
-        'stderr' => [
-            'driver' => 'monolog',
-            'level' => 'debug',
-            'handler' => StreamHandler::class,
-            'formatter' => env('LOG_STDERR_FORMATTER'),
-            'with' => [
-                'stream' => 'php://stderr',
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],

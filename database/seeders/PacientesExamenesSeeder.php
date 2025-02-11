@@ -122,7 +122,10 @@ class PacientesExamenesSeeder extends Seeder
                     ->count(4)
                     ->sequence(
                         ['estado_examen' => EstadoExamen::where('descripcion', 'Realizado')->first()->id],
-                        ['estado_examen' => EstadoExamen::where('descripcion', 'Pendiente')->first()->id],
+                        [
+                            'estado_examen' => EstadoExamen::where('descripcion', 'Pendiente')->first()->id,
+                            'fecha_prox_control' => now()->addMonths(1)
+                        ],
                         ['estado_examen' => EstadoExamen::where('descripcion', 'En Proceso')->first()->id],
                         ['estado_examen' => fn() => EstadoExamen::inRandomOrder()->first()->id]
                     )
@@ -132,7 +135,10 @@ class PacientesExamenesSeeder extends Seeder
                     ->count(4)
                     ->sequence(
                         ['estado_examen' => EstadoExamen::where('descripcion', 'Realizado')->first()->id],
-                        ['estado_examen' => EstadoExamen::where('descripcion', 'Pendiente')->first()->id],
+                        [
+                            'estado_examen' => EstadoExamen::where('descripcion', 'Pendiente')->first()->id,
+                            'fecha_prox_control' => now()->addMonths(1)
+                        ],
                         ['estado_examen' => EstadoExamen::where('descripcion', 'En Proceso')->first()->id],
                         ['estado_examen' => fn() => EstadoExamen::inRandomOrder()->first()->id]
                     )

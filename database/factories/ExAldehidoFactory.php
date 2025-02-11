@@ -13,12 +13,16 @@ class ExAldehidoFactory extends Factory
 
     public function definition(): array
     {
+        $estadoExamen = EstadoExamen::count() > 0 
+            ? EstadoExamen::inRandomOrder()->first()->id 
+            : EstadoExamen::create(['descripcion' => 'Pendiente'])->id;
+
         return [
             'paciente_id' => Paciente::factory(), 
-            'fecha_prox_control'=> $this->faker->dateTimeBetween('-1 year', 'now'),
-            'fecha_ult_control'=> $this->faker->dateTimeBetween('-1 year', 'now'),
+            'fecha_prox_control'=> now()->addMonths(1),
+            'fecha_ult_control'=> now()->subMonths(1),
             'idpgp' => strtoupper(substr(md5(uniqid()), 0, 10)),
-            'estado_examen' => EstadoExamen::inRandomOrder()->first()->id, 
+            'estado_examen' => $estadoExamen, 
             'comentario' => $this->faker->sentence()
         ];
     }
@@ -33,6 +37,14 @@ class ExAldehidoFactory extends Factory
     public function pendiente()
     {
         return $this->state(fn (array $attributes) => [
+            'estado_examen' => EstadoExamen::where('descripcion', 'Pendiente')->first()->id
+        ]);
+    }
+
+    public function proximoAVencer()
+    {
+        return $this->state(fn (array $attributes) => [
+            'fecha_prox_control' => now()->addMonths(1)->addWeeks(2),
             'estado_examen' => EstadoExamen::where('descripcion', 'Pendiente')->first()->id
         ]);
     }

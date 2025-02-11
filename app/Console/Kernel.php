@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\TestAtencionDiariaFactory::class,
         \App\Console\Commands\BaseTruncateCommand::class,
         \App\Console\Commands\TestActivationEmail::class,
+        \App\Console\Commands\EnviarNotificacionesVencimiento::class,
     ];
 
     protected function schedule(Schedule $schedule)
@@ -50,6 +51,38 @@ class Kernel extends ConsoleKernel
                     '--type' => 'alert'
                 ]);
             });
+
+        // Añadir notificaciones de vencimiento de exámenes
+        $schedule->command('notificaciones:vencimiento')
+            ->mondays()
+            ->at('19:00')
+            ->timezone('America/Santiago')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->before(function () {
+                Log::channel('daily')->info('Exam Expiration Notifications Started', [
+                    'timestamp' => now()->toDateTimeString()
+                ]);
+            })
+            ->after(function () {
+                Log::channel('daily')->info('Exam Expiration Notifications Completed', [
+                    'timestamp' => now()->toDateTimeString()
+                ]);
+            })
+            ->onFailure(function () {
+                Artisan::call('telegram:notify', [
+                    'message' => 'CRITICAL: Exam Expiration Notification Job Failed',
+                    '--type' => 'alert'
+                ]);
+            });
+
+        // Programar generación de notificaciones de exámenes
+        $schedule->command('examenes:notificar --log')
+                 ->weekly()  // Ejecutar semanalmente
+                 ->mondays() // Los lunes
+                 ->at('19:00') // A las 7 PM
+                 ->timezone('America/Santiago') // Zona horaria de Chile
+                 ->withoutOverlapping(); // Evitar ejecuciones simultáneas
 
         /**
          * Schedule Test Email

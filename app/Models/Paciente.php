@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\BooleanCastTrait;
+use App\Models\User;
 
 class Paciente extends Model
 {
@@ -118,6 +119,51 @@ class Paciente extends Model
         return $this->hasMany(ExSomnolencia::class);
     }
 
+    public function exAldehido(): HasMany
+    {
+        return $this->hasMany(ExAldehido::class);
+    }
+
+    public function exHumoNegro(): HasMany
+    {
+        return $this->hasMany(ExHumoNegro::class);
+    }
+
+    public function exAyd(): HasMany
+    {
+        return $this->hasMany(ExAyd::class);
+    }
+
+    public function exPvmom(): HasMany
+    {
+        return $this->hasMany(ExPvmom::class);
+    }
+
+    public function exPvmor(): HasMany
+    {
+        return $this->hasMany(ExPvmor::class);
+    }
+
+    public function exPvmos(): HasMany
+    {
+        return $this->hasMany(ExPvmos::class);
+    }
+
+    public function exPvmosol(): HasMany
+    {
+        return $this->hasMany(ExPvmosol::class);
+    }
+
+    public function exPvt(): HasMany
+    {
+        return $this->hasMany(ExPvt::class);
+    }
+
+    public function exPsm(): HasMany
+    {
+        return $this->hasMany(ExPsm::class);
+    }
+
     public function empresa(): BelongsTo
     {
         return $this->belongsTo(Empresa::class, 'empresa', 'id');
@@ -206,7 +252,7 @@ class Paciente extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function tieneAcceso()
@@ -264,26 +310,31 @@ class Paciente extends Model
 
     protected $table = 'paciente';
     protected $fillable = [
+        'rut',
+        'nombre',
+        'apellidos',
+        'direccion',
+        'email',
+        'fecha_nacimiento',
+        'telefono1',
+        'telefono2',
+        'cuenta_activada',
         'activo',
+        'user_id',
         'actividad_economica',
         'afp',
         'antecedentes_familiares',
-        'apellidos',
         'area',
         'cargo',
         'ceco',
         'ciudad',
-        'cuenta_activada',
-        'direccion',
         'donante',
         'edad',
-        'email',
         'empresa',
         'estado_civil',
         'certificacion',
         'estado_certificacion',
         'exposicion',
-        'fecha_nacimiento',
         'factor_riesgo',
         'genero',
         'grupo_sanguineo',
@@ -291,7 +342,6 @@ class Paciente extends Model
         'modalidad_atencion',
         'nacionalidad',
         'nivel_instruccion',
-        'nombre',
         'ocupacion',
         'planta',
         'prevision',
@@ -300,13 +350,9 @@ class Paciente extends Model
         'pueblo_originario',
         'religion',
         'seguro',
-        'telefono1',
-        'telefono2',
         'token_activacion',
         'token_activacion_expira',
         'unidad',
-        'user_id',
-        'rut',
     ];
 
     protected $casts = [

@@ -62,7 +62,7 @@
         "vue3-spinners": "^1.2.2"
     },
     "name": "esalud",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "main": "playwright.config.js",
     "directories": {
         "doc": "docs",

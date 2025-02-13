@@ -45,7 +45,7 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('notification:exepo')
+        $schedule->command('notificaciones:exepo')
             ->mondays()
             ->at('09:00')
             ->timezone('America/Santiago')
@@ -96,7 +96,7 @@ class Kernel extends ConsoleKernel
             });
 
         // Programar generación de notificaciones de exámenes
-        $schedule->command('examenes:notificar --log')
+        $schedule->command('notificaciones:programar --log')
                  ->weekly()  // Ejecutar semanalmente
                  ->mondays() // Los lunes
                  ->at('19:00') // A las 7 PM

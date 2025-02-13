@@ -19,23 +19,8 @@ class NotificacionesExamenesCommand extends Command
      *
      * @var string
      */
-    /*
-    # Mostrar todos los tipos de exámenes próximos a vencer
-    php artisan examenes:notificaciones --test
-
-    # Mostrar solo exámenes ocupacionales
-    php artisan examenes:notificaciones epo --test
-
-    # Mostrar exámenes de aldehidos próximos a vencer en los próximos 3 meses
-    php artisan examenes:notificaciones aldehido --test --meses=3
-
-    # Modo normal de notificaciones para todos los tipos
-    php artisan examenes:notificaciones
-
-    # Modo normal de notificaciones para un tipo específico
-    php artisan examenes:notificaciones aldehido*/
-    
-    protected $signature = 'examenes:notificaciones
+    protected $signature = 'notificaciones:examenes
+                            {accion : Acción a realizar (generar|revisar|enviar)}
                             {tipo? : Tipo específico de examen a procesar}
                             {--meses=2 : Número de meses para considerar exámenes próximos a vencer}
                             {--R|reintentar : Reintentar notificaciones fallidas}
@@ -49,7 +34,7 @@ class NotificacionesExamenesCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Gestionar y revisar notificaciones de exámenes próximos a vencer';
+    protected $description = 'Gestionar, generar y enviar notificaciones de exámenes próximos a vencer';
 
     /**
      * Servicio de notificaciones de exámenes
@@ -100,270 +85,111 @@ class NotificacionesExamenesCommand extends Command
      */
     public function handle()
     {
-        Log::info('Iniciando proceso de notificaciones de exámenes');
-
+        $accion = $this->argument('accion');
         $tipo = $this->argument('tipo');
-        $diasAntelacion = (int) $this->option('meses') * 30; // Convertir meses a días
+        $meses = $this->option('meses');
         $reintentar = $this->option('reintentar');
         $dryRun = $this->option('dry-run');
-        $logDetalles = $this->option('log');
-        $modoTest = $this->option('test');
-        $modoDebug = $this->option('debug');
+        $log = $this->option('log');
+        $test = $this->option('test');
+        $debug = $this->option('debug');
 
-        // Modo de depuración de modelos
-        if ($modoDebug) {
-            $this->depurarModelosExamenes();
-            return Command::SUCCESS;
-        }
-
-        try {
-            // Validar tipo de examen
-            if ($tipo && !array_key_exists($tipo, $this->tiposExamenes)) {
-                $this->error("Tipo de examen no válido. Tipos disponibles: " . implode(', ', array_keys($this->tiposExamenes)));
+        switch ($accion) {
+            case 'generar':
+                return $this->generarNotificaciones($tipo, $meses, $dryRun, $log, $debug);
+            case 'revisar':
+                return $this->revisarNotificaciones($tipo, $meses, $test, $debug);
+            case 'enviar':
+                return $this->enviarNotificaciones($tipo, $reintentar, $dryRun, $log);
+            default:
+                $this->error('Acción no válida. Use generar, revisar o enviar.');
                 return Command::FAILURE;
-            }
-
-            // Modo de prueba o test
-            if ($modoTest) {
-                return $this->mostrarExamenesPorVencer($tipo, $diasAntelacion);
-            }
-
-            Log::info("Buscando exámenes próximos a vencer en los próximos {$diasAntelacion} días...");
-
-            // Configurar modelos de exámenes según el tipo
-            $modelosExamenes = $tipo 
-                ? [$this->tiposExamenes[$tipo]['modelo']] 
-                : array_column($this->tiposExamenes, 'modelo');
-
-            // Establecer modelos de exámenes en el servicio
-            $this->examenNotificationService->setModelosExamenes($modelosExamenes);
-
-            // Obtener exámenes próximos a vencer
-            $examenes = $this->examenNotificationService->obtenerExamenesProximosAVencer($diasAntelacion);
-
-            Log::info("Se encontraron {$examenes->count()} exámenes próximos a vencer.");
-
-            // Depuración detallada de exámenes
-            if ($logDetalles) {
-                $this->table(
-                    ['ID', 'Tipo', 'Fecha Próximo Control', 'Paciente ID', 'Email Paciente'], 
-                    $examenes->map(function($examen) {
-                        return [
-                            $examen->id,
-                            $examen->tipo_examen,
-                            $examen->fecha_prox_control,
-                            $examen->paciente_id,
-                            $examen->paciente->email ?? 'Sin email'
-                        ];
-                    })->toArray()
-                );
-            }
-
-            // Reintentar si se solicita
-            if ($reintentar) {
-                $reintentosExitosos = $this->examenNotificationService->reintentarNotificacionesFallidas();
-                Log::info("Notificaciones reintentadas: {$reintentosExitosos}");
-            }
-
-            // Generar notificaciones
-            $notificaciones = $this->examenNotificationService->generarNotificacionesVencimiento($dryRun, $diasAntelacion);
-
-            Log::info("Se generaron {$notificaciones->count()} notificaciones.");
-
-            $this->info('Proceso de notificaciones completado.');
-            return Command::SUCCESS;
-
-        } catch (\Exception $e) {
-            Log::error('Error en notificaciones de exámenes', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'dias_anticipacion' => $diasAntelacion,
-            ]);
-            $this->error("Error en notificaciones de exámenes: {$e->getMessage()}");
-            return Command::FAILURE;
         }
     }
 
-    /**
-     * Mostrar exámenes próximos a vencer en modo test
-     *
-     * @param string|null $tipo
-     * @param int $diasAntelacion
-     * @return int
-     */
-    protected function mostrarExamenesPorVencer($tipo = null, $diasAntelacion = 60)
+    protected function generarNotificaciones($tipo, $meses, $dryRun, $log, $debug)
     {
-        // Configurar modelos de exámenes según el tipo
-        $modelosExamenes = $tipo 
-            ? [$this->tiposExamenes[$tipo]['modelo']] 
-            : array_column($this->tiposExamenes, 'modelo');
+        // Lógica de generación de notificaciones
+        if ($debug) {
+            $this->debugModelosExamenes();
+        }
 
-        // Establecer modelos de exámenes en el servicio
-        $this->examenNotificationService->setModelosExamenes($modelosExamenes);
+        $notificaciones = $this->examenNotificationService->generarNotificaciones(
+            $tipo ? [$tipo] : array_keys($this->tiposExamenes),
+            $meses,
+            $dryRun
+        );
 
-        // Definir rangos de búsqueda específicos
-        $now = now();
-        
-        // Rango 1: Exactamente 2 meses desde ahora
-        $fechaObjetivo1Ini = $now->copy()->startOfDay();
-        $fechaObjetivo1Ter = $now->copy()->addMonths(2)->endOfDay();
+        if ($log) {
+            $this->logNotificaciones($notificaciones);
+        }
 
-        // Rango 2: 2 meses y una semana desde ahora
-        $fechaObjetivo2Ini = $now->copy()->startOfDay();
-        $fechaObjetivo2Ter = $now->copy()->addMonths(2)->addWeek()->endOfDay();
+        return $notificaciones ? Command::SUCCESS : Command::FAILURE;
+    }
 
-        // Configurar rango de búsqueda en el servicio
-        $this->examenNotificationService->setConfig([
-            'rango_meses_busqueda' => [
-                'atras' => 0,
-                'adelante' => 3  // Un poco más para asegurar la búsqueda
-            ]
+    protected function revisarNotificaciones($tipo, $meses, $test, $debug)
+    {
+        // Lógica de revisión de notificaciones
+        if ($debug) {
+            $this->debugModelosExamenes();
+        }
+
+        $examenes = $this->examenNotificationService->obtenerExamenesPorVencer(
+            $tipo ? [$tipo] : array_keys($this->tiposExamenes),
+            $meses
+        );
+
+        if ($test) {
+            $this->mostrarExamenesPorVencer($examenes);
+        }
+
+        return $examenes ? Command::SUCCESS : Command::FAILURE;
+    }
+
+    protected function enviarNotificaciones($tipo, $reintentar, $dryRun, $log)
+    {
+        // Lógica de envío de notificaciones
+        $notificaciones = $this->examenNotificationService->enviarNotificaciones(
+            $tipo ? [$tipo] : array_keys($this->tiposExamenes),
+            $reintentar,
+            $dryRun
+        );
+
+        if ($log) {
+            $this->logNotificaciones($notificaciones);
+        }
+
+        return $notificaciones ? Command::SUCCESS : Command::FAILURE;
+    }
+
+    protected function debugModelosExamenes()
+    {
+        foreach ($this->tiposExamenes as $tipo => $config) {
+            $modelo = $config['modelo'];
+            $this->info("Modelo para $tipo: " . $modelo);
+            $this->info("Tabla: " . (new $modelo)->getTable());
+        }
+    }
+
+    protected function mostrarExamenesPorVencer($examenes)
+    {
+        $this->table(
+            ['Tipo', 'Cantidad', 'Próximos a Vencer'],
+            array_map(function($tipo, $datos) {
+                return [
+                    $this->tiposExamenes[$tipo]['nombre'],
+                    count($datos),
+                    implode(', ', array_slice(array_column($datos, 'id'), 0, 5))
+                ];
+            }, array_keys($examenes), $examenes)
+        );
+    }
+
+    protected function logNotificaciones($notificaciones)
+    {
+        Log::channel('notifications')->info('Notificaciones de Exámenes', [
+            'total' => count($notificaciones),
+            'detalles' => $notificaciones
         ]);
-
-        // Iterar sobre los tipos de exámenes
-        foreach ($this->tiposExamenes as $tipoKey => $infoTipo) {
-            // Saltar si se especificó un tipo y no coincide
-            if ($tipo && $tipoKey !== $tipo) {
-                continue;
-            }
-
-            // Establecer solo el modelo actual
-            $this->examenNotificationService->setModelosExamenes([$infoTipo['modelo']]);
-
-            // Realizar búsquedas en ambos rangos
-            $resultados = [
-                '2 meses' => $this->buscarExamenesEnRango($infoTipo, $fechaObjetivo1Ini, $fechaObjetivo1Ter),
-                '2 meses + 1 semana' => $this->buscarExamenesEnRango($infoTipo, $fechaObjetivo2Ini, $fechaObjetivo2Ter)
-            ];
-
-            // Mostrar resultados
-            $this->mostrarResultadosBusqueda($infoTipo, $resultados, $fechaObjetivo1Ini, $fechaObjetivo1Ter, $fechaObjetivo2Ini, $fechaObjetivo2Ter);
-        }
-
-        return Command::SUCCESS;
-    }
-
-    /**
-     * Buscar exámenes en un rango de fechas específico
-     *
-     * @param array $tipoInfo
-     * @param Carbon $fechaIni
-     * @param Carbon $fechaTer
-     * @return \Illuminate\Support\Collection
-     */
-    protected function buscarExamenesEnRango($tipoInfo, $fechaIni, $fechaTer)
-    {
-        // Establecer solo el modelo actual
-        $this->examenNotificationService->setModelosExamenes([$tipoInfo['modelo']]);
-
-        // Obtener exámenes
-        return $this->examenNotificationService->obtenerExamenesProximosAVencer(180);  // Días amplios para capturar todo
-    }
-
-    /**
-     * Mostrar resultados de la búsqueda
-     *
-     * @param array $tipoInfo
-     * @param array $resultados
-     * @param Carbon $fechaIni1
-     * @param Carbon $fechaTer1
-     * @param Carbon $fechaIni2
-     * @param Carbon $fechaTer2
-     */
-    protected function mostrarResultadosBusqueda($tipoInfo, $resultados, $fechaIni1, $fechaTer1, $fechaIni2, $fechaTer2)
-    {
-        $this->info("\n" . str_repeat('=', strlen($tipoInfo['nombre'])));
-        $this->info($tipoInfo['nombre']);
-        $this->info(str_repeat('=', strlen($tipoInfo['nombre'])));
-        
-        $this->line("Rangos de búsqueda:");
-        $this->line("  • 2 meses: " . $fechaIni1->format('d-m-Y') . " hasta " . $fechaTer1->format('d-m-Y'));
-        $this->line("  • 2 meses + 1 semana: " . $fechaIni2->format('d-m-Y') . " hasta " . $fechaTer2->format('d-m-Y'));
-        $this->line(str_repeat('-', 40));
-
-        foreach ($resultados as $rango => $examenes) {
-            $this->info("\nRango: $rango");
-            
-            if ($examenes->isEmpty()) {
-                $this->line("No se encontraron {$tipoInfo['nombre']} para notificar en este período.");
-                continue;
-            }
-
-            // Mostrar tabla de exámenes
-            $this->table(
-                ['ID', 'Fecha Próximo Control', 'Paciente ID', 'Email Paciente', 'Descripción'], 
-                $examenes->map(function($examen) use ($tipoInfo) {
-                    return [
-                        $examen->id,
-                        $examen->fecha_prox_control,
-                        $examen->paciente_id,
-                        $examen->paciente->email ?? 'Sin email',
-                        $tipoInfo['descripcion']
-                    ];
-                })->toArray()
-            );
-        }
-    }
-
-    /**
-     * Mostrar resumen de notificaciones generadas
-     *
-     * @param \Illuminate\Support\Collection $notificaciones
-     * @param bool $logDetalles
-     */
-    protected function mostrarResumenNotificaciones($notificaciones, $logDetalles)
-    {
-        $this->info('Resumen de Notificaciones:');
-        $this->info('Total de Notificaciones: ' . $notificaciones->count());
-
-        // Agrupar por tipo de examen
-        $porTipo = $notificaciones->groupBy(function ($notificacion) {
-            return $notificacion->tipo_examen ?? 'Desconocido';
-        });
-
-        foreach ($porTipo as $tipoExamen => $grupo) {
-            $this->info("- {$tipoExamen}: " . $grupo->count() . " notificaciones");
-
-            if ($logDetalles) {
-                foreach ($grupo as $notificacion) {
-                    $this->line(sprintf(
-                        "  * ID: %d, Estado: %s, Paciente: %d, Fecha: %s, Vencimiento: %s",
-                        $notificacion->id,
-                        $notificacion->estado,
-                        $notificacion->paciente_id,
-                        $notificacion->created_at,
-                        $notificacion->fecha_prox_control ?? 'N/A'
-                    ));
-                }
-            }
-        }
-    }
-
-    /**
-     * Depurar modelos de exámenes
-     */
-    protected function depurarModelosExamenes()
-    {
-        foreach ($this->tiposExamenes as $tipo => $info) {
-            $modelo = $info['modelo'];
-            $instancia = new $modelo();
-            
-            $this->info("Depuración de modelo: {$tipo}");
-            $this->info("Tabla: " . $instancia->getTable());
-            $this->info("Columnas: " . implode(', ', Schema::getColumnListing($instancia->getTable())));
-            
-            // Mostrar algunos registros
-            $registros = $modelo::limit(5)->get();
-            $this->table(
-                ['ID', 'Fecha Próximo Control', 'Paciente ID'], 
-                $registros->map(function($registro) {
-                    return [
-                        $registro->id,
-                        $registro->fecha_prox_control ?? 'N/A',
-                        $registro->paciente_id ?? 'N/A'
-                    ];
-                })->toArray()
-            );
-        }
     }
 }

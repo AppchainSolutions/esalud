@@ -202,6 +202,25 @@ php artisan queue:work
 - Revisar logs de notificaciones
 - Comprobar estado de la cola
 
+Explicaré cómo funciona este job:
+
+📋 Descripción del Job GenerarNotificacionesExamenesJob:
+
+## Propósito: Generar notificaciones para exámenes médicos próximos a vencer.
+### Características del Job:
+- Implementa ShouldQueue para procesamiento asíncrono
+- Máximo 3 intentos de ejecución
+- Timeout de 5 minutos
+- Configurable con días de anticipación para notificación
+- Activación: El job se activa mediante el comando ProgramarNotificacionesExamenesCommand, que lo despacha con GenerarNotificacionesExamenesJob::dispatch().
+### Funcionamiento Interno:
+- Recibe días de anticipación para notificación (default: 30-37 días)
+- Usa ExamenNotificationService para procesar notificaciones
+- Registra el inicio del proceso en los logs
+- Maneja configuración de modelos de exámenes
+- Genera notificaciones para exámenes próximos a vencer
+- Configuración: Usa configuraciones de config/notifications.php para definir días de anticipación.
+
 ## Licencia
 [Especificar licencia del proyecto]
 

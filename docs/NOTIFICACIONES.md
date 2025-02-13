@@ -3,7 +3,7 @@
 ## Descripción General
 
 ### Objetivo
-Sistema automatizado para notificar a pacientes sobre exámenes médicos próximos a vencer, mejorando el seguimiento preventivo en salud.
+Sistema automatizado para notificar a paciente sobre exámenes médicos próximos a vencer, mejorando el seguimiento preventivo en salud.
 
 ### Características Principales
 - Notificaciones personalizadas por tipo de examen

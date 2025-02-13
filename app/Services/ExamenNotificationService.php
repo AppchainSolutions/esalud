@@ -7,6 +7,8 @@ use App\Models\Examen;
 use App\Models\Notificacion;
 use App\Notifications\ExamenVencimientoNotification;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ExamenNotificacionMail;
 
 class ExamenNotificationService 
 {
@@ -509,5 +511,66 @@ class ExamenNotificationService
         }
 
         return $notificacion;
+    }
+
+    /**
+     * Enviar notificaciones por correo
+     * 
+     * @param \Illuminate\Support\Collection $notificaciones
+     */
+    public function enviarNotificaciones($notificaciones)
+    {
+        foreach ($notificaciones as $notificacion) {
+            try {
+                // Obtener el examen y paciente
+                $examen = $notificacion->examinable;
+                $paciente = $examen->paciente;
+
+                // Verificar si el paciente tiene email
+                if (!$paciente->email) {
+                    Log::warning("Paciente sin email", [
+                        'paciente_id' => $paciente->id,
+                        'nombre' => $paciente->nombre
+                    ]);
+                    continue;
+                }
+
+                // Enviar correo
+                Mail::to($paciente->email)->send(
+                    new ExamenNotificacionMail($examen, $paciente, $notificacion)
+                );
+
+                // Actualizar estado de notificación
+                $notificacion->update([
+                    'estado' => 'enviado',
+                    'fecha_envio' => now(),
+                    'intentos' => $notificacion->intentos + 1
+                ]);
+
+                // Actualizar fecha de notificación en el examen
+                $examen->update([
+                    'fecha_notificacion' => now()
+                ]);
+
+                Log::info('Notificación enviada', [
+                    'notificacion_id' => $notificacion->id,
+                    'paciente_email' => $paciente->email,
+                    'tipo_examen' => class_basename(get_class($examen))
+                ]);
+
+            } catch (\Exception $e) {
+                // Manejar errores de envío
+                $notificacion->update([
+                    'estado' => 'fallido',
+                    'intentos' => $notificacion->intentos + 1
+                ]);
+
+                Log::error('Error al enviar notificación', [
+                    'notificacion_id' => $notificacion->id,
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Activation;
 
 use App\Services\CorreoService;
 use Illuminate\Console\Command;

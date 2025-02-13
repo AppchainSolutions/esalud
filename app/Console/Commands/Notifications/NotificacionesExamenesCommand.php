@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Notifications;
 
 use App\Models\ExAldehido;
 use App\Models\ExEpo;

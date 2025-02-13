@@ -1,11 +1,14 @@
 <?php
-namespace App\Console\Commands;
+namespace App\Console\Commands\Activation;
 
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
-
+/**
+ * Class NextScheduleCheckCommand
+ * @package App\Console\Commands\Activation
+ */
 class NextScheduleCheckCommand extends Command
 {
     protected $signature = 'app:next-schedule-check';

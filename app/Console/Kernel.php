@@ -11,6 +11,7 @@ use Carbon\Carbon;
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
+        \App\Console\Commands\TestExamenNotificacionesCommand::class,
         // Other commands...
         \App\Console\Commands\TelegramNotificationCommand::class,
         \App\Console\Commands\TelegramNotificationTestCommand::class,

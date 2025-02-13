@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->integer('idpgp')->nullable();
             $table->string('validado_por')->nullable();
             $table->integer('estado_diat')->nullable();
-            $table->increments('id');
+            $table->id();
             $table->boolean('aprobado')->nullable();
             $table->timestamps();
         });

@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\GenerarNotificacionesExamenesJob;
+use App\Services\ExamenNotificationService;
+use App\Models\Examen;
+use App\Models\ExamenLaboratorio;
 
 class ProgramarNotificacionesExamenesCommand extends Command
 {
@@ -14,45 +17,66 @@ class ProgramarNotificacionesExamenesCommand extends Command
      * @var string
      */
     protected $signature = 'notificaciones:programar 
-                            {--dias=30 : Número de días de anticipación para notificaciones}
-                            {--queue=default : Cola a utilizar para el job}';
+                            {--dias=30 : Días de anticipación para notificaciones}
+                            {--dias-max= : Días máximos de anticipación para notificaciones}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Programa un job para generar y enviar notificaciones de exámenes próximos a vencer';
+    protected $description = 'Programar notificaciones de exámenes próximos a vencer';
 
     /**
-     * Execute the console command.
+     * Ejecutar el comando
+     *
+     * @return int
      */
-    public function handle()
+    public function handle(ExamenNotificationService $notificationService)
     {
-        $diasAnticipacion = $this->option('dias');
-        $queue = $this->option('queue');
+        // Obtener días de configuración o parámetros
+        $diasMin = $this->option('dias') ?? 
+            config('notifications.examenes.dias_min', 30);
+        
+        $diasMax = $this->option('dias-max') ?? 
+            config('notifications.examenes.dias_max', 37);
+
+        $diasAnticipacion = [$diasMin, $diasMax];
+
+        $this->info("Programando notificaciones de exámenes");
+        $this->info("Días de anticipación: Min {$diasMin}, Max {$diasMax}");
 
         try {
-            // Crear instancia del job
-            // Programar job en la cola especificada
+            // Configurar modelos desde configuración
+            $notificationService->setModelosExamenes(
+                config('notifications.examenes.modelos', [])
+            );
+
+            // Generar notificaciones
+            $notificaciones = $notificationService->generarNotificacionesVencimiento(
+                false, 
+                $diasAnticipacion
+            );
+
+            $this->info("Notificaciones generadas: {$notificaciones->count()}");
+
+            // Despachar job para procesar notificaciones
             GenerarNotificacionesExamenesJob::dispatch($diasAnticipacion)
-                ->onQueue($queue);
+                ->onQueue(config('notifications.examenes.cola', 'notifications'))
+                ->delay(now()->addMinutes(
+                    config('notifications.examenes.retraso_minutos', 5)
+                ));
 
-            $this->info("Job de notificaciones de exámenes programado exitosamente.");
-            $this->info("Días de anticipación: {$diasAnticipacion}");
-            $this->info("Cola utilizada: {$queue}");
-
-            Log::info('Job de notificaciones de exámenes programado', [
-                'dias_anticipacion' => $diasAnticipacion,
-                'cola' => $queue
-            ]);
+            return self::SUCCESS;
         } catch (\Exception $e) {
-            $this->error("Error al programar job de notificaciones: " . $e->getMessage());
-
-            Log::error('Error al programar job de notificaciones de exámenes', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+            $this->error("Error al programar notificaciones: " . $e->getMessage());
+            Log::error('Error en programación de notificaciones', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'dias_anticipacion' => $diasAnticipacion
             ]);
+
+            return self::FAILURE;
         }
     }
 }

@@ -27,12 +27,14 @@ class GenerarNotificacionesExamenesJob implements ShouldQueue
 
     /**
      * Crear una nueva instancia del job
-     *
-     * @param int $diasAnticipacion Días de anticipación para notificación
      */
-    public function __construct(int $diasAnticipacion = 30)
+    public function __construct($diasAnticipacion = null)
     {
-        $this->diasAnticipacion = $diasAnticipacion;
+        // Si no se proporcionan días, usar configuración por defecto
+        $this->diasAnticipacion = $diasAnticipacion ?? [
+            config('notifications.examenes.dias_min', 30),
+            config('notifications.examenes.dias_max', 37)
+        ];
     }
 
     /**
@@ -45,28 +47,41 @@ class GenerarNotificacionesExamenesJob implements ShouldQueue
         ]);
 
         try {
-            // 1. Generar notificaciones para exámenes próximos a vencer
-            $notificaciones = $notificationService->generarNotificacionesVencimiento(false, $this->diasAnticipacion);
+            // Configurar modelos desde configuración si no están definidos
+            if (empty($notificationService->getModelosExamenes())) {
+                $notificationService->setModelosExamenes(
+                    config('notifications.examenes.modelos', [])
+                );
+            }
+
+            // Generar notificaciones con el rango configurado
+            $notificaciones = $notificationService->generarNotificacionesVencimiento(
+                false, 
+                $this->diasAnticipacion
+            );
 
             Log::info('Notificaciones generadas', [
                 'total_notificaciones' => $notificaciones->count()
             ]);
 
-            // 2. Enviar notificaciones pendientes
-            $pendientes = Notificacion::where('estado', 'pendiente')->get();
-            $notificationService->enviarNotificaciones($pendientes);
-
-            Log::info('Proceso de notificaciones de exámenes completado', [
+            Log::info('Job de notificaciones de exámenes completado', [
                 'notificaciones_generadas' => $notificaciones->count(),
-                'notificaciones_enviadas' => $pendientes->count()
+                'dias_anticipacion' => $this->diasAnticipacion
             ]);
+
+            // Enviar notificaciones
+            $notificationService->enviarNotificaciones($notificaciones);
+
         } catch (\Exception $e) {
             Log::error('Error en job de notificaciones de exámenes', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'dias_anticipacion' => $this->diasAnticipacion
             ]);
 
-            // Relanzar la excepción para que Laravel maneje el reintento
+            // Opcional: Reintento de notificaciones fallidas
+            $notificationService->reintentarNotificacionesFallidas();
+
             throw $e;
         }
     }

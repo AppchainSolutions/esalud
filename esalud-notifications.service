@@ -1,0 +1,13 @@
+[Unit]
+Description=eSalud Exam Notifications Job
+After=network.target
+
+[Service]
+Type=oneshot
+User=www-data
+WorkingDirectory=/var/www/esalud
+Environment=APP_ENV=production
+ExecStart=/usr/bin/php /var/www/esalud/artisan notificaciones:programar
+
+[Install]
+WantedBy=multi-user.target

@@ -83,11 +83,32 @@ class ExamenNotificationService
      * Genera notificaciones de vencimiento de exámenes
      *
      * @param bool $dryRun Modo de prueba sin generar notificaciones reales
-     * @param int|null $diasAntelacion Días de anticipación para notificación
+     * @param int|array|null $diasAnticipacion Días de anticipación para notificación
      * @return \Illuminate\Support\Collection
      */
-    public function generarNotificacionesVencimiento($dryRun = false, $diasAnticipacion = 30)
+    public function generarNotificacionesVencimiento($dryRun = false, $diasAnticipacion = null)
     {
+        // Obtener configuración de rango de días
+        if ($diasAnticipacion === null) {
+            $diasMin = config('notifications.examenes.dias_min', 30);
+            $diasMax = config('notifications.examenes.dias_max', 37);
+            $diasAnticipacion = [$diasMin, $diasMax];
+        }
+
+        // Manejar rango de días de anticipación
+        $diasMin = is_array($diasAnticipacion) ? 
+            ($diasAnticipacion[0] ?? 30) : 
+            $diasAnticipacion;
+        
+        $diasMax = is_array($diasAnticipacion) ? 
+            ($diasAnticipacion[1] ?? $diasMin) : 
+            $diasMin;
+
+        // Si no se han configurado modelos, usar los del archivo de configuración
+        if (empty($this->modelosExamenes)) {
+            $this->modelosExamenes = config('notifications.examenes.modelos', []);
+        }
+
         // Borrar todas las notificaciones enviadas
         Notificacion::whereIn('estado', ['enviada', 'fallida'])->delete();
         
@@ -97,13 +118,14 @@ class ExamenNotificationService
         }
 
         $now = now();
-        $fechaInicio = $now->copy()->subMonth(); 
-        $fechaFin = $now->copy()->addMonths(3); 
+        $fechaInicio = $now->copy()->subDays($diasMax); 
+        $fechaFin = $now->copy()->addDays($diasMax); 
 
         Log::info('Buscando exámenes próximos a vencer', [
             'fecha_inicio' => $fechaInicio->format('Y-m-d'),
             'fecha_fin' => $fechaFin->format('Y-m-d'),
-            'dias_anticipacion' => $diasAnticipacion,
+            'dias_anticipacion_min' => $diasMin,
+            'dias_anticipacion_max' => $diasMax,
             'modelos_examenes' => array_map('class_basename', $this->modelosExamenes)
         ]);
 
@@ -120,22 +142,29 @@ class ExamenNotificationService
             ]);
 
             foreach ($examenes as $examen) {
-                Log::debug('Evaluando examen', [
-                    'examen_id' => $examen->id,
-                    'fecha_prox_control' => $examen->fecha_prox_control,
-                    'notificaciones_count' => $examen->notificaciones()->count(),
-                    'notificaciones_estados' => $examen->notificaciones()->pluck('estado')->toArray()
-                ]);
+                // Calcular días hasta próximo control
+                $diasHastaControl = now()->diffInDays($examen->fecha_prox_control, false);
 
-                try {
-                    $notificacion = $this->crearNotificacion($examen, $dryRun);
-                    $notificacionesGeneradas->push($notificacion);
-                } catch (\Exception $e) {
-                    Log::error('Error al crear notificación', [
+                // Verificar si está dentro del rango de días de anticipación
+                if ($diasHastaControl >= $diasMin && $diasHastaControl <= $diasMax) {
+                    Log::debug('Evaluando examen', [
                         'examen_id' => $examen->id,
-                        'modelo_examen' => get_class($examen),
-                        'error' => $e->getMessage()
+                        'fecha_prox_control' => $examen->fecha_prox_control,
+                        'dias_hasta_control' => $diasHastaControl,
+                        'notificaciones_count' => $examen->notificaciones()->count(),
+                        'notificaciones_estados' => $examen->notificaciones()->pluck('estado')->toArray()
                     ]);
+
+                    try {
+                        $notificacion = $this->crearNotificacion($examen, $dryRun);
+                        $notificacionesGeneradas->push($notificacion);
+                    } catch (\Exception $e) {
+                        Log::error('Error al crear notificación', [
+                            'examen_id' => $examen->id,
+                            'modelo_examen' => get_class($examen),
+                            'error' => $e->getMessage()
+                        ]);
+                    }
                 }
             }
         }

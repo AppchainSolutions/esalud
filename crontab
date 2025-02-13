@@ -1,0 +1,7 @@
+# Crontab para eSalud - Notificaciones de Exámenes
+
+# Ejecutar notificaciones cada semana los lunes a las 6 AM
+0 6 * * 1 /usr/bin/php /var/www/esalud/artisan notificaciones:programar >> /var/log/esalud/notifications.log 2>&1
+
+# Limpiar logs antiguos cada mes
+0 0 1 * * /usr/bin/find /var/log/esalud/ -name "*.log" -mtime +30 -delete

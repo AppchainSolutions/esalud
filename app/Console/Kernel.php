@@ -24,9 +24,10 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\TestActivationEmail::class,
         \App\Console\Commands\NotificacionesExamenesCommand::class,
         \App\Console\Commands\FileTagCommand::class,
+        \App\Console\Commands\EnviarNotificacionesExamenesCommand::class,
     ];
 
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         $schedule->command('notification:exepo')
             ->mondays()
@@ -85,6 +86,20 @@ class Kernel extends ConsoleKernel
                  ->at('19:00') // A las 7 PM
                  ->timezone('America/Santiago') // Zona horaria de Chile
                  ->withoutOverlapping(); // Evitar ejecuciones simultáneas
+
+        // Programar job de notificaciones de exámenes
+        $schedule->command('notificaciones:programar --dias=30')
+                 ->dailyAt('07:00') // Ejecutar a las 7 AM
+                 ->timezone('America/Santiago')
+                 ->runInBackground()
+                 ->withoutOverlapping(); // Evitar ejecuciones simultáneas
+
+        // Opcional: Programar envío de notificaciones pendientes
+        $schedule->command('notificaciones:enviar')
+                 ->hourly()
+                 ->timezone('America/Santiago')
+                 ->runInBackground()
+                 ->withoutOverlapping();
 
         /**
          * Schedule Test Email

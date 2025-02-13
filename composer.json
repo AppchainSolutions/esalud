@@ -1,6 +1,7 @@
 {
   "$schema": "https://getcomposer.org/schema.json",
-  "name": "vulco/laravel",
+  "name": "vitamhc/esalud",
+  "version": "1.15.0",
   "type": "project",
   "description": "The skeleton application for the Laravel framework.",
   "keywords": [

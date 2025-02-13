@@ -1,4 +1,6 @@
 {
+    "name": "vitamhc-esalud",
+    "version": "1.15.0",
     "private": true,
     "scripts": {
         "build": "vite build && vite build --ssr",
@@ -69,8 +71,6 @@
         "vue-moment": "^4.1.0",
         "vue3-spinners": "^1.2.2"
     },
-    "name": "esalud",
-    "version": "1.14.2",
     "main": "playwright.config.js",
     "directories": {
         "test": "tests"

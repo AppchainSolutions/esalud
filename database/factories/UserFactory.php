@@ -16,13 +16,13 @@ class UserFactory extends Factory
 
     public function definition(): array
     {
-        
+
         return [
             'name' => $this->faker->firstName(),
             'lastname' => $this->faker->lastName(),
             'rut' => RutGenerator::generate(),
             'email' => $this->faker->unique()->safeEmail(),
-            'rol' => 'paciente', // Por defecto creamos usuarios pacientes
+            'rol' => 'paciente', // Por defecto creamos usuarios paciente
             'activo' => true,
             'email_verified_at' => now(),
             'password' => Hash::make('password'), // contraseña por defecto
@@ -36,7 +36,7 @@ class UserFactory extends Factory
 
     public function unverified()
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

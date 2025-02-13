@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('diat', function (Blueprint $table) {
+            $table->id();
             $table->integer('paciente_id');
             $table->integer('accidente')->nullable();
             $table->integer('seguro_salud')->nullable();
@@ -25,7 +26,6 @@ return new class extends Migration
             $table->integer('idpgp')->nullable();
             $table->string('validado_por')->nullable();
             $table->integer('estado_diat')->nullable();
-            $table->id();
             $table->boolean('aprobado')->nullable();
             $table->timestamps();
         });

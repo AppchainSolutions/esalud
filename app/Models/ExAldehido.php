@@ -27,6 +27,7 @@ class ExAldehido extends Model
         'fecha_ingreso',
         'fecha_prox_control',
         'fecha_ult_control',
+        'fecha_notificacion',
         'estado_examen',
     ];
 
@@ -34,7 +35,8 @@ class ExAldehido extends Model
         'fecha_control',
         'fecha_ingreso',
         'fecha_prox_control',
-        'fecha_ult_control'
+        'fecha_ult_control',
+        'fecha_notificacion',
     ];
 
     public function scopeProximosAVencer($query)

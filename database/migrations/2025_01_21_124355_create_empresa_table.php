@@ -13,6 +13,7 @@ return new class extends Migration {
     {
         Schema::create('empresa', function (Blueprint $table) {
             $table->id();
+            $table->string('rut', 20)->nullable();
             $table->string('direccion')->nullable();
             $table->string('email')->nullable();
             $table->string('descripcion');
@@ -22,7 +23,6 @@ return new class extends Migration {
             $table->string('telefono')->nullable();
             $table->timestamps();
 
-            $table->string('rut', 20)->nullable();
         });
     }
 

@@ -21,8 +21,8 @@ return new class extends Migration {
             $table->date('fecha_prox_control')->nullable();
             $table->date('fecha_ult_control')->nullable();
             $table->timestamp('fecha_notificacion')->nullable();
-            $table->timestamps();
             $table->integer('estado_examen')->nullable();
+            $table->timestamps();
         });
     }
 

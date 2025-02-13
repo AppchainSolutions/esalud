@@ -10,7 +10,7 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void
-    {
+    {   
         Schema::create('atencion_diaria', function (Blueprint $table) {
             $table->id();
             $table->integer('paciente_id')->default(0);
@@ -42,9 +42,9 @@ return new class extends Migration {
             $table->integer('tipo_atencion')->nullable()->default(0);
             $table->integer('tipo_licencia')->nullable()->default(0);
             $table->integer('turno')->nullable()->default(0);
-            $table->timestamps();
             $table->boolean('acompanado')->nullable()->default(false);
             $table->text('comentario')->nullable();
+            $table->timestamps();
         });
     }
 

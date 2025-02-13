@@ -26,9 +26,9 @@ return new class extends Migration
             $table->timestamp('fecha_notificacion')->nullable();
             $table->integer('dias_restantes')->nullable();
             $table->string('comentario')->nullable();
-            $table->timestamps();
             $table->string('tipo_vehiculo')->nullable();
             $table->integer('estado_examen')->nullable();
+            $table->timestamps();
         });
     }
 

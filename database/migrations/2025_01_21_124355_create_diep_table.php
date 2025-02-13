@@ -22,11 +22,11 @@ return new class extends Migration
             $table->string('origen_denuncia')->nullable();
             $table->integer('tipo_enfermedad')->nullable();
             $table->string('validado_por')->nullable();
-            $table->timestamps();
             $table->integer('idpgp')->nullable();
             $table->string('enfermedad')->nullable();
             $table->string('estado_diep')->nullable();
             $table->integer('seguro_salud')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('examen_pvmor', function (Blueprint $table) {
+            $table->id();
             $table->integer('paciente_id');
             $table->integer('idpgp')->nullable();
             $table->string('comentario')->nullable();
@@ -19,11 +20,10 @@ return new class extends Migration
             $table->date('fecha_ingreso')->nullable();
             $table->date('fecha_prox_control')->nullable();
             $table->date('fecha_ult_control')->nullable();
-            $table->timestamps();
-
             $table->string('estatus')->nullable();
-            $table->id();
+            $table->timestamp('fecha_notificacion')->nullable();
             $table->integer('estado_examen')->nullable();
+            $table->timestamps();
         });
     }
 

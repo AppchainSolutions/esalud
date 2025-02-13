@@ -18,11 +18,21 @@ class ExSolvente extends Model
     protected $fillable = [
         'paciente_id',
         'idpgp',
-        'estado_examen',
+        'comentario',
+        'fecha_examen',
         'fecha_control',
         'fecha_ingreso',
         'fecha_prox_control',
         'fecha_ult_control',
-        'comentario'
+        'fecha_notificacion',
+        'estado_examen',
+    ];
+
+    protected $dates = [
+        'fecha_control',
+        'fecha_ingreso',
+        'fecha_prox_control',
+        'fecha_ult_control',
+        'fecha_notificacion',
     ];
 }

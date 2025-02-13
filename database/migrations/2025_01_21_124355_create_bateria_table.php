@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bateria', function (Blueprint $table) {
+            $table->id();
             $table->string('descripcion')->nullable();
             $table->timestamps();
-            $table->id();
         });
     }
 

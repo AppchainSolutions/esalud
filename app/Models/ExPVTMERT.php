@@ -18,12 +18,24 @@ class ExPVTMERT extends Model
     protected $table = 'examen_pvt';
     protected $fillable = [
         'paciente_id',
-        'estado_examen',
-        'fecha_examen',
-        'fecha_control',
         'nordico',
         'quickdash',
         'derivacion',
         'comentario',
+        'fecha_examen',
+        'fecha_control',
+        'fecha_ingreso',
+        'fecha_prox_control',
+        'fecha_ult_control',
+        'fecha_notificacion',
+        'estado_examen',
+    ];
+
+    protected $dates = [
+        'fecha_control',
+        'fecha_ingreso',
+        'fecha_prox_control',
+        'fecha_ult_control',
+        'fecha_notificacion',
     ];
 }

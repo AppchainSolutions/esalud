@@ -17,8 +17,8 @@ return new class extends Migration
             $table->date('fecha_examen')->nullable();
             $table->timestamp('fecha_notificacion')->nullable();
             $table->string('comentario')->nullable();
-            $table->timestamps();
             $table->string('resultado', 10)->nullable()->default('"No Apto"');
+            $table->timestamps();
         });
     }
 

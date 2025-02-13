@@ -16,6 +16,9 @@ return new class extends Migration
             $table->integer('paciente_id');
             $table->string('idpgp');
             $table->date('fecha_control');
+            $table->date('fecha_ult_control');
+            $table->date('fecha_prox_control')->nullable();
+            $table->date('fecha_vencimiento')->nullable();
             $table->string('test_drogas');
             $table->string('item');
             $table->text('comentario');

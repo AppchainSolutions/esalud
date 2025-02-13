@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Models\Paciente;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ActualizarFechasProximoControlSeeder extends Seeder
 {
@@ -21,8 +21,8 @@ class ActualizarFechasProximoControlSeeder extends Seeder
             'examen_pvmosol',
         ];
 
-        // Obtener pacientes activos
-        $pacientes = Paciente::where('activo', true)->get();
+        // Obtener paciente activos
+        $paciente = Paciente::where('activo', true)->get();
 
         // Fecha actual y límite para próximo control
         $fechaActual = now();
@@ -34,7 +34,7 @@ class ActualizarFechasProximoControlSeeder extends Seeder
         }
 
         // Generar un registro por paciente para cada tabla de examen
-        foreach ($pacientes as $paciente) {
+        foreach ($paciente as $paciente) {
             foreach ($tablasExamenes as $tabla) {
                 // Generar una fecha de próximo control aleatoria dentro del rango
                 $fechaProximoControl = $this->generarFechaProximoControl($fechaActual, $fechaLimite);
@@ -77,7 +77,7 @@ class ActualizarFechasProximoControlSeeder extends Seeder
 
                 // Combinar datos
                 $datosInsercion = array_merge(
-                    $datosComunes, 
+                    $datosComunes,
                     $datosEspecificos[$tabla] ?? []
                 );
 
@@ -87,7 +87,7 @@ class ActualizarFechasProximoControlSeeder extends Seeder
         }
 
         // Mensaje de confirmación
-        $this->command->info('Fechas de próximo control actualizadas para ' . $pacientes->count() . ' pacientes en ' . count($tablasExamenes) . ' tablas de exámenes.');
+        $this->command->info('Fechas de próximo control actualizadas para ' . $paciente->count() . ' paciente en ' . count($tablasExamenes) . ' tablas de exámenes.');
     }
 
     /**

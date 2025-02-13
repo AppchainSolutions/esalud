@@ -2,20 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Paciente;
 use Illuminate\Database\Seeder;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
-use App\Models\Paciente;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 class PacienteSeeder extends Seeder
 {
     public function run()
     {
-       // User::truncate();
+        // User::truncate();
         //Paciente::truncate();
         // Seeders para tablas de referencia
         $this->seedTablasReferencia();
@@ -23,8 +19,8 @@ class PacienteSeeder extends Seeder
         // Primero crear registros base
         //$this->crearRegistrosBase();
 
-        // Crear 10 pacientes sin asociar
-        // $pacientesSinUser = Paciente::factory()->count(10)->create();
+        // Crear 10 paciente sin asociar
+        // $pacienteSinUser = Paciente::factory()->count(10)->create();
         // User::factory()->count(5)->create(
         //     [
         //         'isAdmin' => false,
@@ -34,11 +30,11 @@ class PacienteSeeder extends Seeder
 
         // $this->call(UserSeeder::class);
 
-        // // Crear 3 pacientes con usuarios asociados
-        // $pacientesConUser = Paciente::factory()->count(3)->create();
+        // // Crear 3 paciente con usuarios asociados
+        // $pacienteConUser = Paciente::factory()->count(3)->create();
 
         // // Asociar usuario a cada paciente con usuario
-        // $pacientesConUser->each(function ($paciente) {
+        // $pacienteConUser->each(function ($paciente) {
         //     $user = User::create([
         //         'name' => $paciente->nombre,
         //         'lastname' => $paciente->apellidos,
@@ -59,7 +55,7 @@ class PacienteSeeder extends Seeder
         $this->crearRegistrosRelacionados(Paciente::all());
     }
 
-    private function crearRegistrosRelacionados($pacientes)
+    private function crearRegistrosRelacionados($paciente)
     {
         // Lista de modelos con sus respectivos factories
         $modelos = [
@@ -92,10 +88,10 @@ class PacienteSeeder extends Seeder
         // Iterar sobre cada modelo
         foreach ($modelos as $modelo => $cantidadRegistros) {
             // Para cada paciente
-            $pacientes->each(function ($paciente) use ($modelo, $cantidadRegistros) {
+            $paciente->each(function ($paciente) use ($modelo, $cantidadRegistros) {
                 // Crear 4 registros para cada paciente
                 $modelo::factory()->count($cantidadRegistros)->create([
-                    'paciente_id' => $paciente->id
+                    'paciente_id' => $paciente->id,
                 ]);
             });
         }
@@ -111,78 +107,78 @@ class PacienteSeeder extends Seeder
                 ['id' => 2, 'descripcion' => 'Provida'],
                 ['id' => 3, 'descripcion' => 'Cuprum'],
                 ['id' => 4, 'descripcion' => 'Capital'],
-                ['id' => 5, 'descripcion' => 'Modelo']
+                ['id' => 5, 'descripcion' => 'Modelo'],
             ],
             Area::class => [
                 ['id' => 1, 'descripcion' => 'Recursos Humanos'],
                 ['id' => 2, 'descripcion' => 'Producción'],
                 ['id' => 3, 'descripcion' => 'Mantenimiento'],
                 ['id' => 4, 'descripcion' => 'Administración'],
-                ['id' => 5, 'descripcion' => 'Seguridad']
+                ['id' => 5, 'descripcion' => 'Seguridad'],
             ],
             Empresa::class => [
                 ['id' => 1, 'descripcion' => 'Empresa A', 'rut' => '11.111.111-1'],
                 ['id' => 2, 'descripcion' => 'Empresa B', 'rut' => '22.222.222-2'],
-                ['id' => 3, 'descripcion' => 'Empresa C', 'rut' => '33.333.333-3']
+                ['id' => 3, 'descripcion' => 'Empresa C', 'rut' => '33.333.333-3'],
             ],
             EstadoCivil::class => [
                 ['id' => 1, 'descripcion' => 'Soltero/a'],
                 ['id' => 2, 'descripcion' => 'Casado/a'],
                 ['id' => 3, 'descripcion' => 'Divorciado/a'],
-                ['id' => 4, 'descripcion' => 'Viudo/a']
+                ['id' => 4, 'descripcion' => 'Viudo/a'],
             ],
             Genero::class => [
                 ['id' => 1, 'descripcion' => 'Masculino'],
                 ['id' => 2, 'descripcion' => 'Femenino'],
-                ['id' => 3, 'descripcion' => 'Otro']
+                ['id' => 3, 'descripcion' => 'Otro'],
             ],
             SeguroSalud::class => [
                 ['id' => 1, 'descripcion' => 'Fonasa'],
                 ['id' => 2, 'descripcion' => 'Isapre Banmédica'],
-                ['id' => 3, 'descripcion' => 'Isapre Consalud']
+                ['id' => 3, 'descripcion' => 'Isapre Consalud'],
             ],
             NivelInstruccion::class => [
                 ['id' => 1, 'descripcion' => 'Básica'],
                 ['id' => 2, 'descripcion' => 'Media'],
                 ['id' => 3, 'descripcion' => 'Técnica'],
-                ['id' => 4, 'descripcion' => 'Universitaria']
+                ['id' => 4, 'descripcion' => 'Universitaria'],
             ],
             LeySocial::class => [
                 ['id' => 1, 'descripcion' => 'Ley 16.744'],
-                ['id' => 2, 'descripcion' => 'Código del Trabajo']
+                ['id' => 2, 'descripcion' => 'Código del Trabajo'],
             ],
             Nacionalidad::class => [
                 ['id' => 1, 'descripcion' => 'Chilena'],
-                ['id' => 2, 'descripcion' => 'Extranjera']
+                ['id' => 2, 'descripcion' => 'Extranjera'],
             ],
             ModalidadAtencion::class => [
                 ['id' => 1, 'descripcion' => 'Presencial'],
                 ['id' => 2, 'descripcion' => 'Remoto'],
-                ['id' => 3, 'descripcion' => 'Híbrido']
+                ['id' => 3, 'descripcion' => 'Híbrido'],
             ],
             PuebloOriginario::class => [
                 ['id' => 1, 'descripcion' => 'Mapuche'],
                 ['id' => 2, 'descripcion' => 'Aymara'],
-                ['id' => 3, 'descripcion' => 'Otro']
+                ['id' => 3, 'descripcion' => 'Otro'],
             ],
             Religion::class => [
                 ['id' => 1, 'descripcion' => 'Católica'],
                 ['id' => 2, 'descripcion' => 'Evangélica'],
-                ['id' => 3, 'descripcion' => 'Sin religión']
+                ['id' => 3, 'descripcion' => 'Sin religión'],
             ],
             Planta::class => [
                 ['id' => 1, 'descripcion' => 'Planta A'],
                 ['id' => 2, 'descripcion' => 'Planta B'],
-                ['id' => 3, 'descripcion' => 'Planta C']
+                ['id' => 3, 'descripcion' => 'Planta C'],
             ],
             Prevision::class => [
                 ['id' => 1, 'descripcion' => 'AFP'],
-                ['id' => 2, 'descripcion' => 'IPS']
+                ['id' => 2, 'descripcion' => 'IPS'],
             ],
             Unidad::class => [
                 ['id' => 1, 'descripcion' => 'Unidad 1'],
                 ['id' => 2, 'descripcion' => 'Unidad 2'],
-                ['id' => 3, 'descripcion' => 'Unidad 3']
+                ['id' => 3, 'descripcion' => 'Unidad 3'],
             ],
             GrupoSanguineo::class => [
                 ['id' => 1, 'descripcion' => 'A+'],
@@ -192,7 +188,7 @@ class PacienteSeeder extends Seeder
                 ['id' => 5, 'descripcion' => 'AB+'],
                 ['id' => 6, 'descripcion' => 'AB-'],
                 ['id' => 7, 'descripcion' => 'O+'],
-                ['id' => 8, 'descripcion' => 'O-']
+                ['id' => 8, 'descripcion' => 'O-'],
             ],
 
             AccidenteCondicion::class => [
@@ -200,26 +196,26 @@ class PacienteSeeder extends Seeder
                 ['id' => 2, 'descripcion' => 'Moderado'],
                 ['id' => 3, 'descripcion' => 'Grave'],
                 ['id' => 4, 'descripcion' => 'Crítico'],
-                ['id' => 5, 'descripcion' => 'Potencialmente Mortal']
+                ['id' => 5, 'descripcion' => 'Potencialmente Mortal'],
             ],
             ErrorCritico::class => [
                 ['id' => 1, 'descripcion' => 'Sin Error Crítico'],
                 ['id' => 2, 'descripcion' => 'Error Leve'],
                 ['id' => 3, 'descripcion' => 'Error Moderado'],
                 ['id' => 4, 'descripcion' => 'Error Grave'],
-                ['id' => 5, 'descripcion' => 'Error Crítico']
+                ['id' => 5, 'descripcion' => 'Error Crítico'],
             ],
             EstadoMental::class => [
                 ['id' => 1, 'descripcion' => 'Alerta'],
                 ['id' => 2, 'descripcion' => 'Confuso'],
-                ['id' => 3, 'descripcion' => 'Desorientado']
+                ['id' => 3, 'descripcion' => 'Desorientado'],
             ],
             'lugar_atencion' => [
                 ['id' => 1, 'descripcion' => 'Consultorio'],
                 ['id' => 2, 'descripcion' => 'Emergencia'],
                 ['id' => 3, 'descripcion' => 'Domicilio'],
                 ['id' => 4, 'descripcion' => 'Área de Trabajo'],
-                ['id' => 5, 'descripcion' => 'Otro']
+                ['id' => 5, 'descripcion' => 'Otro'],
             ],
             Accidente::class => [
                 ['id' => 1, 'descripcion' => 'Caída'],
@@ -230,65 +226,65 @@ class PacienteSeeder extends Seeder
                 ['id' => 6, 'descripcion' => 'Exposición a Sustancias Químicas'],
                 ['id' => 7, 'descripcion' => 'Accidente de Tránsito'],
                 ['id' => 8, 'descripcion' => 'Lesión por Máquina'],
-                ['id' => 9, 'descripcion' => 'Otro']
+                ['id' => 9, 'descripcion' => 'Otro'],
             ],
             Derivacion::class => [
                 ['id' => 1, 'descripcion' => 'Médico General'],
                 ['id' => 2, 'descripcion' => 'Especialista'],
                 ['id' => 3, 'descripcion' => 'Urgencias'],
                 ['id' => 4, 'descripcion' => 'Rehabilitación'],
-                ['id' => 5, 'descripcion' => 'Otro']
+                ['id' => 5, 'descripcion' => 'Otro'],
             ],
             Fuente::class => [
                 ['id' => 1, 'descripcion' => 'Área de Trabajo'],
                 ['id' => 2, 'descripcion' => 'Tránsito'],
                 ['id' => 3, 'descripcion' => 'Hogar'],
-                ['id' => 4, 'descripcion' => 'Otro']
+                ['id' => 4, 'descripcion' => 'Otro'],
             ],
             Responsable::class => [
                 ['id' => 1, 'descripcion' => 'Empleado'],
                 ['id' => 2, 'descripcion' => 'Empleador'],
                 ['id' => 3, 'descripcion' => 'ART/Aseguradora'],
-                ['id' => 4, 'descripcion' => 'Otro']
+                ['id' => 4, 'descripcion' => 'Otro'],
             ],
             'medio_derivacion' => [
                 ['id' => 1, 'descripcion' => 'Teléfono'],
                 ['id' => 2, 'descripcion' => 'Correo Electrónico'],
                 ['id' => 3, 'descripcion' => 'Presencial'],
-                ['id' => 4, 'descripcion' => 'Otro']
+                ['id' => 4, 'descripcion' => 'Otro'],
             ],
             'sistema_afectado' => [
                 ['id' => 1, 'descripcion' => 'Musculoesquelético'],
                 ['id' => 2, 'descripcion' => 'Nervioso'],
                 ['id' => 3, 'descripcion' => 'Respiratorio'],
                 ['id' => 4, 'descripcion' => 'Cardiovascular'],
-                ['id' => 5, 'descripcion' => 'Otro']
+                ['id' => 5, 'descripcion' => 'Otro'],
             ],
             'tipo_atencion' => [
                 ['id' => 1, 'descripcion' => 'Primera Vez'],
                 ['id' => 2, 'descripcion' => 'Control'],
                 ['id' => 3, 'descripcion' => 'Seguimiento'],
                 ['id' => 4, 'descripcion' => 'Urgencia'],
-                ['id' => 5, 'descripcion' => 'Otro']
+                ['id' => 5, 'descripcion' => 'Otro'],
             ],
             'turno' => [
                 ['id' => 1, 'descripcion' => 'Mañana'],
                 ['id' => 2, 'descripcion' => 'Tarde'],
                 ['id' => 3, 'descripcion' => 'Noche'],
                 ['id' => 4, 'descripcion' => 'Fin de Semana'],
-                ['id' => 5, 'descripcion' => 'Otro']
+                ['id' => 5, 'descripcion' => 'Otro'],
             ],
             'tipo_licencia' => [
                 ['id' => 1, 'descripcion' => 'Sin Licencia'],
                 ['id' => 2, 'descripcion' => 'Licencia Parcial'],
-                ['id' => 3, 'descripcion' => 'Licencia Total']
+                ['id' => 3, 'descripcion' => 'Licencia Total'],
             ],
             'tipo_certificacion' => [
                 ['id' => 1, 'descripcion' => 'Inicial'],
                 ['id' => 2, 'descripcion' => 'Periódico'],
                 ['id' => 3, 'descripcion' => 'Reintegro'],
                 ['id' => 4, 'descripcion' => 'Seguimiento'],
-                ['id' => 5, 'descripcion' => 'Especial']
+                ['id' => 5, 'descripcion' => 'Especial'],
             ],
             genero,
             afp,
@@ -320,78 +316,78 @@ class PacienteSeeder extends Seeder
                 ['id' => 2, 'descripcion' => 'Provida'],
                 ['id' => 3, 'descripcion' => 'Cuprum'],
                 ['id' => 4, 'descripcion' => 'Capital'],
-                ['id' => 5, 'descripcion' => 'Modelo']
+                ['id' => 5, 'descripcion' => 'Modelo'],
             ],
             Area::class => [
                 ['id' => 1, 'descripcion' => 'Recursos Humanos'],
                 ['id' => 2, 'descripcion' => 'Producción'],
                 ['id' => 3, 'descripcion' => 'Mantenimiento'],
                 ['id' => 4, 'descripcion' => 'Administración'],
-                ['id' => 5, 'descripcion' => 'Seguridad']
+                ['id' => 5, 'descripcion' => 'Seguridad'],
             ],
             Empresa::class => [
                 ['id' => 1, 'descripcion' => 'Empresa A', 'rut' => '11.111.111-1'],
                 ['id' => 2, 'descripcion' => 'Empresa B', 'rut' => '22.222.222-2'],
-                ['id' => 3, 'descripcion' => 'Empresa C', 'rut' => '33.333.333-3']
+                ['id' => 3, 'descripcion' => 'Empresa C', 'rut' => '33.333.333-3'],
             ],
             EstadoCivil::class => [
                 ['id' => 1, 'descripcion' => 'Soltero/a'],
                 ['id' => 2, 'descripcion' => 'Casado/a'],
                 ['id' => 3, 'descripcion' => 'Divorciado/a'],
-                ['id' => 4, 'descripcion' => 'Viudo/a']
+                ['id' => 4, 'descripcion' => 'Viudo/a'],
             ],
             Genero::class => [
                 ['id' => 1, 'descripcion' => 'Masculino'],
                 ['id' => 2, 'descripcion' => 'Femenino'],
-                ['id' => 3, 'descripcion' => 'Otro']
+                ['id' => 3, 'descripcion' => 'Otro'],
             ],
             SeguroSalud::class => [
                 ['id' => 1, 'descripcion' => 'Fonasa'],
                 ['id' => 2, 'descripcion' => 'Isapre Banmédica'],
-                ['id' => 3, 'descripcion' => 'Isapre Consalud']
+                ['id' => 3, 'descripcion' => 'Isapre Consalud'],
             ],
             NivelInstruccion::class => [
                 ['id' => 1, 'descripcion' => 'Básica'],
                 ['id' => 2, 'descripcion' => 'Media'],
                 ['id' => 3, 'descripcion' => 'Técnica'],
-                ['id' => 4, 'descripcion' => 'Universitaria']
+                ['id' => 4, 'descripcion' => 'Universitaria'],
             ],
             LeySocial::class => [
                 ['id' => 1, 'descripcion' => 'Ley 16.744'],
-                ['id' => 2, 'descripcion' => 'Código del Trabajo']
+                ['id' => 2, 'descripcion' => 'Código del Trabajo'],
             ],
             Nacionalidad::class => [
                 ['id' => 1, 'descripcion' => 'Chilena'],
-                ['id' => 2, 'descripcion' => 'Extranjera']
+                ['id' => 2, 'descripcion' => 'Extranjera'],
             ],
             ModalidadAtencion::class => [
                 ['id' => 1, 'descripcion' => 'Presencial'],
                 ['id' => 2, 'descripcion' => 'Remoto'],
-                ['id' => 3, 'descripcion' => 'Híbrido']
+                ['id' => 3, 'descripcion' => 'Híbrido'],
             ],
             PuebloOriginario::class => [
                 ['id' => 1, 'descripcion' => 'Mapuche'],
                 ['id' => 2, 'descripcion' => 'Aymara'],
-                ['id' => 3, 'descripcion' => 'Otro']
+                ['id' => 3, 'descripcion' => 'Otro'],
             ],
             Religion::class => [
                 ['id' => 1, 'descripcion' => 'Católica'],
                 ['id' => 2, 'descripcion' => 'Evangélica'],
-                ['id' => 3, 'descripcion' => 'Sin religión']
+                ['id' => 3, 'descripcion' => 'Sin religión'],
             ],
             Planta::class => [
                 ['id' => 1, 'descripcion' => 'Planta A'],
                 ['id' => 2, 'descripcion' => 'Planta B'],
-                ['id' => 3, 'descripcion' => 'Planta C']
+                ['id' => 3, 'descripcion' => 'Planta C'],
             ],
             Prevision::class => [
                 ['id' => 1, 'descripcion' => 'AFP'],
-                ['id' => 2, 'descripcion' => 'IPS']
+                ['id' => 2, 'descripcion' => 'IPS'],
             ],
             Unidad::class => [
                 ['id' => 1, 'descripcion' => 'Unidad 1'],
                 ['id' => 2, 'descripcion' => 'Unidad 2'],
-                ['id' => 3, 'descripcion' => 'Unidad 3']
+                ['id' => 3, 'descripcion' => 'Unidad 3'],
             ],
             GrupoSanguineo::class => [
                 ['id' => 1, 'descripcion' => 'A+'],
@@ -401,8 +397,8 @@ class PacienteSeeder extends Seeder
                 ['id' => 5, 'descripcion' => 'AB+'],
                 ['id' => 6, 'descripcion' => 'AB-'],
                 ['id' => 7, 'descripcion' => 'O+'],
-                ['id' => 8, 'descripcion' => 'O-']
-            ]
+                ['id' => 8, 'descripcion' => 'O-'],
+            ],
         ];
 
         // Truncar y crear registros base para cada tabla

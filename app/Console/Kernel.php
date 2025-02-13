@@ -11,22 +11,37 @@ use Carbon\Carbon;
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        \App\Console\Commands\TestExamenNotificacionesCommand::class,
-        // Other commands...
-        \App\Console\Commands\TelegramNotificationCommand::class,
-        \App\Console\Commands\TelegramNotificationTestCommand::class,
-        \App\Console\Commands\ScheduleDebugCommand::class,
-        \App\Console\Commands\NextScheduleCheckCommand::class,
-        \App\Console\Commands\ScheduleMonitorCommand::class,
-        \App\Console\Commands\TimezoneCheckCommand::class,
-        \App\Console\Commands\TestAtencionDiariaFactory::class,
-        \App\Console\Commands\BaseTruncateCommand::class,
-        \App\Console\Commands\TestActivationEmail::class,
-        \App\Console\Commands\NotificacionesExamenesCommand::class,
-        \App\Console\Commands\FileTagCommand::class,
-        \App\Console\Commands\EnviarNotificacionesExamenesCommand::class,
-        \App\Console\Commands\DebugConfigurationCommand::class,
-    ];
+            // Activation Commands
+            \App\Console\Commands\Activation\NextScheduleCheckCommand::class,
+            \App\Console\Commands\Activation\ScheduleDebugCommand::class,
+            \App\Console\Commands\Activation\ScheduleMonitorCommand::class,
+            \App\Console\Commands\Activation\TelegramNotificationCommand::class,
+            \App\Console\Commands\Activation\ScheduleTimingVerificationCommand::class,
+            \App\Console\Commands\Activation\TimezoneCheckCommand::class,
+            \App\Console\Commands\Activation\TelegramNotificationTestCommand::class,
+            \App\Console\Commands\Activation\TestActivationEmail::class,
+            \App\Console\Commands\Activation\GenerateSignedUrlCommand::class,
+            \App\Console\Commands\Activation\ProbarConfiguracionCorreo::class,
+
+            // Notifications Commands
+            \App\Console\Commands\Notifications\TestExamenNotificacionesCommand::class,
+            \App\Console\Commands\Notifications\EnviarNotificacionesExamenesCommand::class,
+            \App\Console\Commands\Notifications\ExEpoTestCommand::class,
+            \App\Console\Commands\Notifications\DebugConfigurationCommand::class,
+            \App\Console\Commands\Notifications\EnviarNotificacionesVencimiento::class,
+            \App\Console\Commands\Notifications\GenerarNotificacionesExamenesCommand::class,
+            \App\Console\Commands\Notifications\TestEmailNotificationCommand::class,
+            \App\Console\Commands\Notifications\ExEpoNotificacionCommand::class,
+            \App\Console\Commands\Notifications\NotificacionesExamenesCommand::class,
+
+            // Shared Commands
+            \App\Console\Commands\Shared\BaseTruncateCommand::class,
+            \App\Console\Commands\Shared\FileTagCommand::class,
+            \App\Console\Commands\Shared\CleanStorageFiles::class,
+            \App\Console\Commands\Shared\ProbarConfiguracionCorreo::class,
+            \App\Console\Commands\Shared\TestEnvironmentCheck::class,
+            \App\Console\Commands\Shared\TimezoneCheckCommand::class,
+        ];
 
     protected function schedule(Schedule $schedule): void
     {

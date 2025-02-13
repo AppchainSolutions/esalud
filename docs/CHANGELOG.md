@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.16.0] - 2025-02-13
+### Agregado
+- Comando `CleanStorageFiles` para gestión de archivos temporales
+- Comando `ProbarConfiguracionCorreo` para validar configuración de correo
+- Comando `TestEnvironmentCheck` para diagnóstico de entorno
+- Comando `TimezoneCheckCommand` para verificación de zona horaria
+
+### Mejoras
+- Nuevas herramientas de diagnóstico y mantenimiento del sistema
+- Mejora en la gestión de comandos de consola
+- Incremento de utilidades de depuración y verificación
+
 ## [1.15.0] - 2025-02-13
 ### Agregado
 - Sistema completo de notificaciones de exámenes

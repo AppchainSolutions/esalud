@@ -16,7 +16,7 @@ class PacienteActivacionController extends Controller
     use ContextualLogging;
 
     /**
-     * Servicio de activación de pacientes
+     * Servicio de activación de paciente
      *
      * @var PacienteActivacionService
      */

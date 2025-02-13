@@ -22,11 +22,11 @@ class ActivacionPacienteMail extends Mailable
 
     public function build()
     {
-        return $this->markdown('emails.pacientes.activacion')
+        return $this->markdown('emails.paciente.activacion')
             ->subject('Activación de Cuenta - E-Salud')
             ->with([
                 'nombrePaciente' => $this->paciente->nombre_completo,
-                'urlActivacion' => route('paciente.activar', $this->token)
+                'urlActivacion' => route('paciente.activar', $this->token),
             ]);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 class TestCommand extends Command
 {
@@ -14,12 +13,12 @@ class TestCommand extends Command
                          {--group= : The groups of tests to run}';
 
     protected $description = 'Run the application tests
-    
+
 Available test groups for Pacientes:
-  - busqueda    : Ejecuta solo las pruebas de búsqueda de pacientes
-  - validacion  : Ejecuta solo las pruebas de validación de pacientes
-  - creacion    : Ejecuta solo las pruebas de creación de pacientes
-  - vista       : Ejecuta solo las pruebas de vista de pacientes
+  - busqueda    : Ejecuta solo las pruebas de búsqueda de paciente
+  - validacion  : Ejecuta solo las pruebas de validación de paciente
+  - creacion    : Ejecuta solo las pruebas de creación de paciente
+  - vista       : Ejecuta solo las pruebas de vista de paciente
 
 Examples:
   php artisan test --group=busqueda
@@ -44,7 +43,7 @@ Examples:
         }, $options, array_keys($options)));
 
         $process = new \Symfony\Component\Process\Process($command, base_path(), ['COLUMNS' => '120']);
-        
+
         return $process->run(function ($type, $buffer) {
             $this->output->write($buffer);
         });

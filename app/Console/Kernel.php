@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\TestAtencionDiariaFactory::class,
         \App\Console\Commands\BaseTruncateCommand::class,
         \App\Console\Commands\TestActivationEmail::class,
-        \App\Console\Commands\EnviarNotificacionesVencimiento::class,
+        \App\Console\Commands\NotificacionesExamenesCommand::class,
         \App\Console\Commands\FileTagCommand::class,
     ];
 

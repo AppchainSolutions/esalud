@@ -2,14 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Notification;
 use App\Models\ExAldehido;
 use App\Models\Paciente;
 use App\Models\User;
-use App\Models\EstadoExamen;
 use App\Notifications\ExamenVencimientoNotification;
-use App\Services\NotificacionService;
+use App\Services\ExamenNotificationService;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class NotificacionesVencimientoTest extends TestCase
@@ -33,12 +32,12 @@ class NotificacionesVencimientoTest extends TestCase
             ->create();
 
         // Ejecutar servicio de notificaciones
-        $notificacionService = app(NotificacionService::class);
+        $notificacionService = app(ExamenNotificationService::class);
         $notificacionService->generarNotificacionesVencimiento();
 
         // Verificar que se envió notificación
         Notification::assertSentTo(
-            $paciente->user, 
+            $paciente->user,
             ExamenVencimientoNotification::class,
             function ($notification) use ($examen) {
                 return $notification->examen->id === $examen->id;
@@ -60,11 +59,11 @@ class NotificacionesVencimientoTest extends TestCase
         $examen = ExAldehido::factory()
             ->for($paciente)
             ->create([
-                'fecha_prox_control' => now()->addYears(2)
+                'fecha_prox_control' => now()->addYears(2),
             ]);
 
         // Ejecutar servicio de notificaciones
-        $notificacionService = app(NotificacionService::class);
+        $notificacionService = app(ExamenNotificationService::class);
         $notificacionService->generarNotificacionesVencimiento();
 
         // Verificar que no se envió notificación
@@ -72,7 +71,7 @@ class NotificacionesVencimientoTest extends TestCase
     }
 
     /** @test */
-    public function no_genera_notificaciones_para_pacientes_sin_usuario()
+    public function no_genera_notificaciones_para_paciente_sin_usuario()
     {
         // Crear paciente sin usuario
         $paciente = Paciente::factory()->create();
@@ -84,7 +83,7 @@ class NotificacionesVencimientoTest extends TestCase
             ->create();
 
         // Ejecutar servicio de notificaciones
-        $notificacionService = app(NotificacionService::class);
+        $notificacionService = app(ExamenNotificationService::class);
         $notificacionService->generarNotificacionesVencimiento();
 
         // Verificar que NO se crearon notificaciones en base de datos
@@ -108,18 +107,18 @@ class NotificacionesVencimientoTest extends TestCase
         $notificacion = $examen->generarNotificacionVencimiento();
         $notificacion->update([
             'estado' => 'fallida',
-            'intentos' => 1
+            'intentos' => 1,
         ]);
 
         // Ejecutar reintento de notificaciones
-        $notificacionService = app(NotificacionService::class);
+        $notificacionService = app(ExamenNotificationService::class);
         $notificacionService->reintentarNotificacionesFallidas();
 
         // Verificar que la notificación fue reenviada
         $this->assertDatabaseHas('notificaciones', [
             'id' => $notificacion->id,
             'estado' => 'enviada',
-            'intentos' => 2
+            'intentos' => 2,
         ]);
     }
 
@@ -136,48 +135,48 @@ class NotificacionesVencimientoTest extends TestCase
             ->for($paciente)
             ->proximoAVencer()
             ->create([
-                'comentario' => 'Examen de control anual'
+                'comentario' => 'Examen de control anual',
             ]);
 
         // Simular envío de notificación
         Notification::fake();
 
         // Ejecutar servicio de notificaciones
-        $notificacionService = app(NotificacionService::class);
+        $notificacionService = app(ExamenNotificationService::class);
         $notificacionService->generarNotificacionesVencimiento();
 
         // Verificar que se envió la notificación
         Notification::assertSentTo(
-            $paciente->user, 
+            $paciente->user,
             ExamenVencimientoNotification::class,
             function ($notification) use ($examen) {
                 // Obtener el nombre de la clase sin namespace
                 $tipoExamen = class_basename(get_class($examen));
-                
+
                 // Crear una instancia de MailMessage directamente
                 $mailMessage = $notification->toMail($notification->examen->paciente->user);
-                
+
                 // Convertir introLines a un string para búsqueda más flexible
                 $introLinesText = implode(' ', $mailMessage->introLines);
-                
+
                 // Verificar que el correo contiene los detalles del examen
                 $this->assertTrue(
                     strpos($mailMessage->subject, $tipoExamen) !== false ||
                     strpos($introLinesText, $tipoExamen) !== false,
                     "El correo debe contener el tipo de examen: {$tipoExamen}"
                 );
-                
+
                 $this->assertTrue(
                     strpos($introLinesText, $examen->fecha_prox_control->format('d/m/Y')) !== false,
                     "El correo debe contener la fecha de próximo control: {$examen->fecha_prox_control->format('d/m/Y')}"
                 );
-                
+
                 // Verificar comentario de manera más flexible
                 $this->assertTrue(
                     strpos($introLinesText, 'control anual') !== false,
                     "El correo debe contener algo relacionado con 'control anual'"
                 );
-                
+
                 return true;
             }
         );

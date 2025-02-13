@@ -3,10 +3,8 @@
 namespace Tests\Feature\Pacientes\Crud;
 
 use App\Models\Paciente;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase;
-use Illuminate\Support\Facades\DB;
 use Tests\CreatesApplication;
 
 class PacienteCrudTest extends TestCase
@@ -30,7 +28,7 @@ class PacienteCrudTest extends TestCase
             'empresa' => 1,
             'area' => 1,
             'cargo' => 1,
-            'exposicion' => json_encode(['Ruido', 'Polvo'])
+            'exposicion' => json_encode(['Ruido', 'Polvo']),
         ];
 
         return array_merge($datosBase, $sobreescribir);
@@ -40,9 +38,9 @@ class PacienteCrudTest extends TestCase
     {
         $paciente = Paciente::create($this->datosValidosPaciente());
 
-        $this->assertDatabaseHas('pacientes', [
+        $this->assertDatabaseHas('paciente', [
             'rut' => '12.345.678-9',
-            'email' => 'juan.perez@ejemplo.com'
+            'email' => 'juan.perez@ejemplo.com',
         ]);
 
         $this->assertEquals('Juan', $paciente->nombre);
@@ -56,14 +54,14 @@ class PacienteCrudTest extends TestCase
         $paciente->update([
             'nombre' => 'Carlos',
             'apellidos' => 'Martínez López',
-            'email' => 'carlos.martinez@ejemplo.com'
+            'email' => 'carlos.martinez@ejemplo.com',
         ]);
 
-        $this->assertDatabaseHas('pacientes', [
+        $this->assertDatabaseHas('paciente', [
             'id' => $paciente->id,
             'nombre' => 'Carlos',
             'apellidos' => 'Martínez López',
-            'email' => 'carlos.martinez@ejemplo.com'
+            'email' => 'carlos.martinez@ejemplo.com',
         ]);
     }
 
@@ -74,8 +72,8 @@ class PacienteCrudTest extends TestCase
         $pacienteId = $paciente->id;
         $paciente->delete();
 
-        $this->assertSoftDeleted('pacientes', [
-            'id' => $pacienteId
+        $this->assertSoftDeleted('paciente', [
+            'id' => $pacienteId,
         ]);
     }
 
@@ -86,7 +84,7 @@ class PacienteCrudTest extends TestCase
         Paciente::create($this->datosValidosPaciente());
         Paciente::create($this->datosValidosPaciente([
             'nombre' => 'María',
-            'email' => 'maria.rodriguez@ejemplo.com'
+            'email' => 'maria.rodriguez@ejemplo.com',
         ]));
     }
 
@@ -97,7 +95,7 @@ class PacienteCrudTest extends TestCase
         Paciente::create($this->datosValidosPaciente());
         Paciente::create($this->datosValidosPaciente([
             'nombre' => 'María',
-            'rut' => '98.765.432-1'
+            'rut' => '98.765.432-1',
         ]));
     }
 
@@ -106,12 +104,12 @@ class PacienteCrudTest extends TestCase
         $paciente = Paciente::create($this->datosValidosPaciente());
 
         $paciente->update([
-            'cuenta_activada' => true
+            'cuenta_activada' => true,
         ]);
 
-        $this->assertDatabaseHas('pacientes', [
+        $this->assertDatabaseHas('paciente', [
             'id' => $paciente->id,
-            'cuenta_activada' => true
+            'cuenta_activada' => true,
         ]);
     }
 
@@ -120,12 +118,12 @@ class PacienteCrudTest extends TestCase
         $paciente = Paciente::create($this->datosValidosPaciente());
 
         $paciente->update([
-            'exposicion' => json_encode(['Químicos', 'Humos'])
+            'exposicion' => json_encode(['Químicos', 'Humos']),
         ]);
 
-        $this->assertDatabaseHas('pacientes', [
+        $this->assertDatabaseHas('paciente', [
             'id' => $paciente->id,
-            'exposicion' => json_encode(['Químicos', 'Humos'])
+            'exposicion' => json_encode(['Químicos', 'Humos']),
         ]);
     }
 
@@ -134,12 +132,12 @@ class PacienteCrudTest extends TestCase
         $paciente = Paciente::create($this->datosValidosPaciente());
 
         $paciente->update([
-            'activo' => false
+            'activo' => false,
         ]);
 
-        $this->assertDatabaseHas('pacientes', [
+        $this->assertDatabaseHas('paciente', [
             'id' => $paciente->id,
-            'activo' => false
+            'activo' => false,
         ]);
     }
 
@@ -150,14 +148,14 @@ class PacienteCrudTest extends TestCase
         $paciente->update([
             'empresa' => 2,
             'area' => 2,
-            'cargo' => 2
+            'cargo' => 2,
         ]);
 
-        $this->assertDatabaseHas('pacientes', [
+        $this->assertDatabaseHas('paciente', [
             'id' => $paciente->id,
             'empresa' => 2,
             'area' => 2,
-            'cargo' => 2
+            'cargo' => 2,
         ]);
     }
 
@@ -170,8 +168,8 @@ class PacienteCrudTest extends TestCase
         $pacienteRestaurado = Paciente::withTrashed()->find($pacienteId);
         $pacienteRestaurado->restore();
 
-        $this->assertDatabaseHas('pacientes', [
-            'id' => $pacienteId
+        $this->assertDatabaseHas('paciente', [
+            'id' => $pacienteId,
         ]);
         $this->assertNull($pacienteRestaurado->deleted_at);
     }

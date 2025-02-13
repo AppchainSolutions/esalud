@@ -3,17 +3,15 @@
 namespace Tests\Feature\Controllers;
 
 use App\Http\Controllers\DashboardController;
-use App\Models\Paciente;
 use App\Models\Enfermedad;
+use App\Models\Paciente;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Request;
-use Pest\Laravel;
 
 uses(RefreshDatabase::class);
 
 test('personasPorEmpresa', function () {
-    // Crear algunos pacientes con empresas
+    // Crear algunos paciente con empresas
     Paciente::factory()->count(10)->create(['empresa' => 22]);
     Paciente::factory()->count(5)->create(['empresa' => 6]);
     Paciente::factory()->count(3)->create(['empresa' => 8]);
@@ -32,7 +30,7 @@ test('personasPorEmpresa', function () {
 });
 
 test('personasPorUnidad', function () {
-    // Crear algunos pacientes con unidades
+    // Crear algunos paciente con unidades
     Paciente::factory()->count(10)->create(['unidad' => 1]);
     Paciente::factory()->count(5)->create(['unidad' => 2]);
     Paciente::factory()->count(3)->create(['unidad' => 3]);
@@ -51,7 +49,7 @@ test('personasPorUnidad', function () {
 });
 
 test('personasPorPlanta', function () {
-    // Crear algunos pacientes con plantas
+    // Crear algunos paciente con plantas
     Paciente::factory()->count(10)->create(['planta' => 1]);
     Paciente::factory()->count(5)->create(['planta' => 2]);
     Paciente::factory()->count(3)->create(['planta' => 3]);
@@ -70,7 +68,7 @@ test('personasPorPlanta', function () {
 });
 
 test('personasPorCeco', function () {
-    // Crear algunos pacientes con cecos
+    // Crear algunos paciente con cecos
     Paciente::factory()->count(10)->create(['ceco' => 1]);
     Paciente::factory()->count(5)->create(['ceco' => 2]);
     Paciente::factory()->count(3)->create(['ceco' => 3]);
@@ -89,7 +87,7 @@ test('personasPorCeco', function () {
 });
 
 test('personasPorExpo', function () {
-    // Crear algunos pacientes con exposiciones
+    // Crear algunos paciente con exposiciones
     Paciente::factory()->count(10)->create(['exposicion' => 'Exposicion 1']);
     Paciente::factory()->count(5)->create(['exposicion' => 'Exposicion 2']);
     Paciente::factory()->count(3)->create(['exposicion' => 'Exposicion 3']);
@@ -108,7 +106,7 @@ test('personasPorExpo', function () {
 });
 
 test('enfermedad_empresa', function () {
-    // Crear algunos pacientes con enfermedades
+    // Crear algunos paciente con enfermedades
     Paciente::factory()->count(10)->create(['empresa' => 1]);
     Enfermedad::factory()->count(10)->create(['paciente_id' => 1, 'trastorno_cronico_id' => 1]);
     Enfermedad::factory()->count(5)->create(['paciente_id' => 2, 'trastorno_cronico_id' => 2]);
@@ -128,7 +126,7 @@ test('enfermedad_empresa', function () {
 });
 
 test('enfermedad_planta', function () {
-    // Crear algunos pacientes con enfermedades
+    // Crear algunos paciente con enfermedades
     Paciente::factory()->count(10)->create(['planta' => 1]);
     Enfermedad::factory()->count(10)->create(['paciente_id' => 1, 'trastorno_cronico_id' => 1]);
     Enfermedad::factory()->count(5)->create(['paciente_id' => 2, 'trastorno_cronico_id' => 2]);

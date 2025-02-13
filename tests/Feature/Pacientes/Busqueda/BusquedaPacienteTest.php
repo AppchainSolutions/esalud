@@ -5,7 +5,6 @@ namespace Tests\Feature\Pacientes\Busqueda;
 use App\Models\Paciente;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase;
-use Illuminate\Support\Facades\DB;
 use Tests\CreatesApplication;
 
 class BusquedaPacienteTest extends TestCase
@@ -15,7 +14,7 @@ class BusquedaPacienteTest extends TestCase
 
     private function crearPacientesParaPruebas()
     {
-        // Crear pacientes con diferentes características para pruebas de búsqueda
+        // Crear paciente con diferentes características para pruebas de búsqueda
         Paciente::create([
             'nombre' => 'Juan',
             'apellidos' => 'Pérez González',
@@ -29,7 +28,7 @@ class BusquedaPacienteTest extends TestCase
             'cuenta_activada' => false,
             'empresa' => 1,
             'area' => 1,
-            'cargo' => 1
+            'cargo' => 1,
         ]);
 
         Paciente::create([
@@ -45,7 +44,7 @@ class BusquedaPacienteTest extends TestCase
             'cuenta_activada' => true,
             'empresa' => 2,
             'area' => 2,
-            'cargo' => 2
+            'cargo' => 2,
         ]);
 
         Paciente::create([
@@ -61,7 +60,7 @@ class BusquedaPacienteTest extends TestCase
             'cuenta_activada' => false,
             'empresa' => 3,
             'area' => 3,
-            'cargo' => 3
+            'cargo' => 3,
         ]);
     }
 
@@ -81,7 +80,7 @@ class BusquedaPacienteTest extends TestCase
             'empresa' => 1,
             'area' => 1,
             'cargo' => 1,
-            'exposicion' => json_encode(['Ruido', 'Polvo'])
+            'exposicion' => json_encode(['Ruido', 'Polvo']),
         ]);
 
         Paciente::create([
@@ -98,7 +97,7 @@ class BusquedaPacienteTest extends TestCase
             'empresa' => 2,
             'area' => 2,
             'cargo' => 2,
-            'exposicion' => json_encode(['Humos', 'Químicos'])
+            'exposicion' => json_encode(['Humos', 'Químicos']),
         ]);
 
         Paciente::create([
@@ -115,7 +114,7 @@ class BusquedaPacienteTest extends TestCase
             'empresa' => 3,
             'area' => 3,
             'cargo' => 3,
-            'exposicion' => json_encode(['Ruido', 'Vibraciones'])
+            'exposicion' => json_encode(['Ruido', 'Vibraciones']),
         ]);
     }
 
@@ -134,163 +133,163 @@ class BusquedaPacienteTest extends TestCase
     {
         $this->crearPacientesParaPruebas();
 
-        $pacientes = Paciente::where('nombre', 'LIKE', '%Juan%')
+        $paciente = Paciente::where('nombre', 'LIKE', '%Juan%')
             ->orWhere('apellidos', 'LIKE', '%Pérez%')
             ->get();
 
-        $this->assertCount(1, $pacientes);
-        $this->assertEquals('Juan', $pacientes->first()->nombre);
+        $this->assertCount(1, $paciente);
+        $this->assertEquals('Juan', $paciente->first()->nombre);
     }
 
-    public function test_buscar_pacientes_por_genero()
+    public function test_buscar_paciente_por_genero()
     {
         $this->crearPacientesParaPruebas();
 
-        $pacientes = Paciente::where('genero', 1)->get();
+        $paciente = Paciente::where('genero', 1)->get();
 
-        $this->assertCount(2, $pacientes);
-        $this->assertTrue($pacientes->contains('nombre', 'Juan'));
-        $this->assertTrue($pacientes->contains('nombre', 'Carlos'));
+        $this->assertCount(2, $paciente);
+        $this->assertTrue($paciente->contains('nombre', 'Juan'));
+        $this->assertTrue($paciente->contains('nombre', 'Carlos'));
     }
 
-    public function test_buscar_pacientes_por_estado_activacion()
+    public function test_buscar_paciente_por_estado_activacion()
     {
         $this->crearPacientesParaPruebas();
 
-        $pacientesActivos = Paciente::where('cuenta_activada', true)->get();
-        $pacientesInactivos = Paciente::where('cuenta_activada', false)->get();
+        $pacienteActivos = Paciente::where('cuenta_activada', true)->get();
+        $pacienteInactivos = Paciente::where('cuenta_activada', false)->get();
 
-        $this->assertCount(1, $pacientesActivos);
-        $this->assertEquals('María', $pacientesActivos->first()->nombre);
+        $this->assertCount(1, $pacienteActivos);
+        $this->assertEquals('María', $pacienteActivos->first()->nombre);
 
-        $this->assertCount(2, $pacientesInactivos);
+        $this->assertCount(2, $pacienteInactivos);
     }
 
-    public function test_buscar_pacientes_por_rango_edad()
+    public function test_buscar_paciente_por_rango_edad()
     {
         $this->crearPacientesParaPruebas();
 
         $edadMinima = now()->subYears(35);
         $edadMaxima = now()->subYears(25);
 
-        $pacientes = Paciente::whereBetween('fecha_nacimiento', [$edadMinima, $edadMaxima])->get();
+        $paciente = Paciente::whereBetween('fecha_nacimiento', [$edadMinima, $edadMaxima])->get();
 
-        $this->assertCount(1, $pacientes);
-        $this->assertEquals('Juan', $pacientes->first()->nombre);
+        $this->assertCount(1, $paciente);
+        $this->assertEquals('Juan', $paciente->first()->nombre);
     }
 
-    public function test_buscar_pacientes_por_empresa()
+    public function test_buscar_paciente_por_empresa()
     {
         $this->crearPacientesParaPruebas();
 
-        $pacientes = Paciente::where('empresa', 1)->get();
+        $paciente = Paciente::where('empresa', 1)->get();
 
-        $this->assertCount(1, $pacientes);
-        $this->assertEquals('Juan', $pacientes->first()->nombre);
+        $this->assertCount(1, $paciente);
+        $this->assertEquals('Juan', $paciente->first()->nombre);
     }
 
-    public function test_buscar_pacientes_por_area()
+    public function test_buscar_paciente_por_area()
     {
         $this->crearPacientesParaPruebas();
 
-        $pacientes = Paciente::where('area', 1)->get();
+        $paciente = Paciente::where('area', 1)->get();
 
-        $this->assertCount(1, $pacientes);
-        $this->assertEquals('Juan', $pacientes->first()->nombre);
+        $this->assertCount(1, $paciente);
+        $this->assertEquals('Juan', $paciente->first()->nombre);
     }
 
-    public function test_buscar_pacientes_con_filtros_multiples()
+    public function test_buscar_paciente_con_filtros_multiples()
     {
         $this->crearPacientesParaPruebas();
 
-        $pacientes = Paciente::where('genero', 1)
+        $paciente = Paciente::where('genero', 1)
             ->where('cuenta_activada', false)
             ->where('activo', true)
             ->get();
 
-        $this->assertCount(1, $pacientes);
-        $this->assertEquals('Juan', $pacientes->first()->nombre);
+        $this->assertCount(1, $paciente);
+        $this->assertEquals('Juan', $paciente->first()->nombre);
     }
 
-    public function test_busqueda_pacientes_paginacion()
+    public function test_busqueda_paciente_paginacion()
     {
         $this->crearPacientesParaPruebas();
 
-        $pacientes = Paciente::paginate(2);
+        $paciente = Paciente::paginate(2);
 
-        $this->assertCount(2, $pacientes);
-        $this->assertEquals(3, $pacientes->total());
+        $this->assertCount(2, $paciente);
+        $this->assertEquals(3, $paciente->total());
     }
 
-    public function test_busqueda_pacientes_ordenamiento()
+    public function test_busqueda_paciente_ordenamiento()
     {
         $this->crearPacientesParaPruebas();
 
-        $pacientes = Paciente::orderBy('nombre', 'asc')->get();
+        $paciente = Paciente::orderBy('nombre', 'asc')->get();
 
-        $this->assertEquals('Carlos', $pacientes->first()->nombre);
-        $this->assertEquals('María', $pacientes->last()->nombre);
+        $this->assertEquals('Carlos', $paciente->first()->nombre);
+        $this->assertEquals('María', $paciente->last()->nombre);
     }
 
-    public function test_buscar_pacientes_por_exposicion_unica()
+    public function test_buscar_paciente_por_exposicion_unica()
     {
         $this->crearPacientesParaPruebasExposicion();
 
-        $pacientes = Paciente::whereJsonContains('exposicion', 'Ruido')->get();
+        $paciente = Paciente::whereJsonContains('exposicion', 'Ruido')->get();
 
-        $this->assertCount(2, $pacientes);
-        $this->assertTrue($pacientes->contains('nombre', 'Juan'));
-        $this->assertTrue($pacientes->contains('nombre', 'Carlos'));
+        $this->assertCount(2, $paciente);
+        $this->assertTrue($paciente->contains('nombre', 'Juan'));
+        $this->assertTrue($paciente->contains('nombre', 'Carlos'));
     }
 
-    public function test_buscar_pacientes_por_multiples_exposiciones()
+    public function test_buscar_paciente_por_multiples_exposiciones()
     {
         $this->crearPacientesParaPruebasExposicion();
 
-        $pacientes = Paciente::whereJsonContains('exposicion', 'Ruido')
+        $paciente = Paciente::whereJsonContains('exposicion', 'Ruido')
             ->whereJsonContains('exposicion', 'Polvo')
             ->get();
 
-        $this->assertCount(1, $pacientes);
-        $this->assertEquals('Juan', $pacientes->first()->nombre);
+        $this->assertCount(1, $paciente);
+        $this->assertEquals('Juan', $paciente->first()->nombre);
     }
 
-    public function test_buscar_pacientes_con_cualquiera_de_varias_exposiciones()
+    public function test_buscar_paciente_con_cualquiera_de_varias_exposiciones()
     {
         $this->crearPacientesParaPruebasExposicion();
 
         $exposicionesBuscadas = ['Humos', 'Químicos'];
-        
-        $pacientes = Paciente::where(function($query) use ($exposicionesBuscadas) {
+
+        $paciente = Paciente::where(function ($query) use ($exposicionesBuscadas) {
             foreach ($exposicionesBuscadas as $exposicion) {
                 $query->orWhereJsonContains('exposicion', $exposicion);
             }
         })->get();
 
-        $this->assertCount(1, $pacientes);
-        $this->assertEquals('María', $pacientes->first()->nombre);
+        $this->assertCount(1, $paciente);
+        $this->assertEquals('María', $paciente->first()->nombre);
     }
 
-    public function test_buscar_pacientes_con_exposiciones_y_filtros_adicionales()
+    public function test_buscar_paciente_con_exposiciones_y_filtros_adicionales()
     {
         $this->crearPacientesParaPruebasExposicion();
 
-        $pacientes = Paciente::whereJsonContains('exposicion', 'Ruido')
+        $paciente = Paciente::whereJsonContains('exposicion', 'Ruido')
             ->where('genero', 1)
             ->where('activo', true)
             ->get();
 
-        $this->assertCount(1, $pacientes);
-        $this->assertEquals('Juan', $pacientes->first()->nombre);
+        $this->assertCount(1, $paciente);
+        $this->assertEquals('Juan', $paciente->first()->nombre);
     }
 
-    public function test_buscar_pacientes_sin_exposiciones_especificas()
+    public function test_buscar_paciente_sin_exposiciones_especificas()
     {
         $this->crearPacientesParaPruebasExposicion();
 
-        $pacientes = Paciente::whereJsonDoesntContain('exposicion', 'Ruido')->get();
+        $paciente = Paciente::whereJsonDoesntContain('exposicion', 'Ruido')->get();
 
-        $this->assertCount(1, $pacientes);
-        $this->assertEquals('María', $pacientes->first()->nombre);
+        $this->assertCount(1, $paciente);
+        $this->assertEquals('María', $paciente->first()->nombre);
     }
 }

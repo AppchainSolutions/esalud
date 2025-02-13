@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Symfony\Component\Finder\Finder;
 
 class FileTagCommand extends Command
 {
@@ -13,7 +14,7 @@ class FileTagCommand extends Command
      * @var string
      */
     protected $signature = 'file:tag 
-        {action? : Acción a realizar (add|find|list|remove)} 
+        {action? : Acción a realizar (add|find|list|remove|cleanup)} 
         {file? : Ruta del archivo o etiqueta a buscar} 
         {tags?* : Etiquetas a añadir o buscar en directorios específicos}';
 
@@ -74,6 +75,10 @@ class FileTagCommand extends Command
             'Eliminar una etiqueta de un archivo' => [
                 'comando' => 'php artisan file:tag remove app/Models/User.php importante',
                 'descripcion' => 'Elimina la etiqueta "importante" del archivo User.php'
+            ],
+            'Limpiar tags de archivos eliminados' => [
+                'comando' => 'php artisan file:tag cleanup',
+                'descripcion' => 'Elimina los archivos de tags que corresponden a archivos eliminados'
             ]
         ];
     }
@@ -95,6 +100,7 @@ class FileTagCommand extends Command
             "  - find   : Buscar archivos que contengan una etiqueta determinada",
             "  - list   : Listar todas las etiquetas existentes en el proyecto",
             "  - remove : Eliminar una etiqueta de un archivo",
+            "  - cleanup: Limpiar tags de archivos eliminados",
             "",
             "Restricciones:",
             "  - Las etiquetas solo pueden contener letras, números, espacios y guiones",
@@ -105,7 +111,8 @@ class FileTagCommand extends Command
             "  php artisan file:tag add app/Models/User.php importante urgente",
             "  php artisan file:tag find importante",
             "  php artisan file:tag list",
-            "  php artisan file:tag remove app/Models/User.php importante"
+            "  php artisan file:tag remove app/Models/User.php importante",
+            "  php artisan file:tag cleanup"
         ]);
     }
 
@@ -132,6 +139,7 @@ class FileTagCommand extends Command
         $this->line('  - find   : Buscar archivos con una etiqueta específica');
         $this->line('  - list   : Listar todas las etiquetas existentes');
         $this->line('  - remove : Eliminar una etiqueta de un archivo');
+        $this->line('  - cleanup: Limpiar tags de archivos eliminados');
         $this->line('');
         
         $this->line('Restricciones de Etiquetas:');
@@ -172,8 +180,10 @@ class FileTagCommand extends Command
                 return $this->listTags();
             case 'remove':
                 return $this->removeTag();
+            case 'cleanup':
+                return $this->handleTagCleanup();
             default:
-                $this->error('Acción no válida. Use add, find, list, remove o help para ver ayuda.');
+                $this->error('Acción no válida. Use add, find, list, remove, cleanup o help para ver ayuda.');
                 $this->displayExtendedHelp(); // Mostrar ayuda por defecto
                 return 1;
         }
@@ -208,7 +218,6 @@ class FileTagCommand extends Command
                 continue;
             }
 
-            // Generar hash del archivo
             $fileHash = $this->generateFileHash($absoluteFile);
             $tagFile = $this->tagsDir . '/' . $fileHash . '.tags';
 
@@ -394,122 +403,133 @@ class FileTagCommand extends Command
     }
 
     /**
-     * Listar tags de archivos
+     * Listar tags de archivos con manejo de archivos eliminados
+     * 
+     * @return void
      */
     private function listTags()
     {
         // Obtener todos los archivos de tags
-        $tagFiles = File::glob($this->tagsDir . '/*.tags');
-
-        // Recolectar todas las etiquetas únicas
-        $allTags = [];
-        $tagFileCount = [];
+        $tagFiles = glob($this->tagsDir . '/*.tags');
+        
+        // Agrupar tags por nombre
+        $tagGroups = [];
+        $totalTags = 0;
+        $filesWithDeletedReferences = 0;
 
         foreach ($tagFiles as $tagFile) {
-            // Leer contenido de tags
-            $existingTags = array_filter(explode("\n", File::get($tagFile)));
+            $tagData = $this->readTagFile($tagFile);
             
-            // Obtener el hash del archivo original
-            $fileHash = basename($tagFile, '.tags');
-            
-            // Buscar el archivo original para obtener su ruta relativa
-            $foundFiles = [];
-            $this->findFileByHash(base_path(), $fileHash, $foundFiles);
-            $filePath = $foundFiles[0] ?? 'Archivo no encontrado';
-
-            // Agregar cada etiqueta
-            foreach ($existingTags as $tag) {
-                if (!isset($allTags[$tag])) {
-                    $allTags[$tag] = [];
-                    $tagFileCount[$tag] = 0;
-                }
-                $allTags[$tag][] = $filePath;
-                $tagFileCount[$tag]++;
+            if (!$tagData) {
+                continue;
             }
+
+            foreach ($tagData['tags'] as $tag) {
+                $tag = trim($tag);
+                if (!isset($tagGroups[$tag])) {
+                    $tagGroups[$tag] = [
+                        'files' => [],
+                        'count' => 0
+                    ];
+                }
+
+                // Verificar si el archivo existe
+                $filePath = $this->getFilePathFromTagFile($tagFile);
+                if ($filePath && file_exists($filePath)) {
+                    $tagGroups[$tag]['files'][] = $filePath;
+                    $tagGroups[$tag]['count']++;
+                } else {
+                    $tagGroups[$tag]['files'][] = '<fg=red>Archivo no encontrado</>';
+                    $filesWithDeletedReferences++;
+                }
+            }
+            $totalTags++;
         }
 
-        // Ordenar etiquetas alfabéticamente
-        ksort($allTags);
+        // Ordenar tags alfabéticamente
+        ksort($tagGroups);
 
         // Mostrar resultados
-        if (!empty($allTags)) {
-            $this->line("\n<info>Etiquetas en el proyecto:</info>");
+        $this->line("\n📋 Etiquetas en el proyecto:");
+        foreach ($tagGroups as $tag => $tagInfo) {
+            $this->line("  • <fg=yellow>$tag</> (usado en {$tagInfo['count']} archivo" . ($tagInfo['count'] != 1 ? 's' : '') . "):");
             
-            foreach ($allTags as $tag => $files) {
-                $this->line(sprintf(
-                    "  • <fg=yellow>%s</> (usado en %d archivo%s):", 
-                    $tag, 
-                    count($files), 
-                    count($files) != 1 ? 's' : ''
-                ));
-                
-                // Mostrar archivos con esta etiqueta (limitado a 5 para no saturar)
-                $displayFiles = array_slice($files, 0, 5);
-                foreach ($displayFiles as $file) {
-                    $this->line("    - $file");
-                }
-                
-                // Indicar si hay más archivos
-                if (count($files) > 5) {
-                    $this->line(sprintf("    ... y %d más", count($files) - 5));
-                }
+            // Mostrar hasta 5 archivos
+            $displayFiles = array_slice($tagInfo['files'], 0, 5);
+            foreach ($displayFiles as $file) {
+                $this->line("    - $file");
             }
 
-            $this->line(sprintf(
-                "\n<info>Total de etiquetas:</info> %d", 
-                count($allTags)
-            ));
-        } else {
-            $this->warn("No se encontraron etiquetas en el proyecto.");
+            // Indicar si hay más archivos
+            if (count($tagInfo['files']) > 5) {
+                $remainingCount = count($tagInfo['files']) - 5;
+                $this->line("    ... y $remainingCount más");
+            }
         }
 
-        return 0;
+        // Estadísticas adicionales
+        $this->line("\n📊 Resumen:");
+        $this->line("  • Total de etiquetas: <fg=green>$totalTags</>");
+        $this->line("  • Archivos con referencias eliminadas: <fg=red>$filesWithDeletedReferences</>");
+
+        // Sugerencia de limpieza si hay referencias a archivos eliminados
+        if ($filesWithDeletedReferences > 0) {
+            $this->warn("\n⚠️ Hay referencias a archivos eliminados. Considere limpiar los tags.");
+            $this->line("   Puede usar: <fg=yellow>php artisan file:tag cleanup</>");
+        }
     }
 
     /**
-     * Eliminar un tag de un archivo
+     * Obtener la ruta del archivo desde un archivo de tags
+     * 
+     * @param string $tagFile
+     * @return string|null
      */
-    private function removeTag()
+    private function getFilePathFromTagFile($tagFile)
     {
-        list($file, $tag) = $this->processArguments();
-
-        if (!$file || !$tag) {
-            $this->error('Debe especificar un archivo y una etiqueta');
-            return 1;
+        try {
+            $tagData = $this->readTagFile($tagFile);
+            return $tagData['file'] ?? null;
+        } catch (\Exception $e) {
+            return null;
         }
+    }
 
-        // Resolver ruta absoluta
-        $absoluteFile = $this->resolveFilePath($file);
+    /**
+     * Limpiar tags de archivos eliminados
+     * 
+     * @return void
+     */
+    private function cleanupDeletedFileTags()
+    {
+        $tagFiles = glob($this->tagsDir . '/*.tags');
+        $deletedCount = 0;
 
-        if (!$absoluteFile || !File::exists($absoluteFile)) {
-            $this->error("El archivo $file no existe");
-            return 1;
-        }
-
-        $fileHash = $this->generateFileHash($absoluteFile);
-        $tagFile = $this->tagsDir . '/' . $fileHash . '.tags';
-
-        if (!File::exists($tagFile)) {
-            $relativeFile = $this->convertToRelativePath($absoluteFile);
-            $this->error("No hay tags para el archivo $relativeFile");
-            return 1;
-        }
-
-        $tags = array_filter(explode("\n", File::get($tagFile)));
-        $index = array_search($tag, $tags);
-
-        if ($index !== false) {
-            unset($tags[$index]);
-            File::put($tagFile, implode("\n", $tags));
+        foreach ($tagFiles as $tagFile) {
+            $tagData = $this->readTagFile($tagFile);
             
-            $relativeFile = $this->convertToRelativePath($absoluteFile);
-            $this->info("Tag '$tag' eliminado de $relativeFile");
-        } else {
-            $relativeFile = $this->convertToRelativePath($absoluteFile);
-            $this->warn("El tag '$tag' no existe para $relativeFile");
+            if (!$tagData || !isset($tagData['file']) || !file_exists($tagData['file'])) {
+                // Eliminar archivo de tags si el archivo original no existe
+                unlink($tagFile);
+                $deletedCount++;
+            }
         }
 
-        return 0;
+        if ($deletedCount > 0) {
+            $this->info("🧹 Limpieza completada. Se eliminaron $deletedCount archivos de tags huérfanos.");
+        } else {
+            $this->line("✅ No se encontraron archivos de tags huérfanos.");
+        }
+    }
+
+    /**
+     * Método para manejar la limpieza de tags
+     * 
+     * @return void
+     */
+    private function handleTagCleanup()
+    {
+        $this->cleanupDeletedFileTags();
     }
 
     /**
@@ -521,20 +541,125 @@ class FileTagCommand extends Command
     }
 
     /**
-     * Mejora: Optimizar la resolución de rutas para mayor flexibilidad
-     * Se añade soporte para rutas más complejas y manejo de excepciones
+     * Resolver ruta de archivo con validaciones amigables
+     * 
+     * @param string $path
+     * @return string|null
      */
-    protected function resolveFilePath($path)
+    private function resolveFilePath($path)
     {
-        // Implementar resolución más robusta de rutas
-        $normalizedPath = str_replace(['\\', '//'], '/', $path);
-        
-        // Añadir validación de rutas
-        if (!file_exists($normalizedPath)) {
-            throw new \InvalidArgumentException("La ruta especificada no existe: $normalizedPath");
+        // Manejar caso de ruta vacía
+        if (empty($path)) {
+            $this->error('Debe especificar una ruta de archivo válida.');
+            return null;
         }
+
+        // Normalizar separadores de ruta
+        $normalizedPath = str_replace(['\\', '//'], '/', trim($path));
         
-        return realpath($normalizedPath);
+        // Intentar resolver rutas relativas
+        $possiblePaths = [
+            base_path($normalizedPath),           // Ruta relativa al proyecto
+            $normalizedPath,                      // Ruta original
+            getcwd() . '/' . $normalizedPath,     // Ruta relativa al directorio actual
+            app_path($normalizedPath),            // Ruta relativa a app/
+            public_path($normalizedPath),         // Ruta relativa a public/
+            storage_path($normalizedPath)         // Ruta relativa a storage/
+        ];
+
+        foreach ($possiblePaths as $possiblePath) {
+            if (file_exists($possiblePath)) {
+                return realpath($possiblePath);
+            }
+        }
+
+        // Analizar posibles errores comunes
+        $this->analyzePathError($normalizedPath);
+
+        // Sugerir rutas similares si no se encuentra
+        $similarPaths = $this->findSimilarPaths($normalizedPath);
+
+        // Mensaje de error personalizado
+        $this->error("❌ No se pudo encontrar el archivo: <fg=yellow>$normalizedPath</>");
+        
+        // Contexto adicional
+        $this->line("\n📍 Contexto actual:");
+        $this->line("  • Directorio actual: " . getcwd());
+        $this->line("  • Ruta base del proyecto: " . base_path());
+
+        if (!empty($similarPaths)) {
+            $this->line("\n🔍 ¿Quizás quiso decir?:");
+            foreach ($similarPaths as $similarPath) {
+                $this->line("  • <fg=green>$similarPath</>");
+            }
+        }
+
+        $this->line("\n💡 Consejos:");
+        $this->line("  • Verifique la ortografía de la ruta");
+        $this->line("  • Use rutas relativas desde la raíz del proyecto");
+        $this->line("  • Asegúrese de que el archivo exista");
+
+        return null;
+    }
+
+    /**
+     * Analizar posibles errores en la ruta
+     * 
+     * @param string $path
+     */
+    private function analyzePathError($path)
+    {
+        // Verificar errores comunes
+        $commonErrors = [
+            'Ruta con espacios en blanco' => str_contains($path, ' '),
+            'Ruta con caracteres especiales' => preg_match('/[^a-zA-Z0-9\/\.\-_]/', $path),
+            'Ruta con mayúsculas inconsistentes' => $path !== strtolower($path) && $path === ucfirst($path)
+        ];
+
+        $this->line("\n⚠️ Posibles problemas detectados:");
+        $hasErrors = false;
+        foreach ($commonErrors as $error => $condition) {
+            if ($condition) {
+                $this->line("  • <fg=yellow>$error</>");
+                $hasErrors = true;
+            }
+        }
+
+        if (!$hasErrors) {
+            $this->line("  • No se detectaron errores comunes");
+        }
+    }
+
+    /**
+     * Buscar rutas similares
+     * 
+     * @param string $path
+     * @return array
+     */
+    private function findSimilarPaths($path)
+    {
+        try {
+            // Buscar archivos con nombres similares
+            $finder = new \Symfony\Component\Finder\Finder();
+            $finder->files()
+                ->in(base_path())
+                ->name('*' . basename($path) . '*')
+                ->depth('< 5');  // Limitar profundidad de búsqueda
+
+            $similarPaths = [];
+            foreach ($finder as $file) {
+                $similarPaths[] = $file->getRelativePathname();
+                
+                // Limitar a 5 sugerencias
+                if (count($similarPaths) >= 5) {
+                    break;
+                }
+            }
+
+            return $similarPaths;
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 
     /**
@@ -650,5 +775,40 @@ class FileTagCommand extends Command
     private function removeDuplicateTags(array $tags): array
     {
         return array_unique(array_map('trim', $tags));
+    }
+
+    /**
+     * Leer contenido de un archivo de tags
+     * 
+     * @param string $tagFile
+     * @return array|null
+     */
+    private function readTagFile($tagFile)
+    {
+        try {
+            $content = File::get($tagFile);
+            $lines = explode("\n", $content);
+            $tagData = [
+                'file' => null,
+                'tags' => []
+            ];
+
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if (empty($line)) {
+                    continue;
+                }
+
+                if (strpos($line, 'file:') === 0) {
+                    $tagData['file'] = substr($line, 5);
+                } else {
+                    $tagData['tags'][] = $line;
+                }
+            }
+
+            return $tagData;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }

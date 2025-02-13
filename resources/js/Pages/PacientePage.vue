@@ -2,9 +2,9 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { router } from "@inertiajs/vue3";
 import { reactive, ref, onMounted, computed } from "vue";
-import { useField, useForm } from 'vee-validate';
+import { useField, useForm } from "vee-validate";
 //import '../utils/validation-rules';
-import { formatRut } from '../utils/rut-validator';
+import { formatRut } from "../utils/rut-validator";
 import { useDataStore } from "@/store.js";
 import moment from "moment";
 import { useDate } from "vuetify";
@@ -72,7 +72,7 @@ const state = reactive({
         },
         { title: "Acciones", sortable: false, align: "center", key: "actions" },
     ],
- 
+
     searchQuery: {
         id: null,
         rut: null,
@@ -271,7 +271,7 @@ async function storeItems() {
 }
 
 const create = async () => {
-await handleStoreItem(state, "create");
+    await handleStoreItem(state, "create");
     close();
     state.dialogActivationAccount = true;
 };
@@ -319,7 +319,7 @@ const deleteItemConfirmed = async () => {
     await deleteConfirmed({
         ...state,
         url: {
-            delete: "api/pacientes",
+            delete: "api/paciente",
         },
     });
     closeDelete();
@@ -341,7 +341,11 @@ const deleteItemConfirmed = async () => {
                                 <v-col>
                                     <v-text-field
                                         v-model="state.searchQuery.rut"
-                                        @input="value => state.searchQuery.rut = formatRut(value)"
+                                        @input="
+                                            (value) =>
+                                                (state.searchQuery.rut =
+                                                    formatRut(value))
+                                        "
                                         label="Rut* (12345678-9)"
                                         type="text"
                                         variant="underlined"
@@ -508,7 +512,9 @@ const deleteItemConfirmed = async () => {
                                             <v-row>
                                                 <v-col cols="6" sm="4" md="2">
                                                     <v-text-field
-                                                        v-model="state.editedItem.rut"
+                                                        v-model="
+                                                            state.editedItem.rut
+                                                        "
                                                         label="RUT (12345678-9)"
                                                         type="text"
                                                         required
@@ -599,7 +605,6 @@ const deleteItemConfirmed = async () => {
                                                             state.editedItem
                                                                 .email
                                                         "
-                                                        
                                                         required
                                                         clearable
                                                         variant="underlined"
@@ -858,7 +863,8 @@ const deleteItemConfirmed = async () => {
                                                 <v-col cols="6" sm="4" md="2">
                                                     <v-select
                                                         :items="
-                                                            state.list.pueblo_originario
+                                                            state.list
+                                                                .pueblo_originario
                                                         "
                                                         item-title="descripcion"
                                                         item-value="id"
@@ -901,7 +907,6 @@ const deleteItemConfirmed = async () => {
                                                                 .actividad_economica
                                                         "
                                                         label="Actividad económica"
-                                                        
                                                         clearable
                                                         variant="underlined"
                                                     ></v-text-field>
@@ -1120,11 +1125,11 @@ const deleteItemConfirmed = async () => {
             </v-sheet>
         </v-sheet>
     </v-container>
-            <ConfirmDialog
-                v-model="state.dialogActivationAccount"
-                question="¿Está seguro que desea eliminar este paciente?"
-                description="Esta acción no se puede deshacer y eliminará permanentemente el registro del paciente."
-                @confirm="deleteItemConfirmed"
-                @cancel="closeDelete"
-            />
+    <ConfirmDialog
+        v-model="state.dialogActivationAccount"
+        question="¿Está seguro que desea eliminar este paciente?"
+        description="Esta acción no se puede deshacer y eliminará permanentemente el registro del paciente."
+        @confirm="deleteItemConfirmed"
+        @cancel="closeDelete"
+    />
 </template>

@@ -14,11 +14,24 @@ return [
         'dias_max' => env('NOTIFICACIONES_EXAMENES_DIAS_MAX', 37),
 
         // Modelos de exámenes a notificar
-        'modelos' => [
+        'modelos' => config('examenes.modelos.principales', [
             App\Models\Examen::class,
             App\Models\ExamenLaboratorio::class,
-            // Agregar otros modelos de exámenes
-        ],
+        ]),
+
+        // Tipos de exámenes a incluir
+        'tipos_incluidos' => config('examenes.tipos_incluidos', [
+            'ocupacional',
+            'preocupacional',
+            'periodico',
+            'ingreso',
+        ]),
+
+        // Tipos de exámenes a excluir
+        'tipos_excluidos' => config('examenes.tipos_excluidos', [
+            'especial',
+            'extraordinario',
+        ]),
 
         // Configuraciones de envío
         'envio' => [
@@ -37,7 +50,6 @@ return [
         // Configuraciones de filtrado
         'filtros' => [
             'estado_examen' => ['pendiente', 'programado'],
-            'excluir_tipos' => [], // Tipos de exámenes a excluir
         ],
     ],
 

@@ -33,6 +33,7 @@ return new class extends Migration
             $table->date('fecha_control')->nullable();
             $table->date('fecha_prox_control')->nullable();
             $table->timestamp('fecha_notificacion')->nullable();
+            $table->timestamp('fecha_envio')->nullable();
 
             // Reintentos y seguimiento
             $table->integer('intentos')->default(0);

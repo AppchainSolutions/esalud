@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\NotificacionesExamenesCommand::class,
         \App\Console\Commands\FileTagCommand::class,
         \App\Console\Commands\EnviarNotificacionesExamenesCommand::class,
+        \App\Console\Commands\DebugConfigurationCommand::class,
     ];
 
     protected function schedule(Schedule $schedule): void

@@ -572,4 +572,51 @@ class ExamenNotificationService
             }
         }
     }
+
+    /**
+     * Determinar si un examen está próximo a vencer
+     * 
+     * @param mixed $examen Modelo de examen
+     * @return bool
+     */
+    public function esExamenProximoAVencer($examen)
+    {
+        // Verificar si tiene fecha de próximo control
+        if (!$examen->fecha_prox_control) {
+            return false;
+        }
+
+        // Obtener rango de días desde configuración
+        $diasMin = config('notifications.examenes.dias_min', 30);
+        $diasMax = config('notifications.examenes.dias_max', 37);
+
+        // Convertir fecha de próximo control
+        $fechaVencimiento = \Carbon\Carbon::parse($examen->fecha_prox_control);
+
+        // Verificar rango de fechas y estado
+        return $fechaVencimiento->between(
+            now()->addDays($diasMin), 
+            now()->addDays($diasMax)
+        ) && $examen->estado_examen === 'activo';
+    }
+
+    /**
+     * Scope para encontrar exámenes próximos a vencer
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeProximosAVencer($query)
+    {
+        // Obtener rango de días desde configuración
+        $diasMin = config('notifications.examenes.dias_min', 30);
+        $diasMax = config('notifications.examenes.dias_max', 37);
+
+        return $query->where(function($q) use ($diasMin, $diasMax) {
+            $q->whereNotNull('fecha_prox_control')
+              ->where('fecha_prox_control', '>=', now()->addDays($diasMin))
+              ->where('fecha_prox_control', '<=', now()->addDays($diasMax))
+              ->where('estado_examen', 'activo');
+        });
+    }
 }

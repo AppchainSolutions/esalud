@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Carbon\Carbon;
 
 class ExamenNotificacionMail extends Mailable
 {
@@ -38,6 +39,25 @@ class ExamenNotificacionMail extends Mailable
     }
 
     /**
+     * Obtener nombre amigable del tipo de examen
+     */
+    private function getNombreAmigableExamen(): string
+    {
+        $nombreClase = class_basename(get_class($this->examen));
+        $mapeoNombres = [
+            'ExAldehido' => 'Examen de Aldehído',
+            'ExHumoNegro' => 'Examen de Humo Negro',
+            'ExamenPvt' => 'Examen PVT',
+            'ExamenPvmos' => 'Examen PVMOS',
+            'ExamenPvmosol' => 'Examen PVMOSOL',
+            'ExamenRespirador' => 'Examen de Respirador',
+            // Añadir más mapeos según sea necesario
+        ];
+
+        return $mapeoNombres[$nombreClase] ?? $nombreClase;
+    }
+
+    /**
      * Get the message content definition.
      */
     public function content(): Content
@@ -46,9 +66,11 @@ class ExamenNotificacionMail extends Mailable
             view: 'emails.examen_notificacion',
             with: [
                 'nombrePaciente' => $this->paciente->nombre,
-                'tipoExamen' => class_basename(get_class($this->examen)),
-                'fechaProxControl' => $this->examen->fecha_prox_control,
-                'fechaUltControl' => $this->examen->fecha_ult_control ?? 'No registrada'
+                'tipoExamen' => $this->getNombreAmigableExamen(),
+                'fechaProxControl' => Carbon::parse($this->examen->fecha_prox_control)->format('d/m/Y'),
+                'fechaUltControl' => $this->examen->fecha_ult_control 
+                    ? Carbon::parse($this->examen->fecha_ult_control)->format('d/m/Y') 
+                    : 'No registrada'
             ]
         );
     }

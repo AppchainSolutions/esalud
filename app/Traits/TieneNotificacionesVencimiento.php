@@ -3,7 +3,8 @@
 namespace App\Traits;
 
 use App\Models\Notificacion;
-use Carbon\Carbon;
+use App\Services\ExamenNotificationService;
+use Illuminate\Support\Facades\App;
 
 trait TieneNotificacionesVencimiento
 {
@@ -23,11 +24,9 @@ trait TieneNotificacionesVencimiento
      */
     public function scopeProximosAVencer($query)
     {
-        return $query->where(function($q) {
-            $q->whereNotNull('fecha_prox_control')
-              ->where('fecha_prox_control', '<=', now()->addMonths(2)->addWeek())
-              ->where('estado_examen', 'activo');
-        });
+        /** @var ExamenNotificationService $notificationService */
+        $notificationService = App::make(ExamenNotificationService::class);
+        return $notificationService->scopeProximosAVencer($query);
     }
 
     /**
@@ -41,7 +40,7 @@ trait TieneNotificacionesVencimiento
         return Notificacion::create([
             'examinable_type' => get_class($this),
             'examinable_id' => $this->id,
-            'paciente_id' => $this->paciente_id,
+            'paciente_id' => $this->paciente_id ?? null,
             'tipo_examen' => class_basename(get_class($this)),
             'fecha_control' => $this->fecha_control ?? now(),
             'fecha_proximo_control' => $this->fecha_prox_control,
@@ -56,14 +55,8 @@ trait TieneNotificacionesVencimiento
      */
     public function estaProximoAVencer()
     {
-        if (!$this->fecha_prox_control) {
-            return false;
-        }
-
-        $fechaVencimiento = Carbon::parse($this->fecha_prox_control);
-        $rangoInicio = now();
-        $rangoFin = now()->addMonths(2)->addWeek();
-
-        return $fechaVencimiento->between($rangoInicio, $rangoFin);
+        /** @var ExamenNotificationService $notificationService */
+        $notificationService = App::make(ExamenNotificationService::class);
+        return $notificationService->esExamenProximoAVencer($this);
     }
 }

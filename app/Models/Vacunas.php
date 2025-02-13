@@ -12,7 +12,7 @@ class Vacunas extends Model
 
     public function vacunas(): HasMany
     {
-        return $this->hasMany(Pacientes::class);
+        return $this->hasMany(Paciente::class);
     }
 
     protected $table = 'vacunas';

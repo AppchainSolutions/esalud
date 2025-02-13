@@ -12,7 +12,7 @@ class Nacionalidades extends Model
 
     public function nacionalidad(): BelongsTo
     {
-        return $this->belongsTo(Pacientes::class);
+        return $this->belongsTo(Paciente::class);
     }
 
     protected $table = 'nacionalidades';

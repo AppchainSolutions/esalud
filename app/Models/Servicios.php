@@ -26,11 +26,11 @@ class Servicios extends Model
     }
 
     /**
-     * Obtiene los pacientes asociados al servicio.
+     * Obtiene los paciente asociados al servicio.
      */
-    public function pacientes(): BelongsToMany
+    public function paciente(): BelongsToMany
     {
-        return $this->belongsToMany(Pacientes::class);
+        return $this->belongsToMany(Paciente::class);
     }
 
     /**

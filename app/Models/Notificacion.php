@@ -19,7 +19,8 @@ class Notificacion extends Model
         'fecha_control', 
         'fecha_prox_control', 
         'fecha_notificacion', 
-        'intentos'
+        'intentos',
+        'canal_notificacion'  
     ];
 
     protected $dates = [
@@ -30,6 +31,8 @@ class Notificacion extends Model
 
     /**
      * Relación polimórfica con exámenes
+     * 
+     * @return MorphTo
      */
     public function examinable(): MorphTo
     {
@@ -37,7 +40,9 @@ class Notificacion extends Model
     }
 
     /**
-     * Relación con paciente
+     * Relación con el paciente
+     * 
+     * @return BelongsTo
      */
     public function paciente(): BelongsTo
     {
@@ -46,6 +51,9 @@ class Notificacion extends Model
 
     /**
      * Scope para notificaciones pendientes
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePendientes($query)
     {
@@ -58,6 +66,18 @@ class Notificacion extends Model
     public function scopeFallidas($query)
     {
         return $query->where('estado', 'fallida');
+    }
+
+    /**
+     * Scope para notificaciones por canal
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $canal
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePorCanal($query, $canal)
+    {
+        return $query->where('canal_notificacion', $canal);
     }
 
     /**

@@ -19,7 +19,7 @@ class AsignacionServicio extends Model
     /**
      * Get the patient that owns the service assignment.
      */
-    public function pacientes(): BelongsTo
+    public function paciente(): BelongsTo
     {
         return $this->belongsTo(Servicios::class);
     }

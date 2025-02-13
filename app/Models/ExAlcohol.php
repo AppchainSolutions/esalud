@@ -19,6 +19,9 @@ class ExAlcohol extends Model
     protected $fillable = [
         'paciente_id',
         'idpgp',
+        'fecha_prox_control',
+        'fecha_vencimiento',
+        'fecha_ult_control',
         'fecha_control',
         'test_drogas',
         'comentario'

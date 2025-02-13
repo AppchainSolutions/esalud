@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\BooleanCastTrait;
+use Illuminate\Notifications\Notifiable;
 use App\Models\User;
 
 class Paciente extends Model
 {
     use HasFactory, SoftDeletes;
     use BooleanCastTrait;
+    use Notifiable;
 
     public function atenciones(): HasMany
     {

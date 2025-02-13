@@ -32,7 +32,14 @@ class ExamenVencimientoNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        $canales = ['database'];
+
+        // Agregar canal de correo solo si tiene email
+        if ($notifiable->email) {
+            $canales[] = 'mail';
+        }
+
+        return $canales;
     }
 
     /**
@@ -56,9 +63,12 @@ class ExamenVencimientoNotification extends Notification implements ShouldQueue
             ? $this->examen->comentario 
             : 'Sin comentarios adicionales';
 
+        // Obtener nombre completo del paciente
+        $nombrePaciente = trim("{$notifiable->nombre} {$notifiable->apellidos}");
+
         return (new MailMessage)
             ->subject("Recordatorio de Examen Médico: {$tipoExamen}")
-            ->greeting("Hola {$notifiable->name}")
+            ->greeting("Hola {$nombrePaciente}")
             ->line("Su examen de {$tipoExamen} está próximo a vencer.")
             ->line("Fecha de Próximo Control: {$fechaProxControl}")
             ->line("Quedan {$diasRestantes} días para realizar su examen.")

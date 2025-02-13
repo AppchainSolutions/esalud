@@ -120,10 +120,13 @@ class PacientesExamenesSeeder extends Seeder
 
         // Crear 10 paciente
         $paciente = Paciente::factory()->count(10)->create();
-
+        
         // Crear exámenes para cada paciente
         foreach ($paciente as $paciente) {
-            $fechaProxControl = $this->faker->dateTimeBetween('+60 days', '+67 days');
+            $fechaProxControl = now()
+            ->addMonth()
+            ->addDays(rand(0, 60)); // Genera fecha entre 1 y 3 meses
+
             $fechaUltControl = $this->faker->dateTimeBetween('-1 year', 'now');
 
             $examen = ExAldehido::factory()->create([

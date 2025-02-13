@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->date('fecha_recepcion')->nullable()->default('1900-01-01');
             $table->date('fecha_solicitud')->nullable()->default('1900-01-01');
             $table->date('fecha_vencimiento')->nullable()->default('1900-01-01');
+            $table->timestamp('fecha_notificacion')->nullable();
             $table->integer('numero_solicitud')->nullable();
             $table->string('resultado')->nullable();
             $table->integer('tipo_examen')->nullable();

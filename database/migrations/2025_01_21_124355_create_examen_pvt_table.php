@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->integer('paciente_id');
             $table->date('fecha_examen')->nullable();
             $table->date('fecha_control')->nullable();
+            $table->timestamp('fecha_notificacion')->nullable();
             $table->string('nordico')->nullable();
             $table->string('quickdash')->nullable();
             $table->string('derivacion')->nullable();

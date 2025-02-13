@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('fecha_ult_control');
             $table->date('fecha_prox_control')->nullable();
             $table->date('fecha_vencimiento')->nullable();
+            $table->timestamp('fecha_notificacion')->nullable();
             $table->string('test_drogas');
             $table->string('item');
             $table->text('comentario');

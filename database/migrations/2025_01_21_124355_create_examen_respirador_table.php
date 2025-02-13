@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->integer('paciente_id');
             $table->date('fecha_examen')->nullable();
             $table->string('prueba_ajuste')->nullable();
+            $table->timestamp('fecha_notificacion')->nullable();
             $table->string('talla_respirador')->nullable();
             $table->string('modelo_marca')->nullable();
             $table->string('comentario')->nullable();

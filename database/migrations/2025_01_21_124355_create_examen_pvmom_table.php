@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->date('fecha_ult_control')->nullable();
             $table->timestamps();
             $table->integer('estado_examen')->nullable();
-            $table->increments('id');
+            $table->id();
             $table->date('fecha_control')->nullable();
         });
     }

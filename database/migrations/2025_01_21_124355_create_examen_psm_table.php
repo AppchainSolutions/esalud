@@ -19,6 +19,11 @@ return new class extends Migration
             $table->date('fecha_realizacion')->nullable();
             $table->date('fecha_recepcion')->nullable();
             $table->date('fecha_vencimiento')->nullable();
+            $table->date('fecha_control')->nullable();
+            $table->date('fecha_ingreso')->nullable();
+            $table->date('fecha_prox_control')->nullable();
+            $table->date('fecha_ult_control')->nullable();
+            $table->timestamp('fecha_notificacion')->nullable();
             $table->integer('dias_restantes')->nullable();
             $table->string('comentario')->nullable();
             $table->timestamps();

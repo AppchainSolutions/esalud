@@ -13,7 +13,7 @@ use App\Models\User;
 
 class ExEpoNotificacionCommand extends Command
 {
-    protected $signature = 'notification:exepo';
+    protected $signature = 'notificaciones:exepo';
     protected $description = 'Envío de notificaciones de vencimiento de exámenes ocupacionales y preocupacionales';
 
     public function handle()

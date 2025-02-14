@@ -270,12 +270,51 @@ class ExamenNotificationService
     }
 
     /**
+     * Método centralizado para obtener exámenes próximos a vencer
+     *
+     * @param string|array $tipoExamen Tipo o tipos de examen a filtrar
+     * @param int $mesesAdelante Número de meses hacia adelante para buscar
+     * @param int $mesesAtras Número de meses hacia atrás para buscar
+     * @return \Illuminate\Support\Collection Colección de exámenes próximos a vencer
+     */
+    
+    /**
+     * Método para obtener exámenes próximos a vencer con formato para notificaciones
+     *
+     * @param string|array $tipoExamen Tipo o tipos de examen a filtrar
+     * @param int $mesesAdelante Número de meses hacia adelante para buscar
+     * @return array Exámenes agrupados por tipo
+     */
+    public function obtenerExamenesPorVencer($tipoExamen = null, int $mesesAdelante = 2)
+    {
+        // Convertir $tipoExamen a array si es un string
+        $tipos = is_string($tipoExamen) ? [$tipoExamen] : ($tipoExamen ?? []);
+        
+        $modelosExamenes = $this->obtenerModelosPorTipos($tipos);
+        $this->setModelosExamenes($modelosExamenes);
+
+        $examenesPorVencer = [];
+        foreach ($modelosExamenes as $modeloExamen) {
+            $tipoExamen = class_basename($modeloExamen);
+            $examenes = $modeloExamen::where('fecha_prox_control', '<=', now()->addMonths($mesesAdelante))
+                ->where('fecha_prox_control', '>=', now())
+                ->get();
+
+            if (!$examenes->isEmpty()) {
+                $examenesPorVencer[$tipoExamen] = $examenes->toArray();
+            }
+        }
+
+        return $examenesPorVencer;
+    }
+
+    /**
      * Obtener exámenes próximos a vencer
      *
      * @param int $diasAntelacion Días de anticipación para notificación
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function obtenerExamenesProximosAVencer($diasAntelacion = 60)
+    public function obtenerExamenesProximosAVencerOriginal($diasAntelacion = 60)
     {
         $now = now();
         $examenesPorNotificar = collect();
@@ -464,113 +503,99 @@ class ExamenNotificationService
     /**
      * Crear notificación para un examen específico
      *
-     * @param Examen $examen
-     * @param bool $dryRun
-     * @return Notificacion|null
+     * @param array $examen Datos del examen
+     * @return Notificacion
      */
-    public function crearNotificacion($examen, $dryRun = false)
+    protected function crearNotificacion($examen)
     {
-        // Eliminar notificaciones previas para este examen
-        $examen->notificaciones()->delete();
-
-        // Verificar si el paciente tiene email
-        $paciente = $examen->paciente;
-        if (!$paciente || !$paciente->email) {
-            Log::warning('Paciente sin email', [
-                'examen_id' => $examen->id,
-                'paciente_id' => $paciente ? $paciente->id : null
-            ]);
-            return null;
-        }
-
-        // Definir canales de notificación
-        $canales = $this->config['canales_notificacion'];
-
-        // Crear notificación
-        $notificacion = Notificacion::create([
-            'examinable_type' => get_class($examen),
-            'examinable_id' => $examen->id,
-            'paciente_id' => $paciente->id,
+        return Notificacion::create([
             'tipo_examen' => class_basename(get_class($examen)),
-            'estado' => 'pendiente',
-            'canal_notificacion' => $canales[0] ?? 'email', // Usar el primer canal por defecto
-            'intentos' => 0,
-            'fecha_programada' => now(),
-            'fecha_control' => $examen->fecha_ult_control,
-            'fecha_prox_control' => $examen->fecha_prox_control,
-        ]);
-
-        Log::info('Notificación creada', [
-            'notificacion_id' => $notificacion->id,
             'examen_id' => $examen->id,
-            'paciente_id' => $paciente->id,
-            'canales' => $canales,
-            'dry_run' => $dryRun
+            'paciente_id' => $examen->paciente_id,
+            'estado' => 'pendiente',
+            'intentos' => 0,
+            'fecha_prox_control' => $examen->fecha_prox_control
         ]);
-
-        // Si no es modo de prueba, NO enviar notificación inmediatamente
-        if (!$dryRun) {
-            // Solo marcar como pendiente
-            Log::info('Notificación pendiente de envío', [
-                'notificacion_id' => $notificacion->id,
-                'examen_id' => $examen->id
-            ]);
-        }
-
-        return $notificacion;
     }
 
     /**
-     * Enviar notificaciones por correo
+     * Enviar notificación
      *
-     * @param \Illuminate\Support\Collection $notificaciones
+     * @param Notificacion $notificacion
      */
-    public function enviarNotificaciones($notificaciones)
+    protected function enviarNotificacion($notificacion)
     {
-        $emailTesting = 'omar.ahumadag@gmail.com';
-
-        foreach ($notificaciones as $notificacion) {
-            try {
-                $examen = $notificacion->examinable;
-                $paciente = $examen->paciente;
-
-                // Usar email de testing en lugar del email del paciente
-                Mail::to($emailTesting)->send(
-                    new ExamenNotificacionMail($examen, $paciente, $notificacion)
-                );
-
-                // Actualizar estado de notificación
-                $notificacion->update([
-                    'estado' => 'enviada',
-                    'fecha_envio' => now(),
-                    'intentos' => $notificacion->intentos + 1,
-                ]);
-
-                // Actualizar fecha de notificación en el examen
-                $examen->update([
-                    'fecha_notificacion' => now(),
-                ]);
-
-                Log::info('Notificación enviada', [
-                    'notificacion_id' => $notificacion->id,
-                    'email_testing' => $emailTesting,
-                    'tipo_examen' => class_basename(get_class($examen)),
-                ]);
-
-            } catch (\Exception $e) {
-                $notificacion->update([
-                    'estado' => 'fallida',
-                    'intentos' => $notificacion->intentos + 1,
-                    'mensaje_error' => $e->getMessage(),
-                ]);
-
-                Log::error('Error al enviar notificación', [
-                    'notificacion_id' => $notificacion->id,
-                    'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString(),
-                ]);
+        try {
+            // Envío por email
+            if (in_array('email', $this->config['canales_notificacion'])) {
+                $this->enviarNotificacionEmail($notificacion);
             }
+
+            // Actualizar estado de notificación
+            $notificacion->update([
+                'estado' => 'enviado',
+                'intentos' => $notificacion->intentos + 1
+            ]);
+        } catch (\Exception $e) {
+            // Manejar fallos en el envío
+            $notificacion->update([
+                'estado' => 'fallido',
+                'intentos' => $notificacion->intentos + 1
+            ]);
+
+            Log::error('Error al enviar notificación', [
+                'notificacion_id' => $notificacion->id,
+                'error' => $e->getMessage()
+            ]);
         }
+    }
+
+    /**
+     * Enviar notificación por email
+     *
+     * @param Notificacion $notificacion
+     */
+    protected function enviarNotificacionEmail($notificacion)
+    {
+        $paciente = $notificacion->paciente;
+        
+        if ($paciente && $paciente->email) {
+            Mail::to($paciente->email)->send(
+                new ExamenNotificacionMail($notificacion)
+            );
+        }
+    }
+
+    /**
+     * Calcula la fecha de notificación para un examen próximo a vencer
+     *
+     * @param \Carbon\Carbon $fechaProxControl
+     * @return \Carbon\Carbon
+     */
+    public function calcularFechaNotificacion($fechaProxControl)
+    {
+        // Por defecto, notificar 30 días antes del próximo control
+        $diasAnticipacion = $this->config['dias_anticipacion'] ?? 30;
+        
+        return $fechaProxControl->copy()->subDays($diasAnticipacion);
+    }
+
+    /**
+     * Genera una plantilla de notificación para un examen
+     *
+     * @param object $examen
+     * @return string
+     */
+    public function generarPlantillaNotificacion($examen)
+    {
+        // Generar plantilla de notificación personalizada
+        $plantilla = "Notificación de Examen Próximo\n\n";
+        $plantilla .= "Paciente ID: {$examen->paciente_id}\n";
+        $plantilla .= "Tipo de Examen: {$examen->tipo_examen}\n";
+        $plantilla .= "Fecha de Próximo Control: {$examen->fecha_prox_control}\n";
+        $plantilla .= "\nPor favor, programe su próximo examen médico.";
+
+        return $plantilla;
     }
 
     /**
@@ -618,5 +643,110 @@ class ExamenNotificationService
               ->where('fecha_prox_control', '<=', now()->addDays($diasMax))
               ->where('estado_examen', 'activo');
         });
+    }
+
+    /**
+     * Generar notificaciones de exámenes
+     *
+     * @param array $tipos Tipos de exámenes a procesar
+     * @param int $meses Número de meses para considerar
+     * @param bool $dryRun Modo de prueba
+     * @return array Notificaciones generadas
+     */
+    public function generarNotificaciones(array $tipos = [], int $meses = 2, bool $dryRun = false)
+    {
+        // Configurar modelos de exámenes según los tipos
+        $modelosExamenes = $this->obtenerModelosPorTipos($tipos);
+        $this->setModelosExamenes($modelosExamenes);
+
+        // Obtener exámenes próximos a vencer
+        $examenes = $this->obtenerExamenesPorVencer($tipos, $meses);
+
+        // Generar notificaciones
+        $notificaciones = [];
+        foreach ($examenes as $tipoExamen => $examenesDelTipo) {
+            foreach ($examenesDelTipo as $examen) {
+                if (!$dryRun) {
+                    $notificacion = $this->crearNotificacion($examen);
+                    $notificaciones[] = $notificacion;
+                } else {
+                    $notificaciones[] = [
+                        'tipo_examen' => $tipoExamen,
+                        'examen_id' => $examen['id'],
+                        'paciente_id' => $examen['paciente_id']
+                    ];
+                }
+            }
+        }
+
+        return $notificaciones;
+    }
+
+    /**
+     * Enviar notificaciones de exámenes
+     *
+     * @param array $tipos Tipos de exámenes a procesar
+     * @param bool $reintentar Reintentar notificaciones fallidas
+     * @param bool $dryRun Modo de prueba
+     * @return array Notificaciones enviadas
+     */
+
+    /**
+     * Obtener modelos de exámenes por tipos
+     *
+     * @param array $tipos Tipos de exámenes
+     * @return array Modelos de exámenes
+     */
+    protected function obtenerModelosPorTipos(array $tipos = [])
+    {
+        $mapeoTipos = [
+            'aldehido' => \App\Models\ExAldehido::class,
+            'humo_negro' => \App\Models\ExHumoNegro::class,
+            'metales' => \App\Models\ExMetal::class,
+            // Añadir otros mapeos de tipos
+        ];
+
+        if (empty($tipos)) {
+            return array_values($mapeoTipos);
+        }
+
+        return array_map(function($tipo) use ($mapeoTipos) {
+            return $mapeoTipos[$tipo] ?? null;
+        }, $tipos);
+    }
+
+    /**
+     * Obtener notificaciones pendientes
+     *
+     * @param array $tipos Tipos de exámenes
+     * @return \Illuminate\Support\Collection
+     */
+    protected function obtenerNotificacionesPendientes(array $tipos = [])
+    {
+        $query = Notificacion::where('estado', 'pendiente');
+
+        if (!empty($tipos)) {
+            $query->whereIn('tipo_examen', $tipos);
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * Obtener notificaciones fallidas
+     *
+     * @param array $tipos Tipos de exámenes
+     * @return \Illuminate\Support\Collection
+     */
+    protected function obtenerNotificacionesFallidas(array $tipos = [])
+    {
+        $query = Notificacion::where('estado', 'fallido')
+            ->where('intentos', '<', $this->config['max_intentos']);
+
+        if (!empty($tipos)) {
+            $query->whereIn('tipo_examen', $tipos);
+        }
+
+        return $query->get();
     }
 }

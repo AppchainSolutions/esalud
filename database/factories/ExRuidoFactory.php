@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\ExHumoNegro;
+use App\Models\ExRuido;
 use App\Models\Paciente;
 use App\Models\EstadoExamen;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ExHumoNegroFactory extends Factory
+class ExRuidoFactory extends Factory
 {
-    protected $model = ExHumoNegro::class;
+    protected $model = ExRuido::class;
 
     public function definition(): array
     {

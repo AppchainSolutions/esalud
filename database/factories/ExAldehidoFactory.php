@@ -21,6 +21,8 @@ class ExAldehidoFactory extends Factory
             'paciente_id' => Paciente::factory(), 
             'fecha_prox_control'=> now()->addMonths(1),
             'fecha_ult_control'=> now()->subMonths(1),
+            'fecha_ingreso'=> now()->subMonths(1),
+            'fecha_control'=> now()->subMonths(1),
             'idpgp' => strtoupper(substr(md5(uniqid()), 0, 10)),
             'estado_examen' => $estadoExamen, 
             'comentario' => $this->faker->sentence()

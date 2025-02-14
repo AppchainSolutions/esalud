@@ -5,11 +5,12 @@ namespace Database\Seeders;
 use App\Models\EstadoCivil;
 use App\Models\EstadoExamen;
 use App\Models\ExAldehido;
-use App\Models\ExPVTMERT;
 use App\Models\ExHumoNegro;
 use App\Models\ExMetal;
-use App\Models\ExSilice;
+use App\Models\ExPVTMERT;
 use App\Models\ExRuido;
+use App\Models\ExSilice;
+use App\Models\ExSolvente;
 use App\Models\Genero;
 use App\Models\LeySocial;
 use App\Models\ModalidadAtencion;
@@ -163,6 +164,20 @@ class PacientesExamenesSeeder extends Seeder
             ]);
 
             $examen = ExSilice::factory()->create([
+                'paciente_id' => $paciente->id,
+                'estado_examen' => EstadoExamen::inRandomOrder()->first()->id,
+                'fecha_prox_control' => $fechaProxControl,
+                'fecha_ult_control' => $fechaUltControl,
+            ]);
+
+            $examen = ExRuido::factory()->create([
+                'paciente_id' => $paciente->id,
+                'estado_examen' => EstadoExamen::inRandomOrder()->first()->id,
+                'fecha_prox_control' => $fechaProxControl,
+                'fecha_ult_control' => $fechaUltControl,
+            ]);
+
+            $examen = ExSolvente::factory()->create([
                 'paciente_id' => $paciente->id,
                 'estado_examen' => EstadoExamen::inRandomOrder()->first()->id,
                 'fecha_prox_control' => $fechaProxControl,
